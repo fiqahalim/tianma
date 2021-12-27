@@ -1,0 +1,9 @@
+{
+    "/js/app.js": "/js/app.js",
+    "/js/pages/booking.js": "/js/pages/booking.js",
+    "/js/pages/profile.js": "/js/pages/profile.js",
+    "/css/pages/order.css": "/css/pages/order.css",
+    "/css/pages/booking.css": "/css/pages/booking.css",
+    "/css/pages/tree.css": "/css/pages/tree.css",
+    "/css/app.css": "/css/app.css"
+}
