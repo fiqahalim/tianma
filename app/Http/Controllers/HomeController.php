@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Customer;
 use App\Models\User;
+use App\Models\Order;
 use App\Models\OrderItem;
 
 class HomeController extends Controller
@@ -29,7 +30,12 @@ class HomeController extends Controller
     {
         $customers = Customer::where('created_by', auth()->user()->id)
             ->count();
+
         $agents = User::where('approved', '=', 0)
+            ->get()
+            ->count();
+
+        $orders = Order::where('approved', '=', 0)
             ->get()
             ->count();
 
@@ -42,7 +48,7 @@ class HomeController extends Controller
             $myAmount = $amount['amount'];
         }
 
-        return view('home', compact('customers','agents','myAmount'));
+        return view('home', compact('customers','agents','myAmount', 'orders'));
     }
 
     public function help()

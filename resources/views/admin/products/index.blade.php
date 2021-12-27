@@ -1,5 +1,13 @@
 @extends('layouts.admin')
+
 @section('content')
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">{{ trans('cruds.productManagement.title') }}</li>
+        <li class="breadcrumb-item active" aria-current="page">{{ trans('cruds.product.title') }}</li>
+    </ol>
+</nav>
+
 @can('product_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
@@ -10,7 +18,7 @@
     </div>
 @endcan
 <div class="card">
-    <div class="card-header">
+    <div class="card-header font-weight-bold">
         {{ trans('cruds.product.title_singular') }} {{ trans('global.list') }}
     </div>
 
@@ -57,9 +65,6 @@
                         </th>
                         <th>
                             {{ trans('cruds.product.fields.total_cost') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.product.fields.photo') }}
                         </th>
                         <th>
                             {{ trans('cruds.product.fields.slug') }}
@@ -118,13 +123,6 @@
                                 {{ $product->total_cost ?? '' }}
                             </td>
                             <td>
-                                @if($product->photo)
-                                    <a href="{{ $product->photo->getUrl() }}" target="_blank" style="display: inline-block">
-                                        <img src="{{ $product->photo->getUrl('thumb') }}">
-                                    </a>
-                                @endif
-                            </td>
-                            <td>
                                 {{ $product->slug ?? '' }}
                             </td>
                             <td>
@@ -157,9 +155,7 @@
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
                                     </form>
                                 @endcan
-
                             </td>
-
                         </tr>
                     @endforeach
                 </tbody>
@@ -167,10 +163,8 @@
         </div>
     </div>
 </div>
-
-
-
 @endsection
+
 @section('scripts')
 @parent
 <script>

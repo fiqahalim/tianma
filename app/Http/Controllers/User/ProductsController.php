@@ -26,7 +26,7 @@ class ProductsController extends Controller
         $selectedCategories = [];
 
         if ($childCategory2) {
-            $subCategory = $childCategory->childCategories()->where('name', $childCategory2)->firstOrFail();
+            $subCategory = $childCategory->childCategories()->where('slug', $childCategory2)->firstOrFail();
             $ids = collect($subCategory->id);
             $selectedCategories = [$category->id, $childCategory->id, $subCategory->id];
         } elseif ($childCategory) {
@@ -54,7 +54,7 @@ class ProductsController extends Controller
     public function productCategory($category, $childCategory, $childCategory2, $productSlug, Product $product)
     {
         $product->load('categories.parentCategory.parentCategory');
-        $childCategory2 = $product->categories->where('name', $childCategory2)->first();
+        $childCategory2 = $product->categories->where('slug', $childCategory2)->first();
         $selectedCategories = [];
 
         if ($childCategory2 &&

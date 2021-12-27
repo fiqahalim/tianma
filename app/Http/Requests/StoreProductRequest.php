@@ -58,6 +58,7 @@ class StoreProductRequest extends FormRequest
             'slug' => [
                 'string',
                 'required',
+                'unique:products',
             ],
             'categories.*' => [
                 'integer',

@@ -1,5 +1,13 @@
 @extends('layouts.admin')
+
 @section('content')
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">{{ trans('cruds.productManagement.title') }}</li>
+        <li class="breadcrumb-item active" aria-current="page">{{ trans('cruds.productCategory.title') }}</li>
+    </ol>
+</nav>
+
 @can('product_category_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
@@ -10,7 +18,7 @@
     </div>
 @endcan
 <div class="card">
-    <div class="card-header">
+    <div class="card-header font-weight-bold">
         {{ trans('cruds.productCategory.title_singular') }} {{ trans('global.list') }}
     </div>
 
@@ -47,66 +55,23 @@
                 </thead>
                 <tbody>
                     @foreach($productCategories as $key => $productCategory)
-                        <tr data-entry-id="{{ $productCategory->id }}">
-                            <td>
+                        @include('admin.productCategories.indexRow', compact('productCategory'))
 
-                            </td>
-                            <td>
-                                {{ $productCategory->id ?? '' }}
-                            </td>
-                            <td>
-                                {{ $productCategory->name ?? '' }}
-                            </td>
-                            <td>
-                                {{ $productCategory->description ?? '' }}
-                            </td>
-                            <td>
-                                @if($productCategory->photo)
-                                    <a href="{{ $productCategory->photo->getUrl() }}" target="_blank" style="display: inline-block">
-                                        <img src="{{ $productCategory->photo->getUrl('thumb') }}">
-                                    </a>
-                                @endif
-                            </td>
-                            <td>
-                                {{ $productCategory->slug ?? '' }}
-                            </td>
-                            <td>
-                                {{ $productCategory->category->name ?? '' }}
-                            </td>
-                            <td>
-                                @can('product_category_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.product-categories.show', $productCategory->id) }}">
-                                        {{ trans('global.view') }}
-                                    </a>
-                                @endcan
+                        @foreach($productCategory->childCategories as $childCategory)
+                            @include('admin.productCategories.indexRow', ['productCategory' => $childCategory, 'prefix' => '--'])
 
-                                @can('product_category_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.product-categories.edit', $productCategory->id) }}">
-                                        {{ trans('global.edit') }}
-                                    </a>
-                                @endcan
-
-                                @can('product_category_delete')
-                                    <form action="{{ route('admin.product-categories.destroy', $productCategory->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                    </form>
-                                @endcan
-
-                            </td>
-
-                        </tr>
+                            @foreach($childCategory->childCategories as $childCategory)
+                                @include('admin.productCategories.indexRow', ['productCategory' => $childCategory, 'prefix' => '----'])
+                            @endforeach
+                        @endforeach
                     @endforeach
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-
-
-
 @endsection
+
 @section('scripts')
 @parent
 <script>

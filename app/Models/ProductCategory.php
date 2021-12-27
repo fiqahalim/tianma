@@ -9,12 +9,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class ProductCategory extends Model implements HasMedia
 {
     use SoftDeletes;
     use InteractsWithMedia;
     use HasFactory;
+    use Sluggable;
 
     public $table = 'product_categories';
 
@@ -56,13 +58,32 @@ class ProductCategory extends Model implements HasMedia
         return $file;
     }
 
-    public function category()
+    public function parentCategory()
     {
         return $this->belongsTo(ProductCategory::class, 'category_id');
+    }
+
+    public function childCategories()
+    {
+        return $this->hasMany(ProductCategory::class, 'category_id');
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
     }
 
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
+    }
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
     }
 }

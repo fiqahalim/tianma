@@ -12,6 +12,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class ProductCategoryController extends Controller
 {
@@ -21,7 +22,9 @@ class ProductCategoryController extends Controller
     {
         abort_if(Gate::denies('product_category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $productCategories = ProductCategory::with(['category', 'media'])->get();
+        $productCategories = ProductCategory::whereNull('category_id')
+            ->with(['childCategories.childCategories'])
+            ->get();
 
         return view('admin.productCategories.index', compact('productCategories'));
     }
@@ -30,7 +33,9 @@ class ProductCategoryController extends Controller
     {
         abort_if(Gate::denies('product_category_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $categories = ProductCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $categories = ProductCategory::whereNull('category_id')
+            ->with('childCategories')
+            ->get();
 
         return view('admin.productCategories.create', compact('categories'));
     }
@@ -54,9 +59,11 @@ class ProductCategoryController extends Controller
     {
         abort_if(Gate::denies('product_category_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $categories = ProductCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $categories = ProductCategory::whereNull('category_id')
+            ->with('childCategories')
+            ->get();
 
-        $productCategory->load('category');
+         $productCategory->load('parentCategory');
 
         return view('admin.productCategories.edit', compact('categories', 'productCategory'));
     }
@@ -83,7 +90,7 @@ class ProductCategoryController extends Controller
     {
         abort_if(Gate::denies('product_category_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $productCategory->load('category');
+        $productCategory->load('parentCategory');
 
         return view('admin.productCategories.show', compact('productCategory'));
     }
@@ -114,5 +121,12 @@ class ProductCategoryController extends Controller
         $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+    }
+
+    public function checkSlug(Request $request)
+    {
+        $slug = SlugService::createSlug(ProductCategory::class, 'slug', $request->name);
+
+        return response()->json(['slug' => $slug]);
     }
 }

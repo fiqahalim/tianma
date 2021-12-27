@@ -1,8 +1,16 @@
 @extends('layouts.admin')
+
 @section('content')
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">{{ trans('cruds.productManagement.title') }}</li>
+        <li class="breadcrumb-item">{{ trans('cruds.productCategory.title') }}</li>
+        <li class="breadcrumb-item active" aria-current="page">View Categories</li>
+    </ol>
+</nav>
 
 <div class="card">
-    <div class="card-header">
+    <div class="card-header font-weight-bold">
         {{ trans('global.edit') }} {{ trans('cruds.productCategory.title_singular') }}
     </div>
 
@@ -20,6 +28,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.productCategory.fields.name_helper') }}</span>
             </div>
+
             <div class="form-group">
                 <label for="description">{{ trans('cruds.productCategory.fields.description') }}</label>
                 <textarea class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{{ old('description', $productCategory->description) }}</textarea>
@@ -30,6 +39,32 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.productCategory.fields.description_helper') }}</span>
             </div>
+
+            <div class="form-group">
+                <label for="category_id">{{ trans('cruds.productCategory.fields.category') }}</label>
+                <select class="form-control select2 {{ $errors->has('category') ? 'is-invalid' : '' }}" name="category_id" id="category_id">
+                    @foreach($categories as $category)
+                        @if($productCategory->id !== $category->id)
+                            <option value="{{ $category->id }}" {{ old('category_id', $productCategory->category_id) == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                            @foreach($category->childCategories as $childCategory)
+                                @if($productCategory->id !== $childCategory->id)
+                                    <option
+                                        value="{{ $childCategory->id }}"
+                                        {{ old('category_id', $productCategory->category_id) == $childCategory->id ? 'selected' : '' }}
+                                    >-- {{ $childCategory->name }}</option>
+                                @endif
+                            @endforeach
+                        @endif
+                    @endforeach
+                </select>
+                @if($errors->has('category'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('category') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.productCategory.fields.category_helper') }}</span>
+            </div>
+
             <div class="form-group">
                 <label for="photo">{{ trans('cruds.productCategory.fields.photo') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('photo') ? 'is-invalid' : '' }}" id="photo-dropzone">
@@ -41,6 +76,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.productCategory.fields.photo_helper') }}</span>
             </div>
+
             <div class="form-group">
                 <label class="required" for="slug">{{ trans('cruds.productCategory.fields.slug') }}</label>
                 <input class="form-control {{ $errors->has('slug') ? 'is-invalid' : '' }}" type="text" name="slug" id="slug" value="{{ old('slug', $productCategory->slug) }}" required>
@@ -51,21 +87,11 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.productCategory.fields.slug_helper') }}</span>
             </div>
+            
             <div class="form-group">
-                <label for="category_id">{{ trans('cruds.productCategory.fields.category') }}</label>
-                <select class="form-control select2 {{ $errors->has('category') ? 'is-invalid' : '' }}" name="category_id" id="category_id">
-                    @foreach($categories as $id => $entry)
-                        <option value="{{ $id }}" {{ (old('category_id') ? old('category_id') : $productCategory->category->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('category'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('category') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.productCategory.fields.category_helper') }}</span>
-            </div>
-            <div class="form-group">
+                <a class="btn btn-default" href="{{ route('admin.product-categories.index') }}">
+                    {{ trans('global.back_to_list') }}
+                </a>
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
@@ -73,9 +99,6 @@
         </form>
     </div>
 </div>
-
-
-
 @endsection
 
 @section('scripts')

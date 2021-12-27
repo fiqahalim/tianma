@@ -2,7 +2,6 @@
 
 namespace App\Notifications;
 
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -17,9 +16,9 @@ class OrderApprovedNotification extends Notification
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct()
     {
-        $this->user = $user;
+        
     }
 
     /**
@@ -45,11 +44,6 @@ class OrderApprovedNotification extends Notification
                     ->subject('TianMa: Account Approved')
                     ->greeting('Hello!')
                     ->line('Your account has been approved! Please confirm the below information is correct')
-                    ->line('Full Name: ' . $this->user->name)
-                    ->line('ID Number \ Passport: ' . $this->user->id_number)
-                    ->line('Email: ' . $this->user->email)
-                    ->line('Username: ' . $this->user->username)
-                    ->line('Contact Number: ' . $this->user->contact_no)
                     ->action('Login Here', route('login'))
                     ->line('Thank you for using TianMa application!');
     }

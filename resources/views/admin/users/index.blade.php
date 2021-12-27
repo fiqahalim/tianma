@@ -55,7 +55,7 @@
                         <th>
                             {{ trans('cruds.user.fields.roles') }}
                         </th>
-                        <th>
+                        {{-- <th>
                             {{ trans('cruds.user.fields.email_verified_at') }}
                         </th>
                         <th>
@@ -84,7 +84,7 @@
                         </th>
                         <th>
                             {{ trans('cruds.user.fields.nationality') }}
-                        </th>
+                        </th> --}}
                         <th>
                             &nbsp;
                         </th>
@@ -133,7 +133,7 @@
                                     <span class="badge badge-info">{{ $item->title }}</span>
                                 @endforeach
                             </td>
-                            <td>
+                            {{-- <td>
                                 {{ $user->email_verified_at ?? '' }}
                             </td>
                             <td>
@@ -162,7 +162,7 @@
                             </td>
                             <td>
                                 {{ $user->nationality ?? '' }}
-                            </td>
+                            </td> --}}
                             <td>
                                 @can('user_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.users.show', $user->id) }}">

@@ -29,7 +29,7 @@
                 <div class="card-header" id="headingOne" data-target="#collapseOne" data-toggle="collapse">
                     <h2 class="mb-0">
                         <button aria-controls="collapseOne" aria-expanded="true" class="btn" data-target="#collapseOne" data-toggle="collapse" type="button">
-                            {{ trans('global.customerDetails') }}
+                            <strong>{{ trans('global.customerDetails') }}</strong>
                         </button>
                     </h2>
                 </div>
@@ -86,7 +86,7 @@
                 <div class="card-header" id="headingTwo" data-target="#collapseTwo" data-toggle="collapse">
                     <h2 class="mb-0">
                         <button aria-controls="collapseTwo" aria-expanded="false" class="btn collapsed" data-target="#collapseTwo" data-toggle="collapse" type="button">
-                            {{ trans('global.products.productDetails') }}
+                            <strong>{{ trans('global.products.productDetails') }}</strong>
                         </button>
                     </h2>
                 </div>
@@ -146,7 +146,7 @@
         </div>
 
         <button class="btn btn-primary text-right" type="submit">
-            {{ trans('global.confirm_booking') }}
+            {{ trans('global.confirmBooking') }}
         </button>
     </form>
 </div>

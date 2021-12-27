@@ -25,7 +25,7 @@
             @csrf
 
             <div class="form-row">
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <label class="required" for="full_name">{{ trans('cruds.customer.fields.full_name') }}</label>
                     <input class="form-control {{ $errors->has('full_name') ? 'is-invalid' : '' }}" type="text" name="full_name" id="full_name" value="{{ old('full_name', '') }}" required>
                     @if($errors->has('full_name'))
@@ -34,6 +34,21 @@
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.customer.fields.full_name_helper') }}</span>
+                </div>
+                <div class="form-group col-md-2">
+                    <label>{{ trans('cruds.customer.fields.id_type') }}</label>
+                    <select class="form-control {{ $errors->has('id_type') ? 'is-invalid' : '' }}" name="id_type" id="id_type">
+                        <option value disabled {{ old('id_type', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                        @foreach(App\Models\Customer::ID_TYPE_SELECT as $key => $label)
+                            <option value="{{ $key }}" {{ old('id_type', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('id_type'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('id_type') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.customer.fields.id_type_helper') }}</span>
                 </div>
                 <div class="form-group col-md-4">
                     <label class="required" for="id_number">{{ trans('cruds.customer.fields.id_number') }}</label>
@@ -45,30 +60,10 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.customer.fields.id_number_helper') }}</span>
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="birth_date">{{ trans('cruds.customer.fields.birth_date') }}</label>
-                    <input class="form-control date {{ $errors->has('birth_date') ? 'is-invalid' : '' }}" type="text" name="birth_date" id="birth_date" value="{{ old('birth_date') }}">
-                    @if($errors->has('birth_date'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('birth_date') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.customer.fields.birth_date_helper') }}</span>
-                </div>
             </div>
 
             <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="email">{{ trans('cruds.customer.fields.contactPersonEmail') }}</label>
-                    <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email" value="{{ old('email') }}">
-                    @if($errors->has('email'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('email') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.customer.fields.contactPersonEmail_helper') }}</span>
-                </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-5">
                     <label for="contact_person_name">{{ trans('cruds.customer.fields.contact_person_name') }}</label>
                     <input class="form-control {{ $errors->has('contact_person_name') ? 'is-invalid' : '' }}" type="text" name="contact_person_name" id="contact_person_name" value="{{ old('contact_person_name', '') }}">
                     @if($errors->has('contact_person_name'))
@@ -78,7 +73,7 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.customer.fields.contact_person_name_helper') }}</span>
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-2">
                     <label for="contact_person_no">{{ trans('cruds.customer.fields.contact_person_no') }}</label>
                     <input class="form-control {{ $errors->has('contact_person_no') ? 'is-invalid' : '' }}" type="text" name="contact_person_no" id="contact_person_no" value="{{ old('contact_person_no', '') }}">
                     @if($errors->has('contact_person_no'))
@@ -87,6 +82,26 @@
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.customer.fields.contact_person_no_helper') }}</span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="email">{{ trans('cruds.customer.fields.email') }}</label>
+                    <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email" value="{{ old('email') }}">
+                    @if($errors->has('email'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('email') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.customer.fields.email_helper') }}</span>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="birth_date">{{ trans('cruds.customer.fields.birth_date') }}</label>
+                    <input class="form-control date {{ $errors->has('birth_date') ? 'is-invalid' : '' }}" type="text" name="birth_date" id="birth_date" value="{{ old('birth_date') }}">
+                    @if($errors->has('birth_date'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('birth_date') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.customer.fields.birth_date_helper') }}</span>
                 </div>
             </div>
 
@@ -117,7 +132,7 @@
             </div>
 
             <div class="form-row">
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-2">
                     <label for="postcode">{{ trans('cruds.customer.fields.postcode') }}</label>
                     <input class="form-control {{ $errors->has('postcode') ? 'is-invalid' : '' }}" type="text" name="postcode" id="postcode" value="{{ old('postcode', '') }}" step="1">
                     @if($errors->has('postcode'))
@@ -127,7 +142,7 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.customer.fields.postcode_helper') }}</span>
                 </div>
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-2">
                     <label for="state">{{ trans('cruds.customer.fields.state') }}</label>
                     <input class="form-control {{ $errors->has('state') ? 'is-invalid' : '' }}" type="text" name="state" id="state" value="{{ old('state', '') }}">
                     @if($errors->has('state'))
@@ -137,7 +152,7 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.customer.fields.state_helper') }}</span>
                 </div>
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-2">
                     <label for="city">{{ trans('cruds.customer.fields.city') }}</label>
                     <input class="form-control {{ $errors->has('city') ? 'is-invalid' : '' }}" type="text" name="city" id="city" value="{{ old('city', '') }}">
                     @if($errors->has('city'))
@@ -146,6 +161,16 @@
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.customer.fields.city_helper') }}</span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="nationality">{{ trans('cruds.customer.fields.nationality') }}</label>
+                    <input class="form-control {{ $errors->has('nationality') ? 'is-invalid' : '' }}" type="text" name="nationality" id="nationality" value="{{ old('nationality', '') }}">
+                    @if($errors->has('nationality'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('nationality') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.customer.fields.nationality_helper') }}</span>
                 </div>
                 <div class="form-group col-md-3">
                     <label for="country">{{ trans('cruds.customer.fields.country') }}</label>
@@ -164,7 +189,7 @@
                     {{ trans('global.back') }}
                 </a>
                 <button class="btn btn-primary" type="submit">
-                    {{ trans('global.confirm') }}
+                    {{ trans('global.proceed') }}
                 </button>
             </div>
         </form>

@@ -84,7 +84,7 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $user->load('roles', 'team', 'parent', 'userUserAlerts');
+        $user->load('roles', 'team', 'parent', 'userUserAlerts', 'childUsers');
 
         return view('admin.users.show', compact('user'));
     }
@@ -103,15 +103,5 @@ class UsersController extends Controller
         User::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
-    }
-
-    public function hierarchy(Request $request)
-    {
-        $id = $request['id'];
-        $users = User::whereNull('parent_id')
-            ->with(['childUsers.childUsers'])
-            ->get();
-
-        return view('admin.users. ', compact('users'));
     }
 }

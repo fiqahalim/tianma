@@ -24,6 +24,7 @@ class StoreProductCategoryRequest extends FormRequest
             'slug' => [
                 'string',
                 'required',
+                'unique:product_categories',
             ],
         ];
     }

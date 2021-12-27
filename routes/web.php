@@ -125,7 +125,7 @@ Route::group(['middleware' => 'auth'], function() {
         // Products
         Route::group(['prefix' => 'products'], function() {
             Route::resource('products', '\App\Http\Controllers\User\ProductsController');
-            Route::get('/{category:name}/{childCategory:name?}/{childCategory2?}', [\App\Http\Controllers\User\ProductsController::class, 'category'])->name('category');
+            Route::get('/{category:slug}/{childCategory:slug?}/{childCategory2?}', [\App\Http\Controllers\User\ProductsController::class, 'category'])->name('category');
             Route::get('/{category}/{childCategory}/{childCategory2}/{productSlug}/{product}', [\App\Http\Controllers\User\ProductsController::class, 'productCategory'])->name('product');
             Route::get('/{category}/{childCategory}/{childCategory2}/{productSlug}/{product}/booking', [\App\Http\Controllers\User\ProductsController::class, 'bookingLot'])->name('bookinglot');
 
