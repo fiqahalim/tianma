@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -16,9 +17,9 @@ class OrderApprovedNotification extends Notification
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Order $order)
     {
-        
+        $this->order = $order;
     }
 
     /**
@@ -41,9 +42,9 @@ class OrderApprovedNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('TianMa: Account Approved')
+                    ->subject('TianMa: Order Approved!')
                     ->greeting('Hello!')
-                    ->line('Your account has been approved! Please confirm the below information is correct')
+                    ->line('Your order has been approved!')
                     ->action('Login Here', route('login'))
                     ->line('Thank you for using TianMa application!');
     }

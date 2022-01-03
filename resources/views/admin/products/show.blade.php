@@ -5,7 +5,7 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item">{{ trans('cruds.productManagement.title') }}</li>
         <li class="breadcrumb-item">{{ trans('cruds.product.title') }}</li>
-        <li class="breadcrumb-item active" aria-current="page">View Products</li>
+        <li class="breadcrumb-item active" aria-current="page">View {{ trans('cruds.product.title') }}</li>
     </ol>
 </nav>
 
@@ -88,6 +88,14 @@
                         </th>
                         <td>
                             {{ $product->list_price }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.product.fields.promotion_price') }}
+                        </th>
+                        <td>
+                            {{ $product->promotion_price }}
                         </td>
                     </tr>
                     <tr>

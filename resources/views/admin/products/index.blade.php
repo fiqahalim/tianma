@@ -58,6 +58,9 @@
                             {{ trans('cruds.product.fields.list_price') }}
                         </th>
                         <th>
+                            {{ trans('cruds.product.fields.promotion_price') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.product.fields.point_value') }}
                         </th>
                         <th>
@@ -67,13 +70,7 @@
                             {{ trans('cruds.product.fields.total_cost') }}
                         </th>
                         <th>
-                            {{ trans('cruds.product.fields.slug') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.product.fields.category') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.product.fields.tag') }}
                         </th>
                         <th>
                             &nbsp;
@@ -114,6 +111,9 @@
                                 {{ $product->list_price ?? '' }}
                             </td>
                             <td>
+                                {{ $product->promotion_price ?? '' }}
+                            </td>
+                            <td>
                                 {{ $product->point_value ?? '' }}
                             </td>
                             <td>
@@ -123,18 +123,15 @@
                                 {{ $product->total_cost ?? '' }}
                             </td>
                             <td>
-                                {{ $product->slug ?? '' }}
-                            </td>
-                            <td>
                                 @foreach($product->categories as $key => $item)
                                     <span class="badge badge-info">{{ $item->name }}</span>
                                 @endforeach
                             </td>
-                            <td>
+                            {{-- <td>
                                 @foreach($product->tags as $key => $item)
                                     <span class="badge badge-info">{{ $item->name }}</span>
                                 @endforeach
-                            </td>
+                            </td> --}}
                             <td>
                                 @can('product_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.products.show', $product->id) }}">

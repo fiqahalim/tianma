@@ -178,6 +178,8 @@ return [
             'quantity_per_unit_helper' => ' ',
             'point_value'              => 'Point Value',
             'point_value_helper'       => ' ',
+            'promotion_price'          => 'Promotion Price',
+            'promotion_price_helper'   => '',
         ],
     ],
     'productTag' => [
@@ -223,8 +225,8 @@ return [
         ],
     ],
     'userAlert' => [
-        'title'          => 'User Alerts',
-        'title_singular' => 'User Alert',
+        'title'          => 'Annoucements',
+        'title_singular' => 'Annoucement',
         'fields'         => [
             'id'                => 'ID',
             'id_helper'         => ' ',
@@ -283,12 +285,12 @@ return [
             'id_type'                    => 'ID Type',
             'id_type_helper'             => ' ',
             'created_by'                 => 'Created By',
-            'created_by_helper'             => ' ',
+            'created_by_helper'          => ' ',
         ],
     ],
     'auditLog' => [
-        'title'          => 'Audit Logs',
-        'title_singular' => 'Audit Log',
+        'title'          => 'Audit Trails',
+        'title_singular' => 'Audit Trails',
         'fields'         => [
             'id'                  => 'ID',
             'id_helper'           => ' ',

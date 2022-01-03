@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'site_title' => 'demo',
+    'site_title' => 'TianMa Memorial Group',
 ];

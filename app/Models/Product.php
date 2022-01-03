@@ -39,6 +39,7 @@ class Product extends Model implements HasMedia
         'selling_price',
         'maintenance_price',
         'list_price',
+        'promotion_price',
         'point_value',
         'quantity_per_unit',
         'total_cost',

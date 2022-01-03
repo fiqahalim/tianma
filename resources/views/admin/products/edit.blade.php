@@ -5,7 +5,7 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item">{{ trans('cruds.productManagement.title') }}</li>
         <li class="breadcrumb-item">{{ trans('cruds.product.title') }}</li>
-        <li class="breadcrumb-item active" aria-current="page">Edit Products</li>
+        <li class="breadcrumb-item active" aria-current="page">Edit {{ trans('cruds.product.title') }}</li>
     </ol>
 </nav>
 
@@ -61,7 +61,7 @@
                                 <i>RM</i>
                             </span>
                         </div>
-                        <input class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}" type="text" name="price" id="price" value="{{ old('price', $product->price) }}" step="0.01" required>
+                        <input class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}" type="text" name="text" id="price" value="{{ old('price', $product->price) }}" step="0.01" required>
                         @if($errors->has('price'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('price') }}
@@ -78,7 +78,7 @@
                                 <i>RM</i>
                             </span>
                         </div>
-                        <input class="form-control {{ $errors->has('selling_price') ? 'is-invalid' : '' }}" type="number" name="selling_price" id="selling_price" value="{{ old('selling_price', $product->selling_price) }}" step="0.01" required>
+                        <input class="form-control {{ $errors->has('selling_price') ? 'is-invalid' : '' }}" type="text" name="selling_price" id="selling_price" value="{{ old('selling_price', $product->selling_price) }}" step="0.01" required>
                         @if($errors->has('selling_price'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('selling_price') }}
@@ -95,7 +95,7 @@
                                 <i>RM</i>
                             </span>
                         </div>
-                        <input class="form-control {{ $errors->has('maintenance_price') ? 'is-invalid' : '' }}" type="number" name="maintenance_price" id="maintenance_price" value="{{ old('maintenance_price', $product->maintenance_price) }}" step="0.01" required>
+                        <input class="form-control {{ $errors->has('maintenance_price') ? 'is-invalid' : '' }}" type="text" name="maintenance_price" id="maintenance_price" value="{{ old('maintenance_price', $product->maintenance_price) }}" step="0.01" required>
                         @if($errors->has('maintenance_price'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('maintenance_price') }}
@@ -112,7 +112,7 @@
                                 <i>RM</i>
                             </span>
                         </div>
-                        <input class="form-control {{ $errors->has('list_price') ? 'is-invalid' : '' }}" type="number" name="list_price" id="list_price" value="{{ old('list_price', $product->list_price) }}" step="0.01" required>
+                        <input class="form-control {{ $errors->has('list_price') ? 'is-invalid' : '' }}" type="text" name="list_price" id="list_price" value="{{ old('list_price', $product->list_price) }}" step="0.01" required>
                         @if($errors->has('list_price'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('list_price') }}
@@ -124,9 +124,26 @@
             </div>
 
             <div class="form-row">
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
+                    <label for="promotion_price">{{ trans('cruds.product.fields.promotion_price') }}</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>RM</i>
+                            </span>
+                        </div>
+                        <input class="form-control {{ $errors->has('promotion_price') ? 'is-invalid' : '' }}" type="text" name="promotion_price" id="promotion_price" value="{{ old('promotion_price', $product->promotion_price) }}" step="0.01" required>
+                        @if($errors->has('promotion_price'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('promotion_price') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.product.fields.promotion_price_helper') }}</span>
+                    </div>
+                </div>
+                <div class="form-group col-md-3">
                     <label class="required" for="point_value">{{ trans('cruds.product.fields.point_value') }}</label>
-                    <input class="form-control {{ $errors->has('point_value') ? 'is-invalid' : '' }}" type="number" name="point_value" id="point_value" value="{{ old('point_value', $product->point_value) }}" step="0.01" required>
+                    <input class="form-control {{ $errors->has('point_value') ? 'is-invalid' : '' }}" type="text" name="point_value" id="point_value" value="{{ old('point_value', $product->point_value) }}" step="0.01" required>
                     @if($errors->has('point_value'))
                         <div class="invalid-feedback">
                             {{ $errors->first('point_value') }}
@@ -134,7 +151,7 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.product.fields.point_value_helper') }}</span>
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <label for="quantity_per_unit">{{ trans('cruds.product.fields.quantity_per_unit') }}</label>
                     <input class="form-control {{ $errors->has('quantity_per_unit') ? 'is-invalid' : '' }}" type="number" name="quantity_per_unit" id="quantity_per_unit" value="{{ old('quantity_per_unit', $product->quantity_per_unit) }}" step="1">
                     @if($errors->has('quantity_per_unit'))
@@ -144,7 +161,7 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.product.fields.quantity_per_unit_helper') }}</span>
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <label class="required" for="total_cost">{{ trans('cruds.product.fields.total_cost') }}</label>
                     <input class="form-control {{ $errors->has('total_cost') ? 'is-invalid' : '' }}" type="number" name="total_cost" id="total_cost" value="{{ old('total_cost', $product->total_cost) }}" step="0.01" required>
                     @if($errors->has('total_cost'))

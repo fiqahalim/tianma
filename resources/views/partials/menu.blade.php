@@ -1,9 +1,10 @@
 @can('admin_only')
     <div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show">
         <div class="c-sidebar-brand d-md-down-none">
-            <a class="c-sidebar-brand-full h4" href="#">
+            {{-- <a class="c-sidebar-brand-full h4" href="#">
                 {{ trans('panel.site_title') }}
-            </a>
+            </a> --}}
+            <img src="{{ asset('/images/tianma_logo_op-02.png') }}" style="width: 185px;">
         </div>
 
         <ul class="c-sidebar-nav">
@@ -84,6 +85,13 @@
                         {{ trans('cruds.documentManagement.title') }}
                     </a>
                     <ul class="c-sidebar-nav-dropdown-items">
+                        @can('user_alert_access')
+                            <li class="c-sidebar-nav-item">
+                                <a href="{{ route("admin.user-alerts.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/user-alerts") || request()->is("admin/user-alerts/*") ? "c-active" : "" }}">
+                                    {{ trans('cruds.userAlert.title') }}
+                                </a>
+                            </li>
+                        @endcan
                         @can('my_document_access')
                             <li class="c-sidebar-nav-item">
                                 <a href="{{ route("admin.my-documents.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/my-documents") || request()->is("admin/my-documents/*") ? "c-active" : "" }}">
@@ -124,24 +132,10 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('audit_log_access')
-                            <li class="c-sidebar-nav-item">
-                                <a href="{{ route("admin.audit-logs.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/audit-logs") || request()->is("admin/audit-logs/*") ? "c-active" : "" }}">
-                                    {{ trans('cruds.auditLog.title') }}
-                                </a>
-                            </li>
-                        @endcan
                         @can('team_access')
                             <li class="c-sidebar-nav-item">
                                 <a href="{{ route("admin.teams.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/teams") || request()->is("admin/teams/*") ? "c-active" : "" }}">
                                     {{ trans('cruds.team.title') }}
-                                </a>
-                            </li>
-                        @endcan
-                        @can('user_alert_access')
-                            <li class="c-sidebar-nav-item">
-                                <a href="{{ route("admin.user-alerts.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/user-alerts") || request()->is("admin/user-alerts/*") ? "c-active" : "" }}">
-                                    {{ trans('cruds.userAlert.title') }}
                                 </a>
                             </li>
                         @endcan
@@ -171,21 +165,23 @@
                                 {{ trans('cruds.setting.profile') }}
                             </a>
                         </li>
-                        @can('user_alert_access')
-                            <li class="c-sidebar-nav-item">
-                                <a href="{{ route("admin.user-alerts.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/user-alerts") || request()->is("admin/user-alerts/*") ? "c-active" : "" }}">
-                                    {{ trans('cruds.userAlert.title') }}
-                                </a>
-                            </li>
-                        @endcan
                     </ul>
+                </li>
+            @endcan
+
+            @can('audit_log_access')
+                <li class="c-sidebar-nav-item">
+                    <a href="{{ route("admin.audit-logs.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/audit-logs") || request()->is("admin/audit-logs/*") ? "c-active" : "" }}">
+                        <i class="c-sidebar-nav-icon fab fa-searchengin"></i>
+                        {{ trans('cruds.auditLog.title') }}
+                    </a>
                 </li>
             @endcan
 
             <hr>
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('home.help') }}" class="c-sidebar-nav-link">
-                    <i class="c-sidebar-nav-icon fas fa-fw fa-bell"></i>
+                    <i class="c-sidebar-nav-icon fas fa-question-circle"></i>
                     {{ trans('global.helps') }}
                 </a>
             </li>
@@ -203,9 +199,10 @@
 {{-- This is users sidebar --}}
     <div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show">
         <div class="c-sidebar-brand d-md-down-none">
-            <a class="c-sidebar-brand-full h4" href="#">
+            {{-- <a class="c-sidebar-brand-full h4" href="#">
                 {{ trans('panel.site_title') }}
-            </a>
+            </a> --}}
+            <img src="{{ asset('/images/tianma_logo_op-02.png') }}" style="width: 185px;">
         </div>
 
         <ul class="c-sidebar-nav">
@@ -299,7 +296,7 @@
             <hr>
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('home.help') }}" class="c-sidebar-nav-link">
-                    <i class="c-sidebar-nav-icon fas fa-fw fa-bell"></i>
+                    <i class="c-sidebar-nav-icon fas fa-question-circle"></i>
                     {{ trans('global.helps') }}
                 </a>
             </li>

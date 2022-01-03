@@ -7,7 +7,7 @@
     </ol>
 </nav>
 
-@can('order_create')
+{{-- @can('order_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.orders.create') }}">
@@ -15,7 +15,8 @@
             </a>
         </div>
     </div>
-@endcan
+@endcan --}}
+
 <div class="card">
     <div class="card-header font-weight-bold">
         {{ trans('cruds.order.title_singular') }} {{ trans('global.list') }}

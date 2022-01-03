@@ -1,18 +1,21 @@
 @extends('layouts.admin')
+
 @section('content')
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">{{ trans('cruds.productManagement.title') }}</li>
+        <li class="breadcrumb-item">{{ trans('cruds.productTag.title') }}</li>
+        <li class="breadcrumb-item active" aria-current="page">View {{ trans('cruds.productTag.title') }}</li>
+    </ol>
+</nav>
 
 <div class="card">
-    <div class="card-header">
+    <div class="card-header font-weight-bold">
         {{ trans('global.show') }} {{ trans('cruds.productTag.title') }}
     </div>
 
     <div class="card-body">
         <div class="form-group">
-            <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.product-tags.index') }}">
-                    {{ trans('global.back_to_list') }}
-                </a>
-            </div>
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
@@ -41,7 +44,4 @@
         </div>
     </div>
 </div>
-
-
-
 @endsection

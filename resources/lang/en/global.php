@@ -150,9 +150,9 @@ return [
     'category_name'                        => 'Category name',
     'change_notifications_field_1_label'   => 'Send email notification to User',
     'change_notifications_field_2_label'   => 'When Entry on CRUD',
-    'my_profile'                           => 'My profile',
-    'my_team'                              => 'My team',
-    'change_password'                      => 'Change password',
+    'my_profile'                           => 'My Profile',
+    'my_team'                              => 'My Team',
+    'change_password'                      => 'Change Password',
     'delete_account'                       => 'Delete account',
     'delete_account_warning'               => 'Enter your email address to confirm you want to delete account.\nThis action is not reversible.',
     'two_factor'                           => [

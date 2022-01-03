@@ -10,7 +10,7 @@
                         <div class="col-lg-6">
                             <div class="card-body p-md-5 mx-md-4">
                                 <div class="text-center">
-                                    <img alt="logo" src="https://mdbootstrap.com/img/Photos/new-templates/bootstrap-login-form/lotus.png" style="width: 185px;">
+                                    <img alt="logo" src="{{ asset('/images/tianma_logo_op-02.png') }}" style="width: 185px;">
                                         <h4 class="mt-1 mb-3 pb-1">We are The TianMa Team</h4>
                                         <p>{{ trans('auth.login_title') }}</p>
                                     </img>

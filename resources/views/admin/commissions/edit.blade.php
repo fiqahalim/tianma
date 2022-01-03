@@ -21,23 +21,37 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="commission">{{ trans('cruds.commission.fields.commission') }}</label>
-                    <input class="form-control {{ $errors->has('commission') ? 'is-invalid' : '' }}" type="number" name="commission" id="commission" value="{{ old('commission', $commission->commission) }}" step="0.01">
-                    @if($errors->has('commission'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('commission') }}
+                    <div class="input-group mb-3">
+                        <input class="form-control {{ $errors->has('commission') ? 'is-invalid' : '' }}" type="number" name="commission" id="commission" value="{{ old('commission', $commission->commission) }}" step="0.01">
+                        @if($errors->has('commission'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('commission') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.commission.fields.commission_helper') }}</span>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>%</i>
+                            </span>
                         </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.commission.fields.commission_helper') }}</span>
+                    </div>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="increased_commission">{{ trans('cruds.commission.fields.increased_commission') }}</label>
-                    <input class="form-control {{ $errors->has('increased_commission') ? 'is-invalid' : '' }}" type="number" name="increased_commission" id="increased_commission" value="{{ old('increased_commission', $commission->increased_commission) }}" step="0.01">
-                    @if($errors->has('increased_commission'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('increased_commission') }}
+                    <div class="input-group mb-3">
+                        <input class="form-control {{ $errors->has('increased_commission') ? 'is-invalid' : '' }}" type="number" name="increased_commission" id="increased_commission" value="{{ old('increased_commission', $commission->increased_commission) }}" step="0.01">
+                        @if($errors->has('increased_commission'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('increased_commission') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.commission.fields.increased_commission_helper') }}</span>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>%</i>
+                            </span>
                         </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.commission.fields.increased_commission_helper') }}</span>
+                    </div>
                 </div>
             </div>
 
@@ -83,7 +97,4 @@
         </form>
     </div>
 </div>
-
-
-
 @endsection

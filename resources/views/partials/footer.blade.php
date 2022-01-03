@@ -4,6 +4,6 @@
         <script>
             document.write(new Date().getFullYear())
         </script>
-        <strong>Demo App</strong> {{ trans('global.allRightsReserved') }}
+        <strong>TianMa Memorial Group</strong> {{ trans('global.allRightsReserved') }}
     </div>
 </div>
