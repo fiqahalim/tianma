@@ -4,7 +4,7 @@
             {{-- <a class="c-sidebar-brand-full h4" href="#">
                 {{ trans('panel.site_title') }}
             </a> --}}
-            <img src="{{ asset('/images/tianma_logo_op-02.png') }}" style="width: 185px;">
+            <img src="{{ asset('/images/tianma_logo_op-03.png') }}" style="width: 190px;">
         </div>
 
         <ul class="c-sidebar-nav">
@@ -202,7 +202,7 @@
             {{-- <a class="c-sidebar-brand-full h4" href="#">
                 {{ trans('panel.site_title') }}
             </a> --}}
-            <img src="{{ asset('/images/tianma_logo_op-02.png') }}" style="width: 185px;">
+            <img src="{{ asset('/images/tianma_logo_op-03.png') }}" style="width: 190px;">
         </div>
 
         <ul class="c-sidebar-nav">

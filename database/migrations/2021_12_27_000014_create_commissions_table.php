@@ -10,8 +10,8 @@ class CreateCommissionsTable extends Migration
     {
         Schema::create('commissions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->decimal('commission', 15, 2)->nullable();
-            $table->decimal('increased_commission', 15, 2)->nullable();
+            $table->decimal('mo_overriding_comm', 15, 2)->nullable();
+            $table->decimal('mo_spin_off', 15, 2)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

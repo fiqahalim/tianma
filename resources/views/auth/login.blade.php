@@ -13,7 +13,6 @@
                                     <img alt="logo" src="{{ asset('/images/tianma_logo_op-02.png') }}" style="width: 185px;">
                                         <h4 class="mt-1 mb-3 pb-1">We are The TianMa Team</h4>
                                         <p>{{ trans('auth.login_title') }}</p>
-                                    </img>
                                 </div>
 
                                 @if(session('message'))
@@ -64,7 +63,7 @@
                                         <p class="mb-0 me-2 mr-2">
                                             Don't have an account?
                                         </p>
-                                        <a class="btn btn-outline-danger" href="{{ route('register') }}">
+                                        <a class="btn btn-outline-primary" href="{{ route('register') }}">
                                             {{ trans('global.register.title') }}
                                         </a>
                                     </div>

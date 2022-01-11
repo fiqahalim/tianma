@@ -21,10 +21,9 @@
                             <div class="col-lg-8">
                                 <div class="card-body">
                                     <div class="text-center">
-                                        <img alt="logo" src="https://mdbootstrap.com/img/Photos/new-templates/bootstrap-login-form/lotus.png" style="width: 185px;">
+                                        <img alt="logo" src="{{ asset('/images/tianma_logo_op-02.png') }}" style="width: 185px;">
                                             <h4 class="mt-1 mb-3 pb-1">We are The TianMa Team</h4>
                                             <p>{{ __('auth.register_label') }}</p>
-                                        </img>
                                     </div>
 
                                     <form method="POST" action="{{ route('register') }}">
@@ -42,10 +41,14 @@
                                                     </div>
                                                     <select class="form-control form-select {{ $errors->has('parent') ? 'is-invalid' : '' }}" name="parent_id" id="parent_id">
                                                         @foreach($users as $user)
-                                                            <option value="{{ $user->id }}" {{ old('parent_id') == $user->id ? 'selected' : '' }}>{{ $user->agent_code }}</option>
-                                                            @foreach($user->childUsers as $childUser)
-                                                                <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>-- {{ $childUser->agent_code }}</option>
-                                                            @endforeach
+                                                            @if($user->approved == 1)
+                                                                <option value="{{ $user->id }}" {{ old('parent_id') == $user->id ? 'selected' : '' }}>{{ $user->agent_code }}</option>
+                                                                @foreach($user->childUsers as $childUser)
+                                                                    @if($childUser->approved == 1)
+                                                                        <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}</option>
+                                                                    @endif
+                                                                @endforeach
+                                                            @endif
                                                         @endforeach
                                                     </select>
                                                     {{-- <input type="text" name="agent_code" class="form-control{{ $errors->has('agent_code') ? ' is-invalid' : '' }}" required autofocus value="{{ old('agent_code', null) }}">

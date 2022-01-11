@@ -14,6 +14,10 @@
             <a class="btn btn-success" href="{{ route('admin.products.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.product.title_singular') }}
             </a>
+            <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                {{ trans('global.app_excelImport') }}
+            </button>
+            @include('import.modal')
         </div>
     </div>
 @endcan
@@ -69,9 +73,9 @@
                         <th>
                             {{ trans('cruds.product.fields.total_cost') }}
                         </th>
-                        <th>
+                        {{-- <th>
                             {{ trans('cruds.product.fields.category') }}
-                        </th>
+                        </th> --}}
                         <th>
                             &nbsp;
                         </th>
@@ -122,11 +126,11 @@
                             <td>
                                 {{ $product->total_cost ?? '' }}
                             </td>
-                            <td>
+                            {{-- <td>
                                 @foreach($product->categories as $key => $item)
                                     <span class="badge badge-info">{{ $item->name }}</span>
                                 @endforeach
-                            </td>
+                            </td> --}}
                             {{-- <td>
                                 @foreach($product->tags as $key => $item)
                                     <span class="badge badge-info">{{ $item->name }}</span>

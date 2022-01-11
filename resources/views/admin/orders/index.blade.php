@@ -43,6 +43,9 @@
                             {{ trans('cruds.order.fields.order_status') }}
                         </th>
                         <th>
+                            {{ trans('cruds.order.fields.order_date') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.order.fields.approved') }}
                         </th>
                         <th>
@@ -78,6 +81,9 @@
                                 {{ App\Models\Order::ORDER_STATUS_SELECT[$order->order_status] ?? '' }}
                             </td>
                             <td>
+                                {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y') }}
+                            </td>
+                            <td>
                                 <span style="display:none">{{ $order->approved ?? '' }}</span>
                                 <input type="checkbox" disabled="disabled" {{ $order->approved ? 'checked' : '' }}>
                             </td>
@@ -89,7 +95,9 @@
                                 {{ $order->createdBy->agent_code ?? '' }}
                             </td>
                             <td>
-                                {{ $order->createdBy->agent_code ?? '' }}
+                                @if($order->approved == 1)
+                                    {{ $order->commissions->mo_overriding_comm ?? '' }}
+                                @endif
                             </td>
                             <td>
                                 @can('order_show')

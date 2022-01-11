@@ -83,6 +83,9 @@ Route::group(['middleware' => 'auth'], function() {
             Route::post('products/media', [\App\Http\Controllers\Admin\ProductsController::class, 'storeMedia'])->name('products.storeMedia');
             Route::post('products/ckmedia', [\App\Http\Controllers\Admin\ProductsController::class, 'storeCKEditorImages'])->name('products.storeCKEditorImages');
             Route::get('products/check-slug', [\App\Http\Controllers\Admin\ProductsController::class, 'checkSlug'])->name('products.checkSlug');
+            Route::get('importExportView', [\App\Http\Controllers\Admin\ProductsController::class, 'importExportView'])->name('products.importExportView');
+            Route::get('export', [\App\Http\Controllers\Admin\ProductsController::class, 'export'])->name('products.export');
+            Route::post('import', [\App\Http\Controllers\Admin\ProductsController::class, 'import'])->name('products.import');
 
             // Tags
             Route::resource('product-tags', '\App\Http\Controllers\Admin\ProductTagController');

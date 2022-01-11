@@ -16,6 +16,10 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
+use App\Exports\ProductExport;
+use App\Imports\ProductImport;
+use Maatwebsite\Excel\Facades\Excel;
+
 class ProductsController extends Controller
 {
     use MediaUploadingTrait;
@@ -55,7 +59,7 @@ class ProductsController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $product->id]);
         }
 
-        return redirect()->route('admin.products.index');
+        return redirect()->route('admin.products.index')->with('message', __('global.create_success'));
     }
 
     public function edit(Product $product)
@@ -89,7 +93,7 @@ class ProductsController extends Controller
             $product->photo->delete();
         }
 
-        return redirect()->route('admin.products.index');
+        return redirect()->route('admin.products.index')->with('message', __('global.update_success'));
     }
 
     public function show(Product $product)
@@ -107,7 +111,7 @@ class ProductsController extends Controller
 
         $product->delete();
 
-        return back();
+        return back()->with('message', __('global.delete_success'));
     }
 
     public function massDestroy(MassDestroyProductRequest $request)
@@ -134,5 +138,31 @@ class ProductsController extends Controller
         $slug = SlugService::createSlug(Product::class, 'slug', $request->name);
 
         return response()->json(['slug' => $slug]);
+    }
+
+    /**
+    * @return \Illuminate\Support\Collection
+    */
+    public function importExportView()
+    {
+       return view('import.modal');
+    }
+     
+    /**
+    * @return \Illuminate\Support\Collection
+    */
+    public function export() 
+    {
+        return Excel::download(new ProductExport, 'products.xlsx');
+    }
+     
+    /**
+    * @return \Illuminate\Support\Collection
+    */
+    public function import() 
+    {
+        Excel::import(new ProductImport, request()->file('file'));
+             
+        return redirect()->route('admin.products.index')->with('message', __('global.app_import_data_success'));
     }
 }

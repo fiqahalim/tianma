@@ -1,8 +1,16 @@
 @extends('layouts.admin')
+
 @section('content')
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">{{ trans('cruds.userManagement.title') }}</li>
+        <li class="breadcrumb-item">{{ trans('cruds.role.title') }}</li>
+        <li class="breadcrumb-item active" aria-current="page">Create {{ trans('cruds.role.title') }}</li>
+    </ol>
+</nav>
 
 <div class="card">
-    <div class="card-header">
+    <div class="card-header font-weight-bold">
         {{ trans('global.create') }} {{ trans('cruds.role.title_singular') }}
     </div>
 
@@ -38,6 +46,9 @@
                 <span class="help-block">{{ trans('cruds.role.fields.permissions_helper') }}</span>
             </div>
             <div class="form-group">
+                <a class="btn btn-default" href="{{ route('admin.roles.index') }}">
+                    {{ trans('global.back_to_list') }}
+                </a>
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
@@ -45,7 +56,4 @@
         </form>
     </div>
 </div>
-
-
-
 @endsection

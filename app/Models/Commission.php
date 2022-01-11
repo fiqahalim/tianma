@@ -23,8 +23,8 @@ class Commission extends Model
     ];
 
     protected $fillable = [
-        'commission',
-        'increased_commission',
+        'mo_overriding_comm',
+        'mo_spin_off',
         'user_id',
         'order_id',
         'created_at',

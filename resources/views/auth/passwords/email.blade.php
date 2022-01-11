@@ -5,7 +5,9 @@
     <div class="col-md-6">
         <div class="card mx-4">
             <div class="card-body p-4">
-                <h3 class="text-center"><i class="fa fa-lock fa-4x"></i></h3>
+                <h3 class="text-center">
+                    <img alt="logo" src="{{ asset('/images/tianma_logo_op-02.png') }}" style="width: 185px;">
+                </h3>
                 <h2 class="text-center">
                     {{ __('passwords.forgot_title') }}
                 </h2>

@@ -68,7 +68,7 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.user.fields.email_helper') }}</span>
                 </div>
-                <div class="form-group col-md-2">
+                <div class="form-group col-md-3">
                     <label class="required" for="username">{{ trans('cruds.user.fields.username') }}</label>
                     <input class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}" type="text" name="username" id="username" value="{{ old('username', $user->username) }}" required>
                     @if($errors->has('username'))
@@ -78,7 +78,7 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.user.fields.username_helper') }}</span>
                 </div>
-                <div class="form-group col-md-2">
+                {{-- <div class="form-group col-md-2">
                     <label class="required" for="password">{{ trans('cruds.user.fields.password') }}</label>
                     <input class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" type="password" name="password" id="password">
                     @if($errors->has('password'))
@@ -87,8 +87,8 @@
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.user.fields.password_helper') }}</span>
-                </div>
-                <div class="form-group col-md-2">
+                </div> --}}
+                <div class="form-group col-md-3">
                     <label class="required" for="contact_no">{{ trans('cruds.user.fields.contact_no') }}</label>
                     <input class="form-control {{ $errors->has('contact_no') ? 'is-invalid' : '' }}" type="text" name="contact_no" id="contact_no" value="{{ old('contact_no', $user->contact_no) }}" required>
                     @if($errors->has('contact_no'))

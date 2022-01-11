@@ -39,6 +39,11 @@ class HomeController extends Controller
             ->get()
             ->count();
 
+        $allOrders = Order::get();
+
+        $myComms = Order::where('created_by', auth()->user()->id)
+            ->get();
+
         $amounts = OrderItem::select('amount')
             ->where('user_id', auth()->user()->id)
             ->get();
@@ -48,7 +53,7 @@ class HomeController extends Controller
             $myAmount = $amount['amount'];
         }
 
-        return view('home', compact('customers','agents','myAmount', 'orders'));
+        return view('home', compact('customers','agents','myAmount', 'orders', 'allOrders', 'myComms'));
     }
 
     public function help()

@@ -106,6 +106,7 @@ return [
             'ref_name'                    => 'Referral Agent Code',
             'ref_name_helper'             => ' ',
             'hierarchy'                   => 'My Hierarchy',
+            'change_image'                => 'Change Profile',
         ],
     ],
     'productManagement' => [
@@ -324,6 +325,8 @@ return [
             'amount_helper'       => ' ',
             'order_status'        => 'Order Status',
             'order_status_helper' => ' ',
+            'order_date'          => 'Order Date',
+            'order_date_helper'   => ' ',
             'created_at'          => 'Created at',
             'created_at_helper'   => ' ',
             'updated_at'          => 'Updated at',
