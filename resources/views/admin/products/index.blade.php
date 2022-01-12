@@ -14,7 +14,7 @@
             <a class="btn btn-success" href="{{ route('admin.products.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.product.title_singular') }}
             </a>
-            <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+            <button class="btn btn-dark" data-toggle="modal" data-target="#csvImportModal">
                 {{ trans('global.app_excelImport') }}
             </button>
             @include('import.modal')

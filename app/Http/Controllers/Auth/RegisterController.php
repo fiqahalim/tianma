@@ -86,7 +86,7 @@ class RegisterController extends Controller
             'username'      => $data['username'],
             'contact_no'    => $data['contact_no'],
             'password'      => Hash::make($data['password']),
-            'team_id'       => request()->input('team', null),
+            // 'team_id'       => request()->input('team', null),
             'parent_id'     => $data['parent_id'],
         ]);
 
@@ -99,14 +99,14 @@ class RegisterController extends Controller
             $admin->notify(new AdminNewUserNotification($user));
         }
 
-        if (!request()->has('team')) {
-            $team = \App\Models\Team::create([
-                'owner_id' => $user->id,
-                'name'     => $data['email'],
-            ]);
+        // if (!request()->has('team')) {
+        //     $team = \App\Models\Team::create([
+        //         'owner_id' => $user->id,
+        //         'name'     => $data['email'],
+        //     ]);
 
-            $user->update(['team_id' => $team->id]);
-        }
+        //     $user->update(['team_id' => $team->id]);
+        // }
 
         return $user;
     }

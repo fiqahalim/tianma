@@ -19,6 +19,7 @@ class UsersTableSeeder extends Seeder
                 'approved'           => 1,
                 'verified'           => 1,
                 'verified_at'        => '2021-12-27 06:10:57',
+                'id_type'            => 'NRIC',
                 'id_number'          => '770707-71-7777',
                 'username'           => 'admin001',
                 'contact_no'         => '60123456789',

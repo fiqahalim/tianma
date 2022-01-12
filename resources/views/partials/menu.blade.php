@@ -144,7 +144,6 @@
             @endcan
 
             {{-- Settings --}}
-            @can('setting_access')
                 <li class="c-sidebar-nav-dropdown">
                     <a class="c-sidebar-nav-dropdown-toggle" href="#">
                         <i class="fa-fw fas fa-cogs c-sidebar-nav-icon"></i>
@@ -167,7 +166,6 @@
                         </li>
                     </ul>
                 </li>
-            @endcan
 
             @can('audit_log_access')
                 <li class="c-sidebar-nav-item">
