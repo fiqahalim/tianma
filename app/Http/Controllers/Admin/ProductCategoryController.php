@@ -45,7 +45,7 @@ class ProductCategoryController extends Controller
         $productCategory = ProductCategory::create($request->all());
 
         if ($request->input('photo', false)) {
-            $productCategory->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+            $productCategory->addMedia(storage_path('tmp/uploads/' . $request->input('photo')))->toMediaCollection('photo');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -74,10 +74,7 @@ class ProductCategoryController extends Controller
 
         if ($request->input('photo', false)) {
             if (!$productCategory->photo || $request->input('photo') !== $productCategory->photo->file_name) {
-                if ($productCategory->photo) {
-                    $productCategory->photo->delete();
-                }
-                $productCategory->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+                $productCategory->addMedia(storage_path('tmp/uploads/' . $request->input('photo')))->toMediaCollection('photo');
             }
         } elseif ($productCategory->photo) {
             $productCategory->photo->delete();
@@ -125,7 +122,7 @@ class ProductCategoryController extends Controller
 
     public function checkSlug(Request $request)
     {
-        $slug = SlugService::createSlug(ProductCategory::class, 'slug', $request->name);
+        $slug = SlugService::createSlug(ProductCategory::class, 'slug', $request->name, ['unique' => true]);
 
         return response()->json(['slug' => $slug]);
     }

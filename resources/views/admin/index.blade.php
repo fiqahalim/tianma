@@ -32,7 +32,7 @@
                                 Earnings (Annual)
                             </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                RM 215,000
+                                RM 0
                             </div>
                         </div>
                         <div class="col-auto">
