@@ -18,17 +18,20 @@
         <form method="POST" action="{{ route("admin.user-alerts.update", [$userAlert->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
-            <div class="form-group">
-                <label for="attachment">{{ trans('cruds.userAlert.fields.attachment') }}</label>
-                <div class="needsclick dropzone {{ $errors->has('attachment') ? 'is-invalid' : '' }}" id="attachment-dropzone">
-                </div>
-                @if($errors->has('attachment'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('attachment') }}
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="attachment">{{ trans('cruds.userAlert.fields.attachment') }}</label>
+                    <div class="needsclick dropzone {{ $errors->has('attachment') ? 'is-invalid' : '' }}" id="attachment-dropzone">
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.userAlert.fields.attachment_helper') }}</span>
+                    @if($errors->has('attachment'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('attachment') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.userAlert.fields.attachment_helper') }}</span>
+                </div>
             </div>
+
             <div class="form-group">
                 <a class="btn btn-default" href="{{ route('admin.user-alerts.index') }}">
                     {{ trans('global.back_to_list') }}

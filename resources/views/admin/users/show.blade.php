@@ -18,18 +18,20 @@
                     <div class="mt-2">
                         <span><strong>{{ $user->agent_code }}</strong></span>
                     </div>
+                    <i id="menu-item" class="fas fa-plus-circle"></i>
                     @if(count($user->childUsers))
                         <ul>
                             @foreach($user->childUsers as $childUser)
-                                <li>
+                                <li class="sub-menu">
                                     <img class="rounded-circle mt-2" src="https://bootdey.com/img/Content/avatar/avatar7.png" width="80">
                                     <div class="mt-2">
                                         <span>{{ $childUser->agent_code }}</span>
                                     </div>
+                                    <i id="menu-item" class="fas fa-plus-circle"></i>
                                     @if(count($childUser->childUsers))
                                     <ul>
                                         @foreach($user->childUsers as $childs)
-                                            <li>
+                                            <li class="sub-menu">
                                                 <img class="rounded-circle mt-2" src="https://bootdey.com/img/Content/avatar/avatar7.png" width="80">
                                                 <div class="mt-2">
                                                     <span>{{ $childUser->agent_code }}</span>
@@ -54,4 +56,12 @@
 
 @section('styles')
 <link href="{{ mix('/css/pages/tree.css') }}" media="screen,projection" rel="stylesheet" type="text/css"/>
+@endsection
+
+@section('scripts')
+<script>
+    $("#menu-item").click(function(){
+        $(".sub-menu").toggle();
+    });
+</script>
 @endsection

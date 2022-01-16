@@ -101,3 +101,8 @@ right connector from last child*/
 .tree li a:hover+ul ul::before{
     border-color:  #9894b4;
 }
+
+.sub-menu {
+  display:none;
+  
+}
