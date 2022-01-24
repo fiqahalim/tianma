@@ -88,6 +88,7 @@ class RegisterController extends Controller
             'password'      => Hash::make($data['password']),
             // 'team_id'       => request()->input('team', null),
             'parent_id'     => $data['parent_id'],
+            'ranking_id'    => 1,
         ]);
 
         // send notification of new agent registered

@@ -71,6 +71,8 @@ class User extends Authenticatable
         'created_at',
         'updated_at',
         'deleted_at',
+        'avatar',
+        'ranking_id',
     ];
 
     public function __construct(array $attributes = [])
@@ -121,6 +123,11 @@ class User extends Authenticatable
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
+    }
+
+    public function ranking()
+    {
+        return $this->belongsTo(Ranking::class, 'ranking_id');
     }
 
     public function parent()

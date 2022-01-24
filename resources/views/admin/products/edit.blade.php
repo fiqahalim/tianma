@@ -61,7 +61,7 @@
                                 <i>RM</i>
                             </span>
                         </div>
-                        <input class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}" type="text" name="text" id="price" value="{{ old('price', $product->price) }}" step="0.01" required>
+                        <input class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}" type="text" name="price" id="price" value="{{ old('price', $product->price) }}" required>
                         @if($errors->has('price'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('price') }}
@@ -181,8 +181,8 @@
                         <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                     </div>
                     <select class="form-control select2 {{ $errors->has('categories') ? 'is-invalid' : '' }}" name="categories[]" id="categories" multiple>
-                        @foreach($categories as $id => $category)
-                            <option value="{{ $id }}" {{ (in_array($id, old('categories', [])) || $product->categories->contains($id)) ? 'selected' : '' }}>{{ $category }}</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ (in_array($category->id, old('categories', [])) || $product->categories->contains($category->id)) ? 'selected' : '' }}>{{ $category->parentCategory->parentCategory->name }} / {{ $category->parentCategory->name }} / {{ $category->name }}</option>
                         @endforeach
                     </select>
                     @if($errors->has('categories'))
