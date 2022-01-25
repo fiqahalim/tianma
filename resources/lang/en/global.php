@@ -374,7 +374,7 @@ return [
     ],
     'reports' => [
         'title'             => 'Reports',
-        'binaryCommission'  => 'Binary Commission',
+        'myCommission'      => 'My Commission',
         'refCommission'     => 'Referral Commission',
     ],
     'emailNotification'     => [

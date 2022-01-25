@@ -19,10 +19,10 @@
         @endif
     </td>
     <td>
-        {{ $productCategory->parentCategory->name ?? '' }}
+        {{ $productCategory->slug ?? '' }}
     </td>
     <td>
-        {{ $productCategory->slug ?? '' }}
+        {{ $productCategory->parentCategory->name ?? '' }}
     </td>
     <td>
         @can('product_category_show')

@@ -128,8 +128,8 @@
                         </th>
                         <td>
                             @if($product->photo)
-                                <a href="{{ $product->photo->getUrl() }}" target="_blank" style="display: inline-block">
-                                    <img src="{{ $product->photo->getUrl('thumb') }}">
+                                <a href="{{ $product->photo->getUrl() }}" target="_blank">
+                                    <img src="{{ $product->photo->getUrl('thumb') }}" width="50px" height="50px">
                                 </a>
                             @endif
                         </td>

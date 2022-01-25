@@ -393,4 +393,9 @@ return [
         'profile'         => 'My Profile',
         'change_password' => 'Change Password',
     ],
+    'ranking' => [
+        'title'           => 'Ranking',
+        'title_singular'  => 'Rankings',
+        'myRanking'       => 'My Ranking',
+    ],
 ];

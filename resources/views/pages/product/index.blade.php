@@ -22,18 +22,14 @@
                         <div class="col-md-4 mb-4">
                             <div class="card h-100">
                                 <!-- Product image-->
-                                <a href="{{ route('user.product', [$product->categories->first()->parentCategory->parentCategory->slug,
-                                    $product->categories->first()->parentCategory->slug, $product->categories->first()->slug, 
-                                    $product->slug, $product]) }}">
-                                    <img class="card-img-top" src="{{ $product->photo->url ?? 'http://placehold.it/525x300' }}" alt="">
+                                <a href="{{ route('user.product', [$product->categories->first()->parentCategory->parentCategory->slug, $product->categories->first()->parentCategory->slug, $product->categories->first()->slug, $product->slug, $product]) }}">
+                                    <img class="card-img-top" src="{{ $product->photo->url ?? '/images/home-urns.png' }}" style="height: 200px;">
                                 </a>
                                 <!-- Product details-->
                                 <div class="card-body p-4">
                                     <div class="text-center">
                                         <h5 class="fw-bolder">
-                                            <a href="{{ route('user.product', [$product->categories->first()->parentCategory->parentCategory->slug,
-                                                $product->categories->first()->parentCategory->slug, $product->categories->first()->slug,
-                                                $product->slug, $product]) }}">
+                                            <a href="{{ route('user.product', [$product->categories->first()->parentCategory->parentCategory->slug, $product->categories->first()->parentCategory->slug, $product->categories->first()->slug, $product->slug, $product]) }}">
                                                 {{ $product->name }}
                                             </a>
                                         </h5>
