@@ -54,7 +54,7 @@ Route::group(['middleware' => 'auth'], function() {
             // Users
             Route::resource('users', '\App\Http\Controllers\Admin\UsersController');
             Route::delete('users/destroy', [\App\Http\Controllers\Admin\UsersController::class, 'massDestroy'])->name('users.massDestroy');
-            Route::get('users/{id}/hierarchy', [\App\Http\Controllers\Admin\UsersController::class, 'hierarchy'])->name('users.hierarchy');
+            // Route::get('users/{id}/hierarchy', [\App\Http\Controllers\Admin\UsersController::class, 'hierarchy'])->name('users.hierarchy');
 
             // Team
             Route::delete('teams/destroy', [\App\Http\Controllers\Admin\TeamController::class, 'massDestroy'])->name('teams.massDestroy');
@@ -142,8 +142,13 @@ Route::group(['middleware' => 'auth'], function() {
 
         // Downline
         Route::group(['prefix' => 'downline'], function() {
-            Route::get('/', [\App\Http\Controllers\User\MembersController::class, 'myTree'])->name('mytree');
-            Route::get('/my-referral', [\App\Http\Controllers\User\MembersController::class, 'myReferral'])->name('myreferral');
+            Route::get('/my-tree', [\App\Http\Controllers\User\MembersController::class, 'myTree'])->name('myTree');
+            Route::get('/my-downline', [\App\Http\Controllers\User\MembersController::class, 'myDownline'])->name('myDownline');
+        });
+
+        // Report
+        Route::group(['prefix' => 'report'], function() {
+            Route::get('/my-commission', [\App\Http\Controllers\User\MembersController::class, 'myCommission'])->name('myCommission');
         });
     });
 

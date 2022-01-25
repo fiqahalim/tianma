@@ -221,15 +221,15 @@
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
                     <li class="c-sidebar-nav-item">
-                        <a href="{{ route('user.mytree') }}" class="c-sidebar-nav-link" >
+                        <a href="{{ route('user.myTree') }}" class="c-sidebar-nav-link" >
                             {{ trans('global.downline.my_tree') }}
                         </a>
                     </li>
-                    {{-- <li class="c-sidebar-nav-item">
-                        <a href="{{ route('user.myreferral') }}" class="c-sidebar-nav-link">
-                            {{ trans('global.downline.my_referral') }}
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route('user.myDownline') }}" class="c-sidebar-nav-link">
+                            {{ trans('global.downline.my_downline') }}
                         </a>
-                    </li> --}}
+                    </li>
                 </ul>
             </li>
 
@@ -257,13 +257,8 @@
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
                     <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link" href="{{ route('user.myreferral') }}" >
-                            {{ trans('global.reports.binaryCommission') }}
-                        </a>
-                    </li>
-                    <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link" href="#" >
-                            {{ trans('global.reports.refCommission') }}
+                        <a class="c-sidebar-nav-link" href="{{ route('user.myCommission') }}" >
+                            {{ trans('global.reports.myCommission') }}
                         </a>
                     </li>
                 </ul>

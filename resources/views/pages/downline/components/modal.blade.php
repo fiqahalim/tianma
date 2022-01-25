@@ -20,7 +20,7 @@
                                     {{ trans('cruds.ranking.myRanking') }}
                                 </th>
                                 <td>
-                                    {{ $users[0]->ranking->position ?? 'Not Available' }}
+                                    {{ Auth::user()->ranking_id ?? 'Not Available' }}
                                 </td>
                             </tr>
                             <tr>
@@ -28,7 +28,7 @@
                                     {{ trans('cruds.user.fields.ref_name') }}
                                 </th>
                                 <td>
-                                    {{ $users[0]->parent->agent_code ?? 'Not Available' }}
+                                    {{ $parent[0]->agent_code ?? 'Not Available' }}
                                 </td>
                             </tr>
                             <tr>
@@ -36,7 +36,7 @@
                                     {{ trans('cruds.user.fields.team') }}
                                 </th>
                                 <td>
-                                    {{ $users[0]->team->name ?? 'Not Available' }}
+                                    {{ isset($team) ? $team[0]->name : 'Not Available' }}
                                 </td>
                             </tr>
                         </tbody>

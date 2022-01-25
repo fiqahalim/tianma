@@ -17,20 +17,21 @@
                 <li>
                     <img class="rounded-circle mt-2" src="https://bootdey.com/img/Content/avatar/avatar7.png" width="80" data-toggle="modal" data-target="#userDetailsModal">
                     <div class="mt-2">
-                        <span><strong>{{ $users->agent_code }}</strong></span>
+                        <span><strong>{{ Auth::user()->agent_code ?? 'Not Available' }}</strong></span>
                     </div>
-                    @if(count($users->childUsers))
+                    <i id="menu-item" class="fas fa-plus-circle"></i>
+                    @if(count($users))
                         <ul>
-                            @foreach($user->childUsers as $childUser)
-                                <li>
+                            @foreach($users as $key => $childUser)
+                                <li class="sub-menu">
                                     <img class="rounded-circle mt-2" src="https://bootdey.com/img/Content/avatar/avatar7.png" width="80">
                                     <div class="mt-2">
-                                        <span>{{ $childUser->agent_code }}</span>
+                                        <span>{{ $childUser->agent_code ?? 'Not Available' }}</span>
                                     </div>
-                                    @if(count($childUser->childUsers))
+                                    {{-- @if(count($childUser->childUsers))
                                     <ul>
                                         @foreach($childUser->childUsers as $childs)
-                                            <li>
+                                            <li class="sub-menu">
                                                 <img class="rounded-circle mt-2" src="https://bootdey.com/img/Content/avatar/avatar7.png" width="80">
                                                 <div class="mt-2">
                                                     <span>{{ $childs->agent_code }}</span>
@@ -38,7 +39,7 @@
                                             </li>
                                         @endforeach
                                     </ul>
-                                    @endif
+                                    @endif --}}
                                 </li>
                             @endforeach
                         </ul>
@@ -49,7 +50,7 @@
     </div>
 
     <!-- Modal -->
-    @include('admin.users.modal')
+    @include('pages.downline.components.modal')
 </div>
 @endsection
 
@@ -58,9 +59,9 @@
 @endsection
 
 @section('scripts')
-@parent
-{{--
-<script src="{{ mix('/js/pages/tree.js') }}" type="text/javascript">
+<script>
+    $("#menu-item").click(function(){
+        $(".sub-menu").toggle();
+    });
 </script>
---}}
 @endsection

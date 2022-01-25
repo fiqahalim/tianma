@@ -361,7 +361,7 @@ return [
     ],
     'downline' => [
         'title'              => 'Downline',
-        'my_referral'        => 'My Referral',
+        'my_downline'        => 'My Downline',
         'my_tree'            => 'My Hierarchy',
     ],
     'products' => [
