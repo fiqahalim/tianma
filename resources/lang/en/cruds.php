@@ -385,6 +385,7 @@ return [
             'deleted_at_helper'           => ' ',
             'team'                        => 'Team',
             'team_helper'                 => ' ',
+            'comm_per_order'              => 'Commissions (Per Order)',
         ],
     ],
     'setting' => [

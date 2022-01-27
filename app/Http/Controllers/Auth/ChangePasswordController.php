@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use App\Models\User;
+use Alert;
 
 class ChangePasswordController extends Controller
 {
@@ -45,18 +46,27 @@ class ChangePasswordController extends Controller
         $user->city = $request->input('city');
         $user->save();
 
-        return redirect()->route('profile.index')->with('message', __('global.update_profile_success'));
+        alert()->success(__('global.update_profile_success'))->toToast();
+        return redirect()->route('profile.index');
     }
 
     public function updateProfileImage(Request $request)
     {
-        if ($request->hasFile('avatar')) {
-            $filename = $request->avatar->getClientOriginalName();
-            $request->avatar->storeAs('avatar', $filename,'public');
-            auth()->user()->update(['avatar' => $filename]);
-        }
+        $user = auth()->user();
+
+        $request->validate([
+            'avatar' => 'required|mimes:jpg,png,jpeg|max:5048'
+        ]);
+
+        $profileImage = time() . '.' . $request->avatar->extension();
+
+        $request->avatar->move(public_path('images/profile'), $profileImage);
+
+        $user->avatar = $profileImage;
+        $user->save();
         
-        return redirect()->route('profile.index')->with('message', __('global.update_profile_image_success'));
+        alert()->success(__('global.update_profile_image_success'))->toToast();
+        return redirect()->route('profile.index');
     }
 
     public function destroy()
@@ -69,6 +79,7 @@ class ChangePasswordController extends Controller
 
         $user->delete();
 
-        return redirect()->route('login')->with('message', __('global.delete_account_success'));
+        alert()->success(__('global.delete_account_success'))->toToast();
+        return redirect()->route('login');
     }
 }

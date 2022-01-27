@@ -26,6 +26,7 @@
 </head>
 
 <body class="c-app">
+    @include('sweetalert::alert')
     @include('partials.menu')
     <div class="c-wrapper">
         <header class="c-header c-header-fixed px-3">
@@ -85,7 +86,7 @@
                     <li class="nav-item dropdown">
                         <a class="navbar-brand dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
                             <span class="mr-2 small">{{ Auth::user()->name }}</span>
-                            <img src="{{ asset('/storage/images/'.Auth::user()->avatar) ?? 'https://bootdey.com/img/Content/avatar/avatar7.png' }}" class="rounded-circle" width="30" height="30" alt="">
+                            <img src="{{ asset('/images/profile/' .Auth::user()->avatar ?? 'avatar.png') }}" class="rounded-circle" width="30" height="30" alt="">
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('profile.index') }}">

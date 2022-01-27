@@ -19,6 +19,7 @@ use Cviebrock\EloquentSluggable\Services\SlugService;
 use App\Exports\ProductExport;
 use App\Imports\ProductImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Alert;
 
 class ProductsController extends Controller
 {
@@ -59,7 +60,8 @@ class ProductsController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $product->id]);
         }
 
-        return redirect()->route('admin.products.index')->with('message', __('global.create_success'));
+        alert()->success(__('global.create_success'))->toToast();
+        return redirect()->route('admin.products.index');
     }
 
     public function edit(Product $product)
@@ -93,7 +95,8 @@ class ProductsController extends Controller
             $product->photo->delete();
         }
 
-        return redirect()->route('admin.products.index')->with('message', __('global.update_success'));
+        alert()->success(__('global.update_success'))->toToast();
+        return redirect()->route('admin.products.index');
     }
 
     public function show(Product $product)
@@ -111,7 +114,8 @@ class ProductsController extends Controller
 
         $product->delete();
 
-        return back()->with('message', __('global.delete_success'));
+        alert()->success(__('global.delete_success'))->toToast();
+        return back();
     }
 
     public function massDestroy(MassDestroyProductRequest $request)
@@ -162,7 +166,8 @@ class ProductsController extends Controller
     public function import() 
     {
         Excel::import(new ProductImport, request()->file('file'));
-             
-        return redirect()->route('admin.products.index')->with('message', __('global.app_import_data_success'));
+
+        alert()->success(__('global.app_import_data_success'))->toToast();
+        return redirect()->route('admin.products.index');
     }
 }
