@@ -85,7 +85,7 @@
                             <img src="/images/help/user_hierarchy.png" class="img-fluid img-thumbnail mx-auto d-block mt-3">
                         </p>
                         <p class="mt-2">
-                            To see the agent's details, you can click on the profile picture. If you like to view child agents, you can click the <i class="fas fa-plus-circle"></i> button.
+                            To see the agent's details, you can click on the profile picture. If you like to view downline agents, you can click the <i class="fas fa-plus-circle"></i> button.
                         </p>
                     </div>
                 </div>

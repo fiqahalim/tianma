@@ -20,7 +20,7 @@
                         <form method="POST" action="{{ route("profile.updateProfileImage") }}" enctype="multipart/form-data">
                             @csrf
                             <div class="d-flex flex-column align-items-center text-center">
-                                <img class="rounded-circle" src="{{ asset('/storage/images/'.Auth::user()->avatar) ?? 'https://bootdey.com/img/Content/avatar/avatar7.png' }}" width="150">
+                                <img class="rounded-circle" src="{{ asset('/images/profile/' .Auth::user()->avatar) ?? '/images/avatar.png' }}" width="150">
                                     <div class="mt-3">
                                         <h4>
                                             {{ Auth::user()->name }}

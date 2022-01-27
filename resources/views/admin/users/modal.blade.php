@@ -101,7 +101,7 @@
                                     {{ trans('cruds.user.fields.ref_name') }}
                                 </th>
                                 <td>
-                                    {{ $user->parent->name ?? '' }}
+                                    {{ $user->parent->name ?? 'No upperline' }}
                                 </td>
                             </tr>
                             <tr>
@@ -109,7 +109,7 @@
                                     {{ trans('cruds.user.fields.team') }}
                                 </th>
                                 <td>
-                                    {{ $user->team->name ?? '' }}
+                                    {{ $user->team->name ?? 'Not assigned' }}
                                 </td>
                             </tr>
                             <tr>

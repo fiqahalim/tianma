@@ -14,7 +14,7 @@
         <div class="tree">
             <ul>
                 <li>
-                    <img class="rounded-circle mt-2" src="https://bootdey.com/img/Content/avatar/avatar7.png" width="80" data-toggle="modal" data-target="#userDetailsModal">
+                    <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .Auth::user()->avatar) ?? '/images/avatar.png' }}" width="80" data-toggle="modal" data-target="#userDetailsModal">
                     <div class="mt-2">
                         <span><strong>{{ $user->agent_code }}</strong></span>
                     </div>
@@ -23,7 +23,7 @@
                         <ul>
                             @foreach($user->childUsers as $childUser)
                                 <li class="sub-menu">
-                                    <img class="rounded-circle mt-2" src="https://bootdey.com/img/Content/avatar/avatar7.png" width="80">
+                                    <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="80">
                                     <div class="mt-2">
                                         <span>{{ $childUser->agent_code }}</span>
                                     </div>
@@ -32,9 +32,9 @@
                                     <ul>
                                         @foreach($user->childUsers as $childs)
                                             <li class="sub-menu">
-                                                <img class="rounded-circle mt-2" src="https://bootdey.com/img/Content/avatar/avatar7.png" width="80">
+                                                <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childs->avatar) ?? '/images/avatar.png' }}" width="80">
                                                 <div class="mt-2">
-                                                    <span>{{ $childUser->agent_code }}</span>
+                                                    <span>{{ $childs->agent_code }}</span>
                                                 </div>
                                             </li>
                                         @endforeach
