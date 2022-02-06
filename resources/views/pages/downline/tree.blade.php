@@ -15,7 +15,7 @@
         <div class="tree">
             <ul>
                 <li>
-                    <img class="rounded-circle mt-2" src="https://bootdey.com/img/Content/avatar/avatar7.png" width="80" data-toggle="modal" data-target="#userDetailsModal">
+                    <img class="rounded-circle mt-2" src="{{ asset('/images/profile/'.Auth::user()->avatar ?? 'avatar.png') }}" width="80" data-toggle="modal" data-target="#userDetailsModal">
                     <div class="mt-2">
                         <span><strong>{{ Auth::user()->agent_code ?? 'Not Available' }}</strong></span>
                     </div>
@@ -24,7 +24,7 @@
                         <ul>
                             @foreach($users as $key => $childUser)
                                 <li class="sub-menu">
-                                    <img class="rounded-circle mt-2" src="https://bootdey.com/img/Content/avatar/avatar7.png" width="80">
+                                    <img class="rounded-circle mt-2" src="{{ asset('/images/profile/'.$childUser->avatar ?? 'avatar.png') }}" width="80">
                                     <div class="mt-2">
                                         <span>{{ $childUser->agent_code ?? 'Not Available' }}</span>
                                     </div>

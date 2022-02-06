@@ -36,7 +36,7 @@
                                     {{ trans('cruds.user.fields.team') }}
                                 </th>
                                 <td>
-                                    {{ isset($team) ? $team[0]->name : 'Not Available' }}
+                                    {{ isset($team[0]) ? $team[0]->name : 'Not Available' }}
                                 </td>
                             </tr>
                         </tbody>

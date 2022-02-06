@@ -41,7 +41,7 @@ class OrderController extends Controller
         $order->ref_no = $this->getOrderNumber();
         $order->order_status = 'NEW';
         $order->amount = $totalProductAmount;
-        $order->order_date = $current = Carbon::now('+08:00');
+        $order->order_date = $current = Carbon::now();
         $order->customer_id = $customer->id;
         $order->created_by = auth()->user()->id;
         $order->save();

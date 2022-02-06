@@ -17,6 +17,7 @@
                     <h2 class="mb-0">
                         <button aria-controls="collapseOne" aria-expanded="false" class="btn" data-target="#collapseOne" data-toggle="collapse" type="button">
                             <strong>How To Import or Export Products Files?</strong>
+                            <i class="fas fa-angle-down rotate-icon"></i>
                         </button>
                     </h2>
                 </div>
@@ -71,6 +72,7 @@
                     <h2 class="mb-0">
                         <button aria-controls="collapseTwo" aria-expanded="false" class="btn collapsed" data-target="#collapseTwo" data-toggle="collapse" type="button">
                             <strong>How To View Agent's Hierarchy?</strong>
+                            <i class="fas fa-angle-down rotate-icon"></i>
                         </button>
                     </h2>
                 </div>
@@ -95,6 +97,7 @@
                     <h2 class="mb-0">
                         <button aria-controls="collapseThree" aria-expanded="false" class="btn collapsed" data-target="#collapseThree" data-toggle="collapse" type="button">
                             <strong>Collapsible Group Item #3</strong>
+                            <i class="fas fa-angle-down rotate-icon"></i>
                         </button>
                     </h2>
                 </div>
@@ -113,7 +116,8 @@
                 <div class="card-header" id="headingOne" data-target="#collapseOne" data-toggle="collapse">
                     <h2 class="mb-0">
                         <button aria-controls="collapseOne" aria-expanded="false" class="btn" data-target="#collapseOne" data-toggle="collapse" type="button">
-                            Collapse Item #1
+                            <strong>Collapse Group Item #1</strong>
+                            <i class="fas fa-angle-down rotate-icon"></i>
                         </button>
                     </h2>
                 </div>
@@ -127,7 +131,8 @@
                 <div class="card-header" id="headingTwo" data-target="#collapseTwo" data-toggle="collapse">
                     <h2 class="mb-0">
                         <button aria-controls="collapseTwo" aria-expanded="false" class="btn collapsed" data-target="#collapseTwo" data-toggle="collapse" type="button">
-                            Collapsible Group Item #2
+                            <strong>Collapsible Group Item #2</strong>
+                            <i class="fas fa-angle-down rotate-icon"></i>
                         </button>
                     </h2>
                 </div>
@@ -141,7 +146,8 @@
                 <div class="card-header" id="headingThree" data-target="#collapseThree" data-toggle="collapse">
                     <h2 class="mb-0">
                         <button aria-controls="collapseThree" aria-expanded="false" class="btn collapsed" data-target="#collapseThree" data-toggle="collapse" type="button">
-                            Collapsible Group Item #3
+                            <strong>Collapsible Group Item #3</strong>
+                            <i class="fas fa-angle-down rotate-icon"></i>
                         </button>
                     </h2>
                 </div>
