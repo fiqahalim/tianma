@@ -12,23 +12,16 @@ class Transaction extends Model
 
     public $table = 'transactions';
 
-    public const MODE_SELECT = [
-        'installment'   => 'Installment',
-        'full_payment'  => 'Full Payment',
-    ];
-
     protected $dates = [
         'transaction_date',
     ];
 
     protected $fillable = [
-        'mode',
         'amount',
         'transaction_date',
-        'downpayment',
-        'outstanding_balance',
-        'installment',
-        'installment_balance',
+        'trans_name',
+        'description',
+        'amount',
         'order_id',
         'created_by',
         'customer_id',
@@ -44,7 +37,7 @@ class Transaction extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function order()
+    public function orders()
     {
         return $this->belongsTo(Order::class, 'order_id');
     }

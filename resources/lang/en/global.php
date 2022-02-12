@@ -104,6 +104,7 @@ return [
         'month'                       => 'month',
         'trial_user'                  => 'Trial User',
         'plan_purchased_successfully' => 'Plan purchased successfully',
+        'billingDetails'              => 'Billing Details',
     ],
     'payments' => [
         'title'        => 'Payments',

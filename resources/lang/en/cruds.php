@@ -287,6 +287,7 @@ return [
             'id_type_helper'             => ' ',
             'created_by'                 => 'Created By',
             'created_by_helper'          => ' ',
+            'mode'                       => 'Payment Options',
         ],
     ],
     'auditLog' => [
