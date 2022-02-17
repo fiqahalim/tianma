@@ -19,6 +19,15 @@
     <div class="row d-flex cart align-items-center justify-content-center">
         <div class="col-md-10">
             <div class="card">
+                <div class="d-flex justify-content-center border-bottom">
+                    <div class="p-3">
+                        <div class="progresses">
+                            <div class="steps"> <span><i class="fa fa-check"></i></span> </div> <span class="line"></span>
+                            <div class="steps"> <span><i class="fa fa-check"></i></span> </div> <span class="line"></span>
+                            <div class="steps"> <span class="font-weight-bold">3</span> </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row g-0">
                     <div class="col-md-6 border-right p-5">
                         <div class="text-center order-details">
@@ -34,52 +43,51 @@
                                     Your order has been processed
                                 </small>
                             </div>
-                            {{--
-                            <button class="btn btn-danger btn-block order-button">
-                                Go to your Order
+
+                            <button class="btn btn-outline-info btn-block order-button">
+                                <i class="fas fa-home-alt"></i> Go to Dashboard
                             </button>
-                            --}}
+
                         </div>
                     </div>
                     <div class="col-md-6 background-muted">
                         <div class="p-3 border-bottom">
-                            {{-- <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span>
+                                    <i class="fas fa-calendar-check"></i>
+                                    {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y') }}
+                                </span>
                                 <span>
                                     <i class="fa fa-clock-o text-muted">
                                     </i>
-                                    3 days delivery
+                                    {{ Carbon\Carbon::parse($order->created_at)->format('h:i:s') }}
                                 </span>
-                                <span>
-                                    <i class="fa fa-refresh text-muted">
-                                    </i>
-                                    2 Max Revisions
-                                </span>
-                            </div> --}}
+                            </div>
                             <div class="mt-3">
                                 <h6 class="mb-0">
                                     Order Reference Number: #{{ $order->ref_no }}
                                 </h6>
-                                {{-- <span class="d-block mb-0">
+                                <span class="d-block mb-0">
                                     Includes: Sketch, PSD, PNG, SVG, AI
                                 </span>
                                 <small>
-                                    Min: 1 illustraion
+                                    Order Status: {{ $order->ref_no }}
                                 </small>
                                 <div class="d-flex flex-column mt-3">
                                     <small>
                                         <i class="fa fa-check text-muted">
                                         </i>
-                                        Vector file
+                                        Agent Code:
                                     </small>
                                     <small>
                                         <i class="fa fa-check text-muted">
                                         </i>
-                                        Sources files
-                                    </small> --}}
+                                        Payment Method: {{ $customer->mode }}
+                                    </small>
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="row g-0 border-bottom">
+                        <div class="row g-0 border-bottom">
                             <div class="col-md-6 border-right">
                                 <div class="p-3 d-flex justify-content-center align-items-center">
                                     <span>
@@ -142,7 +150,7 @@
                                     </span>
                                 </div>
                             </div>
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
                 <div>

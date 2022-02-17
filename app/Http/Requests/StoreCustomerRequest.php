@@ -24,7 +24,7 @@ class StoreCustomerRequest extends FormRequest
             'id_number' => [
                 'string',
                 'required',
-                'unique:customers',
+                // 'unique:customers',
             ],
             'contact_person_name' => [
                 'string',

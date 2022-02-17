@@ -135,8 +135,8 @@ Route::group(['middleware' => 'auth'], function() {
             // Customers
             Route::resource('/{category}/{childCategory}/{childCategory2}/{productSlug}/{product}/customerdetails', '\App\Http\Controllers\User\CustomerController');
 
-            // Route::resource('/{category}/{childCategory}/{childCategory2}/{productSlug}/{product}/customerdetails/booking-details', '\App\Http\Controllers\User\OrderController');
-            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{productSlug}/{product}/order-details', [\App\Http\Controllers\User\OrderController::class, 'index'])->name('order');
+            // Orders
+            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{productSlug}/{product}/order-details', [\App\Http\Controllers\User\OrderController::class, 'orderPage'])->name('order');
             Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{productSlug}/{product}/order-details/store', [\App\Http\Controllers\User\OrderController::class, 'store'])->name('order.details.store');
         });
 
@@ -144,12 +144,15 @@ Route::group(['middleware' => 'auth'], function() {
         Route::group(['prefix' => 'downline'], function() {
             Route::get('/my-tree', [\App\Http\Controllers\User\MembersController::class, 'myTree'])->name('myTree');
             Route::get('/my-downline', [\App\Http\Controllers\User\MembersController::class, 'myDownline'])->name('myDownline');
+            Route::resource('/my-downline', '\App\Http\Controllers\User\MembersController');
         });
 
         // Report
         Route::group(['prefix' => 'report'], function() {
             Route::get('/my-commission', [\App\Http\Controllers\User\MembersController::class, 'myCommission'])->name('myCommission');
         });
+
+        Route::resource('/my-orders', '\App\Http\Controllers\User\OrderDetailsController');
     });
 
 });

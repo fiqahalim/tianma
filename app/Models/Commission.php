@@ -38,7 +38,7 @@ class Commission extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function order()
+    public function orders()
     {
         return $this->belongsTo(Order::class, 'order_id');
     }

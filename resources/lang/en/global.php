@@ -9,6 +9,7 @@ return [
     'create'                         => 'Create',
     'dashboard'                      => 'Dashboard',
     'delete'                         => 'Delete',
+    'withdraw'                       => 'Withdraw',
     'cancel'                         => 'Cancel',
     'clear'                          => 'Clear',
     'helps'                          => 'Helps',
@@ -104,6 +105,7 @@ return [
         'month'                       => 'month',
         'trial_user'                  => 'Trial User',
         'plan_purchased_successfully' => 'Plan purchased successfully',
+        'billingDetails'              => 'Billing Details',
     ],
     'payments' => [
         'title'        => 'Payments',
@@ -355,6 +357,8 @@ return [
         'customer_id'       => 'Customer ID',
         'approved'          => 'Approved',
         'created_by'        => 'Created By',
+        'orderConfirmation' => 'Order Confirmation',
+        'orderReview'       => 'Order Review',
     ],
     'documents' => [
         'title'              => 'Documents',

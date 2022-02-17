@@ -35,7 +35,16 @@ class CustomerController extends Controller
 
     public function store(StoreCustomerRequest $request, $category, $childCategory, $childCategory2, $productSlug, Product $product)
     {
-        $customer = Customer::create($request->all());
+        /**
+         * Check if customer exists or not
+         */
+        $customer = Customer::where('id_number', '=', $request->input('id_number'))->first();
+
+        if ($customer !== null) {
+            $customer->update($request->all());
+        } else {
+            $customer = Customer::create($request->all());
+        }
 
         $product->load('categories.parentCategory.parentCategory');
         $childCategory2 = $product->categories->where('slug', $childCategory2)->first();

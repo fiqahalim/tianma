@@ -125,7 +125,7 @@ class User extends Authenticatable
         return $this->belongsTo(Team::class, 'team_id');
     }
 
-    public function ranking()
+    public function rankings()
     {
         return $this->belongsTo(Ranking::class, 'ranking_id');
     }
@@ -153,6 +153,11 @@ class User extends Authenticatable
     public function customer()
     {
         return $this->hasMany(Customer::class);
+    }
+
+    public function commissions()
+    {
+        return $this->belongsTo(Commission::class, 'id', 'user_id');
     }
 
     public function getVerifiedAtAttribute($value)

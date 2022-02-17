@@ -19,9 +19,15 @@ class CreateTransactionsTable extends Migration
             $table->string('description')->nullable();
             $table->decimal('amount', 15, 2)->nullable();
             $table->timestamp('transaction_date')->nullable();
-            $table->unsignedBigInteger('order_id')->nullable();
+            $table->timestamps();
 
-            $table->foreign('order_id')->references('id')->on(DB::raw('orders'));
+            $table->unsignedBigInteger('order_id')->nullable();
+            $table->unsignedBigInteger('customer_id')->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
+
+            $table->foreign('order_id')->references('id')->on('orders');
+            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->foreign('created_by')->references('id')->on('users');
         });
     }
 

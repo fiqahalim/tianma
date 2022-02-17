@@ -28,8 +28,8 @@
     height: 40px;
     width: 48px;
     margin: 8px;
-    border-top-left-radius: 22px;
-    border-top-right-radius: 22px;
+    /*border-top-left-radius: 22px;*/
+    /*border-top-right-radius: 22px;*/
 }
 
 .seat:nth-of-type(2) {

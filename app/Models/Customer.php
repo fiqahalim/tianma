@@ -20,6 +20,11 @@ class Customer extends Model
         'nric'     => 'NRIC',
     ];
 
+    public const MODE_SELECT = [
+        'installment'   => 'Installment',
+        'full_payment'  => 'Full Payment',
+    ];
+
     public $table = 'customers';
 
     protected $dates = [
@@ -47,7 +52,8 @@ class Customer extends Model
         'created_at',
         'updated_at',
         'deleted_at',
-        'created_by'
+        'created_by',
+        'mode',
     ];
 
     public function createdBy()
@@ -68,5 +74,10 @@ class Customer extends Model
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }

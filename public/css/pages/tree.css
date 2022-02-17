@@ -102,7 +102,7 @@ right connector from last child*/
     border-color:  #9894b4;
 }
 
-.sub-menu {
+.sub-menu, .child-menu {
   display:none;
-  
 }
+

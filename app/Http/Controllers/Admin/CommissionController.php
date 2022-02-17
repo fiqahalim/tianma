@@ -10,6 +10,7 @@ use App\Models\Commission;
 use App\Models\Order;
 use App\Models\User;
 use Gate;
+use Alert;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,7 +20,7 @@ class CommissionController extends Controller
     {
         abort_if(Gate::denies('commission_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $commissions = Commission::with(['user', 'order', 'team'])->get();
+        $commissions = Commission::with(['user', 'orders', 'team'])->get();
 
         return view('admin.commissions.index', compact('commissions'));
     }
@@ -39,6 +40,7 @@ class CommissionController extends Controller
     {
         $commission = Commission::create($request->all());
 
+        alert()->success(__('global.create_success'))->toToast();
         return redirect()->route('admin.commissions.index');
     }
 
@@ -50,7 +52,7 @@ class CommissionController extends Controller
 
         $orders = Order::pluck('ref_no', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $commission->load('user', 'order', 'team');
+        $commission->load('user', 'orders', 'team');
 
         return view('admin.commissions.edit', compact('commission', 'orders', 'users'));
     }
@@ -59,6 +61,7 @@ class CommissionController extends Controller
     {
         $commission->update($request->all());
 
+        alert()->success(__('global.update_success'))->toToast();
         return redirect()->route('admin.commissions.index');
     }
 
@@ -66,7 +69,7 @@ class CommissionController extends Controller
     {
         abort_if(Gate::denies('commission_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $commission->load('user', 'order', 'team');
+        $commission->load('user', 'orders', 'team');
 
         return view('admin.commissions.show', compact('commission'));
     }
@@ -77,6 +80,7 @@ class CommissionController extends Controller
 
         $commission->delete();
 
+        alert()->success(__('global.delete_success'))->toToast();
         return back();
     }
 
