@@ -109,6 +109,7 @@
                     <span class="help-block">{{ trans('cruds.user.fields.agent_code_helper') }}</span>
                 </div>
             </div>
+            <hr>
 
             {{-- Address Details --}}
             <div class="form-row">
@@ -166,6 +167,7 @@
                     <span class="help-block">{{ trans('cruds.user.fields.city_helper') }}</span>
                 </div>
             </div>
+            <hr>
 
             {{-- Team Details --}}
             <div class="form-row">
@@ -187,7 +189,36 @@
                     <label>{{ trans('cruds.user.fields.ref_name') }}</label>
                     <input class="form-control" type="text" value="{{ $user->parent ? $user->parent->agent_code : '' }}" readonly>
                 </div>
+                {{-- Commissions --}}
+                <div class="form-group col-md-4">
+                    <label>{{ trans('cruds.ranking.currentRank') }}</label>
+                    <select class="form-control form-select {{ $errors->has('rankings') ? 'is-invalid' : '' }}" name="ranking_id" id="rankings_id" disabled>
+                        @foreach($rankings as $id => $data)
+                            <option value="{{ $id }}" {{ (old('rankings_id') ? old('rankings_id') : $user->rankings->id ?? '') == $id ? 'selected' : '' }}>{{ $data }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>{{ trans('cruds.commission.fields.comm_monthly') }}</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>RM</i>
+                            </span>
+                        </div>
+                        <input class="form-control" type="text" value="{{ $user->parent ? $user->parent->agent_code : '' }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>{{ trans('cruds.ranking.remoteDemote') }}</label>
+                    <select class="form-control form-select {{ $errors->has('rankings') ? 'is-invalid' : '' }}" name="ranking_id" id="rankings_id">
+                        @foreach($rankings as $id => $data)
+                            <option value="{{ $id }}" {{ (old('rankings_id') ? old('rankings_id') : $user->rankings->id ?? '') == $id ? 'selected' : '' }}>{{ $data }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
+            <hr>
 
             <div class="form-group">
                 <label class="required" for="roles">{{ trans('cruds.user.fields.roles') }}</label>

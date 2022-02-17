@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateUserAlertRequest;
 use App\Models\User;
 use App\Models\UserAlert;
 use Gate;
+use Alert;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;

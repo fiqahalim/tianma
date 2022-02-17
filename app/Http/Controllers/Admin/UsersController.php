@@ -9,9 +9,12 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\Role;
 use App\Models\Team;
 use App\Models\User;
+use App\Models\Ranking;
 use Gate;
+use Alert;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Carbon\Carbon;
 
 use App\Notifications\UserApprovedNotification;
 
@@ -21,7 +24,7 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $users = User::with(['roles', 'team', 'parent'])->get();
+        $users = User::with(['roles', 'team', 'parent', 'commissions'])->get();
 
         return view('admin.users.index', compact('users'));
     }
@@ -32,13 +35,15 @@ class UsersController extends Controller
 
         $roles = Role::pluck('title', 'id');
 
+        $rankings = Ranking::pluck('category', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $teams = Team::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $users = User::whereNull('parent_id')
             ->with('childUsers')
             ->get();
 
-        return view('admin.users.create', compact('roles', 'teams', 'users'));
+        return view('admin.users.create', compact('roles', 'teams', 'users', 'rankings'));
     }
 
     public function store(StoreUserRequest $request)
@@ -46,6 +51,7 @@ class UsersController extends Controller
         $user = User::create($request->all());
         $user->roles()->sync($request->input('roles', []));
 
+        alert()->success(__('global.update_success'))->toToast();
         return redirect()->route('admin.users.index');
     }
 
@@ -55,15 +61,17 @@ class UsersController extends Controller
 
         $roles = Role::pluck('title', 'id');
 
+        $rankings = Ranking::pluck('category', 'id');
+
         $teams = Team::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $parentUser = User::whereNull('parent_id')
             ->with('childUsers')
             ->get();
 
-        $user->load('roles', 'parent', 'team');
+        $user->load('roles', 'parent', 'team', 'rankings');
 
-        return view('admin.users.edit', compact('roles', 'teams', 'parentUser', 'user'));
+        return view('admin.users.edit', compact('roles', 'teams', 'parentUser', 'user', 'rankings'));
     }
 
     public function update(UpdateUserRequest $request, User $user)
@@ -77,6 +85,7 @@ class UsersController extends Controller
             $user->notify(new UserApprovedNotification());
         }
 
+        alert()->success(__('global.update_success'))->toToast();
         return redirect()->route('admin.users.index');
     }
 
@@ -95,6 +104,7 @@ class UsersController extends Controller
 
         $user->delete();
 
+        alert()->success(__('global.update_success'))->toToast();
         return back();
     }
 

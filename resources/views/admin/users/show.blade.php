@@ -18,23 +18,27 @@
                     <div class="mt-2">
                         <span><strong>{{ $user->agent_code }}</strong></span>
                     </div>
-                    <i id="menu-item" class="fas fa-plus-circle"></i>
+                    <i id="menu-item" class="fas fa-plus-circle" onclick="myFunction()"></i>
                     @if(count($user->childUsers))
                         <ul>
                             @foreach($user->childUsers as $childUser)
-                                <li class="sub-menu">
-                                    <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="80">
-                                    <div class="mt-2">
-                                        <span>{{ $childUser->agent_code }}</span>
+                                <li>
+                                    <div class="sub-menu">
+                                        <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="80">
+                                        <div class="mt-2">
+                                            <span>{{ $childUser->agent_code }}</span>
+                                        </div>
                                     </div>
-                                    <i id="menu-item" class="fas fa-plus-circle"></i>
+                                    <i id="child-item" class="fas fa-plus-circle"></i>
                                     @if(count($childUser->childUsers))
                                     <ul>
-                                        @foreach($user->childUsers as $childs)
-                                            <li class="sub-menu">
-                                                <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childs->avatar) ?? '/images/avatar.png' }}" width="80">
-                                                <div class="mt-2">
-                                                    <span>{{ $childs->agent_code }}</span>
+                                        @foreach($childUser->childUsers as $childs)
+                                            <li>
+                                                <div class="child-menu">
+                                                    <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childs->avatar) ?? '/images/avatar.png' }}" width="80">
+                                                    <div class="child-menu mt-2">
+                                                        <span>{{ $childs->agent_code }}</span>
+                                                    </div>
                                                 </div>
                                             </li>
                                         @endforeach
@@ -62,6 +66,9 @@
 <script>
     $("#menu-item").click(function(){
         $(".sub-menu").toggle();
+    });
+    $("#child-item").click(function(){
+        $(".child-menu").toggle();
     });
 </script>
 @endsection

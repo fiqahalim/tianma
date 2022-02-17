@@ -7,10 +7,10 @@
             {{ trans('global.products.title') }}
         </li>
         <li class="breadcrumb-item">
-            {{ trans('global.products.title') }}
+            {{ trans('global.order.orderReview') }}
         </li>
         <li aria-current="page" class="breadcrumb-item active">
-            {{ trans('global.products.title') }}
+            {{ trans('global.order.orderConfirmation') }}
         </li>
     </ol>
 </nav>
@@ -44,9 +44,9 @@
                                 </small>
                             </div>
 
-                            <button class="btn btn-outline-info btn-block order-button">
+                            <a href="{{ route("home.index") }}" class="btn btn-outline-info btn-block order-button">
                                 <i class="fas fa-home-alt"></i> Go to Dashboard
-                            </button>
+                            </a>
 
                         </div>
                     </div>
@@ -67,17 +67,17 @@
                                 <h6 class="mb-0">
                                     Order Reference Number: #{{ $order->ref_no }}
                                 </h6>
-                                <span class="d-block mb-0">
-                                    Includes: Sketch, PSD, PNG, SVG, AI
-                                </span>
+                                {{-- <span class="d-block mb-0">
+                                    Customer Name:{{ $customer->name }}
+                                </span> --}}
                                 <small>
-                                    Order Status: {{ $order->ref_no }}
+                                    {{ trans('global.order.order_status') }}: {{ $order->order_status }}
                                 </small>
                                 <div class="d-flex flex-column mt-3">
                                     <small>
                                         <i class="fa fa-check text-muted">
                                         </i>
-                                        Agent Code:
+                                        Agent Code: {{ Auth::user()->agent_code }}
                                     </small>
                                     <small>
                                         <i class="fa fa-check text-muted">
@@ -87,73 +87,107 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row g-0 border-bottom">
-                            <div class="col-md-6 border-right">
-                                <div class="p-3 d-flex justify-content-center align-items-center">
-                                    <span>
-                                        x3
-                                    </span>
+
+                        @if ($customer->mode == 'installment')
+                            <div class="row g-0 border-bottom">
+                                <div class="col-md-6 border-right">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span>
+                                            Total
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span>
+                                            RM {{ $order->amount }}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="p-3 d-flex justify-content-center align-items-center">
-                                    <span>
-                                        $20 per unit
-                                    </span>
+                            <div class="row g-0 border-bottom">
+                                <div class="col-md-6 border-right">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span>
+                                            Downpayment (20%)
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span>
+                                            RM {{ $paymentInfo->downpayment }}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row g-0 border-bottom">
-                            <div class="col-md-6">
-                                <div class="p-3 d-flex justify-content-center align-items-center">
-                                    <span>
-                                        Subtotal
-                                    </span>
+                            <div class="row g-0 border-bottom">
+                                <div class="col-md-6 border-right">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span>
+                                            Monthly Installment (11 months)
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span>
+                                            RM {{ $paymentInfo->monthly_installment }}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="p-3 d-flex justify-content-center align-items-center">
-                                    <span>
-                                        $60
-                                    </span>
+                            <div class="row g-0 border-bottom">
+                                <div class="col-md-6 border-right">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span>
+                                            Installment Balance
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span>
+                                            RM {{ $paymentInfo->installment_balance }}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row g-0 border-bottom">
-                            <div class="col-md-6">
-                                <div class="p-3 d-flex justify-content-center align-items-center">
-                                    <span>
-                                        Processing fees
-                                    </span>
+                            <div class="row g-0">
+                                <div class="col-md-6">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span class="font-weight-bold">
+                                            Outstanding Balance
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span class="font-weight-bold">
+                                            RM {{ $paymentInfo->outstanding_balance }}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="p-3 d-flex justify-content-center align-items-center">
-                                    <span>
-                                        $1.80
-                                    </span>
+                        @else
+                            <div class="row g-0">
+                                <div class="col-md-6">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span class="font-weight-bold">
+                                            Total
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span class="font-weight-bold">
+                                            RM {{ $order->amount }}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row g-0">
-                            <div class="col-md-6">
-                                <div class="p-3 d-flex justify-content-center align-items-center">
-                                    <span class="font-weight-bold">
-                                        Total
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="p-3 d-flex justify-content-center align-items-center">
-                                    <span class="font-weight-bold">
-                                        $61.80
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
+                        @endif
                     </div>
-                </div>
-                <div>
                 </div>
             </div>
         </div>

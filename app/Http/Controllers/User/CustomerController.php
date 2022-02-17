@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateCustomerRequest;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use Carbon\Carbon;
 
 class CustomerController extends Controller
 {
@@ -33,7 +34,7 @@ class CustomerController extends Controller
         return view('pages.customer.customer-detail', compact('product', 'selectedCategories'));
     }
 
-    public function store(StoreCustomerRequest $request, $category, $childCategory, $childCategory2, $productSlug, Product $product)
+    public function store(UpdateCustomerRequest $request, $category, $childCategory, $childCategory2, $productSlug, Product $product)
     {
         /**
          * Check if customer exists or not
@@ -43,7 +44,26 @@ class CustomerController extends Controller
         if ($customer !== null) {
             $customer->update($request->all());
         } else {
-            $customer = Customer::create($request->all());
+            $customer = null;
+            $customer = new Customer;
+            $customer->full_name = $request->full_name;
+            $customer->id_type = $request->id_type;
+            $customer->id_number = $request->id_number;
+            $customer->email = $request->email;
+            $customer->contact_person_name = $request->contact_person_name;
+            $customer->contact_person_no = $request->contact_person_no;
+            $customer->postcode = $request->postcode;
+            $customer->state = $request->state;
+            $customer->city = $request->city;
+            $customer->address_1 = $request->address_1;
+            $customer->address_2 = $request->address_2;
+            $customer->nationality = $request->nationality;
+            $customer->country = $request->country;
+            $customer->mode = $request->mode;
+            $customer->created_by = auth()->user()->id;
+            $customer->created_at = $current = Carbon::now();
+            $customer->updated_at = $current = Carbon::now();
+            $customer->save();
         }
 
         $product->load('categories.parentCategory.parentCategory');

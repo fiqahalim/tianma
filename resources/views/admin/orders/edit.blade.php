@@ -21,13 +21,20 @@
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label class="required" for="ref_no">{{ trans('cruds.order.fields.ref_no') }}</label>
-                    <input class="form-control {{ $errors->has('ref_no') ? 'is-invalid' : '' }}" type="text" name="ref_no" id="ref_no" value="{{ old('ref_no', $order->ref_no) }}" required>
-                    @if($errors->has('ref_no'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('ref_no') }}
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>#</i>
+                            </span>
                         </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.order.fields.ref_no_helper') }}</span>
+                        <input class="form-control {{ $errors->has('ref_no') ? 'is-invalid' : '' }}" type="text" name="ref_no" id="ref_no" value="{{ old('ref_no', $order->ref_no) }}" readonly>
+                        @if($errors->has('ref_no'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('ref_no') }}
+                            </div>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.order.fields.ref_no_helper') }}</span>
+                    </div>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="amount">{{ trans('cruds.order.fields.amount') }}</label>
@@ -37,7 +44,7 @@
                                 <i>RM</i>
                             </span>
                         </div>
-                        <input class="form-control {{ $errors->has('amount') ? 'is-invalid' : '' }}" type="text" name="amount" id="amount" value="{{ old('amount', $order->amount) }}" step="0.01">
+                        <input class="form-control {{ $errors->has('amount') ? 'is-invalid' : '' }}" type="text" name="amount" id="amount" value="{{ old('amount', $order->amount) }}" step="0.01" readonly>
                         @if($errors->has('amount'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('amount') }}
@@ -60,6 +67,28 @@
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.order.fields.order_status_helper') }}</span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label>{{ trans('cruds.commission.fields.comm_per_order') }}</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>RM</i>
+                            </span>
+                        </div>
+                        <input class="form-control" type="text" value="{{ $order->commissions ? $order->commissions->mo_overriding_comm : '' }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>{{ trans('cruds.user.fields.ref_name') }}</label>
+                    <input class="form-control" type="text" value="{{ $order->createdBy ? $order->createdBy->agent_code : '' }}" readonly>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>{{ trans('cruds.order.fields.order_date') }}</label>
+                    <input class="form-control" type="text" value="{{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y H:i:s') }}" readonly>
                 </div>
             </div>
 

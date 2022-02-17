@@ -34,11 +34,11 @@
                         <div class="form-row">
                             <div class="form-group col-md-5">
                                 <label for="full_name">{{ trans('cruds.customer.fields.full_name') }}</label>
-                                <input class="form-control" id="full_name" type="name" value="{{ $customer->full_name }}" readonly>
+                                <input class="form-control" id="full_name" type="name" value="{{ old('full_name', $customer->full_name) }}" readonly>
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="id_type">{{ trans('cruds.customer.fields.id_type') }}</label>
-                                <input class="form-control" id="id_type" type="text" value="{{ $customer->id_type }}" readonly>
+                                <input class="form-control" id="id_type" type="text" value="{{ old('id_type', $customer->id_type) }}" readonly>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="id_number">{{ trans('cruds.customer.fields.id_number') }}</label>
@@ -152,8 +152,7 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-primary float-right mb-3" type="submit">
-                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <button class="btn btn-primary float-right mb-3 mr-3" type="submit">
                         {{ trans('global.confirmBooking') }}
                     </button>
                 </form>
