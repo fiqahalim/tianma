@@ -46,12 +46,11 @@ class HomeController extends Controller
             ->count();
 
         $agentComms = Order::join('commissions', 'commissions.order_id', '=', 'orders.id')
-            ->where('orders.created_by', auth()->user()->id)
+            ->where('orders.approved', '=', 1)
             ->where('commissions.user_id', auth()->user()->id)
             ->get(['orders.*', 'commissions.mo_overriding_comm']);
 
         $myEarnings = Commission::join('orders', 'orders.id', '=', 'commissions.order_id')
-            ->where('orders.created_by', auth()->user()->id)
             ->where('commissions.user_id', auth()->user()->id)
             ->where('orders.approved', '=', 1)
             ->whereMonth('commissions.created_at', Carbon::now()->month)

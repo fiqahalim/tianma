@@ -15,7 +15,7 @@
 <div class="container-lg">
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="">
+            <a class="btn btn-success" href="{{ route('user.my-downline.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.user.title_singular') }}
             </a>
         </div>
@@ -68,5 +68,4 @@
         </div>
     </div>
 </div>
-<!-- /.col-->
 @endsection

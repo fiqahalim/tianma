@@ -21,8 +21,8 @@ class User extends Authenticatable
     use HasFactory;
 
     public const ID_TYPE_SELECT = [
-        'nric'     => 'NRIC',
-        'passport' => 'Passport',
+        'NRIC'     => 'NRIC',
+        'Passport' => 'Passport',
     ];
 
     public $table = 'users';

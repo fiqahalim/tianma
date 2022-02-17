@@ -192,11 +192,12 @@
                 {{-- Commissions --}}
                 <div class="form-group col-md-4">
                     <label>{{ trans('cruds.ranking.currentRank') }}</label>
-                    <select class="form-control form-select {{ $errors->has('rankings') ? 'is-invalid' : '' }}" name="ranking_id" id="rankings_id" disabled>
+                    <input class="form-control" type="text" name="rankings_id" id="rankings_id" value="{{ $user->rankings->category }}" readonly>
+                    {{-- <select class="form-control form-select {{ $errors->has('rankings') ? 'is-invalid' : '' }}" name="ranking_id" id="rankings_id" disabled>
                         @foreach($rankings as $id => $data)
                             <option value="{{ $id }}" {{ (old('rankings_id') ? old('rankings_id') : $user->rankings->id ?? '') == $id ? 'selected' : '' }}>{{ $data }}</option>
                         @endforeach
-                    </select>
+                    </select> --}}
                 </div>
                 <div class="form-group col-md-4">
                     <label>{{ trans('cruds.commission.fields.comm_monthly') }}</label>
@@ -206,7 +207,7 @@
                                 <i>RM</i>
                             </span>
                         </div>
-                        <input class="form-control" type="text" value="{{ $user->parent ? $user->parent->agent_code : '' }}" readonly>
+                        <input class="form-control" type="text" value="{{ $user->commissions ? $user->commissions->mo_overriding_comm : '0.00' }}" readonly>
                     </div>
                 </div>
                 <div class="form-group col-md-4">

@@ -17,10 +17,10 @@ class Order extends Model
     use HasFactory;
 
     public const ORDER_STATUS_SELECT = [
-        'pending'    => 'Pending',
-        'inprogress' => 'In Progress',
-        'completed'  => 'Completed',
-        'rejected'   => 'Rejected',
+        'Pending'    => 'Pending',
+        'In Progress' => 'In Progress',
+        'Completed'  => 'Completed',
+        'Rejected'   => 'Rejected',
     ];
 
     public $table = 'orders';

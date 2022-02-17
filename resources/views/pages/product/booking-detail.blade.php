@@ -34,7 +34,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-5">
                                 <label for="full_name">{{ trans('cruds.customer.fields.full_name') }}</label>
-                                <input class="form-control" id="full_name" type="name" value="{{ old('full_name', $customer->full_name) }}" readonly>
+                                <input class="form-control" id="full_name" type="name" value="{{ $customer->full_name }}" readonly>
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="id_type">{{ trans('cruds.customer.fields.id_type') }}</label>
@@ -42,21 +42,21 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="id_number">{{ trans('cruds.customer.fields.id_number') }}</label>
-                                <input class="form-control" id="id_number" type="text" value="{{ $customer->id_number }}" readonly>
+                                <input class="form-control" id="id_number" type="text" value="{{ old('id_number', $customer->id_number) }}" readonly>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="contact_person_name">{{ trans('cruds.customer.fields.contact_person_name') }}</label>
-                                <input class="form-control" id="contact_person_name" type="text" value="{{ $customer->contact_person_name }}" readonly>
+                                <input class="form-control" id="contact_person_name" type="text" value="{{ old('contact_person_name', $customer->contact_person_name) }}" readonly>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="contact_person_no">{{ trans('cruds.customer.fields.contact_person_no') }}</label>
-                                <input class="form-control" id="contact_person_no" type="text" value="{{ $customer->contact_person_no }}" readonly>
+                                <input class="form-control" id="contact_person_no" type="text" value="{{ old('contact_person_no', $customer->contact_person_no) }}" readonly>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="email">{{ trans('cruds.customer.fields.email') }}</label>
-                                <input class="form-control" id="email" type="text" value="{{ $customer->email }}" readonly>
+                                <input class="form-control" id="email" type="text" value="{{ old('email', $customer->email) }}" readonly>
                             </div>
                         </div>
                         <hr>
@@ -116,25 +116,25 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="address_1">{{ trans('cruds.customer.fields.address_1') }}</label>
-                                <input class="form-control" id="address_1" type="text" value="{{ $customer->address_1 }}" readonly>
+                                <input class="form-control" id="address_1" type="text" value="{{ old('address_1', $customer->address_1) }}" readonly>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="address_2">{{ trans('cruds.customer.fields.address_2') }}</label>
-                                <input class="form-control" id="address_2" type="text" value="{{ $customer->address_2 }}" readonly>
+                                <input class="form-control" id="address_2" type="text" value="{{ old('address_2', $customer->address_2) }}" readonly>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="city">{{ trans('cruds.customer.fields.city') }}</label>
-                                <input class="form-control" id="city" type="text" value="{{ $customer->city }}" readonly>
+                                <input class="form-control" id="city" type="text" value="{{ old('city', $customer->city) }}" readonly>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="state">{{ trans('cruds.customer.fields.state') }}</label>
-                                <input class="form-control" id="state" type="text" value="{{ $customer->state }}" readonly>
+                                <input class="form-control" id="state" type="text" value="{{ old('state', $customer->state) }}" readonly>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="postcode">{{ trans('cruds.customer.fields.postcode') }}</label>
-                                <input class="form-control" id="postcode" type="text" value="{{ $customer->postcode }}" readonly>
+                                <input class="form-control" id="postcode" type="text" value="{{ old('postcode', $customer->postcode) }}" readonly>
                             </div>
                         </div>
                         <hr>
@@ -143,7 +143,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="mode">{{ trans('cruds.customer.fields.mode') }}</label>
-                                <input class="form-control" id="mode" type="text" value="{{ $customer->mode }}" readonly>
+                                <input class="form-control" id="mode" type="text" value="{{ old('mode', $customer->mode) }}" readonly>
                             </div>
                             {{-- <div class="form-group col-md-6">
                                 <label for="address_2">{{ trans('cruds.customer.fields.address_2') }}</label>
