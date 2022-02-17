@@ -9,6 +9,7 @@ use App\Http\Requests\StoreProductCategoryRequest;
 use App\Http\Requests\UpdateProductCategoryRequest;
 use App\Models\ProductCategory;
 use Gate;
+use Alert;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,6 +53,7 @@ class ProductCategoryController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $productCategory->id]);
         }
 
+        alert()->success(__('global.update_success'))->toToast();
         return redirect()->route('admin.product-categories.index');
     }
 
@@ -80,6 +82,7 @@ class ProductCategoryController extends Controller
             $productCategory->photo->delete();
         }
 
+        alert()->success(__('global.update_success'))->toToast();
         return redirect()->route('admin.product-categories.index');
     }
 
@@ -98,6 +101,7 @@ class ProductCategoryController extends Controller
 
         $productCategory->delete();
 
+        alert()->success(__('global.update_success'))->toToast();
         return back();
     }
 

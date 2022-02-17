@@ -43,9 +43,22 @@
                                                         @foreach($users as $user)
                                                             @if($user->approved == 1)
                                                                 <option value="{{ $user->id }}" {{ old('parent_id') == $user->id ? 'selected' : '' }}>{{ $user->agent_code }}</option>
+                                                            @endif
+
+                                                            @if($user->childUsers->count())
                                                                 @foreach($user->childUsers as $childUser)
                                                                     @if($childUser->approved == 1)
-                                                                        <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}</option>
+                                                                        <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
+                                                                        </option>
+                                                                    @endif
+
+                                                                    @if($childUser->childUsers->count())
+                                                                        @foreach($childUser->childUsers as $childUser)
+                                                                            @if($childUser->approved == 1)
+                                                                                <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
+                                                                                </option>
+                                                                            @endif
+                                                                        @endforeach
                                                                     @endif
                                                                 @endforeach
                                                             @endif

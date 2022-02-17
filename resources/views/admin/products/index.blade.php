@@ -139,13 +139,13 @@
                             <td>
                                 @can('product_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.products.show', $product->id) }}">
-                                        {{ trans('global.view') }}
+                                        <i class="fas fa-eye"></i>
                                     </a>
                                 @endcan
 
                                 @can('product_edit')
                                     <a class="btn btn-xs btn-info" href="{{ route('admin.products.edit', $product->id) }}">
-                                        {{ trans('global.edit') }}
+                                        <i class="fas fa-pencil-alt"></i>
                                     </a>
                                 @endcan
 
@@ -153,7 +153,9 @@
                                     <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                        <button type="submit" class="btn btn-xs btn-danger">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
                                     </form>
                                 @endcan
                             </td>

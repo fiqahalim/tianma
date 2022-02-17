@@ -36,12 +36,12 @@
                         <th>
                             {{ trans('cruds.user.fields.name') }}
                         </th>
-                        <th>
+                        {{-- <th>
                             {{ trans('cruds.user.fields.id_type') }}
                         </th>
                         <th>
                             {{ trans('cruds.user.fields.id_number') }}
-                        </th>
+                        </th> --}}
                         <th>
                             {{ trans('cruds.user.fields.email') }}
                         </th>
@@ -54,15 +54,18 @@
                         <th>
                             {{ trans('cruds.user.fields.verified') }}
                         </th>
-                        <th>
+                        {{-- <th>
                             {{ trans('cruds.user.fields.contact_no') }}
-                        </th>
+                        </th> --}}
                         <th>
                             {{ trans('cruds.user.fields.agent_code') }}
                         </th>
                         <th>
                             {{ trans('cruds.user.fields.roles') }}
                         </th>
+                        {{-- <th>
+                            {{ trans('cruds.commission.fields.comm_monthly') }}
+                        </th> --}}
                         {{-- <th>
                             {{ trans('cruds.user.fields.email_verified_at') }}
                         </th>
@@ -110,12 +113,12 @@
                             <td>
                                 {{ $user->name ?? '' }}
                             </td>
-                            <td>
+                            {{-- <td>
                                 {{ App\Models\User::ID_TYPE_SELECT[$user->id_type] ?? '' }}
                             </td>
                             <td>
                                 {{ $user->id_number ?? '' }}
-                            </td>
+                            </td> --}}
                             <td>
                                 {{ $user->email ?? '' }}
                             </td>
@@ -130,9 +133,9 @@
                                 <span style="display:none">{{ $user->verified ?? '' }}</span>
                                 <input type="checkbox" disabled="disabled" {{ $user->verified ? 'checked' : '' }}>
                             </td>
-                            <td>
+                            {{-- <td>
                                 {{ $user->contact_no ?? '' }}
-                            </td>
+                            </td> --}}
                             <td>
                                 {{ $user->agent_code ?? '' }}
                             </td>
@@ -143,8 +146,8 @@
                             </td>
                             {{-- <td>
                                 {{ $user->email_verified_at ?? '' }}
-                            </td>
-                            <td>
+                            </td> --}}
+                            {{-- <td>
                                 {{ $user->passport_issue_date ?? '' }}
                             </td>
                             <td>
@@ -174,13 +177,13 @@
                             <td>
                                 @can('user_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.users.show', $user->id) }}">
-                                        {{ trans('global.view') }}
+                                        <i class="fas fa-eye"></i>
                                     </a>
                                 @endcan
 
                                 @can('user_edit')
                                     <a class="btn btn-xs btn-info" href="{{ route('admin.users.edit', $user->id) }}">
-                                        {{ trans('global.edit') }}
+                                        <i class="fas fa-pencil-alt"></i>
                                     </a>
                                 @endcan
 
@@ -188,7 +191,9 @@
                                     <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                        <button type="submit" class="btn btn-xs btn-danger">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
                                     </form>
                                 @endcan
                             </td>

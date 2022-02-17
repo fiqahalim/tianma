@@ -11,7 +11,15 @@
         </li>
     </ol>
 </nav>
+
 <div class="container-lg">
+    <div style="margin-bottom: 10px;" class="row">
+        <div class="col-lg-12">
+            <a class="btn btn-success" href="">
+                {{ trans('global.add') }} {{ trans('cruds.user.title_singular') }}
+            </a>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="card mb-4">

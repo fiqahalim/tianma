@@ -9,10 +9,10 @@ use Illuminate\Http\Response;
 
 class UpdateCustomerRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return Gate::allows('customer_edit');
-    }
+    // public function authorize()
+    // {
+    //     return Gate::allows('customer_edit');
+    // }
 
     public function rules()
     {

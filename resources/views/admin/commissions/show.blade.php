@@ -30,7 +30,7 @@
                             {{ trans('cruds.commission.fields.commission') }}
                         </th>
                         <td>
-                            {{ $commission->commission }}
+                            {{ $commission->mo_overriding_comm }}
                         </td>
                     </tr>
                     <tr>
@@ -38,7 +38,7 @@
                             {{ trans('cruds.commission.fields.increased_commission') }}
                         </th>
                         <td>
-                            {{ $commission->increased_commission }}
+                            {{ $commission->mo_spin_off ?? 'Not eligible yet' }}
                         </td>
                     </tr>
                     <tr>
@@ -54,7 +54,7 @@
                             {{ trans('cruds.commission.fields.order') }}
                         </th>
                         <td>
-                            {{ $commission->order->ref_no ?? '' }}
+                            #{{ $commission->orders->ref_no ?? '' }}
                         </td>
                     </tr>
                 </tbody>

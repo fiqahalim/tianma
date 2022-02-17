@@ -111,6 +111,18 @@
                         {{ trans('cruds.userManagement.title') }}
                     </a>
                     <ul class="c-sidebar-nav-dropdown-items">
+                        @can('user_access')
+                            <li class="c-sidebar-nav-item">
+                                <a href="{{ route("admin.users.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/users") || request()->is("admin/users/*") ? "c-active" : "" }}">
+                                    {{ trans('cruds.user.title') }}
+                                </a>
+                            </li>
+                        @endcan
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route('admin.users.show', Auth::user()->id) }}" class="c-sidebar-nav-link {{ request()->is("admin/users") || request()->is("admin/users/*") ? "c-active" : "" }}">
+                                {{ trans('cruds.user.fields.hierarchies') }}
+                            </a>
+                        </li>
                         @can('permission_access')
                             <li class="c-sidebar-nav-item">
                                 <a href="{{ route("admin.permissions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/permissions") || request()->is("admin/permissions/*") ? "c-active" : "" }}">
@@ -122,13 +134,6 @@
                             <li class="c-sidebar-nav-item">
                                 <a href="{{ route("admin.roles.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/roles") || request()->is("admin/roles/*") ? "c-active" : "" }}">
                                     {{ trans('cruds.role.title') }}
-                                </a>
-                            </li>
-                        @endcan
-                        @can('user_access')
-                            <li class="c-sidebar-nav-item">
-                                <a href="{{ route("admin.users.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/users") || request()->is("admin/users/*") ? "c-active" : "" }}">
-                                    {{ trans('cruds.user.title') }}
                                 </a>
                             </li>
                         @endcan
@@ -226,18 +231,25 @@
                         </a>
                     </li>
                     <li class="c-sidebar-nav-item">
-                        <a href="{{ route('user.myDownline') }}" class="c-sidebar-nav-link">
+                        <a href="{{ route('user.my-downline.index') }}" class="c-sidebar-nav-link">
                             {{ trans('global.downline.my_downline') }}
                         </a>
                     </li>
                 </ul>
             </li>
 
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("user.my-orders.index") }}" class="c-sidebar-nav-link">
+                    <i class="fa-fw fab fa-first-order-alt c-sidebar-nav-icon"></i>
+                        {{ trans('cruds.order.title') }}
+                </a>
+            </li>
+
             {{-- Products --}}
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('user.products.index') }}" class="c-sidebar-nav-link">
                     <i class="fa-fw fas fa-shopping-bag c-sidebar-nav-icon"></i>
-                     {{ trans('global.products.title') }}
+                        {{ trans('global.products.title') }}
                 </a>
             </li>
 
@@ -245,12 +257,12 @@
             <li class="c-sidebar-nav-item">
                 <a href="#" class="c-sidebar-nav-link">
                     <i class="fa-fw fas fa-folder c-sidebar-nav-icon"></i>
-                     {{ trans('global.documents.title') }}
+                        {{ trans('global.documents.title') }}
                 </a>
             </li>
 
             {{-- Reports --}}
-            <li class="c-sidebar-nav-dropdown">
+            {{-- <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa-fw fas fa-file-excel-o c-sidebar-nav-icon"></i>
                     {{ trans('global.reports.title') }}
@@ -262,7 +274,7 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li> --}}
 
             {{-- Settings --}}
             <li class="c-sidebar-nav-dropdown">
@@ -290,15 +302,13 @@
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('home.help') }}" class="c-sidebar-nav-link">
                     <i class="c-sidebar-nav-icon fas fa-question-circle"></i>
-                    {{ trans('global.helps') }}
+                        {{ trans('global.helps') }}
                 </a>
             </li>
             <li class="c-sidebar-nav-item">
                 <a href="#" class="c-sidebar-nav-link" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
-                    <i class="c-sidebar-nav-icon fas fa-fw fa-sign-out-alt">
-
-                    </i>
-                    {{ trans('global.logout') }}
+                    <i class="c-sidebar-nav-icon fas fa-fw fa-sign-out-alt"></i>
+                        {{ trans('global.logout') }}
                 </a>
             </li>
         </ul>

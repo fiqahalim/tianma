@@ -73,14 +73,14 @@
                             {{ $customer->contact_person_no }}
                         </td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th>
                             {{ trans('cruds.customer.fields.birth_date') }}
                         </th>
                         <td>
                             {{ $customer->birth_date }}
                         </td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th>
                             {{ trans('cruds.customer.fields.postcode') }}

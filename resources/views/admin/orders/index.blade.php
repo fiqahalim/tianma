@@ -78,10 +78,10 @@
                                 {{ $order->amount ?? '' }}
                             </td>
                             <td>
-                                {{ App\Models\Order::ORDER_STATUS_SELECT[$order->order_status] ?? '' }}
+                                {{ $order->order_status ?? '' }}
                             </td>
                             <td>
-                                {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y') }}
+                                {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y H:i:s') }}
                             </td>
                             <td>
                                 <span style="display:none">{{ $order->approved ?? '' }}</span>
@@ -89,26 +89,23 @@
                             </td>
                             <td>
                                 {{ $order->customer->full_name ?? '' }}
-                                {{-- {{ dd($order->commissions) }} --}}
                             </td>
                             <td>
                                 {{ $order->createdBy->agent_code ?? '' }}
                             </td>
                             <td>
-                                @if($order->approved == 1)
-                                    {{ $order->commissions->mo_overriding_comm ?? '' }}
-                                @endif
+                                RM {{ $order->commissions->mo_overriding_comm ?? '' }}
                             </td>
                             <td>
                                 @can('order_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.orders.show', $order->id) }}">
-                                        {{ trans('global.view') }}
+                                        <i class="fas fa-eye"></i>
                                     </a>
                                 @endcan
 
                                 @can('order_edit')
                                     <a class="btn btn-xs btn-info" href="{{ route('admin.orders.edit', $order->id) }}">
-                                        {{ trans('global.edit') }}
+                                        <i class="fas fa-pencil-alt"></i>
                                     </a>
                                 @endcan
 
@@ -116,7 +113,9 @@
                                     <form action="{{ route('admin.orders.destroy', $order->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                        <button type="submit" class="btn btn-xs btn-danger">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
                                     </form>
                                 @endcan
                             </td>

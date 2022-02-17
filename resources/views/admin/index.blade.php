@@ -3,17 +3,19 @@
 @section('content')
 <div class="content">
     <div class="row">
-        <div class="col-xl-4 col-md-6 mb-4">
+        <div class="col-xl-6 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Pending Agents Approval
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                {{ $agents }}
-                            </div>
+                            <a href="{{ route('admin.users.index') }}">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Pending Agents Approval
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    {{ $agents }}
+                                </div>
+                            </a>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-user fa-2x text-gray-300">
@@ -23,7 +25,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-6 mb-4">
+        {{-- <div class="col-xl-4 col-md-6 mb-4">
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
@@ -42,21 +44,23 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-xl-4 col-md-6 mb-4">
+        </div> --}}
+        <div class="col-xl-6 col-md-6 mb-4">
             <div class="card border-left-warning shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                Pending Order Approval
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                {{ $orders }}
-                            </div>
+                            <a href="{{ route("admin.orders.index") }}">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                    Pending Order Approval
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    {{ $orders }}
+                                </div>
+                            </a>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-comments fa-2x text-gray-300">
+                            <i class="fas fa-clipboard-list fa-2x text-gray-300">
                             </i>
                         </div>
                     </div>
@@ -80,9 +84,9 @@
                                     <th width="10">
 
                                     </th>
-                                    <th>
+                                    {{-- <th>
                                         {{ trans('cruds.order.fields.id') }}
-                                    </th>
+                                    </th> --}}
                                     <th>
                                         {{ trans('cruds.order.fields.ref_no') }}
                                     </th>
@@ -105,7 +109,7 @@
                                         {{ trans('cruds.order.fields.created_by') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.order.fields.commissions') }}
+                                        {{ trans('cruds.order.fields.commissions') }} Per Order
                                     </th>
                                     <th>
                                         &nbsp;
@@ -114,24 +118,25 @@
                             </thead>
                             <tbody>
                                 @foreach($allOrders as $key => $order)
+
                                     <tr data-entry-id="{{ $order->id }}">
                                         <td>
 
                                         </td>
-                                        <td>
+                                        {{-- <td>
                                             {{ $order->id ?? '' }}
-                                        </td>
+                                        </td> --}}
                                         <td>
-                                            {{ $order->ref_no ?? '' }}
+                                            #{{ $order->ref_no ?? '' }}
                                         </td>
                                         <td>
                                             {{ $order->amount ?? '' }}
                                         </td>
                                         <td>
-                                            {{ App\Models\Order::ORDER_STATUS_SELECT[$order->order_status] ?? '' }}
+                                            {{ $order->order_status ?? '' }}
                                         </td>
                                         <td>
-                                            {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y i') }}
+                                            {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y H:i:s') }}
                                         </td>
                                         <td>
                                             <span style="display:none">{{ $order->approved ?? '' }}</span>
@@ -144,14 +149,13 @@
                                             {{ $order->createdBy->agent_code ?? '' }}
                                         </td>
                                         <td>
-                                            @if($order->approved == 1)
-                                                {{ $order->commissions->mo_overriding_comm ?? '' }}
-                                            @endif
+                                            RM {{ $order->commissions->mo_overriding_comm ?? '' }}
                                         </td>
                                         <td>
                                             @can('order_edit')
                                                 <a class="btn btn-xs btn-info" href="{{ route('admin.orders.edit', $order->id) }}">
-                                                    {{ trans('global.edit') }}
+                                                    {{-- {{ trans('global.edit') }} --}}
+                                                    <i class="fas fa-pencil-alt"></i>
                                                 </a>
                                             @endcan
                                         </td>

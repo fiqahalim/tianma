@@ -29,7 +29,7 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.customer.fields.full_name_helper') }}</span>
                 </div>
-                <div class="form-group col-md-2">
+                <div class="form-group col-md-3">
                     <label>{{ trans('cruds.customer.fields.id_type') }}</label>
                     <select class="form-control {{ $errors->has('id_type') ? 'is-invalid' : '' }}" name="id_type" id="id_type">
                         <option value disabled {{ old('id_type', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
@@ -44,7 +44,7 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.customer.fields.id_type_helper') }}</span>
                 </div>
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4">
                     <label class="required" for="id_number">{{ trans('cruds.customer.fields.id_number') }}</label>
                     <input class="form-control {{ $errors->has('id_number') ? 'is-invalid' : '' }}" type="text" name="id_number" id="id_number" value="{{ old('id_number', $customer->id_number) }}" required>
                     @if($errors->has('id_number'))
@@ -54,7 +54,7 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.customer.fields.id_number_helper') }}</span>
                 </div>
-                <div class="form-group col-md-2">
+                {{-- <div class="form-group col-md-2">
                     <label for="birth_date">{{ trans('cruds.customer.fields.birth_date') }}</label>
                     <input class="form-control date {{ $errors->has('birth_date') ? 'is-invalid' : '' }}" type="text" name="birth_date" id="birth_date" value="{{ old('birth_date', $customer->birth_date) }}">
                     @if($errors->has('birth_date'))
@@ -63,7 +63,7 @@
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.customer.fields.birth_date_helper') }}</span>
-                </div>
+                </div> --}}
             </div>
 
             <div class="form-row">
