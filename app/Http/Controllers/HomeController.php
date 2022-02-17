@@ -39,21 +39,14 @@ class HomeController extends Controller
             ->get()
             ->count();
 
-        $allOrders = Order::get();
+        $allOrders = Order::with(['commissions', 'customer'])->get();
 
-        $myComms = Order::where('created_by', auth()->user()->id)
-            ->get();
+        $agentComms = Order::join('commissions', 'commissions.order_id', '=', 'orders.id')
+            ->where('orders.created_by', auth()->user()->id)
+            ->where('commissions.user_id', auth()->user()->id)
+            ->get(['orders.*', 'commissions.mo_overriding_comm']);
 
-        $amounts = OrderItem::select('amount')
-            ->where('user_id', auth()->user()->id)
-            ->get();
-
-        $myAmount = 0;
-        foreach($amounts as $keys => $amount) {
-            $myAmount = $amount['amount'];
-        }
-
-        return view('home', compact('customers','agents','myAmount', 'orders', 'allOrders', 'myComms'));
+        return view('home', compact('customers','agents','orders', 'allOrders', 'agentComms'));
     }
 
     public function help()

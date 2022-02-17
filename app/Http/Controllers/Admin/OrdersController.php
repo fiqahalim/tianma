@@ -8,6 +8,7 @@ use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
 use Gate;
+use Alert;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -33,6 +34,7 @@ class OrdersController extends Controller
     {
         $order = Order::create($request->all());
 
+        alert()->success(__('global.update_success'))->toToast();
         return redirect()->route('admin.orders.index');
     }
 
@@ -40,7 +42,7 @@ class OrdersController extends Controller
     {
         abort_if(Gate::denies('order_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $order->load('customer', 'team');
+        $order->load('customer', 'team', 'createdBy', 'commissions');
 
         return view('admin.orders.edit', compact('order'));
     }
@@ -49,6 +51,7 @@ class OrdersController extends Controller
     {
         $order->update($request->all());
 
+        alert()->success(__('global.update_success'))->toToast();
         return redirect()->route('admin.orders.index');
     }
 
@@ -67,6 +70,7 @@ class OrdersController extends Controller
 
         $order->delete();
 
+        alert()->success(__('global.update_success'))->toToast();
         return back();
     }
 

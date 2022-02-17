@@ -61,7 +61,7 @@ class Order extends Model
 
     public function commissions()
     {
-        return $this->belongsTo(Commission::class);
+        return $this->belongsTo(Commission::class, 'id', 'order_id');
     }
 
     protected function serializeDate(DateTimeInterface $date)

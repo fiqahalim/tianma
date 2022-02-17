@@ -20,37 +20,37 @@
 
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="commission">{{ trans('cruds.commission.fields.commission') }}</label>
+                    <label for="mo_overriding_comm">{{ trans('cruds.commission.fields.commission') }}</label>
                     <div class="input-group mb-3">
-                        <input class="form-control {{ $errors->has('commission') ? 'is-invalid' : '' }}" type="number" name="commission" id="commission" value="{{ old('commission', $commission->commission) }}" step="0.01">
-                        @if($errors->has('commission'))
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>RM</i>
+                            </span>
+                        </div>
+                        <input class="form-control {{ $errors->has('mo_overriding_comm') ? 'is-invalid' : '' }}" type="number" name="commission" id="mo_overriding_comm" value="{{ old('mo_overriding_comm', $commission->mo_overriding_comm) }}" step="0.01" readonly>
+                        @if($errors->has('mo_overriding_comm'))
                             <div class="invalid-feedback">
-                                {{ $errors->first('commission') }}
+                                {{ $errors->first('mo_overriding_comm') }}
                             </div>
                         @endif
                         <span class="help-block">{{ trans('cruds.commission.fields.commission_helper') }}</span>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i>%</i>
-                            </span>
-                        </div>
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="increased_commission">{{ trans('cruds.commission.fields.increased_commission') }}</label>
+                    <label for="mo_spin_off">{{ trans('cruds.commission.fields.increased_commission') }}</label>
                     <div class="input-group mb-3">
-                        <input class="form-control {{ $errors->has('increased_commission') ? 'is-invalid' : '' }}" type="number" name="increased_commission" id="increased_commission" value="{{ old('increased_commission', $commission->increased_commission) }}" step="0.01">
-                        @if($errors->has('increased_commission'))
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>RM</i>
+                            </span>
+                        </div>
+                        <input class="form-control {{ $errors->has('mo_spin_off') ? 'is-invalid' : '' }}" type="number" name="mo_spin_off" id="mo_spin_off" value="{{ old('mo_spin_off', $commission->mo_spin_off) }}" step="0.01" readonly>
+                        @if($errors->has('mo_spin_off'))
                             <div class="invalid-feedback">
-                                {{ $errors->first('increased_commission') }}
+                                {{ $errors->first('mo_spin_off') }}
                             </div>
                         @endif
                         <span class="help-block">{{ trans('cruds.commission.fields.increased_commission_helper') }}</span>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i>%</i>
-                            </span>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -58,11 +58,7 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="user_id">{{ trans('cruds.commission.fields.user') }}</label>
-                    <select class="form-control form-select {{ $errors->has('user') ? 'is-invalid' : '' }}" name="user_id" id="user_id">
-                        @foreach($users as $id => $entry)
-                            <option value="{{ $id }}" {{ (old('user_id') ? old('user_id') : $commission->user->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                        @endforeach
-                    </select>
+                    <input class="form-control {{ $errors->has('user') ? 'is-invalid' : '' }}" type="text" name="user_id" id="user_id" value="{{ $commission->user->agent_code }}" readonly>
                     @if($errors->has('user'))
                         <div class="invalid-feedback">
                             {{ $errors->first('user') }}
@@ -72,14 +68,10 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="order_id">{{ trans('cruds.commission.fields.order') }}</label>
-                    <select class="form-control form-select {{ $errors->has('order') ? 'is-invalid' : '' }}" name="order_id" id="order_id">
-                        @foreach($orders as $id => $entry)
-                            <option value="{{ $id }}" {{ (old('order_id') ? old('order_id') : $commission->order->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                        @endforeach
-                    </select>
-                    @if($errors->has('order'))
+                    <input class="form-control {{ $errors->has('orders') ? 'is-invalid' : '' }}" type="text" name="order_id" id="order_id" value="#{{ $commission->orders->ref_no }}" readonly>
+                    @if($errors->has('orders'))
                         <div class="invalid-feedback">
-                            {{ $errors->first('order') }}
+                            {{ $errors->first('orders') }}
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.commission.fields.order_helper') }}</span>

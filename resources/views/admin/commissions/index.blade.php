@@ -30,11 +30,11 @@
                         <th width="10">
 
                         </th>
-                        <th>
+                        {{-- <th>
                             {{ trans('cruds.commission.fields.id') }}
-                        </th>
+                        </th> --}}
                         <th>
-                            {{ trans('cruds.commission.fields.commission') }}
+                            {{ trans('cruds.commission.fields.comm_per_order') }}
                         </th>
                         <th>
                             {{ trans('cruds.commission.fields.increased_commission') }}
@@ -44,6 +44,9 @@
                         </th>
                         <th>
                             {{ trans('cruds.commission.fields.order') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.customer.fields.mode') }}
                         </th>
                         <th>
                             &nbsp;
@@ -56,31 +59,34 @@
                             <td>
 
                             </td>
-                            <td>
+                            {{-- <td>
                                 {{ $commission->id ?? '' }}
+                            </td> --}}
+                            <td>
+                                {{ $commission->mo_overriding_comm ?? '' }}
                             </td>
                             <td>
-                                {{ $commission->commission ?? '' }}
-                            </td>
-                            <td>
-                                {{ $commission->increased_commission ?? '' }}
+                                {{ $commission->mo_spin_off ?? 'Not eligible yet' }}
                             </td>
                             <td>
                                 {{ $commission->user->agent_code ?? '' }}
                             </td>
                             <td>
-                                {{ $commission->order->ref_no ?? '' }}
+                                #{{ $commission->orders->ref_no ?? '' }}
+                            </td>
+                            <td>
+                                {{ $commission->orders->customer->mode ?? '' }}
                             </td>
                             <td>
                                 @can('commission_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.commissions.show', $commission->id) }}">
-                                        {{ trans('global.view') }}
+                                        <i class="fas fa-eye"></i>
                                     </a>
                                 @endcan
 
                                 @can('commission_edit')
                                     <a class="btn btn-xs btn-info" href="{{ route('admin.commissions.edit', $commission->id) }}">
-                                        {{ trans('global.edit') }}
+                                        <i class="fas fa-pencil-alt"></i>
                                     </a>
                                 @endcan
 
@@ -88,7 +94,9 @@
                                     <form action="{{ route('admin.commissions.destroy', $commission->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                        <button type="submit" class="btn btn-xs btn-danger">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
                                     </form>
                                 @endcan
                             </td>
