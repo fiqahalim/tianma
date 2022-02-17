@@ -88,7 +88,7 @@
                             </div>
                         </div>
 
-                        @if ($customer->mode == 'installment')
+                        @if ($customer->mode == 'Installment')
                             <div class="row g-0 border-bottom">
                                 <div class="col-md-6 border-right">
                                     <div class="p-3 d-flex justify-content-center align-items-center">

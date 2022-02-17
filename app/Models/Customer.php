@@ -16,13 +16,13 @@ class Customer extends Model
     use HasFactory;
 
     public const ID_TYPE_SELECT = [
-        'passport' => 'Passport',
-        'nric'     => 'NRIC',
+        'Passport' => 'Passport',
+        'NRIC'     => 'NRIC',
     ];
 
     public const MODE_SELECT = [
-        'installment'   => 'Installment',
-        'full_payment'  => 'Full Payment',
+        'Installment'   => 'Installment',
+        'Full Payment'  => 'Full Payment',
     ];
 
     public $table = 'customers';

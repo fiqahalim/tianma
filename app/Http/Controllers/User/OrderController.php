@@ -51,7 +51,7 @@ class OrderController extends Controller
         $order->save();
 
         // payment mode calculation
-        if ($customer->mode == 'installment') {
+        if ($customer->mode == 'Installment') {
             $paymentInfo = $this->installmentCalculate();
             $commissions = $this->commissions();
         } else {
