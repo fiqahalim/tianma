@@ -35,6 +35,7 @@ class CustomerController extends Controller
     {
         $customer = Customer::create($request->all());
 
+        alert()->success(__('global.update_success'))->toToast();
         return redirect()->route('admin.customers.index');
     }
 
@@ -49,6 +50,7 @@ class CustomerController extends Controller
     {
         $customer->update($request->all());
 
+        alert()->success(__('global.update_success'))->toToast();
         return redirect()->route('admin.customers.index');
     }
 
@@ -65,6 +67,7 @@ class CustomerController extends Controller
 
         $customer->delete();
 
+        alert()->success(__('global.update_success'))->toToast();
         return back();
     }
 

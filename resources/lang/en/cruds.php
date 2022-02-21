@@ -316,7 +316,7 @@ return [
         ],
     ],
     'order' => [
-        'title'          => 'Orders',
+        'title'          => 'Order Management',
         'title_singular' => 'Order',
         'fields'         => [
             'id'                  => 'ID',
@@ -345,6 +345,8 @@ return [
             'created_by_helper'   => ' ',
             'commissions'         => 'Commissions',
             'commissions_helper'  => ' ',
+            'orderList'           => 'Order Lists',
+            'createOrder'         => 'Create New Order',
         ],
     ],
     'team' => [

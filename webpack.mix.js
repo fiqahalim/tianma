@@ -23,7 +23,8 @@ mix.postCss('resources/css/app.css', 'public/css', [
 
 mix.css(cssPath + 'pages/tree.css', 'public/css/pages')
     .css(cssPath + 'pages/booking.css', 'public/css/pages')
-    .css(cssPath + 'pages/order.css', 'public/css/pages');
+    .css(cssPath + 'pages/order.css', 'public/css/pages')
+    .css(cssPath + 'pages/invoice.css', 'public/css/pages');
 
 mix.webpackConfig({
     output: {

@@ -7,6 +7,7 @@ use App\Http\Requests\MassDestroyCommissionRequest;
 use App\Http\Requests\StoreCommissionRequest;
 use App\Http\Requests\UpdateCommissionRequest;
 use App\Models\Commission;
+use App\Models\Installment;
 use App\Models\Order;
 use App\Models\User;
 use Gate;

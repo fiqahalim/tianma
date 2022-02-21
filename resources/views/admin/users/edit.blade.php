@@ -192,7 +192,7 @@
                 {{-- Commissions --}}
                 <div class="form-group col-md-4">
                     <label>{{ trans('cruds.ranking.currentRank') }}</label>
-                    <input class="form-control" type="text" name="rankings_id" id="rankings_id" value="{{ $user->rankings->category }}" readonly>
+                    <input class="form-control" type="text" name="rankings_id" id="rankings_id" value="{{ $user->rankings ? $user->rankings->category : '' }}" readonly>
                     {{-- <select class="form-control form-select {{ $errors->has('rankings') ? 'is-invalid' : '' }}" name="ranking_id" id="rankings_id" disabled>
                         @foreach($rankings as $id => $data)
                             <option value="{{ $id }}" {{ (old('rankings_id') ? old('rankings_id') : $user->rankings->id ?? '') == $id ? 'selected' : '' }}>{{ $data }}</option>

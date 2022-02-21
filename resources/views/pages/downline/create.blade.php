@@ -15,7 +15,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route(" user.my-downline.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("user.my-downline.store") }}" enctype="multipart/form-data">
             @csrf
 
             <div class="form-row">
@@ -165,7 +165,7 @@
 
             {{-- Teams Details --}}
             <div class="form-row">
-                <div class="form-group col-md-4">
+                {{-- <div class="form-group col-md-4">
                     <label for="team_id">{{ trans('cruds.user.fields.team') }}</label>
                     <select class="form-control form-select {{ $errors->has('team') ? 'is-invalid' : '' }}" name="team_id" id="team_id" required>
                         @foreach($teams as $id => $entry)
@@ -178,47 +178,27 @@
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.user.fields.team_helper') }}</span>
-                </div>
+                </div> --}}
                 <div class="form-group col-md-4">
                     <label class="required">{{ trans('cruds.user.fields.ref_name') }}</label>
-                    <select class="form-control form-select {{ $errors->has('parent') ? 'is-invalid' : '' }}" name="parent_id" id="parent_id">
-                        @foreach($users as $user)
-                            <option value="{{ $user->id }}" {{ old('parent_id') == $user->id ? 'selected' : '' }}>{{ $user->agent_code }}</option>
-                            @foreach($user->childUsers as $childUser)
-                                <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}</option>
-                            @endforeach
-                        @endforeach
-                    </select>
+                    <input type="text" name="parent_id" class="form-control {{ $errors->has('parent_id') ? 'is-invalid' : '' }}" id="parent_id" value="{{ Auth::user()->agent_code }}" readonly>
+
                 </div>
                 <div class="form-group col-md-4">
+                    <label class="required" for="roles">{{ trans('cruds.user.fields.roles') }}</label>
+                    <input type="text" name="parent_id" class="form-control {{ $errors->has('parent_id') ? 'is-invalid' : '' }}" id="parent_id" value="{{ $roles[2] }}" readonly>
+
+                </div>
+                {{-- <div class="form-group col-md-4">
                     <label class="required">{{ trans('cruds.ranking.title') }}</label>
                     <select class="form-control form-select {{ $errors->has('rankings') ? 'is-invalid' : '' }}" name="ranking_id" id="ranking_id">
                         @foreach($rankings as $id => $data)
                             <option value="{{ $id }}" {{ old('ranking_id') == $id ? 'selected' : '' }}>{{ $data }}</option>
                         @endforeach
                     </select>
-                </div>
+                </div> --}}
             </div>
             <hr>
-
-            <div class="form-group">
-                <label class="required" for="roles">{{ trans('cruds.user.fields.roles') }}</label>
-                <div style="padding-bottom: 4px">
-                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                </div>
-                <select class="form-control select2 {{ $errors->has('roles') ? 'is-invalid' : '' }}" name="roles[]" id="roles" multiple required>
-                    @foreach($roles as $id => $role)
-                        <option value="{{ $id }}" {{ in_array($id, old('roles', [])) ? 'selected' : '' }}>{{ $role }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('roles'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('roles') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.user.fields.roles_helper') }}</span>
-            </div>
 
             <div class="form-group pl-2">
                 <div class="form-check {{ $errors->has('approved') ? 'is-invalid' : '' }}">
@@ -235,7 +215,7 @@
             </div>
 
             <div class="form-group mt-3">
-                <a class="btn btn-default" href="{{ route('admin.users.index') }}">
+                <a class="btn btn-default" href="{{ route('user.my-downline.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
                 <button class="btn btn-danger" type="submit">
