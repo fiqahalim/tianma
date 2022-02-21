@@ -29,7 +29,7 @@ class Installment extends Model
         'order_id',
     ];
 
-    public function customer()
+    public function customers()
     {
         return $this->belongsTo(Customer::class, 'customer_id');
     }
@@ -39,7 +39,7 @@ class Installment extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function order()
+    public function orders()
     {
         return $this->belongsTo(Order::class, 'order_id');
     }

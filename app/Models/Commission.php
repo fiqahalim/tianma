@@ -52,4 +52,9 @@ class Commission extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
+
+    public function installments()
+    {
+        return $this->belongsTo(Installment::class);
+    }
 }

@@ -1,11 +1,20 @@
 @extends('layouts.admin')
 
 @section('content')
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page">{{ trans('global.products.title') }}</li>
-      </ol>
-    </nav>
+    @can('admin_only')
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">{{ trans('cruds.order.title') }}</li>
+            <li class="breadcrumb-item active" aria-current="page">{{ trans('cruds.order.fields.createOrder') }}</li>
+          </ol>
+        </nav>
+    @else
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">{{ trans('global.products.title') }}</li>
+          </ol>
+        </nav>
+    @endcan
     
     <div class="container-fluid mt-5 mb-5">
         <div class="row g-2">

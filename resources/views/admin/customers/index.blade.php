@@ -50,9 +50,9 @@
                         <th>
                             {{ trans('cruds.customer.fields.contact_person_no') }}
                         </th>
-                        <th>
+                        {{-- <th>
                             {{ trans('cruds.customer.fields.created_by') }}
-                        </th>
+                        </th> --}}
                         <th>
                             &nbsp;
                         </th>
@@ -85,9 +85,9 @@
                             <td>
                                 {{ $customer->contact_person_no ?? '' }}
                             </td>
-                            <td>
+                            {{-- <td>
                                 {{ $customer->createdBy->agent_code ?? '' }}
-                            </td>
+                            </td> --}}
                             <td>
                                 @can('customer_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.customers.show', $customer->id) }}">

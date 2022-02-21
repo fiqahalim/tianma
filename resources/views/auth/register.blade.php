@@ -31,7 +31,7 @@
                                         <div class="form-row mt-4">
                                             <div class="form-group col-md-6">
                                                 <label class="font-weight-bold required" for="agent_code">
-                                                    {{ trans('global.register.agent_code') }}
+                                                    Referral {{ trans('global.register.agent_code') }}
                                                 </label>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
@@ -41,20 +41,20 @@
                                                     </div>
                                                     <select class="form-control form-select {{ $errors->has('parent') ? 'is-invalid' : '' }}" name="parent_id" id="parent_id">
                                                         @foreach($users as $user)
-                                                            @if($user->approved == 1)
+                                                            @if($user->approved == 1 && (!is_null($user->agent_code)))
                                                                 <option value="{{ $user->id }}" {{ old('parent_id') == $user->id ? 'selected' : '' }}>{{ $user->agent_code }}</option>
                                                             @endif
 
                                                             @if($user->childUsers->count())
                                                                 @foreach($user->childUsers as $childUser)
-                                                                    @if($childUser->approved == 1)
+                                                                    @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
                                                                         <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
                                                                         </option>
                                                                     @endif
 
                                                                     @if($childUser->childUsers->count())
                                                                         @foreach($childUser->childUsers as $childUser)
-                                                                            @if($childUser->approved == 1)
+                                                                            @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
                                                                                 <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
                                                                                 </option>
                                                                             @endif

@@ -137,14 +137,14 @@
                             {{ $customer->country }}
                         </td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th>
                             {{ trans('cruds.customer.fields.created_by') }}
                         </th>
                         <td>
                             {{ $customer->createdBy->agent_code ?? '' }}
                         </td>
-                    </tr>
+                    </tr> --}}
                 </tbody>
             </table>
             <div class="form-group">

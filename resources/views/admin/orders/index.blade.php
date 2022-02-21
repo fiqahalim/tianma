@@ -3,7 +3,8 @@
 @section('content')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page">{{ trans('cruds.order.title') }}</li>
+        <li class="breadcrumb-item">{{ trans('cruds.order.title') }}</li>
+        <li class="breadcrumb-item active" aria-current="page">{{ trans('cruds.order.fields.orderList') }}</li>
     </ol>
 </nav>
 

@@ -36,11 +36,23 @@
             @endcan
 
             @can('order_access')
-                <li class="c-sidebar-nav-item">
-                    <a href="{{ route("admin.orders.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/orders") || request()->is("admin/orders/*") ? "c-active" : "" }}">
+                <li class="c-sidebar-nav-dropdown">
+                    <a class="c-sidebar-nav-dropdown-toggle" href="#">
                         <i class="fa-fw fab fa-first-order-alt c-sidebar-nav-icon"></i>
                         {{ trans('cruds.order.title') }}
                     </a>
+                    <ul class="c-sidebar-nav-dropdown-items">
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.new-order.index") }}" class="c-sidebar-nav-link">
+                                {{ trans('cruds.order.fields.createOrder') }}
+                            </a>
+                        </li>
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.orders.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/orders") || request()->is("admin/orders/*") ? "c-active" : "" }}">
+                                {{ trans('cruds.order.fields.orderList') }}
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             @endcan
 
