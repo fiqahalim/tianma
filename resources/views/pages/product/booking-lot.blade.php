@@ -11,113 +11,73 @@
     </nav>
 
     <div class="container-fluid">
-        <img src="{{ $product->photo->url ?? '/images/product/luxury_1.png' }}" class="rounded mx-auto d-block" >
-        <div class="movie-container">
-            <h5><strong>Category Selected:</strong> {{ $product->product_name }}
-            </h5>
-            <select class="form-select" aria-label="Default select example" id="wings">
-                <option selected>Please choose</option>
-                <option value="1">DA</option>
-                <option value="2">DB</option>
-                <option value="3">DC</option>
-                <option value="4">DD</option>
-            </select>
-        </div>
-        <ul class="showcase">
-            <li>
-                <div class="seat"></div>
-                <small class="font-weight-bold">Available</small>
-            </li>
-            <li>
-                <div class="seat selected"></div>
-                <small class="font-weight-bold">Selected</small>
-            </li>
-            <li>
-                <div class="seat occupied"></div>
-                <small class="font-weight-bold">Occupied</small>
-            </li>
-        </ul>
+        <form method="POST" action="" enctype="multipart/form-data">
+            @method('PUT')
+            @csrf
+            <img src="{{ $product->photo->url ?? '/images/product/luxury_1.png' }}" class="rounded mx-auto d-block" >
+            <div class="movie-container">
+                <h5><strong>Category Selected:</strong> {{ $product->product_name }}
+                </h5>
+                <select class="form-control {{ $errors->has('section') ? 'is-invalid' : '' }}" name="section" id="wings">
+                    <option selected>{{ trans('global.pleaseSelect') }}</option>
+                    <option value="DA">DA</option>
+                    <option value="DB">DB</option>
+                    <option value="DC">DC</option>
+                    <option value="DD">DD</option>
+                </select>
+                @if($errors->has('section'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('section') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.order.fields.order_status_helper') }}</span>
+            </div>
+            <ul class="showcase">
+                <li>
+                    <div class="seat"></div>
+                    <small class="font-weight-bold">Available</small>
+                </li>
+                <li>
+                    <div class="seat selected"></div>
+                    <small class="font-weight-bold">Selected</small>
+                </li>
+                <li>
+                    <div class="seat occupied"></div>
+                    <small class="font-weight-bold">Occupied</small>
+                </li>
+            </ul>
 
-        <div class="container">
-            <form method="POST" action="#">
-                @csrf
+            <div class="container">
                 <div id="container-seats">
-                    <div class="row-seat">
-                        <div id="1" class="seat"></div>
-                        <div class="seat"></div>
-                        <div class="seat"></div>
-                        <div class="seat"></div>
-                        <div class="seat"></div>
-                        <div class="seat"></div>
-                        <div class="seat"></div>
-                        <div class="seat"></div>
+                    <div class="DA GFG">
+                        @include('pages.product.components.da')
                     </div>
-                    <div class="row-seat">
-                        <div class="seat"></div>
-                        <div class="seat"></div>
-                        <div class="seat"></div>
-                        <div class="seat"></div>
-                        <div class="seat"></div>
-                        <div class="seat"></div>
-                        <div class="seat"></div>
-                        <div class="seat"></div>
+                    <div class="DB GFG">
+                        @include('pages.product.components.db')
                     </div>
-                    <div class="row-seat">
-                        <div class="seat"></div>
-                        <div class="seat occupied"></div>
-                        <div class="seat"></div>
-                        <div class="seat"></div>
-                        <div class="seat"></div>
-                        <div class="seat"></div>
-                        <div class="seat occupied"></div>
-                        <div class="seat"></div>
+                    <div class="DC GFG">
+                        @include('pages.product.components.dc')
                     </div>
-                    <div class="row-seat">
-                        <div class="seat"></div>
-                        <div class="seat"></div>
-                        <div class="seat"></div>
-                        <div class="seat"></div>
-                        <div class="seat"></div>
-                        <div class="seat"></div>
-                        <div class="seat"></div>
-                        <div class="seat"></div>
-                    </div>
-                    <div class="row-seat">
-                        <div class="seat occupied"></div>
-                        <div class="seat"></div>
-                        <div class="seat occupied"></div>
-                        <div class="seat"></div>
-                        <div class="seat occupied"></div>
-                        <div class="seat"></div>
-                        <div class="seat"></div>
-                        <div class="seat"></div>
-                    </div>
-                    <div class="row-seat">
-                        <div class="seat occupied"></div>
-                        <div class="seat occupied"></div>
-                        <div class="seat"></div>
-                        <div class="seat occupied"></div>
-                        <div class="seat"></div>
-                        <div class="seat"></div>
-                        <div class="seat"></div>
-                        <div class="seat"></div>
+                    <div class="DD GFG">
+                        @include('pages.product.components.dd')
                     </div>
                 </div>
-            </form>
 
-            <p class="text-center mt-3">
-                You have selected <span id="count">
-                    0
-                </span> lot(s)
-            </p>
+                <p class="text-center mt-3">
+                    You have selected <span id="count">
+                        0
+                    </span> lot(s)
+                </p>
 
-              <div class="text-center">
-                <a class="btn btn-outline-primary mt-2" href="{{ route('user.customerdetails.index', [$product->categories->first()->parentCategory->parentCategory->slug,
-                    $product->categories->first()->parentCategory->slug, $product->categories->first()->slug, $product->slug, $product]) }}">
-                        {{ trans('global.products.product_select') }}
-                </a>
+                  <div class="text-center">
+                    <a class="btn btn-outline-primary mt-2" href="{{ route('user.customerdetails.index', [$product->categories->first()->parentCategory->parentCategory->slug,
+                        $product->categories->first()->parentCategory->slug, $product->categories->first()->slug, $product->slug, $product]) }}">
+                            {{ trans('global.products.product_select') }}
+                    </a>
+                </div>
             </div>
-        </div>
+
+        </form>
     </div>
 @endsection
 
@@ -130,9 +90,17 @@
     <script type="text/javascript" src="{{ mix('/js/pages/booking.js') }}"></script>
     <script>
         $(document).ready(function() {
-            $('#wings').on('change', function() {
-                alert($(this).val());
-            });
+            $("select").on('change', function() {
+                $(this).find("option:selected").each(function() {
+                    var geeks = $(this).attr("value");
+                    if (geeks) {
+                        $(".GFG").not("." + geeks).hide();
+                        $("." + geeks).show();
+                    } else {
+                        $(".GFG").hide();
+                    }
+                });
+            }).change();
         });
     </script>
 @endsection

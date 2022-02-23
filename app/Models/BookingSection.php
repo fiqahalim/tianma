@@ -6,11 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use \DateTimeInterface;
 
-class ProductBooking extends Model
+class BookingSection extends Model
 {
     use HasFactory;
 
-    public $table = 'product_bookings';
+    public $table = 'booking_sections';
+
+    public const SECTION_SELECT = [
+        'DA' => 'DA',
+        'DB' => 'DB',
+        'DC' => 'DC',
+        'DD' => 'DD',
+    ];
 
     protected $dates = [
         'created_at',
@@ -18,11 +25,11 @@ class ProductBooking extends Model
     ];
 
     protected $fillable = [
-        'booking_id',
-        'customer_id',
+        'section',
         'created_at',
         'updated_at',
         'product_id',
+        'product_bookings_id',
         'booking_lots_id',
     ];
 
@@ -36,8 +43,16 @@ class ProductBooking extends Model
         return $this->belongsToMany(Product::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function productBookings()
+    {
+        return $this->belongsTo(ProductBooking::class, 'product_bookings_id');
+    }
+
     public function bookingLots()
     {
-        return $this->belongsToMany(BookingLot::class, 'booking_lots_id');
+        return $this->belongsToMany(BookingLot::class);
     }
 }

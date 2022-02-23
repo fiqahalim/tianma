@@ -104,4 +104,9 @@ class Product extends Model implements HasMedia
             ]
         ];
     }
+
+    public function bookingSections()
+    {
+        return $this->belongsToMany(BookingSection::class);
+    }
 }
