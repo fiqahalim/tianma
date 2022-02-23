@@ -38,6 +38,7 @@ class RolesController extends Controller
         $role = Role::create($request->all());
         $role->permissions()->sync($request->input('permissions', []));
 
+        alert()->success(__('global.create_success'))->toToast();
         return redirect()->route('admin.roles.index');
     }
 
@@ -57,6 +58,7 @@ class RolesController extends Controller
         $role->update($request->all());
         $role->permissions()->sync($request->input('permissions', []));
 
+        alert()->success(__('global.create_success'))->toToast();
         return redirect()->route('admin.roles.index');
     }
 
@@ -75,6 +77,7 @@ class RolesController extends Controller
 
         $role->delete();
 
+        alert()->success(__('global.create_success'))->toToast();
         return back();
     }
 

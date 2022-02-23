@@ -34,6 +34,7 @@ class ProductTagController extends Controller
     {
         $productTag = ProductTag::create($request->all());
 
+        alert()->success(__('global.create_success'))->toToast();
         return redirect()->route('admin.product-tags.index');
     }
 
@@ -48,6 +49,7 @@ class ProductTagController extends Controller
     {
         $productTag->update($request->all());
 
+        alert()->success(__('global.create_success'))->toToast();
         return redirect()->route('admin.product-tags.index');
     }
 
@@ -64,6 +66,7 @@ class ProductTagController extends Controller
 
         $productTag->delete();
 
+        alert()->success(__('global.create_success'))->toToast();
         return back();
     }
 
