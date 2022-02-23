@@ -72,6 +72,7 @@ class TeamController extends Controller
         $data['owner_id'] = auth()->user()->id;
         $team             = Team::create($data);
 
+        alert()->success(__('global.create_success'))->toToast();
         return redirect()->route('admin.teams.index');
     }
 
@@ -88,6 +89,7 @@ class TeamController extends Controller
     {
         $team->update($request->all());
 
+        alert()->success(__('global.create_success'))->toToast();
         return redirect()->route('admin.teams.index');
     }
 
@@ -106,6 +108,7 @@ class TeamController extends Controller
 
         $team->delete();
 
+        alert()->success(__('global.create_success'))->toToast();
         return back();
     }
 

@@ -34,6 +34,7 @@ class PermissionsController extends Controller
     {
         $permission = Permission::create($request->all());
 
+        alert()->success(__('global.create_success'))->toToast();
         return redirect()->route('admin.permissions.index');
     }
 
@@ -48,6 +49,7 @@ class PermissionsController extends Controller
     {
         $permission->update($request->all());
 
+        alert()->success(__('global.create_success'))->toToast();
         return redirect()->route('admin.permissions.index');
     }
 
@@ -64,6 +66,7 @@ class PermissionsController extends Controller
 
         $permission->delete();
 
+        alert()->success(__('global.create_success'))->toToast();
         return back();
     }
 
