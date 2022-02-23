@@ -27,7 +27,7 @@
             {{-- product list --}}
             <div class="col-md-9">
                 <div class="row g-2">
-                    @foreach($products as $product)
+                    @forelse($products as $product)
                         <div class="col-md-4 mb-4">
                             <div class="card h-100">
                                 <!-- Product image-->
@@ -62,7 +62,9 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    @empty
+                    <h4>No Product Availaible</h4>
+                    @endforelse
                 </div>
             </div>
             @if(get_class($products) == 'Illuminate\Pagination\LengthAwarePaginator')
