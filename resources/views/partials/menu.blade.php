@@ -258,12 +258,12 @@
             </li>
 
             {{-- Products --}}
-            <li class="c-sidebar-nav-item">
+            {{-- <li class="c-sidebar-nav-item">
                 <a href="{{ route('user.products.index') }}" class="c-sidebar-nav-link">
                     <i class="fa-fw fas fa-shopping-bag c-sidebar-nav-icon"></i>
                         {{ trans('global.products.title') }}
                 </a>
-            </li>
+            </li> --}}
 
             {{-- Documents --}}
             <li class="c-sidebar-nav-item">
