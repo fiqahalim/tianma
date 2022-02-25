@@ -114,7 +114,7 @@
                                             {{ $key+1 }}
                                         </td>
                                         <td>
-                                            {{ $order->ref_no ?? '' }}
+                                            #{{ $order->ref_no ?? '' }}
                                         </td>
                                         <td>
                                             {{ $order->amount ?? '' }}

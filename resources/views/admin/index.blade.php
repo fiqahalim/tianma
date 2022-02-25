@@ -118,48 +118,49 @@
                             </thead>
                             <tbody>
                                 @foreach($allOrders as $key => $order)
+                                    @if(!empty($order->commissions) && $order->commissions->mo_overriding_comm > 0)
+                                        <tr data-entry-id="{{ $order->id }}">
+                                            <td>
 
-                                    <tr data-entry-id="{{ $order->id }}">
-                                        <td>
-
-                                        </td>
-                                        {{-- <td>
-                                            {{ $order->id ?? '' }}
-                                        </td> --}}
-                                        <td>
-                                            #{{ $order->ref_no ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $order->amount ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $order->order_status ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y H:i:s') }}
-                                        </td>
-                                        <td>
-                                            <span style="display:none">{{ $order->approved ?? '' }}</span>
-                                            <input type="checkbox" disabled="disabled" {{ $order->approved ? 'checked' : '' }}>
-                                        </td>
-                                        <td>
-                                            {{ $order->customer->full_name ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $order->createdBy->agent_code ?? '' }}
-                                        </td>
-                                        <td>
-                                            RM {{ $order->commissions->mo_overriding_comm ?? '' }}
-                                        </td>
-                                        <td>
-                                            @can('order_edit')
-                                                <a class="btn btn-xs btn-info" href="{{ route('admin.orders.edit', $order->id) }}">
-                                                    {{-- {{ trans('global.edit') }} --}}
-                                                    <i class="fas fa-pencil-alt"></i>
-                                                </a>
-                                            @endcan
-                                        </td>
-                                    </tr>
+                                            </td>
+                                            {{-- <td>
+                                                {{ $order->id ?? '' }}
+                                            </td> --}}
+                                            <td>
+                                                #{{ $order->ref_no ?? '' }}
+                                            </td>
+                                            <td>
+                                                {{ $order->amount ?? '' }}
+                                            </td>
+                                            <td>
+                                                {{ $order->order_status ?? '' }}
+                                            </td>
+                                            <td>
+                                                {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y H:i:s') }}
+                                            </td>
+                                            <td>
+                                                <span style="display:none">{{ $order->approved ?? '' }}</span>
+                                                <input type="checkbox" disabled="disabled" {{ $order->approved ? 'checked' : '' }}>
+                                            </td>
+                                            <td>
+                                                {{ $order->customer->full_name ?? '' }}
+                                            </td>
+                                            <td>
+                                                {{ $order->createdBy->agent_code ?? '' }}
+                                            </td>
+                                            <td>
+                                                RM {{ $order->commissions->mo_overriding_comm ?? '' }}
+                                            </td>
+                                            <td>
+                                                @can('order_edit')
+                                                    <a class="btn btn-xs btn-info" href="{{ route('admin.orders.edit', $order->id) }}">
+                                                        {{-- {{ trans('global.edit') }} --}}
+                                                        <i class="fas fa-pencil-alt"></i>
+                                                    </a>
+                                                @endcan
+                                            </td>
+                                        </tr>
+                                    @endif
                                     @endforeach
                             </tbody>
                         </table>
