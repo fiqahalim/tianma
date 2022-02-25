@@ -145,10 +145,14 @@
                                 <label for="mode">{{ trans('cruds.customer.fields.mode') }}</label>
                                 <input class="form-control" id="mode" type="text" value="{{ old('mode', $customer->mode) }}" readonly>
                             </div>
-                            {{-- <div class="form-group col-md-6">
-                                <label for="address_2">{{ trans('cruds.customer.fields.address_2') }}</label>
-                                <input class="form-control" id="address_2" type="text" value="{{ $customer->address_2 }}" readonly>
-                            </div> --}}
+                            <div class="form-group col-md-6">
+                                <label class="font-weight-bold required" for="agent_code">
+                                    Referral {{ trans('global.register.agent_code') }}
+                                </label>
+                                @foreach($users as $user)
+                                    <input class="form-control" id="created_by" type="text" value="{{ $user->agent_code }}" readonly>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
 

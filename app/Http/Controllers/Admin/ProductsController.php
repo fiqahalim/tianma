@@ -42,7 +42,7 @@ class ProductsController extends Controller
             ->whereHas('parentCategory.parentCategory')
             ->get();
 
-        $tags = ProductTag::pluck('name', 'id');
+        $tags = ProductTag::all()->pluck('name', 'id');
 
         return view('admin.products.create', compact('categories', 'tags'));
     }
@@ -52,6 +52,7 @@ class ProductsController extends Controller
         $product = Product::create($request->all());
         $product->categories()->sync($request->input('categories', []));
         $product->tags()->sync($request->input('tags', []));
+
         if ($request->input('photo', false)) {
             $product->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
         }
@@ -72,7 +73,7 @@ class ProductsController extends Controller
             ->whereHas('parentCategory.parentCategory')
             ->get();
 
-        $tags = ProductTag::pluck('name', 'id');
+        $tags = ProductTag::all()->pluck('name', 'id');
 
         $product->load('categories', 'tags');
 
@@ -84,6 +85,7 @@ class ProductsController extends Controller
         $product->update($request->all());
         $product->categories()->sync($request->input('categories', []));
         $product->tags()->sync($request->input('tags', []));
+
         if ($request->input('photo', false)) {
             if (!$product->photo || $request->input('photo') !== $product->photo->file_name) {
                 if ($product->photo) {

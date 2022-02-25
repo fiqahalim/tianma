@@ -204,10 +204,11 @@
                                 </div>
                             </div>
 
+                            {{-- Payment Option --}}
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label class="required">{{ trans('cruds.customer.fields.mode') }}</label>
-                                    <select class="form-control {{ $errors->has('mode') ? 'is-invalid' : '' }}" name="mode" id="mode">
+                                    <select class="form-control select2 {{ $errors->has('mode') ? 'is-invalid' : '' }}" name="mode" id="mode">
                                         <option value disabled {{ old('mode', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
                                         @foreach(App\Models\Customer::MODE_SELECT as $key => $mode)
                                             <option value="{{ $key }}" {{ old('mode', '') === (string) $key ? 'selected' : '' }}>{{ $mode }}</option>
@@ -221,6 +222,36 @@
                                     <span class="help-block">
                                         {{ trans('cruds.customer.fields.id_type_helper') }}
                                     </span>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="font-weight-bold required" for="agent_code">
+                                        Referral {{ trans('global.register.agent_code') }}
+                                    </label>
+                                    <select class="form-control select2 {{ $errors->has('created_by') ? 'is-invalid' : '' }}" name="created_by" id="created_by">
+                                        @foreach($users as $user)
+                                            @if($user->approved == 1 && (!is_null($user->agent_code)))
+                                                <option value="{{ $user->id }}" {{ old('created_by') == $user->id ? 'selected' : '' }}>{{ $user->agent_code }}</option>
+                                            @endif
+
+                                            @if($user->childUsers->count())
+                                                @foreach($user->childUsers as $childUser)
+                                                    @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
+                                                        <option value="{{ $childUser->id }}" {{ old('created_by') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
+                                                        </option>
+                                                    @endif
+
+                                                    @if($childUser->childUsers->count())
+                                                        @foreach($childUser->childUsers as $childUser)
+                                                            @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
+                                                                <option value="{{ $childUser->id }}" {{ old('created_by') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
+                                                                </option>
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
