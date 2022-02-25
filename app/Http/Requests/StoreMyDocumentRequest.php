@@ -9,10 +9,10 @@ use Illuminate\Http\Response;
 
 class StoreMyDocumentRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return Gate::allows('my_document_create');
-    }
+    // public function authorize()
+    // {
+    //     return Gate::allows('my_document_create');
+    // }
 
     public function rules()
     {
