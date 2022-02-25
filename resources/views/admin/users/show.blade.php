@@ -18,36 +18,7 @@
                     <div class="mt-2">
                         <span><strong>{{ $user->agent_code }}</strong></span>
                     </div>
-                    <i id="menu-item" class="fas fa-plus-circle" onclick="myFunction()"></i>
-                    @if(count($user->childUsers))
-                        <ul>
-                            @foreach($user->childUsers as $childUser)
-                                <li>
-                                    <div class="sub-menu">
-                                        <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="80">
-                                        <div class="mt-2">
-                                            <span>{{ $childUser->agent_code }}</span>
-                                        </div>
-                                    </div>
-                                    <i id="child-item" class="fas fa-plus-circle"></i>
-                                    @if(count($childUser->childUsers))
-                                    <ul>
-                                        @foreach($childUser->childUsers as $childs)
-                                            <li>
-                                                <div class="child-menu">
-                                                    <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childs->avatar) ?? '/images/avatar.png' }}" width="80">
-                                                    <div class="child-menu mt-2">
-                                                        <span>{{ $childs->agent_code }}</span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                    @endif
-                                </li>
-                            @endforeach
-                        </ul>
-                    @endif
+                    @include('components.hierarchy')
                 </li>
             </ul>
         </div>
@@ -63,12 +34,5 @@
 @endsection
 
 @section('scripts')
-<script>
-    $("#menu-item").click(function(){
-        $(".sub-menu").toggle();
-    });
-    $("#child-item").click(function(){
-        $(".child-menu").toggle();
-    });
-</script>
+    <script type="text/javascript" src="{{ mix('/js/pages/hierarchy.js') }}"></script>
 @endsection

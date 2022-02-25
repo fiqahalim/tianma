@@ -2,6 +2,7 @@
     "/js/app.js": "/js/app.js",
     "/js/pages/booking.js": "/js/pages/booking.js",
     "/js/pages/profile.js": "/js/pages/profile.js",
+    "/js/pages/hierarchy.js": "/js/pages/hierarchy.js",
     "/css/pages/invoice.css": "/css/pages/invoice.css",
     "/css/pages/order.css": "/css/pages/order.css",
     "/css/pages/booking.css": "/css/pages/booking.css",

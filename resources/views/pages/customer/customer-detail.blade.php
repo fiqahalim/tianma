@@ -69,16 +69,6 @@
                                     @endif
                                     <span class="help-block">{{ trans('cruds.customer.fields.id_number_helper') }}</span>
                                 </div>
-                                {{-- <div class="form-group col-md-2">
-                                    <label for="birth_date">{{ trans('cruds.customer.fields.birth_date') }}</label>
-                                    <input class="form-control date {{ $errors->has('birth_date') ? 'is-invalid' : '' }}" type="text" name="birth_date" id="birth_date" value="{{ old('birth_date') }}">
-                                    @if($errors->has('birth_date'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('birth_date') }}
-                                        </div>
-                                    @endif
-                                    <span class="help-block">{{ trans('cruds.customer.fields.birth_date_helper') }}</span>
-                                </div> --}}
                             </div>
 
                             <div class="form-row">
@@ -228,29 +218,7 @@
                                         Referral {{ trans('global.register.agent_code') }}
                                     </label>
                                     <select class="form-control select2 {{ $errors->has('created_by') ? 'is-invalid' : '' }}" name="created_by" id="created_by">
-                                        @foreach($users as $user)
-                                            @if($user->approved == 1 && (!is_null($user->agent_code)))
-                                                <option value="{{ $user->id }}" {{ old('created_by') == $user->id ? 'selected' : '' }}>{{ $user->agent_code }}</option>
-                                            @endif
-
-                                            @if($user->childUsers->count())
-                                                @foreach($user->childUsers as $childUser)
-                                                    @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                                                        <option value="{{ $childUser->id }}" {{ old('created_by') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
-                                                        </option>
-                                                    @endif
-
-                                                    @if($childUser->childUsers->count())
-                                                        @foreach($childUser->childUsers as $childUser)
-                                                            @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                                                                <option value="{{ $childUser->id }}" {{ old('created_by') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
-                                                                </option>
-                                                            @endif
-                                                        @endforeach
-                                                    @endif
-                                                @endforeach
-                                            @endif
-                                        @endforeach
+                                        @include('components.parent-child')
                                     </select>
                                 </div>
                             </div>

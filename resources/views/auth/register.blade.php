@@ -40,36 +40,8 @@
                                                         </span>
                                                     </div>
                                                     <select class="form-control form-select {{ $errors->has('parent') ? 'is-invalid' : '' }}" name="parent_id" id="parent_id">
-                                                        @foreach($users as $user)
-                                                            @if($user->approved == 1 && (!is_null($user->agent_code)))
-                                                                <option value="{{ $user->id }}" {{ old('parent_id') == $user->id ? 'selected' : '' }}>{{ $user->agent_code }}</option>
-                                                            @endif
-
-                                                            @if($user->childUsers->count())
-                                                                @foreach($user->childUsers as $childUser)
-                                                                    @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                                                                        <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
-                                                                        </option>
-                                                                    @endif
-
-                                                                    @if($childUser->childUsers->count())
-                                                                        @foreach($childUser->childUsers as $childUser)
-                                                                            @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                                                                                <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
-                                                                                </option>
-                                                                            @endif
-                                                                        @endforeach
-                                                                    @endif
-                                                                @endforeach
-                                                            @endif
-                                                        @endforeach
+                                                        @include('components.parent-child')
                                                     </select>
-                                                    {{-- <input type="text" name="agent_code" class="form-control{{ $errors->has('agent_code') ? ' is-invalid' : '' }}" required autofocus value="{{ old('agent_code', null) }}">
-                                                    @if($errors->has('agent_code'))
-                                                        <div class="invalid-feedback">
-                                                            {{ $errors->first('agent_code') }}
-                                                        </div>
-                                                    @endif --}}
                                                 </div>
                                             </div>
                                         </div>

@@ -19,31 +19,7 @@
                     <div class="mt-2">
                         <span><strong>{{ Auth::user()->agent_code ?? 'Not Available' }}</strong></span>
                     </div>
-                    <i id="menu-item" class="fas fa-plus-circle"></i>
-                    @if(count($users))
-                        <ul>
-                            @foreach($users as $key => $childUser)
-                                <li class="sub-menu">
-                                    <img class="rounded-circle mt-2" src="{{ asset('/images/profile/'.$childUser->avatar ?? 'avatar.png') }}" width="80">
-                                    <div class="mt-2">
-                                        <span>{{ $childUser->agent_code ?? 'Not Available' }}</span>
-                                    </div>
-                                    {{-- @if(count($childUser->childUsers))
-                                    <ul>
-                                        @foreach($childUser->childUsers as $childs)
-                                            <li class="sub-menu">
-                                                <img class="rounded-circle mt-2" src="https://bootdey.com/img/Content/avatar/avatar7.png" width="80">
-                                                <div class="mt-2">
-                                                    <span>{{ $childs->agent_code }}</span>
-                                                </div>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                    @endif --}}
-                                </li>
-                            @endforeach
-                        </ul>
-                    @endif
+                    @include('components.hierarchy')
                 </li>
             </ul>
         </div>
@@ -62,6 +38,21 @@
 <script>
     $("#menu-item").click(function(){
         $(".sub-menu").toggle();
+    });
+    $("#child-item").click(function(){
+        $(".child-menu").toggle();
+    });
+    $("#child-child").click(function(){
+        $(".child-child-menu").toggle();
+    });
+    $("#child-cc").click(function(){
+        $(".child-cc-menu").toggle();
+    });
+    $("#child-ccc").click(function(){
+        $(".child-ccc-menu").toggle();
+    });
+    $("#child-dd").click(function(){
+        $(".child-dd-menu").toggle();
     });
 </script>
 @endsection
