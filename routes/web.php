@@ -124,6 +124,7 @@ Route::group(['middleware' => 'auth'], function() {
             // Orders
             Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/order-details', [\App\Http\Controllers\User\OrderController::class, 'orderPage'])->name('order');
             Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/order-details/store', [\App\Http\Controllers\User\OrderController::class, 'store'])->name('order.details.store');
+
         });
 
         // Audit Logs
@@ -146,7 +147,7 @@ Route::group(['middleware' => 'auth'], function() {
             Route::get('/{category}/{childCategory}/{childCategory2}/{product}/booking', [\App\Http\Controllers\User\ProductsController::class, 'bookingLot'])->name('bookinglot');
 
             // Customers
-            Route::resource('/{category}/{childCategory}/{childCategory2}/{product}/customerdetails', '\App\Http\Controllers\User\CustomerController');
+            Route::resource('/{category}/{childCategory}/{childCategory2}/{productSlug}/{product}/customerdetails', '\App\Http\Controllers\User\CustomerController');
 
             // Orders
             Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/order-details', [\App\Http\Controllers\User\OrderController::class, 'orderPage'])->name('order');

@@ -39,12 +39,12 @@
                                     <div class="text-center">
                                         <h5 class="fw-bolder">
                                             <a href="{{ route('user.product', [$product->categories->first()->parentCategory->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
-                                                {{ $product->name }}
+                                                {{ $product->product_name }}
                                             </a>
                                         </h5>
                                         <!-- Product price-->
                                         RM{{ $product->price }}
-                                        <p class="card-text">{{ Str::limit($product->description, 75) }}</p>
+                                        <p class="card-text">{{ $product->product_code }}</p>
                                     </div>
                                 </div>
                                 <!-- Product actions-->

@@ -70,18 +70,18 @@
                                 <h6 class="mb-0">
                                     Order Reference Number: #{{ $order->ref_no }}
                                 </h6>
-                                {{-- <span class="d-block mb-0">
+                                <span class="d-block mb-0">
                                     Customer Name:{{ $customer->name }}
-                                </span> --}}
+                                </span>
                                 <small>
                                     {{ trans('global.order.order_status') }}: {{ $order->order_status }}
                                 </small>
                                 <div class="d-flex flex-column mt-3">
-                                    <small>
+                                    {{-- <small>
                                         <i class="fa fa-check text-muted">
                                         </i>
                                         Agent Code: {{ Auth::user()->agent_code }}
-                                    </small>
+                                    </small> --}}
                                     <small>
                                         <i class="fa fa-check text-muted">
                                         </i>
