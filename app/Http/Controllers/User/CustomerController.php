@@ -9,6 +9,7 @@ use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Product;
+use App\Models\User;
 use App\Models\ProductCategory;
 use Carbon\Carbon;
 
@@ -16,6 +17,10 @@ class CustomerController extends Controller
 {
     public function index($category, $childCategory, $childCategory2, $productSlug, Product $product)
     {
+        $users = User::where('parent_id')
+            ->with('childUsers')
+            ->get();
+
         $product->load('categories.parentCategory.parentCategory');
         $childCategory2 = $product->categories->where('slug', $childCategory2)->first();
         $selectedCategories = [];
@@ -31,7 +36,7 @@ class CustomerController extends Controller
             ];
         }
 
-        return view('pages.customer.customer-detail', compact('product', 'selectedCategories'));
+        return view('pages.customer.customer-detail', compact('product', 'selectedCategories', 'users'));
     }
 
     public function store(UpdateCustomerRequest $request, $category, $childCategory, $childCategory2, $productSlug, Product $product)
@@ -40,6 +45,10 @@ class CustomerController extends Controller
          * Check if customer exists or not
          */
         $customer = Customer::where('id_number', '=', $request->input('id_number'))->first();
+
+        $users = User::where('parent_id')
+            ->with('childUsers')
+            ->get();
 
         if ($customer !== null) {
             $customer->update($request->all());
@@ -60,7 +69,7 @@ class CustomerController extends Controller
             $customer->nationality = $request->nationality;
             $customer->country = $request->country;
             $customer->mode = $request->mode;
-            $customer->created_by = auth()->user()->id;
+            $customer->created_by = $request->created_by;
             $customer->created_at = $current = Carbon::now();
             $customer->updated_at = $current = Carbon::now();
             $customer->save();
@@ -83,6 +92,6 @@ class CustomerController extends Controller
 
         session(['customer' => $customer]);
 
-        return view('pages.product.booking-detail', compact('product', 'selectedCategories', 'customer'));
+        return view('pages.product.booking-detail', compact('product', 'selectedCategories', 'customer', 'users'));
     }
 }

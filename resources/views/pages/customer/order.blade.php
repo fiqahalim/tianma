@@ -42,10 +42,13 @@
                                 <small class="mt-2">
                                     Your order has been processed
                                 </small>
+                                {{-- <a href="{{ route('user.invoice') }}" target="_blank" class="text-decoration-none invoice-link">
+                                    View Invoices
+                                </a> --}}
                             </div>
 
                             <a href="{{ route("home.index") }}" class="btn btn-outline-info btn-block order-button">
-                                <i class="fas fa-home-alt"></i> Go to Dashboard
+                                <i class="fa fa-home"></i> Go to Dashboard
                             </a>
 
                         </div>

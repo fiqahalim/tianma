@@ -18,12 +18,12 @@ class RankingsTableSeeder extends Seeder
             [
                 'id'        => 1,
                 'position'  => 'SD',
-                'category'  => null,
+                'category'  => 'SD',
             ],
             [
                 'id'    => 2,
                 'position' => 'DSD',
-                'category'  => null,
+                'category'  => 'DSD',
             ],
             [
                 'id'    => 3,
@@ -38,7 +38,7 @@ class RankingsTableSeeder extends Seeder
             [
                 'id'    => 5,
                 'position' => 'CBDD',
-                'category'  => null,
+                'category'  => 'CBDD',
             ],
         ];
 

@@ -165,7 +165,7 @@
 
             {{-- Teams Details --}}
             <div class="form-row">
-                <div class="form-group col-md-4">
+                {{-- <div class="form-group col-md-4">
                     <label for="team_id">{{ trans('cruds.user.fields.team') }}</label>
                     <select class="form-control form-select {{ $errors->has('team') ? 'is-invalid' : '' }}" name="team_id" id="team_id" required>
                         @foreach($teams as $id => $entry)
@@ -178,8 +178,8 @@
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.user.fields.team_helper') }}</span>
-                </div>
-                <div class="form-group col-md-4">
+                </div> --}}
+                <div class="form-group col-md-6">
                     <label class="required">{{ trans('cruds.user.fields.ref_name') }}</label>
                     <select class="form-control form-select {{ $errors->has('parent') ? 'is-invalid' : '' }}" name="parent_id" id="parent_id">
                         @foreach($users as $user)
@@ -208,7 +208,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <label class="required">{{ trans('cruds.ranking.title') }}</label>
                     <select class="form-control form-select {{ $errors->has('rankings') ? 'is-invalid' : '' }}" name="ranking_id" id="ranking_id">
                         @foreach($rankings as $id => $data)

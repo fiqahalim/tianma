@@ -58,10 +58,10 @@
                         @include('admin.productCategories.indexRow', compact('productCategory'))
 
                         @foreach($productCategory->childCategories as $childCategory)
-                            @include('admin.productCategories.indexRow', ['productCategory' => $childCategory, 'prefix' => '--'])
+                            @include('admin.productCategories.indexRow', ['productCategory' => $childCategory])
 
                             @foreach($childCategory->childCategories as $childCategory)
-                                @include('admin.productCategories.indexRow', ['productCategory' => $childCategory, 'prefix' => '----'])
+                                @include('admin.productCategories.indexRow', ['productCategory' => $childCategory])
                             @endforeach
                         @endforeach
                     @endforeach
