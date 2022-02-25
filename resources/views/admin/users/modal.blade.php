@@ -104,14 +104,14 @@
                                     {{ $user->parent->name ?? 'No upperline' }}
                                 </td>
                             </tr>
-                            <tr>
+                           {{--  <tr>
                                 <th>
                                     {{ trans('cruds.user.fields.team') }}
                                 </th>
                                 <td>
                                     {{ $user->team->name ?? 'Not assigned' }}
                                 </td>
-                            </tr>
+                            </tr> --}}
                             <tr>
                                 <th>
                                     {{ trans('cruds.user.fields.roles') }}

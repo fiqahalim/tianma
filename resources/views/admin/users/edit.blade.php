@@ -207,7 +207,7 @@
                                 <i>RM</i>
                             </span>
                         </div>
-                        <input class="form-control" type="text" value="{{ $user->commissions ? $user->commissions->mo_overriding_comm : '0.00' }}" readonly>
+                        <input class="form-control" type="text" value="{{ $totalComms ?? '' }}" readonly>
                     </div>
                 </div>
                 <div class="form-group col-md-6">
@@ -254,47 +254,6 @@
                 <span class="help-block">{{ trans('cruds.user.fields.approved_helper') }}</span>
             </div>
 
-
-            {{-- <div class="form-group">
-                <label for="passport_issue_date">{{ trans('cruds.user.fields.passport_issue_date') }}</label>
-                <input class="form-control date {{ $errors->has('passport_issue_date') ? 'is-invalid' : '' }}" type="text" name="passport_issue_date" id="passport_issue_date" value="{{ old('passport_issue_date', $user->passport_issue_date) }}">
-                @if($errors->has('passport_issue_date'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('passport_issue_date') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.user.fields.passport_issue_date_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="passport_expiry_date">{{ trans('cruds.user.fields.passport_expiry_date') }}</label>
-                <input class="form-control date {{ $errors->has('passport_expiry_date') ? 'is-invalid' : '' }}" type="text" name="passport_expiry_date" id="passport_expiry_date" value="{{ old('passport_expiry_date', $user->passport_expiry_date) }}">
-                @if($errors->has('passport_expiry_date'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('passport_expiry_date') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.user.fields.passport_expiry_date_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="country">{{ trans('cruds.user.fields.country') }}</label>
-                <input class="form-control {{ $errors->has('country') ? 'is-invalid' : '' }}" type="text" name="country" id="country" value="{{ old('country', $user->country) }}">
-                @if($errors->has('country'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('country') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.user.fields.country_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="nationality">{{ trans('cruds.user.fields.nationality') }}</label>
-                <input class="form-control {{ $errors->has('nationality') ? 'is-invalid' : '' }}" type="text" name="nationality" id="nationality" value="{{ old('nationality', $user->nationality) }}">
-                @if($errors->has('nationality'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('nationality') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.user.fields.nationality_helper') }}</span>
-            </div> --}}
             <div class="form-group">
                 <a class="btn btn-default" href="{{ route('admin.users.index') }}">
                     {{ trans('global.back_to_list') }}

@@ -10,6 +10,7 @@ use App\Models\Role;
 use App\Models\Team;
 use App\Models\User;
 use App\Models\Ranking;
+use App\Models\Commission;
 use Gate;
 use Alert;
 use Illuminate\Http\Request;
@@ -69,9 +70,15 @@ class UsersController extends Controller
             ->with('childUsers')
             ->get();
 
+        $totalComms = Commission::join('orders', 'orders.id', '=', 'commissions.order_id')
+            ->where('commissions.user_id', $user->id)
+            ->whereMonth('commissions.created_at', Carbon::now()->month)
+            ->whereYear('commissions.created_at', Carbon::now()->year)
+            ->sum('commissions.mo_overriding_comm');
+
         $user->load('roles', 'parent', 'team', 'rankings');
 
-        return view('admin.users.edit', compact('roles', 'teams', 'parentUser', 'user', 'rankings'));
+        return view('admin.users.edit', compact('roles', 'teams', 'parentUser', 'user', 'rankings', 'totalComms'));
     }
 
     public function update(UpdateUserRequest $request, User $user)
