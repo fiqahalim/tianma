@@ -111,7 +111,7 @@
             <hr>
 
             {{-- Address Details --}}
-            <div class="form-row">
+            {{-- <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="address_1" class="required">{{ trans('cruds.user.fields.address_1') }}</label>
                     <input class="form-control {{ $errors->has('address_1') ? 'is-invalid' : '' }}" type="text" name="address_1" id="address_1" value="{{ old('address_1', '') }}">
@@ -130,9 +130,9 @@
                         </div>
                     @endif
                 </div>
-            </div>
+            </div> --}}
 
-            <div class="form-row">
+            {{-- <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="state" class="required">{{ trans('cruds.user.fields.state') }}</label>
                     <input class="form-control {{ $errors->has('state') ? 'is-invalid' : '' }}" type="text" name="state" id="state" value="{{ old('state', '') }}">
@@ -160,8 +160,8 @@
                         </div>
                     @endif
                 </div>
-            </div>
-            <hr>
+            </div> --}}
+            {{-- <hr> --}}
 
             {{-- Teams Details --}}
             <div class="form-row">
@@ -179,14 +179,14 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.user.fields.team_helper') }}</span>
                 </div> --}}
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <label class="required">{{ trans('cruds.user.fields.ref_name') }}</label>
                     <input type="text" name="parent_id" class="form-control {{ $errors->has('parent_id') ? 'is-invalid' : '' }}" id="parent_id" value="{{ Auth::user()->agent_code }}" readonly>
 
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <label class="required" for="roles">{{ trans('cruds.user.fields.roles') }}</label>
-                    <input type="text" name="parent_id" class="form-control {{ $errors->has('parent_id') ? 'is-invalid' : '' }}" id="parent_id" value="{{ $roles[2] }}" readonly>
+                    <input type="text" name="roles" class="form-control {{ $errors->has('roles') ? 'is-invalid' : '' }}" id="roles" value="{{ $roles[2] }}" readonly>
 
                 </div>
                 {{-- <div class="form-group col-md-4">
@@ -200,7 +200,7 @@
             </div>
             <hr>
 
-            <div class="form-group pl-2">
+            {{-- <div class="form-group pl-2">
                 <div class="form-check {{ $errors->has('approved') ? 'is-invalid' : '' }}">
                     <input type="hidden" name="approved" value="0">
                     <input class="form-check-input" type="checkbox" name="approved" id="approved" value="1" {{ old('approved', 0) == 1 ? 'checked' : '' }}>
@@ -212,7 +212,7 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.user.fields.approved_helper') }}</span>
-            </div>
+            </div> --}}
 
             <div class="form-group mt-3">
                 <a class="btn btn-default" href="{{ route('user.my-downline.index') }}">

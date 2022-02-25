@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\User;
 
 use Symfony\Component\HttpFoundation\Response;
-use App\Http\Requests\StoreUserRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Role;
@@ -30,8 +29,6 @@ class MembersController extends Controller
     public function create()
     {
         $roles = Role::pluck('title', 'id');
-        // $rankings = Ranking::get();
-        // dd($rankings);
 
         $users = User::whereNull('parent_id')
             ->with('childUsers')
@@ -40,10 +37,31 @@ class MembersController extends Controller
         return view('pages.downline.create', compact('roles', 'users'));
     }
 
-    public function store(StoreUserRequest $request)
+    public function store(Request $request)
     {
-        $user = User::create($request->all());
-        $user->roles()->sync($request->input('roles', []));
+        $validated = $request->validate([
+            'name' => 'required',
+            'id_number' => 'required|unique:users',
+            'email' => 'required|unique:users',
+            'username' => 'required',
+            'password' => 'required',
+            'contact_no' => 'required',
+            'agent_code' => 'required',
+        ]);
+
+        $user = null;
+        $user = new User;
+        $user->name = $request->name;
+        $user->id_type = $request->id_type;
+        $user->id_number = $request->id_number;
+        $user->email = $request->email;
+        $user->username = $request->username;
+        $user->password = $request->password;
+        $user->contact_no = $request->contact_no;
+        $user->agent_code = $request->agent_code;
+        $user->parent_id = auth()->user()->id;
+        $user->ranking_id = 1;
+        $user->save();
 
         alert()->success(__('global.update_success'))->toToast();
         return redirect()->route('user.my-downline.index');

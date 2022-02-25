@@ -165,6 +165,13 @@ Route::group(['middleware' => 'auth'], function() {
             Route::get('/my-commission', [\App\Http\Controllers\User\MembersController::class, 'myCommission'])->name('myCommission');
         });
 
+        Route::group(['prefix' => 'document'], function() {
+            Route::resource('my-documents', '\App\Http\Controllers\User\MyDocumentController');
+            Route::delete('my-documents/destroy', [\App\Http\Controllers\User\MyDocumentController::class, 'massDestroy'])->name('my-documents.massDestroy');
+            Route::post('my-documents/media', [\App\Http\Controllers\User\MyDocumentController::class, 'storeMedia'])->name('my-documents.storeMedia');
+            Route::post('my-documents/ckmedia', [\App\Http\Controllers\User\MyDocumentController::class, 'storeCKEditorImages'])->name('my-documents.storeCKEditorImages');
+        });
+
         Route::resource('/my-orders', '\App\Http\Controllers\User\OrderDetailsController');
     });
 
