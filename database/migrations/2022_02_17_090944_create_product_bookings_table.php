@@ -15,7 +15,10 @@ class CreateProductBookingsTable extends Migration
     {
         Schema::create('product_bookings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('booking_id')->nullable();
+            $table->string('pnr_number', 40)->nullable();
+            $table->string('seats', 255)->nullable();
+            $table->unsignedInteger('ticket_count')->default(0);
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
 
             $table->unsignedBigInteger('product_id')->nullable();

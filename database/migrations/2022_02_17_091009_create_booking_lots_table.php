@@ -15,12 +15,8 @@ class CreateBookingLotsTable extends Migration
     {
         Schema::create('booking_lots', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('lot_no')->nullable();
-            $table->string('lot_booked')->nullable();
+            $table->string('layout', 40)->nullable();
             $table->timestamps();
-
-            $table->unsignedBigInteger('product_id')->nullable();
-            $table->foreign('product_id')->references('id')->on('products');
         });
     }
 

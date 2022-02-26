@@ -182,7 +182,7 @@
                     </div>
                     <select class="form-control select2 {{ $errors->has('categories') ? 'is-invalid' : '' }}" name="categories[]" id="categories" multiple>
                         @foreach($categories as $category)
-                            <option value="{{ $category->id }}" {{ (in_array($category->id, old('categories', [])) || $product->categories->contains($category->id)) ? 'selected' : '' }}>{{ $category->parentCategory->parentCategory->name }} / {{ $category->parentCategory->name }} / {{ $category->name }}</option>
+                            <option value="{{ $category->id }}" {{ (in_array($category->id, old('categories', [])) || $product->categories->contains($category->id)) ? 'selected' : '' }}>{{ $category->parentCategory->name }} / {{ $category->parentCategory->name }} / {{ $category->name }}</option>
                         @endforeach
                     </select>
                     @if($errors->has('categories'))

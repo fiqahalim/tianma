@@ -54,7 +54,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.productCategory.fields.category_helper') }}</span>
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="photo">{{ trans('cruds.productCategory.fields.photo') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('photo') ? 'is-invalid' : '' }}" id="photo-dropzone">
                 </div>
@@ -64,7 +64,7 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.productCategory.fields.photo_helper') }}</span>
-            </div>
+            </div> --}}
             <div class="form-group">
                 <label class="required" for="slug">{{ trans('cruds.productCategory.fields.slug') }}</label>
                 <input class="form-control {{ $errors->has('slug') ? 'is-invalid' : '' }}" type="text" name="slug" id="slug" value="{{ old('slug', '') }}" required>

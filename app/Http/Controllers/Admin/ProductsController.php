@@ -38,8 +38,8 @@ class ProductsController extends Controller
     {
         abort_if(Gate::denies('product_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $categories = ProductCategory::with('parentCategory.parentCategory')
-            ->whereHas('parentCategory.parentCategory')
+        $categories = ProductCategory::with('parentCategory')
+            ->whereHas('parentCategory')
             ->get();
 
         $tags = ProductTag::all()->pluck('name', 'id');
@@ -54,7 +54,7 @@ class ProductsController extends Controller
         $product->tags()->sync($request->input('tags', []));
 
         if ($request->input('photo', false)) {
-            $product->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+            $product->addMedia(storage_path('tmp/uploads/' . $request->input('photo')))->toMediaCollection('photo');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -69,8 +69,8 @@ class ProductsController extends Controller
     {
         abort_if(Gate::denies('product_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $categories = ProductCategory::with('parentCategory.parentCategory')
-            ->whereHas('parentCategory.parentCategory')
+        $categories = ProductCategory::with('parentCategory')
+            ->whereHas('parentCategory')
             ->get();
 
         $tags = ProductTag::all()->pluck('name', 'id');
@@ -91,7 +91,7 @@ class ProductsController extends Controller
                 if ($product->photo) {
                     $product->photo->delete();
                 }
-                $product->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+                $product->addMedia(storage_path('tmp/uploads/' . $request->input('photo')))->toMediaCollection('photo');
             }
         } elseif ($product->photo) {
             $product->photo->delete();

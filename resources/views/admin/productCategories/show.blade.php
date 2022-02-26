@@ -42,7 +42,7 @@
                             {{ $productCategory->description }}
                         </td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th>
                             {{ trans('cruds.productCategory.fields.photo') }}
                         </th>
@@ -53,7 +53,7 @@
                                 </a>
                             @endif
                         </td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th>
                             {{ trans('cruds.productCategory.fields.slug') }}
