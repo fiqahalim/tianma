@@ -20,6 +20,8 @@ class Product extends Model implements HasMedia
 
     public $table = 'products';
 
+    protected $guarded = ['id'];
+
     protected $appends = [
         'photo',
     ];
@@ -48,6 +50,7 @@ class Product extends Model implements HasMedia
         'updated_at',
         'deleted_at',
         'created_by',
+        'section_id',
     ];
 
     public function registerMediaConversions(Media $media = null): void
@@ -105,8 +108,18 @@ class Product extends Model implements HasMedia
         ];
     }
 
-    public function bookingSections()
+    public function bookingSection()
     {
-        return $this->belongsToMany(BookingSection::class);
+        return $this->belongsTo(BookingSection::class);
+    }
+
+    public function productBooked()
+    {
+        return $this->hasMany(ProductBooking::class)->whereIn('status', [1,2]);
+    }
+
+    public function scopeActive()
+    {
+        return $this->where('status', 1);
     }
 }

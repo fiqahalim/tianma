@@ -12,11 +12,17 @@ class BookingSection extends Model
 
     public $table = 'booking_sections';
 
+    protected $guarded = ['id'];
+
     public const SECTION_SELECT = [
         'DA' => 'DA',
         'DB' => 'DB',
         'DC' => 'DC',
         'DD' => 'DD',
+    ];
+
+    protected $casts = [
+        'deck_seats' => 'object',
     ];
 
     protected $dates = [
@@ -40,7 +46,7 @@ class BookingSection extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->hasMany(Product::class);
     }
 
     /**
@@ -54,5 +60,10 @@ class BookingSection extends Model
     public function bookingLots()
     {
         return $this->belongsToMany(BookingLot::class);
+    }
+
+    public function scopeActive()
+    {
+        return $this->where('status', 1);
     }
 }

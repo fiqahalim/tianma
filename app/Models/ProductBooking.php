@@ -12,18 +12,21 @@ class ProductBooking extends Model
 
     public $table = 'product_bookings';
 
+    protected $casts = [
+        'seats' => 'array'
+    ];
+
     protected $dates = [
         'created_at',
         'updated_at',
     ];
 
     protected $fillable = [
-        'booking_id',
-        'customer_id',
-        'created_at',
-        'updated_at',
+        'pnr_number',
+        'seats',
+        'ticket_count',
         'product_id',
-        'booking_lots_id',
+        'customer_id',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -33,11 +36,31 @@ class ProductBooking extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsTo(Product::class);
     }
 
     public function bookingLots()
     {
         return $this->belongsToMany(BookingLot::class, 'booking_lots_id');
+    }
+
+    public function customers()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+    public function scopePending()
+    {
+        return $this->where('status', 2);
+    }
+
+    public function scopeBooked()
+    {
+        return $this->where('status', 1);
+    }
+
+    public function scopeRejected()
+    {
+        return $this->where('status', 0);
     }
 }

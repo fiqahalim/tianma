@@ -12,16 +12,14 @@ class BookingLot extends Model
 
     public $table = 'booking_lots';
 
+    protected $guarded = ['id'];
+
     protected $dates = [
         'created_at',
         'updated_at',
     ];
 
     protected $fillable = [
-        'lot_no',
-        'lot_booked',
-        'created_at',
-        'updated_at',
         'product_id',
     ];
 

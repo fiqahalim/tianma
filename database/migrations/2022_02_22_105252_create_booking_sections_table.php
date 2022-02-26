@@ -17,6 +17,8 @@ class CreateBookingSectionsTable extends Migration
             $table->bigIncrements('id');
             $table->string('section')->nullable();
             $table->string('seat_layout')->nullable();
+            $table->unsignedInteger('deck')->default(0);
+            $table->string('deck_seats', 40)->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
 

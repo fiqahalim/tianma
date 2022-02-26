@@ -12,9 +12,10 @@ class DatabaseSeeder extends Seeder
             PermissionsTableSeeder::class,
             RolesTableSeeder::class,
             PermissionRoleTableSeeder::class,
+            RankingsTableSeeder::class,
             UsersTableSeeder::class,
             RoleUserTableSeeder::class,
-            RankingsTableSeeder::class,
+            ProductTagTableSeeder::class,
             // ProductCategoriesTableSeeder::class,
         ]);
     }
