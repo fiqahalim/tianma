@@ -11,16 +11,16 @@
     <td>
         {{ $productCategory->description ?? '' }}
     </td>
-    <td>
+    {{-- <td>
         @if($productCategory->photo)
             <a href="{{ $productCategory->photo->getUrl() }}" target="_blank">
                 <img src="{{ $productCategory->photo->getUrl('thumb') }}" width="50px" height="50px">
             </a>
         @endif
-    </td>
-    <td>
+    </td> --}}
+    {{-- <td>
         {{ $productCategory->slug ?? '' }}
-    </td>
+    </td> --}}
     <td>
         {{ $productCategory->parentCategory->name ?? '' }}
     </td>

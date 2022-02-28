@@ -90,6 +90,12 @@ Route::group(['middleware' => 'auth'], function() {
             // Tags
             Route::resource('product-tags', '\App\Http\Controllers\Admin\ProductTagController');
             Route::delete('product-tags/destroy', [\App\Http\Controllers\Admin\ProductTagController::class, 'massDestroy'])->name('product-tags.massDestroy');
+
+            // Manage Layouts
+            Route::get('lot_layouts', [\App\Http\Controllers\Admin\LotLayoutController::class, 'lotLayouts'])->name('lot.layouts');
+            Route::post('lot_layouts', [\App\Http\Controllers\Admin\LotLayoutController::class, 'lotLayoutStore'])->name('lot.layouts.store');
+            Route::post('lot_layouts/{id}', [\App\Http\Controllers\Admin\LotLayoutController::class, 'lotLayoutUpdate'])->name('lot.layouts.update');
+            Route::post('lot_layouts/destroy', [\App\Http\Controllers\Admin\LotLayoutController::class, 'lotLayoutDelete'])->name('lot.layouts.delete');
         });
 
         /** DOCUMENT MANAGEMENT **/
@@ -147,7 +153,7 @@ Route::group(['middleware' => 'auth'], function() {
             Route::get('/{category}/{childCategory}/{childCategory2}/{product}/booking', [\App\Http\Controllers\User\ProductsController::class, 'bookingLot'])->name('bookinglot');
 
             // Customers
-            Route::resource('/{category}/{childCategory}/{childCategory2}/{productSlug}/{product}/customerdetails', '\App\Http\Controllers\User\CustomerController');
+            Route::resource('/{category}/{childCategory}/{childCategory2}/{product}/customerdetails', '\App\Http\Controllers\User\CustomerController');
 
             // Orders
             Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/order-details', [\App\Http\Controllers\User\OrderController::class, 'orderPage'])->name('order');

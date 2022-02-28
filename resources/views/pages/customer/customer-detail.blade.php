@@ -16,7 +16,7 @@
     </nav>
 
     <div class="container-fluid">
-        <form method="POST" action="{{ route("user.customerdetails.store", [$product->categories->first()->parentCategory->parentCategory->slug, $product->categories->first()->parentCategory->slug, $product->categories->first()->slug, $product->slug, $product]) }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("user.customerdetails.store", [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}" enctype="multipart/form-data">
             @csrf
 
             <div class="accordion" id="accordionExample">

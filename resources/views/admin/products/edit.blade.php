@@ -236,7 +236,7 @@
                 <span class="help-block">{{ trans('cruds.product.fields.photo_helper') }}</span>
             </div>
 
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label class="required" for="slug">{{ trans('cruds.product.fields.slug') }}</label>
                 <input class="form-control {{ $errors->has('slug') ? 'is-invalid' : '' }}" type="text" name="slug" id="slug" value="{{ old('slug', $product->slug) }}" required>
                 @if($errors->has('slug'))
@@ -245,7 +245,7 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.product.fields.slug_helper') }}</span>
-            </div>
+            </div> --}}
 
             <div class="form-group">
                 <a class="btn btn-default" href="{{ route('admin.products.index') }}">

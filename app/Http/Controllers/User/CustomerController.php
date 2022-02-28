@@ -15,14 +15,14 @@ use Carbon\Carbon;
 
 class CustomerController extends Controller
 {
-    public function index($category, $childCategory, $childCategory2, $productSlug, Product $product)
+    public function index($category, $childCategory, $childCategory2, Product $product)
     {
         $users = User::where('parent_id')
             ->with('childUsers')
             ->get();
 
-        $product->load('categories.parentCategory.parentCategory');
-        $childCategory2 = $product->categories->where('slug', $childCategory2)->first();
+        $product->load('categories.parentCategory');
+        $childCategory2 = $product->categories->where('name', $childCategory2)->first();
         $selectedCategories = [];
 
         if ($childCategory2 &&
@@ -39,7 +39,7 @@ class CustomerController extends Controller
         return view('pages.customer.customer-detail', compact('product', 'selectedCategories', 'users'));
     }
 
-    public function store(UpdateCustomerRequest $request, $category, $childCategory, $childCategory2, $productSlug, Product $product)
+    public function store(UpdateCustomerRequest $request, $category, $childCategory, $childCategory2, Product $product)
     {
         /**
          * Check if customer exists or not
@@ -75,8 +75,8 @@ class CustomerController extends Controller
             $customer->save();
         }
 
-        $product->load('categories.parentCategory.parentCategory');
-        $childCategory2 = $product->categories->where('slug', $childCategory2)->first();
+        $product->load('categories.parentCategory');
+        $childCategory2 = $product->categories->where('name', $childCategory2)->first();
         $selectedCategories = [];
 
         if ($childCategory2 &&

@@ -85,6 +85,11 @@
                                 </a>
                             </li>
                         @endcan
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.lot.layouts") }}" class="c-sidebar-nav-link">
+                                {{ trans('cruds.lotLayout.title') }}
+                            </a>
+                        </li>
                     </ul>
                 </li>
             @endcan

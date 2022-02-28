@@ -21,7 +21,7 @@ class CommissionController extends Controller
     {
         abort_if(Gate::denies('commission_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $commissions = Commission::with(['user', 'orders', 'team'])->get();
+        $commissions = Commission::with(['user', 'orders', 'team', 'installments'])->get();
 
         return view('admin.commissions.index', compact('commissions'));
     }

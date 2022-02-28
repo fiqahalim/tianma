@@ -134,14 +134,14 @@
                             @endif
                         </td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th>
                             {{ trans('cruds.product.fields.slug') }}
                         </th>
                         <td>
                             {{ $product->slug }}
                         </td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th>
                             {{ trans('cruds.product.fields.category') }}

@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->float('point_value', 15, 2);
             $table->integer('quantity_per_unit')->nullable();
             $table->decimal('total_cost', 15, 2);
-            $table->string('slug');
+            $table->string('slug')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

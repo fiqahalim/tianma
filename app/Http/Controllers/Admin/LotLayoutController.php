@@ -17,7 +17,7 @@ class LotLayoutController extends Controller
         $emptyMessage = 'No layouts found';
         $layouts = BookingLot::orderBy('id','desc')->paginate(getPaginate());
 
-        return view('admin.fleet.seat_layouts', compact('pageTitle', 'emptyMessage', 'layouts'));
+        return view('admin.lotLayout.index', compact('pageTitle', 'emptyMessage', 'layouts'));
     }
 
     public function lotLayoutStore(Request $request)
@@ -31,7 +31,7 @@ class LotLayoutController extends Controller
         $lotLayout->save();
 
         alert()->success(__('global.update_success'))->toToast();
-        return redirect()->route('admin.orders.index');
+        return redirect()->route('admin.lot.layouts');
     }
 
     public function lotLayoutUpdate(Request $request, $id)
@@ -45,7 +45,7 @@ class LotLayoutController extends Controller
         $lot->save();
 
         alert()->success(__('global.update_success'))->toToast();
-        return redirect()->route('admin.orders.index');
+        return redirect()->route('admin.lot.layouts');
     }
 
     public function lotLayoutDelete(Request $request)
@@ -54,6 +54,6 @@ class LotLayoutController extends Controller
         BookingLot::find($request->id)->delete();
 
         alert()->success(__('global.update_success'))->toToast();
-        return redirect()->route('admin.orders.index');
+        return redirect()->route('admin.lot.layouts');
     }
 }

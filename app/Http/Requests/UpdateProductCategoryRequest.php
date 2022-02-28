@@ -21,10 +21,10 @@ class UpdateProductCategoryRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'slug' => [
-                'string',
-                'required',
-            ],
+            // 'slug' => [
+            //     'string',
+            //     'required',
+            // ],
         ];
     }
 }

@@ -55,11 +55,11 @@ class StoreProductRequest extends FormRequest
             'total_cost' => [
                 'required',
             ],
-            'slug' => [
-                'string',
-                'required',
-                'unique:products',
-            ],
+            // 'slug' => [
+            //     'string',
+            //     'required',
+            //     'unique:products',
+            // ],
             'categories.*' => [
                 'integer',
             ],

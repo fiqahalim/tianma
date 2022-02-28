@@ -200,6 +200,16 @@ return [
             'deleted_at_helper' => ' ',
         ],
     ],
+    'lotLayout' => [
+        'title'          => 'Manage Layout',
+        'title_singular' => 'Layout',
+        'fields'         => [
+            'id'                => 'ID',
+            'id_helper'         => ' ',
+            'name'              => 'Layouts',
+            'name_helper'       => ' ',
+        ],
+    ],
     'documentManagement' => [
         'title'          => 'Document Management',
         'title_singular' => 'Document Management',

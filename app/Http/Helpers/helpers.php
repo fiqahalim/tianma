@@ -69,3 +69,8 @@ function removeElement($array, $value)
 {
     return array_diff($array, (is_array($value) ? $value : array($value)));
 }
+
+function getPaginate($paginate = 20)
+{
+    return $paginate;
+}

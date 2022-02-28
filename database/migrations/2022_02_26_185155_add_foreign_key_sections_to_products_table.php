@@ -14,7 +14,7 @@ class AddForeignKeySectionsToProductsTable extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->string('images');
+            $table->string('images')->nullable();
             $table->unsignedBigInteger('section_id')->nullable();
             $table->foreign('section_id')->references('id')->on('booking_sections');
         });

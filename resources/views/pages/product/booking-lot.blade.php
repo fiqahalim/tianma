@@ -11,7 +11,7 @@
     </nav>
 
     <div class="container-fluid">
-        <form method="POST" action="" enctype="multipart/form-data">
+        <form method="POST" action="" enctype="multipart/form-data" id="bookingForm">
             @method('PUT')
             @csrf
             <img src="{{ $product->photo->url ?? '/images/product/luxury_1.png' }}" class="rounded mx-auto d-block" >
@@ -49,6 +49,9 @@
 
             <div class="container">
                 <div id="container-seats">
+                    {{-- @php
+                        echo $busLayout->getDeckHeader($loop->index);
+                    @endphp --}}
                     <div class="DA GFG">
                         @include('pages.product.components.da')
                     </div>
@@ -70,15 +73,17 @@
                 </p>
 
                   <div class="text-center">
-                    <a class="btn btn-outline-primary mt-2" href="{{ route('user.customerdetails.index', [$product->categories->first()->parentCategory->parentCategory->slug,
-                        $product->categories->first()->parentCategory->slug, $product->categories->first()->slug, $product->slug, $product]) }}">
+                    <a class="btn btn-outline-primary mt-2" id="bookConfirm" href="{{ route('user.customerdetails.index', [$product->categories->first()->parentCategory->name,
+                        $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
                             {{ trans('global.products.product_select') }}
                     </a>
                 </div>
             </div>
-
         </form>
     </div>
+
+    {{-- modal --}}
+
 @endsection
 
 @section('styles')
@@ -101,6 +106,17 @@
                     }
                 });
             }).change();
+        });
+
+        $('#bookingForm').on('submit', function(e) {
+            e.preventDefault();
+            let selectedSeats = $('.seat.selected');
+            if (selectedSeats.length > 0) {
+                var modal = $('#bookConfirm');
+                modal.modal('show');
+            } else {
+                notify('error', 'Select at least one lot.');
+            }
         });
     </script>
 @endsection

@@ -31,14 +31,14 @@
                         <div class="col-md-4 mb-4">
                             <div class="card h-100">
                                 <!-- Product image-->
-                                <a href="{{ route('user.product', [$product->categories->first()->parentCategory->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
+                                <a href="{{ route('user.product', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
                                     <img class="card-img-top" src="{{ $product->photo->url ?? '/images/home-urns.png' }}" style="height: 200px;">
                                 </a>
                                 <!-- Product details-->
                                 <div class="card-body p-4">
                                     <div class="text-center">
                                         <h5 class="fw-bolder">
-                                            <a href="{{ route('user.product', [$product->categories->first()->parentCategory->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
+                                            <a href="{{ route('user.product', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
                                                 {{ $product->product_name }}
                                             </a>
                                         </h5>
@@ -53,7 +53,7 @@
                                         <form action="{{ route('user.products.store') }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="id" value="{{ $product->id }}">
-                                            <a class="btn btn-outline-primary mt-2" href="{{ route('user.product', [$product->categories->first()->parentCategory->parentCategory->name,
+                                            <a class="btn btn-outline-primary mt-2" href="{{ route('user.product', [$product->categories->first()->parentCategory->name,
                                                 $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
                                                 {{ trans('global.products.product_select') }}
                                             </a>

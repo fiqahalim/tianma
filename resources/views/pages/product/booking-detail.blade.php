@@ -25,8 +25,8 @@
         <div class="col-md-12 mb-4">
             <div class="card">
                 <h4 class="mt-5 text-center">Review Order</h4>
-                <form method="POST" action="{{ route('user.order.details.store', [$product->categories->first()->parentCategory->parentCategory->slug,
-                        $product->categories->first()->parentCategory->slug, $product->categories->first()->slug, $product->slug, $product]) }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('user.order.details.store', [$product->categories->first()->parentCategory->name,
+                        $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}" enctype="multipart/form-data">
                     @csrf
 
                     <div class="card-body">
@@ -145,14 +145,14 @@
                                 <label for="mode">{{ trans('cruds.customer.fields.mode') }}</label>
                                 <input class="form-control" id="mode" type="text" value="{{ old('mode', $customer->mode) }}" readonly>
                             </div>
-                            <div class="form-group col-md-6">
+                            {{-- <div class="form-group col-md-6">
                                 <label class="font-weight-bold required" for="agent_code">
                                     Referral {{ trans('global.register.agent_code') }}
                                 </label>
                                 @foreach($users as $user)
-                                    <input class="form-control" id="created_by" type="text" value="{{ $user->agent_code }}" readonly>
+                                    <input class="form-control" id="created_by" type="text" value="{{ $users->agent_code }}" readonly>
                                 @endforeach
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
 

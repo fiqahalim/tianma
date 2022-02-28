@@ -39,12 +39,12 @@
                         <th>
                             {{ trans('cruds.productCategory.fields.description') }}
                         </th>
-                        <th>
+                        {{-- <th>
                             {{ trans('cruds.productCategory.fields.photo') }}
-                        </th>
-                        <th>
+                        </th> --}}
+                        {{-- <th>
                             {{ trans('cruds.productCategory.fields.slug') }}
-                        </th>
+                        </th> --}}
                         <th>
                             {{ trans('cruds.productCategory.fields.category') }}
                         </th>

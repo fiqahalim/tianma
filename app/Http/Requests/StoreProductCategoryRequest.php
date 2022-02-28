@@ -21,11 +21,11 @@ class StoreProductCategoryRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'slug' => [
-                'string',
-                'required',
-                'unique:product_categories',
-            ],
+            // 'slug' => [
+            //     'string',
+            //     'required',
+            //     'unique:product_categories',
+            // ],
         ];
     }
 }

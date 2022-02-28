@@ -55,6 +55,7 @@
                 </thead>
                 <tbody>
                     @foreach($commissions as $key => $commission)
+                    @if(!empty($commission->mo_overriding_comm) && $commission->mo_overriding_comm > 0)
                         <tr data-entry-id="{{ $commission->id }}">
                             <td>
 
@@ -101,6 +102,7 @@
                                 @endcan
                             </td>
                         </tr>
+                    @endif
                     @endforeach
                 </tbody>
             </table>
