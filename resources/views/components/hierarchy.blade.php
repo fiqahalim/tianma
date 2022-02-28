@@ -1,5 +1,5 @@
+<i id="menu-item" class="fas fa-plus-circle" onclick="myFunction()"></i>
 @if(count($user->childUsers))
-    <i id="menu-item" class="fas fa-plus-circle" onclick="myFunction()"></i>
     {{-- Level 1 --}}
     <ul>
         @foreach($user->childUsers as $childUser)

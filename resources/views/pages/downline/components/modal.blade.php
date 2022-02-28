@@ -31,14 +31,6 @@
                                     {{ $parent[0]->agent_code ?? 'Not Available' }}
                                 </td>
                             </tr>
-                            <tr>
-                                <th>
-                                    {{ trans('cruds.user.fields.team') }}
-                                </th>
-                                <td>
-                                    {{ isset($team[0]) ? $team[0]->name : 'Not Available' }}
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>

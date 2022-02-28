@@ -70,14 +70,13 @@ class MembersController extends Controller
 
     public function myTree(Request $request)
     {
-        $users = Auth::user()->childUsers()->get();
+        $user = Auth::user()->childUsers()->get();
+
         $parent = Auth::user()->parent()->get();
-        $team = Auth::user()->team()->get();
 
         return view('pages.downline.tree')->with([
-            'users' => $users,
+            'user' => $user,
             'parent' => $parent,
-            'team' => $team,
         ]);
     }
 
