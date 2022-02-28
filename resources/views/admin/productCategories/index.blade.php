@@ -30,9 +30,9 @@
                         <th width="10">
 
                         </th>
-                        <th>
+                        {{-- <th>
                             {{ trans('cruds.productCategory.fields.id') }}
-                        </th>
+                        </th> --}}
                         <th>
                             {{ trans('cruds.productCategory.fields.name') }}
                         </th>

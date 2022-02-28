@@ -10,6 +10,7 @@ use App\Models\Team;
 use App\Models\User;
 use App\Models\Ranking;
 use App\Models\Commission;
+use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -82,6 +83,16 @@ class MembersController extends Controller
 
     public function myCommission(Order $order)
     {
-        return view('pages.report.ref-commission');
+        $commissions = Commission::where('id', '=', Auth::user()->id)
+            ->with(['user', 'orders', 'team', 'installments'])
+            ->get();
+        return view('pages.report.ref-commission', compact('commissions'));
+    }
+
+    public function myCustomers()
+    {
+        $customers = Customer::where('id', '=', Auth::user()->id)
+            ->get();
+        return view('pages.report.my-customer', compact('customers'));
     }
 }

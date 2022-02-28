@@ -7,7 +7,7 @@
     </ol>
 </nav>
 
-@can('commission_create')
+{{-- @can('commission_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.commissions.create') }}">
@@ -15,7 +15,7 @@
             </a>
         </div>
     </div>
-@endcan
+@endcan --}}
 
 <div class="card">
     <div class="card-header font-weight-bold">
@@ -34,6 +34,9 @@
                             {{ trans('cruds.commission.fields.id') }}
                         </th> --}}
                         <th>
+                            {{ trans('global.createdDate') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.commission.fields.comm_per_order') }}
                         </th>
                         <th>
@@ -45,9 +48,9 @@
                         <th>
                             {{ trans('cruds.commission.fields.order') }}
                         </th>
-                        <th>
+                        {{-- <th>
                             {{ trans('cruds.customer.fields.mode') }}
-                        </th>
+                        </th> --}}
                         <th>
                             &nbsp;
                         </th>
@@ -64,6 +67,9 @@
                                 {{ $commission->id ?? '' }}
                             </td> --}}
                             <td>
+                                {{ Carbon\Carbon::parse($commission->created_at)->format('d/m/Y H:i:s') }}
+                            </td>
+                            <td>
                                 {{ $commission->mo_overriding_comm ?? '' }}
                             </td>
                             <td>
@@ -75,15 +81,15 @@
                             <td>
                                 #{{ $commission->orders->ref_no ?? '' }}
                             </td>
-                            <td>
+                            {{-- <td>
                                 {{ $commission->orders->customer->mode ?? '' }}
-                            </td>
+                            </td> --}}
                             <td>
-                                @can('commission_show')
+                                {{-- @can('commission_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.commissions.show', $commission->id) }}">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                @endcan
+                                @endcan --}}
 
                                 @can('commission_edit')
                                     <a class="btn btn-xs btn-info" href="{{ route('admin.commissions.edit', $commission->id) }}">

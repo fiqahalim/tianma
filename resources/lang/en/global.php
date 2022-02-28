@@ -23,6 +23,7 @@ return [
     'username'                       => 'Username',
     'entries'                        => 'Entries',
     'filterDate'                     => 'Filter by date',
+    'createdDate'                    => 'Date Created',
     'forgot_password'                => 'Forgot your password?',
     'customerDetails'                => 'Customer Details',
     'home'                           => 'Home',
@@ -359,6 +360,8 @@ return [
         'created_by'        => 'Created By',
         'orderConfirmation' => 'Order Confirmation',
         'orderReview'       => 'Order Review',
+        'myOrder'           => 'Orders',
+        'myCust'            => 'Customers',
     ],
     'documents' => [
         'title'              => 'Documents',
@@ -378,6 +381,7 @@ return [
     ],
     'reports' => [
         'title'             => 'Reports',
+        'title_singular'    => 'Commissions',
         'myCommission'      => 'My Commission',
         'refCommission'     => 'Referral Commission',
     ],

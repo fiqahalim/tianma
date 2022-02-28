@@ -7,7 +7,7 @@
     </ol>
 </nav>
 
-@can('customer_create')
+{{-- @can('customer_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.customers.create') }}">
@@ -15,7 +15,7 @@
             </a>
         </div>
     </div>
-@endcan
+@endcan --}}
 <div class="card">
     <div class="card-header font-weight-bold">
         {{ trans('cruds.customer.title_singular') }} {{ trans('global.list') }}
@@ -29,8 +29,11 @@
                         <th width="10">
 
                         </th>
-                        <th>
+                        {{-- <th>
                             {{ trans('cruds.customer.fields.id') }}
+                        </th> --}}
+                         <th>
+                            {{ trans('global.createdDate') }}
                         </th>
                         <th>
                             {{ trans('cruds.customer.fields.full_name') }}
@@ -65,7 +68,7 @@
 
                             </td>
                             <td>
-                                {{ $customer->id ?? '' }}
+                                {{ Carbon\Carbon::parse($customer->created_at)->format('d/m/Y H:i:s') }}
                             </td>
                             <td>
                                 {{ $customer->full_name ?? '' }}

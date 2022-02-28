@@ -167,9 +167,13 @@ Route::group(['middleware' => 'auth'], function() {
             Route::resource('/my-downline', '\App\Http\Controllers\User\MembersController');
         });
 
-        // Report
-        Route::group(['prefix' => 'report'], function() {
-            Route::get('/my-commission', [\App\Http\Controllers\User\MembersController::class, 'myCommission'])->name('myCommission');
+        // Commissions
+        Route::group(['prefix' => 'my-commission'], function() {
+            Route::get('/', [\App\Http\Controllers\User\MembersController::class, 'myCommission'])->name('myCommission');
+        });
+
+        Route::group(['prefix' => 'my-customers'], function() {
+            Route::get('/', [\App\Http\Controllers\User\MembersController::class, 'myCustomers'])->name('myCustomers');
         });
 
         Route::group(['prefix' => 'document'], function() {

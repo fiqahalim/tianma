@@ -54,6 +54,7 @@ class OrderController extends Controller
         $order->order_date = $current = Carbon::now();
         $order->customer_id = $customer->id;
         $order->created_by = $customer->created_by;
+        $order->product_id = $products->id;
         $order->save();
 
         // payment mode calculation

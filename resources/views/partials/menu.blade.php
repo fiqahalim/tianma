@@ -1,9 +1,6 @@
 @can('admin_only')
     <div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show">
         <div class="c-sidebar-brand d-md-down-none">
-            {{-- <a class="c-sidebar-brand-full h4" href="#">
-                {{ trans('panel.site_title') }}
-            </a> --}}
             <img src="{{ asset('/images/tianma_logo_op-03.png') }}" style="width: 190px;">
         </div>
 
@@ -140,7 +137,7 @@
                                 {{ trans('cruds.user.fields.hierarchies') }}
                             </a>
                         </li>
-                        @can('permission_access')
+                        {{-- @can('permission_access')
                             <li class="c-sidebar-nav-item">
                                 <a href="{{ route("admin.permissions.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/permissions") || request()->is("admin/permissions/*") ? "c-active" : "" }}">
                                     {{ trans('cruds.permission.title') }}
@@ -153,7 +150,7 @@
                                     {{ trans('cruds.role.title') }}
                                 </a>
                             </li>
-                        @endcan
+                        @endcan --}}
                         {{-- @can('team_access')
                             <li class="c-sidebar-nav-item">
                                 <a href="{{ route("admin.teams.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/teams") || request()->is("admin/teams/*") ? "c-active" : "" }}">
@@ -219,9 +216,6 @@
 {{-- This is users sidebar --}}
     <div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show">
         <div class="c-sidebar-brand d-md-down-none">
-            {{-- <a class="c-sidebar-brand-full h4" href="#">
-                {{ trans('panel.site_title') }}
-            </a> --}}
             <img src="{{ asset('/images/tianma_logo_op-03.png') }}" style="width: 190px;">
         </div>
 
@@ -255,12 +249,30 @@
                 </ul>
             </li>
 
+            {{-- Commissions --}}
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="{{ route('user.myCommission') }}" >
+                    <i class="fas fa-dollar-sign c-sidebar-nav-icon"></i>
+                    {{ trans('global.reports.title_singular') }}
+                </a>
+            </li>
+
+            {{-- My Orders --}}
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("user.my-orders.index") }}" class="c-sidebar-nav-link">
                     <i class="fa-fw fab fa-first-order-alt c-sidebar-nav-icon"></i>
-                        {{ trans('cruds.order.title') }}
+                    {{ trans('global.order.myOrder') }}
                 </a>
             </li>
+
+            {{-- My Customers --}}
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("user.myCustomers") }}" class="c-sidebar-nav-link">
+                    <i class="fas fa-user c-sidebar-nav-icon"></i>
+                    {{ trans('global.order.myCust') }}
+                </a>
+            </li>
+
 
             {{-- Products --}}
             {{-- <li class="c-sidebar-nav-item">
@@ -277,21 +289,6 @@
                         {{ trans('global.documents.title') }}
                 </a>
             </li>
-
-            {{-- Reports --}}
-            {{-- <li class="c-sidebar-nav-dropdown">
-                <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                    <i class="fa-fw fas fa-file-excel-o c-sidebar-nav-icon"></i>
-                    {{ trans('global.reports.title') }}
-                </a>
-                <ul class="c-sidebar-nav-dropdown-items">
-                    <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link" href="{{ route('user.myCommission') }}" >
-                            {{ trans('global.reports.myCommission') }}
-                        </a>
-                    </li>
-                </ul>
-            </li> --}}
 
             {{-- Settings --}}
             <li class="c-sidebar-nav-dropdown">

@@ -30,9 +30,9 @@
                         <th width="10">
 
                         </th>
-                        {{-- <th>
-                            {{ trans('cruds.user.fields.id') }}
-                        </th> --}}
+                        <th>
+                            {{ trans('global.createdDate') }}
+                        </th>
                         <th>
                             {{ trans('cruds.user.fields.name') }}
                         </th>
@@ -107,9 +107,9 @@
                             <td>
 
                             </td>
-                            {{-- <td>
-                                {{ $user->id ?? '' }}
-                            </td> --}}
+                            <td>
+                                {{ Carbon\Carbon::parse($user->created_at)->format('d/m/Y H:i:s') }}
+                            </td>
                             <td>
                                 {{ $user->name ?? '' }}
                             </td>

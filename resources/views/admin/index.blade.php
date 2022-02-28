@@ -88,6 +88,9 @@
                                         {{ trans('cruds.order.fields.id') }}
                                     </th> --}}
                                     <th>
+                                        {{ trans('cruds.order.fields.order_date') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.order.fields.ref_no') }}
                                     </th>
                                     <th>
@@ -95,9 +98,6 @@
                                     </th>
                                     <th>
                                         {{ trans('cruds.order.fields.order_status') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.order.fields.order_date') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.order.fields.approved') }}
@@ -127,6 +127,9 @@
                                                 {{ $order->id ?? '' }}
                                             </td> --}}
                                             <td>
+                                                {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y H:i:s') }}
+                                            </td>
+                                            <td>
                                                 #{{ $order->ref_no ?? '' }}
                                             </td>
                                             <td>
@@ -134,9 +137,6 @@
                                             </td>
                                             <td>
                                                 {{ $order->order_status ?? '' }}
-                                            </td>
-                                            <td>
-                                                {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y H:i:s') }}
                                             </td>
                                             <td>
                                                 <span style="display:none">{{ $order->approved ?? '' }}</span>

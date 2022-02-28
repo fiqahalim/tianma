@@ -42,6 +42,7 @@ class Order extends Model
         'deleted_at',
         'team_id',
         'created_by',
+        'product_id',
     ];
 
     public function customer()
@@ -64,6 +65,11 @@ class Order extends Model
         return $this->belongsTo(Commission::class, 'id', 'order_id');
     }
 
+    public function products()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
@@ -71,6 +77,11 @@ class Order extends Model
 
     public function installments()
     {
-        return $this->belongsTo(Installment::class);
+        return $this->belongsTo(Installment::class, 'id', 'order_id');
+    }
+
+    public function fullPayments()
+    {
+        return $this->belongsTo(Transaction::class, 'id', 'order_id');
     }
 }

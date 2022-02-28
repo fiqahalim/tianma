@@ -23,9 +23,11 @@ class OrderDetailsController extends Controller
     public function show($id)
     {
         $order = Order::find($id);
-        // dd($order);
 
-        return view('pages.order.show', compact('order'));
+        $today = Carbon::now();
+        $date = $today->addMonth(1);
+
+        return view('pages.order.show', compact('order', 'date'));
     }
 
     public function edit()

@@ -9,64 +9,14 @@
 </nav>
 
 <div class="card">
-    <div class="card-header font-weight-bold">
-        {{ trans('global.show') }} {{ trans('cruds.order.title') }}
-    </div>
-
     <div class="card-body">
         <div class="form-group">
-            <table class="table table-bordered table-striped">
-                <tbody>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.order.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $order->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.order.fields.ref_no') }}
-                        </th>
-                        <td>
-                            {{ $order->ref_no }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.order.fields.amount') }}
-                        </th>
-                        <td>
-                            {{ $order->amount }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.order.fields.order_status') }}
-                        </th>
-                        <td>
-                            {{ App\Models\Order::ORDER_STATUS_SELECT[$order->order_status] ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.order.fields.approved') }}
-                        </th>
-                        <td>
-                            <input type="checkbox" disabled="disabled" {{ $order->approved ? 'checked' : '' }}>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.order.fields.customer') }}
-                        </th>
-                        <td>
-                            {{ $order->customer->full_name ?? '' }}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            @if($order->customer->mode == 'Installment')
+                @include('admin.commissions.components.installment')
+            @else
+                @include('admin.commissions.components.fullpayment')
+            @endif
+
             <div class="form-group">
                 <a class="btn btn-default" href="{{ route('admin.orders.index') }}">
                     {{ trans('global.back_to_list') }}
@@ -75,4 +25,18 @@
         </div>
     </div>
 </div>
+@endsection
+
+
+@section('styles')
+    <link type="text/css" rel="stylesheet" href="{{ mix('/css/pages/invoice.css') }}"  media="screen,projection"/>
+    <link href="{{ mix('/css/pages/invoice.css') }}" rel="stylesheet" media="print" type="text/css">
+@endsection
+
+@section('scripts')
+<script>
+    $('.print-window').click(function() {
+    window.print();
+    });
+</script>
 @endsection

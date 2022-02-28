@@ -8,12 +8,14 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Total Customers
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                {{ $customers }}
-                            </div>
+                            <a href="{{ route("user.myCustomers") }}">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Total Customers
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    {{ $customers }}
+                                </div>
+                            </a>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-user fa-2x text-gray-300">
@@ -29,12 +31,14 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Total Orders (Monthly)
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                {{ $myOrders }}
-                            </div>
+                            <a href="{{ route("user.my-orders.index") }}">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    Total Orders (Monthly)
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    {{ $myOrders }}
+                                </div>
+                            </a>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-clipboard-list fa-2x text-gray-300">
@@ -50,12 +54,14 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                My Earnings (Monthly)
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                RM {{ $myEarnings }}
-                            </div>
+                            <a href="{{ route('user.myCommission') }}">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                    My Earnings (Monthly)
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    RM {{ $myEarnings }}
+                                </div>
+                            </a>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300">
@@ -81,7 +87,7 @@
                                 <tr>
                                     <th></th>
                                     <th>
-                                        {{ trans('cruds.order.fields.id') }}
+                                        {{ trans('cruds.order.fields.order_date') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.order.fields.ref_no') }}
@@ -91,9 +97,6 @@
                                     </th>
                                     <th>
                                         {{ trans('cruds.order.fields.order_status') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.order.fields.order_date') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.order.fields.approved') }}
@@ -108,39 +111,38 @@
                             </thead>
                             <tbody>
                                 @foreach($agentComms as $key => $order)
-                                    <tr data-entry-id="{{ $order->id }}">
-                                        <td></td>
-                                        <td>
-                                            {{ $key+1 }}
-                                        </td>
-                                        <td>
-                                            #{{ $order->ref_no ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $order->amount ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $order->order_status ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y H:i:s') }}
-                                        </td>
-                                        <td>
-                                            <span style="display:none">{{ $order->approved ?? '' }}</span>
-                                            <input type="checkbox" disabled="disabled" {{ $order->approved ? 'checked' : '' }}>
-                                        </td>
-                                        <td>
-                                            {{ $order->customer->full_name ?? '' }}
-                                        </td>
-                                        <td>
-                                            @if($order->approved == 1)
-                                                {{ $order->mo_overriding_comm ?? '' }}
-                                            @else
-                                                Only display when order approved
-                                            @endif
-                                        </td>
-                                    </tr>
-                                    @endforeach
+                                    @if(!empty($order->mo_overriding_comm) && $order->mo_overriding_comm > 0)
+                                        <tr data-entry-id="{{ $order->id }}">
+                                            <td></td>
+                                            <td>
+                                                {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y H:i:s') }}
+                                            </td>
+                                            <td>
+                                                #{{ $order->ref_no ?? '' }}
+                                            </td>
+                                            <td>
+                                                {{ $order->amount ?? '' }}
+                                            </td>
+                                            <td>
+                                                {{ $order->order_status ?? '' }}
+                                            </td>
+                                            <td>
+                                                <span style="display:none">{{ $order->approved ?? '' }}</span>
+                                                <input type="checkbox" disabled="disabled" {{ $order->approved ? 'checked' : '' }}>
+                                            </td>
+                                            <td>
+                                                {{ $order->customer->full_name ?? '' }}
+                                            </td>
+                                            <td>
+                                                @if($order->approved == 1)
+                                                    {{ $order->mo_overriding_comm ?? '' }}
+                                                @else
+                                                    Only display when order approved
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endif
+                                @endforeach
                             </tbody>
                         </table>
 

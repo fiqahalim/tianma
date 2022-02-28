@@ -2,9 +2,9 @@
     <td>
         
     </td>
-    <td>
+    {{-- <td>
         {{ $productCategory->id ?? '' }}
-    </td>
+    </td> --}}
     <td>
         {{ $prefix ?? '' }} {{ $productCategory->name ?? '' }}
     </td>

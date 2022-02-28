@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
 use Gate;
 use Alert;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -61,7 +62,10 @@ class OrdersController extends Controller
 
         $order->load('customer', 'team', 'createdBy', 'commissions');
 
-        return view('admin.orders.show', compact('order'));
+        $today = Carbon::today();
+        $date = $today->addMonth(1);
+
+        return view('admin.orders.show', compact('order', 'date'));
     }
 
     public function destroy(Order $order)

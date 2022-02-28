@@ -102,6 +102,9 @@ right connector from last child*/
     border-color:  #9894b4;
 }
 
-.sub-menu, .child-menu {
+.sub-menu, .child-menu1, .child-menu2, .child-menu3, .child-menu4,
+.child-menu5, .child-menu6, .child-menu7, .child-menu8, .child-menu9,
+.child-menu10, .child-menu11, .child-menu12, .child-item1, .child-item2
+{
   display:none;
 }

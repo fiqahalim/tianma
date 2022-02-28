@@ -32,7 +32,7 @@
 
                         </th>
                         <th>
-                            {{ trans('cruds.order.fields.id') }}
+                            {{ trans('cruds.order.fields.order_date') }}
                         </th>
                         <th>
                             {{ trans('cruds.order.fields.ref_no') }}
@@ -42,9 +42,6 @@
                         </th>
                         <th>
                             {{ trans('cruds.order.fields.order_status') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.order.fields.order_date') }}
                         </th>
                         <th>
                             {{ trans('cruds.order.fields.approved') }}
@@ -71,19 +68,16 @@
 
                                 </td>
                                 <td>
-                                    {{ $order->id ?? '' }}
+                                    {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y H:i:s') }}
                                 </td>
                                 <td>
-                                    {{ $order->ref_no ?? '' }}
+                                    #{{ $order->ref_no ?? '' }}
                                 </td>
                                 <td>
                                     {{ $order->amount ?? '' }}
                                 </td>
                                 <td>
                                     {{ $order->order_status ?? '' }}
-                                </td>
-                                <td>
-                                    {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y H:i:s') }}
                                 </td>
                                 <td>
                                     <span style="display:none">{{ $order->approved ?? '' }}</span>
@@ -96,7 +90,15 @@
                                     {{ $order->createdBy->agent_code ?? '' }}
                                 </td>
                                 <td>
-                                    RM {{ $order->commissions->mo_overriding_comm ?? '' }}
+                                    @if($order->customer->mode == 'Installment')
+                                    <span class="badge bg-success text-white">
+                                        {{ $order->customer->mode ?? '' }}
+                                    </span>
+                                    @else
+                                    <span class="badge bg-primary text-white">
+                                        {{ $order->customer->mode ?? '' }}
+                                    </span>
+                                    @endif
                                 </td>
                                 <td>
                                     @can('order_show')

@@ -39,7 +39,7 @@ class CustomerController extends Controller
         return view('pages.customer.customer-detail', compact('product', 'selectedCategories', 'users'));
     }
 
-    public function store(UpdateCustomerRequest $request, $category, $childCategory, $childCategory2, Product $product)
+    public function store(Request $reqs, UpdateCustomerRequest $request, $category, $childCategory, $childCategory2, Product $product)
     {
         /**
          * Check if customer exists or not
@@ -55,21 +55,21 @@ class CustomerController extends Controller
         } else {
             $customer = null;
             $customer = new Customer;
-            $customer->full_name = $request->full_name;
-            $customer->id_type = $request->id_type;
-            $customer->id_number = $request->id_number;
-            $customer->email = $request->email;
-            $customer->contact_person_name = $request->contact_person_name;
-            $customer->contact_person_no = $request->contact_person_no;
-            $customer->postcode = $request->postcode;
-            $customer->state = $request->state;
-            $customer->city = $request->city;
-            $customer->address_1 = $request->address_1;
-            $customer->address_2 = $request->address_2;
-            $customer->nationality = $request->nationality;
-            $customer->country = $request->country;
-            $customer->mode = $request->mode;
-            $customer->created_by = $request->created_by;
+            $customer->full_name = $reqs->full_name;
+            $customer->id_type = $reqs->id_type;
+            $customer->id_number = $reqs->id_number;
+            $customer->email = $reqs->email;
+            $customer->contact_person_name = $reqs->contact_person_name;
+            $customer->contact_person_no = $reqs->contact_person_no;
+            $customer->postcode = $reqs->postcode;
+            $customer->state = $reqs->state;
+            $customer->city = $reqs->city;
+            $customer->address_1 = $reqs->address_1;
+            $customer->address_2 = $reqs->address_2;
+            $customer->nationality = $reqs->nationality;
+            $customer->country = $reqs->country;
+            $customer->mode = $reqs->mode;
+            $customer->created_by = $reqs->created_by;
             $customer->created_at = $current = Carbon::now();
             $customer->updated_at = $current = Carbon::now();
             $customer->save();
