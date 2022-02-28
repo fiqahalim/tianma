@@ -43,6 +43,13 @@ class MyDocumentController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $myDocument->id]);
         }
 
-        return redirect()->route('pages.document.index');
+        return redirect()->route('user.my-documents.index');
+    }
+
+    public function show(MyDocument $myDocument)
+    {
+        $myDocument->load('agents');
+
+        return view('pages.document.show', compact('myDocument'));
     }
 }

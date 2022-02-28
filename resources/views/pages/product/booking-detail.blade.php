@@ -34,7 +34,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-5">
                                 <label for="full_name">{{ trans('cruds.customer.fields.full_name') }}</label>
-                                <input class="form-control" id="full_name" type="name" value="{{ $customer->full_name }}" readonly>
+                                <input class="form-control" id="full_name" type="name" value="{{ old($full_name, $customer->full_name) }}" readonly>
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="id_type">{{ trans('cruds.customer.fields.id_type') }}</label>
@@ -61,6 +61,7 @@
                         </div>
                         <hr>
 
+                        {{-- Product Info --}}
                         <h5 class="my-3">Product Information</h5>
                         <div class="form-row">
                             <div class="form-group col-md-6">
@@ -112,6 +113,7 @@
                         </div>
                         <hr>
 
+                        {{-- Billing Info --}}
                         <h5 class="my-3">Billing Information</h5>
                         <div class="form-row">
                             <div class="form-group col-md-6">
@@ -139,6 +141,7 @@
                         </div>
                         <hr>
 
+                        {{-- Payment Info --}}
                         <h5 class="my-3">Payment Information</h5>
                         <div class="form-row">
                             <div class="form-group col-md-6">

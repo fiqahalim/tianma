@@ -31,7 +31,7 @@
 
                         </th>
                         <th>
-                            {{ trans('cruds.myDocument.fields.id') }}
+                            {{ trans('global.createdDate') }}
                         </th>
                         <th>
                             {{ trans('cruds.myDocument.fields.document_name') }}
@@ -41,9 +41,6 @@
                         </th>
                         <th>
                             {{ trans('cruds.myDocument.fields.document_file') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.myDocument.fields.agents') }}
                         </th>
                         <th>
                             {{ trans('cruds.user.fields.name') }}
@@ -56,11 +53,9 @@
                 <tbody>
                     @foreach($myDocuments as $key => $myDocument)
                         <tr data-entry-id="{{ $myDocument->id }}">
+                            <td></td>
                             <td>
-
-                            </td>
-                            <td>
-                                {{ $myDocument->id ?? '' }}
+                                {{ $myDocument->created_at ?? '' }}
                             </td>
                             <td>
                                 {{ $myDocument->document_name ?? '' }}
@@ -79,18 +74,15 @@
                                 {{ $myDocument->agents->name ?? '' }}
                             </td>
                             <td>
-                                {{ $myDocument->agents->name ?? '' }}
-                            </td>
-                            <td>
-                                <a class="btn btn-xs btn-primary" href="{{ route('user.my-documents.show', $myDocument->id) }}">
+                                <a class="btn btn-xs btn-primary" href="{{ route('admin.my-documents.show', $myDocument->id) }}">
                                     <i class="fas fa-eye"></i>
                                 </a>
 
-                                <a class="btn btn-xs btn-info" href="{{ route('user.my-documents.edit', $myDocument->id) }}">
+                                <a class="btn btn-xs btn-info" href="{{ route('admin.my-documents.edit', $myDocument->id) }}">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
 
-                                <form action="{{ route('user.my-documents.destroy', $myDocument->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                <form action="{{ route('admin.my-documents.destroy', $myDocument->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                     <input type="hidden" name="_method" value="DELETE">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <button type="submit" class="btn btn-xs btn-danger">

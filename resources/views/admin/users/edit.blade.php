@@ -78,16 +78,6 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.user.fields.username_helper') }}</span>
                 </div>
-                {{-- <div class="form-group col-md-2">
-                    <label class="required" for="password">{{ trans('cruds.user.fields.password') }}</label>
-                    <input class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" type="password" name="password" id="password">
-                    @if($errors->has('password'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('password') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.user.fields.password_helper') }}</span>
-                </div> --}}
                 <div class="form-group col-md-3">
                     <label class="required" for="contact_no">{{ trans('cruds.user.fields.contact_no') }}</label>
                     <input class="form-control {{ $errors->has('contact_no') ? 'is-invalid' : '' }}" type="text" name="contact_no" id="contact_no" value="{{ old('contact_no', $user->contact_no) }}" required>
@@ -171,20 +161,6 @@
 
             {{-- Team Details --}}
             <div class="form-row">
-                {{-- <div class="form-group col-md-6">
-                    <label for="team_id">{{ trans('cruds.user.fields.team') }}</label>
-                    <select class="form-control form-select {{ $errors->has('team') ? 'is-invalid' : '' }}" name="team_id" id="team_id">
-                        @foreach($teams as $id => $entry)
-                            <option value="{{ $id }}" {{ (old('team_id') ? old('team_id') : $user->team->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                        @endforeach
-                    </select>
-                    @if($errors->has('team'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('team') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.user.fields.team_helper') }}</span>
-                </div> --}}
                 <div class="form-group col-md-6">
                     <label>{{ trans('cruds.user.fields.ref_name') }}</label>
                     <input class="form-control" type="text" value="{{ $user->parent ? $user->parent->agent_code : '' }}" readonly>
@@ -193,11 +169,6 @@
                 <div class="form-group col-md-6">
                     <label>{{ trans('cruds.ranking.currentRank') }}</label>
                     <input class="form-control" type="text" name="rankings_id" id="rankings_id" value="{{ $user->rankings ? $user->rankings->category : '' }}" readonly>
-                    {{-- <select class="form-control form-select {{ $errors->has('rankings') ? 'is-invalid' : '' }}" name="ranking_id" id="rankings_id" disabled>
-                        @foreach($rankings as $id => $data)
-                            <option value="{{ $id }}" {{ (old('rankings_id') ? old('rankings_id') : $user->rankings->id ?? '') == $id ? 'selected' : '' }}>{{ $data }}</option>
-                        @endforeach
-                    </select> --}}
                 </div>
                 <div class="form-group col-md-6">
                     <label>{{ trans('cruds.commission.fields.comm_monthly') }}</label>
@@ -210,13 +181,18 @@
                         <input class="form-control" type="text" value="{{ $totalComms ?? '' }}" readonly>
                     </div>
                 </div>
+
                 <div class="form-group col-md-6">
                     <label>{{ trans('cruds.ranking.remoteDemote') }}</label>
-                    <select class="form-control form-select {{ $errors->has('rankings') ? 'is-invalid' : '' }}" name="ranking_id" id="rankings_id">
-                        @foreach($rankings as $id => $data)
-                            <option value="{{ $id }}" {{ (old('rankings_id') ? old('rankings_id') : $user->rankings->id ?? '') == $id ? 'selected' : '' }}>{{ $data }}</option>
-                        @endforeach
-                    </select>
+                    @if(!empty($totalComms) && $totalComms > 50000)
+                        <select class="form-control form-select {{ $errors->has('rankings') ? 'is-invalid' : '' }}" name="ranking_id" id="rankings_id">
+                            @foreach($rankings as $id => $data)
+                                <option value="{{ $id }}" {{ (old('rankings_id') ? old('rankings_id') : $user->rankings->id ?? '') == $id ? 'selected' : '' }}>{{ $data }}</option>
+                            @endforeach
+                        </select>
+                    @else
+                        <input class="form-control" type="text" value="Not eligible to do this option until total commissions reach the target!" readonly>
+                    @endif
                 </div>
             </div>
             <hr>

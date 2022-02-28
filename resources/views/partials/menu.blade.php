@@ -99,13 +99,13 @@
                         {{ trans('cruds.documentManagement.title') }}
                     </a>
                     <ul class="c-sidebar-nav-dropdown-items">
-                        @can('user_alert_access')
+                        {{-- @can('user_alert_access')
                             <li class="c-sidebar-nav-item">
                                 <a href="{{ route("admin.user-alerts.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/user-alerts") || request()->is("admin/user-alerts/*") ? "c-active" : "" }}">
                                     {{ trans('cruds.userAlert.title') }}
                                 </a>
                             </li>
-                        @endcan
+                        @endcan --}}
                         @can('my_document_access')
                             <li class="c-sidebar-nav-item">
                                 <a href="{{ route("admin.my-documents.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/my-documents") || request()->is("admin/my-documents/*") ? "c-active" : "" }}">

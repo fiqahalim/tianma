@@ -52,6 +52,13 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
         ],
 
+        'media' => [
+            'driver' => 'local',
+            'root' => storage_path ('app/public'),
+            'url' => '/storage',
+            'visibility' => 'public',
+        ],
+
     ],
 
     /*

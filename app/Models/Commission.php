@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use \DateTimeInterface;
-use App\Traits\MultiTenantModelTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,7 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Commission extends Model
 {
     use SoftDeletes;
-    use MultiTenantModelTrait;
     use HasFactory;
 
     public $table = 'commissions';
@@ -31,6 +29,9 @@ class Commission extends Model
         'updated_at',
         'deleted_at',
         'team_id',
+        'credit_amount',
+        'debit_amount',
+        'balance_amount',
     ];
 
     public function user()

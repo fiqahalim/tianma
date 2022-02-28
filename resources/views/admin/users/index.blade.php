@@ -36,12 +36,6 @@
                         <th>
                             {{ trans('cruds.user.fields.name') }}
                         </th>
-                        {{-- <th>
-                            {{ trans('cruds.user.fields.id_type') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.user.fields.id_number') }}
-                        </th> --}}
                         <th>
                             {{ trans('cruds.user.fields.email') }}
                         </th>
@@ -54,48 +48,12 @@
                         <th>
                             {{ trans('cruds.user.fields.verified') }}
                         </th>
-                        {{-- <th>
-                            {{ trans('cruds.user.fields.contact_no') }}
-                        </th> --}}
                         <th>
                             {{ trans('cruds.user.fields.agent_code') }}
                         </th>
                         <th>
                             {{ trans('cruds.user.fields.roles') }}
                         </th>
-                        {{-- <th>
-                            {{ trans('cruds.commission.fields.comm_monthly') }}
-                        </th> --}}
-                        {{-- <th>
-                            {{ trans('cruds.user.fields.email_verified_at') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.user.fields.passport_issue_date') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.user.fields.passport_expiry_date') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.user.fields.address_1') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.user.fields.address_2') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.user.fields.postcode') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.user.fields.state') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.user.fields.city') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.user.fields.country') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.user.fields.nationality') }}
-                        </th> --}}
                         <th>
                             &nbsp;
                         </th>
@@ -113,12 +71,6 @@
                             <td>
                                 {{ $user->name ?? '' }}
                             </td>
-                            {{-- <td>
-                                {{ App\Models\User::ID_TYPE_SELECT[$user->id_type] ?? '' }}
-                            </td>
-                            <td>
-                                {{ $user->id_number ?? '' }}
-                            </td> --}}
                             <td>
                                 {{ $user->email ?? '' }}
                             </td>
@@ -133,9 +85,6 @@
                                 <span style="display:none">{{ $user->verified ?? '' }}</span>
                                 <input type="checkbox" disabled="disabled" {{ $user->verified ? 'checked' : '' }}>
                             </td>
-                            {{-- <td>
-                                {{ $user->contact_no ?? '' }}
-                            </td> --}}
                             <td>
                                 {{ $user->agent_code ?? '' }}
                             </td>
@@ -144,36 +93,6 @@
                                     <span class="badge badge-info">{{ $item->title }}</span>
                                 @endforeach
                             </td>
-                            {{-- <td>
-                                {{ $user->email_verified_at ?? '' }}
-                            </td> --}}
-                            {{-- <td>
-                                {{ $user->passport_issue_date ?? '' }}
-                            </td>
-                            <td>
-                                {{ $user->passport_expiry_date ?? '' }}
-                            </td>
-                            <td>
-                                {{ $user->address_1 ?? '' }}
-                            </td>
-                            <td>
-                                {{ $user->address_2 ?? '' }}
-                            </td>
-                            <td>
-                                {{ $user->postcode ?? '' }}
-                            </td>
-                            <td>
-                                {{ $user->state ?? '' }}
-                            </td>
-                            <td>
-                                {{ $user->city ?? '' }}
-                            </td>
-                            <td>
-                                {{ $user->country ?? '' }}
-                            </td>
-                            <td>
-                                {{ $user->nationality ?? '' }}
-                            </td> --}}
                             <td>
                                 @can('user_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.users.show', $user->id) }}">

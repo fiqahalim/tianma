@@ -11,6 +11,8 @@ class AddRelationshipFieldsToMyDocumentsTable extends Migration
         Schema::table('my_documents', function (Blueprint $table) {
             $table->unsignedBigInteger('agents_id')->nullable();
             $table->foreign('agents_id', 'agents_fk_5482659')->references('id')->on('users');
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->foreign('created_by', 'created_by_fk_6109147')->references('id')->on('users');
         });
     }
 }

@@ -3,13 +3,11 @@
 namespace App\Models;
 
 use \DateTimeInterface;
-use App\Traits\MultiTenantModelTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Ranking extends Model
 {
-    use MultiTenantModelTrait;
     use HasFactory;
 
     public $table = 'rankings';
