@@ -7,16 +7,6 @@
     </ol>
 </nav>
 
-{{-- @can('commission_create')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.commissions.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.commission.title_singular') }}
-            </a>
-        </div>
-    </div>
-@endcan --}}
-
 <div class="card">
     <div class="card-header font-weight-bold">
         {{ trans('cruds.commission.title_singular') }} {{ trans('global.list') }}
@@ -27,12 +17,7 @@
             <table class=" table table-bordered table-striped table-hover datatable datatable-Commission">
                 <thead>
                     <tr>
-                        <th width="10">
-
-                        </th>
-                        {{-- <th>
-                            {{ trans('cruds.commission.fields.id') }}
-                        </th> --}}
+                        <th width="10"></th>
                         <th>
                             {{ trans('global.createdDate') }}
                         </th>
@@ -48,9 +33,6 @@
                         <th>
                             {{ trans('cruds.commission.fields.order') }}
                         </th>
-                        {{-- <th>
-                            {{ trans('cruds.customer.fields.mode') }}
-                        </th> --}}
                         <th>
                             &nbsp;
                         </th>
@@ -60,12 +42,7 @@
                     @foreach($commissions as $key => $commission)
                     @if(!empty($commission->mo_overriding_comm) && $commission->mo_overriding_comm > 0)
                         <tr data-entry-id="{{ $commission->id }}">
-                            <td>
-
-                            </td>
-                            {{-- <td>
-                                {{ $commission->id ?? '' }}
-                            </td> --}}
+                            <td></td>
                             <td>
                                 {{ Carbon\Carbon::parse($commission->created_at)->format('d/m/Y H:i:s') }}
                             </td>
@@ -81,15 +58,10 @@
                             <td>
                                 #{{ $commission->orders->ref_no ?? '' }}
                             </td>
-                            {{-- <td>
-                                {{ $commission->orders->customer->mode ?? '' }}
-                            </td> --}}
                             <td>
-                                {{-- @can('commission_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.commissions.show', $commission->id) }}">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                @endcan --}}
+                                <a class="btn btn-xs btn-warning" href="">
+                                    {{ trans('global.withdraw') }}
+                                </a>
 
                                 @can('commission_edit')
                                     <a class="btn btn-xs btn-info" href="{{ route('admin.commissions.edit', $commission->id) }}">
