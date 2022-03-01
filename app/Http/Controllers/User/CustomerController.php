@@ -39,7 +39,7 @@ class CustomerController extends Controller
         return view('pages.customer.customer-detail', compact('product', 'selectedCategories', 'users'));
     }
 
-    public function store(Request $reqs, $category, $childCategory, $childCategory2, Product $product)
+    public function store(Request $reqs, UpdateCustomerRequest $request, $category, $childCategory, $childCategory2, Product $product)
     {
         /**
          * Check if customer exists or not

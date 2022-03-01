@@ -196,9 +196,8 @@
         </div>
     </div>
 </div>
-{{-- {{session()->forget('customer')}}
-{{session()->forget('customer')}} --}}
-{{session()->flush()}}
+{{session()->forget('customer')}}
+{{session()->forget('products')}}
 @endsection
 
 @section('styles')
