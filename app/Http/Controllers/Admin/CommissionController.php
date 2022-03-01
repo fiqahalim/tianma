@@ -91,4 +91,11 @@ class CommissionController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+    public function withdrawCommission(Request $req, $id)
+    {
+        // get total commission by certain agent
+
+        // deduct the total commission and save into debit_amount column
+    }
 }

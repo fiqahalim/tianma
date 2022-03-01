@@ -39,7 +39,7 @@ class CustomerController extends Controller
         return view('pages.customer.customer-detail', compact('product', 'selectedCategories', 'users'));
     }
 
-    public function store(Request $reqs, UpdateCustomerRequest $request, $category, $childCategory, $childCategory2, Product $product)
+    public function store(Request $reqs, $category, $childCategory, $childCategory2, Product $product)
     {
         /**
          * Check if customer exists or not
@@ -49,6 +49,22 @@ class CustomerController extends Controller
         $users = User::where('parent_id')
             ->with('childUsers')
             ->get();
+
+
+        $product->load('categories.parentCategory');
+        $childCategory2 = $product->categories->where('name', $childCategory2)->first();
+        $selectedCategories = [];
+
+        if ($childCategory2 &&
+            $childCategory2->parentCategory &&
+            $childCategory2->parentCategory->parentCategory
+        ) {
+            $selectedCategories = [
+                $childCategory2->parentCategory->parentCategory->id ?? null,
+                $childCategory2->parentCategory->id ?? null,
+                $childCategory2->id
+            ];
+        }
 
         if ($customer !== null) {
             $customer->update($request->all());
@@ -73,21 +89,6 @@ class CustomerController extends Controller
             $customer->created_at = $current = Carbon::now();
             $customer->updated_at = $current = Carbon::now();
             $customer->save();
-        }
-
-        $product->load('categories.parentCategory');
-        $childCategory2 = $product->categories->where('name', $childCategory2)->first();
-        $selectedCategories = [];
-
-        if ($childCategory2 &&
-            $childCategory2->parentCategory &&
-            $childCategory2->parentCategory->parentCategory
-        ) {
-            $selectedCategories = [
-                $childCategory2->parentCategory->parentCategory->id ?? null,
-                $childCategory2->parentCategory->id ?? null,
-                $childCategory2->id
-            ];
         }
 
         session(['customer' => $customer]);
