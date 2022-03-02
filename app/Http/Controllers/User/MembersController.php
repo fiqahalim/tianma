@@ -82,7 +82,7 @@ class MembersController extends Controller
 
     public function myCommission(Order $order)
     {
-        $commissions = Commission::where('id', '=', Auth::user()->id)
+        $commissions = Commission::where('user_id', '=', Auth::user()->id)
             ->with(['user', 'orders', 'team', 'installments'])
             ->get();
         return view('pages.report.ref-commission', compact('commissions'));

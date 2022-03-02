@@ -16,9 +16,9 @@
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-Commission">
+            <table class="table table-bordered table-striped table-hover datatable datatable-Commission">
                 <thead>
-                    <tr>
+                    <tr class="table-info">
                         <th width="10"></th>
                         <th>
                             {{ trans('global.createdDate') }}
@@ -28,9 +28,6 @@
                         </th>
                         <th>
                             {{ trans('cruds.commission.fields.increased_commission') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.commission.fields.user') }}
                         </th>
                         <th>
                             {{ trans('cruds.commission.fields.order') }}
@@ -54,14 +51,8 @@
                                 {{ $commission->mo_spin_off ?? 'Not eligible yet' }}
                             </td>
                             <td>
-                                {{ $commission->user->agent_code ?? '' }}
-                            </td>
-                            <td>
                                 #{{ $commission->orders->ref_no ?? '' }}
                             </td>
-                            {{-- <td>
-                                {{ $commission->orders->customer->mode ?? '' }}
-                            </td> --}}
                         </tr>
                     @endif
                     @endforeach

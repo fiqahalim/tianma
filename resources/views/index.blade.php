@@ -84,7 +84,7 @@
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped table-hover datatable datatable-Order">
                             <thead>
-                                <tr>
+                                <tr class="table-info">
                                     <th></th>
                                     <th>
                                         {{ trans('cruds.order.fields.order_date') }}

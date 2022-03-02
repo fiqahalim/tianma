@@ -21,7 +21,7 @@
                             @csrf
                             <div class="d-flex flex-column align-items-center text-center">
                                 <img class="rounded-circle" src="{{ asset('/images/profile/' .Auth::user()->avatar ?? 'avatar.png') }}" width="150">
-                                    <div class="mt-3">
+                                    <div class="mt-3 mb-2">
                                         <h4>
                                             {{ Auth::user()->name }}
                                         </h4>
@@ -30,6 +30,10 @@
                                         </p>
                                         <p class="text-muted font-size-sm">
                                             {{ Auth::user()->username }}
+                                        </p>
+                                        <p class="text-muted font-size-sm">
+                                            Joined Date:
+                                            {{ Carbon\Carbon::parse(Auth::user()->created_at)->format('d/M/Y') }}
                                         </p>
                                     </div>
                                 </img>
@@ -41,8 +45,6 @@
                                         </button>
                                     </div>
                                 </div>
-                                {{-- <input type="file" name="avatar" id="avatar" style="opacity: 0;height:1px;display:none">
-                                <a href="javascript:void(0)" class="btn btn-primary btn-block" id="change_picture_btn"><b>Change picture</b></a> --}}
                             </div>
                         </form>
                     </div>

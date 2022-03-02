@@ -229,6 +229,22 @@
                 </a>
             </li>
 
+            {{-- My Customers --}}
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("user.myCustomers") }}" class="c-sidebar-nav-link">
+                    <i class="fas fa-user c-sidebar-nav-icon"></i>
+                    {{ trans('global.order.myCust') }}
+                </a>
+            </li>
+
+            {{-- Commissions --}}
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="{{ route('user.myCommission') }}" >
+                    <i class="fas fa-dollar-sign c-sidebar-nav-icon"></i>
+                    {{ trans('global.reports.title_singular') }}
+                </a>
+            </li>
+
             {{-- Downline --}}
             <li class="c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
@@ -249,13 +265,6 @@
                 </ul>
             </li>
 
-            {{-- Commissions --}}
-            <li class="c-sidebar-nav-item">
-                <a class="c-sidebar-nav-link" href="{{ route('user.myCommission') }}" >
-                    <i class="fas fa-dollar-sign c-sidebar-nav-icon"></i>
-                    {{ trans('global.reports.title_singular') }}
-                </a>
-            </li>
 
             {{-- My Orders --}}
             <li class="c-sidebar-nav-item">
@@ -265,13 +274,6 @@
                 </a>
             </li>
 
-            {{-- My Customers --}}
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route("user.myCustomers") }}" class="c-sidebar-nav-link">
-                    <i class="fas fa-user c-sidebar-nav-icon"></i>
-                    {{ trans('global.order.myCust') }}
-                </a>
-            </li>
 
 
             {{-- Products --}}

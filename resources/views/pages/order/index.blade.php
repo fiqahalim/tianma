@@ -16,9 +16,10 @@
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-Order">
+            <table class="table table-bordered table-striped table-hover datatable datatable-Order">
                 <thead>
                     <tr class="table-info">
+                        <th></th>
                         <th>
                             {{ trans('cruds.order.fields.order_date') }}
                         </th>
@@ -38,7 +39,9 @@
                 </thead>
                 <tbody>
                     @foreach($myOrders as $key => $order)
+                    @if(!empty($order->approved) && $order->approved == 1)
                         <tr data-entry-id="{{ $order->id }}">
+                            <td></td>
                             <td>
                                 {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y H:i:s') }}
                             </td>
@@ -65,6 +68,7 @@
                                 </a>
                             </td>
                         </tr>
+                    @endif
                     @endforeach
                 </tbody>
             </table>
@@ -75,4 +79,22 @@
 
 @section('scripts')
 @parent
+
+<script>
+    $(function () {
+        let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+
+        $.extend(true, $.fn.dataTable.defaults, {
+            orderCellsTop: true,
+            order: [[ 1, 'desc' ]],
+            pageLength: 10,
+        });
+
+        let table = $('.datatable-Order:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+
+        $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
+            $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
+        });
+    })
+</script>
 @endsection

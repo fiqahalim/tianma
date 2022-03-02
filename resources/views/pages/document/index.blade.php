@@ -24,9 +24,9 @@
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-MyDocument">
+            <table class="table table-bordered table-striped table-hover datatable datatable-MyDocument">
                 <thead>
-                    <tr>
+                    <tr class="table-info">
                         <th width="10"></th>
                         <th>
                             {{ trans('global.createdDate') }}
