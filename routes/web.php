@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth'], function() {
     |--------------------------------------------------------------------------
     */
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['can:admin_only']], function () {
+
         /** USERS MANAGEMENT **/
         Route::group(['prefix' => 'user-management'], function() {
             // Permissions
@@ -54,7 +55,6 @@ Route::group(['middleware' => 'auth'], function() {
             // Users
             Route::resource('users', '\App\Http\Controllers\Admin\UsersController');
             Route::delete('users/destroy', [\App\Http\Controllers\Admin\UsersController::class, 'massDestroy'])->name('users.massDestroy');
-            // Route::get('users/{id}/hierarchy', [\App\Http\Controllers\Admin\UsersController::class, 'hierarchy'])->name('users.hierarchy');
 
             // Team
             Route::delete('teams/destroy', [\App\Http\Controllers\Admin\TeamController::class, 'massDestroy'])->name('teams.massDestroy');
@@ -107,6 +107,33 @@ Route::group(['middleware' => 'auth'], function() {
             Route::post('my-documents/ckmedia', [\App\Http\Controllers\Admin\MyDocumentController::class, 'storeCKEditorImages'])->name('my-documents.storeCKEditorImages');
         });
 
+        /** ORDERS MANAGEMENT **/
+        Route::group(['prefix' => 'order-management'], function() {
+            // Order Lists
+            Route::delete('orders/destroy', [\App\Http\Controllers\Admin\OrdersController::class,'massDestroy'])->name('orders.massDestroy');
+            Route::resource('orders', '\App\Http\Controllers\Admin\OrdersController');
+
+            // New Order
+            Route::resource('new-order', '\App\Http\Controllers\Admin\ProductOrderController');
+            Route::get('/{category:name}/{childCategory:name?}/{childCategory2?}', [\App\Http\Controllers\Admin\ProductOrderController::class, 'category'])->name('category');
+            Route::get('/{category}/{childCategory}/{childCategory2}/{product}', [\App\Http\Controllers\Admin\ProductOrderController::class, 'productCategory'])->name('product');
+
+            // Customer Details
+            Route::resource('/{category}/{childCategory}/{childCategory2}/{product}/customer-details', '\App\Http\Controllers\Admin\CustomerDetailsController');
+
+            // Search Customer Details
+            Route::get('/{category}/{childCategory}/{childCategory2}/{product}/search', [\App\Http\Controllers\Admin\CustomerDetailsController::class, 'search'])->name('search');
+            Route::post('/{category}/{childCategory}/{childCategory2}/{product}/searchCustomer', [\App\Http\Controllers\Admin\CustomerDetailsController::class, 'searchCustomer'])->name('searchCustomer');
+
+            // Booking
+            Route::resource('product-booking', '\App\Http\Controllers\Admin\ProductBookingController');
+            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/review-order', [\App\Http\Controllers\Admin\ProductBookingController::class, 'reviewOrder'])->name('reviewOrder');
+
+            // Order Summary
+            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/order-details', [\App\Http\Controllers\Admin\OrderConfirmationController::class, 'orderPage'])->name('order');
+            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/order-details/store', [\App\Http\Controllers\Admin\OrderConfirmationController::class, 'store'])->name('order.details.store');
+        });
+
         // Customer
         Route::delete('customers/destroy', [\App\Http\Controllers\Admin\CustomerController::class,'massDestroy'])->name('customers.massDestroy');
         Route::resource('customers', '\App\Http\Controllers\Admin\CustomerController');
@@ -115,27 +142,8 @@ Route::group(['middleware' => 'auth'], function() {
         Route::delete('commissions/destroy', [\App\Http\Controllers\Admin\CommissionController::class, 'massDestroy'])->name('commissions.massDestroy');
         Route::resource('commissions', '\App\Http\Controllers\Admin\CommissionController');
 
-        /** ORDERS **/
-        Route::group(['prefix' => 'order-management'], function() {
-            Route::delete('orders/destroy', [\App\Http\Controllers\Admin\OrdersController::class,'massDestroy'])->name('orders.massDestroy');
-            Route::resource('orders', '\App\Http\Controllers\Admin\OrdersController');
-            Route::resource('new-order', '\App\Http\Controllers\User\ProductsController');
-            Route::get('/{category:name}/{childCategory:name?}/{childCategory2?}', [\App\Http\Controllers\User\ProductsController::class, 'category'])->name('category');
-            Route::get('/{category}/{childCategory}/{childCategory2}/{product}', [\App\Http\Controllers\User\ProductsController::class, 'productCategory'])->name('product');
-            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/booking', [\App\Http\Controllers\User\ProductsController::class, 'bookingLot'])->name('bookinglot');
-
-            // Customers
-            Route::resource('/{category}/{childCategory}/{childCategory2}/{product}/customerdetails', '\App\Http\Controllers\User\CustomerController');
-
-            // Orders
-            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/order-details', [\App\Http\Controllers\User\OrderController::class, 'orderPage'])->name('order');
-            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/order-details/store', [\App\Http\Controllers\User\OrderController::class, 'store'])->name('order.details.store');
-
-        });
-
         // Audit Logs
         Route::resource('audit-logs', '\App\Http\Controllers\Admin\AuditLogsController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);
-
     });
 
 
@@ -145,37 +153,15 @@ Route::group(['middleware' => 'auth'], function() {
     |--------------------------------------------------------------------------
     */
     Route::group(['prefix' => 'user', 'as' => 'user.'], function() {
-        // Products
-        Route::group(['prefix' => 'products'], function() {
-            Route::resource('products', '\App\Http\Controllers\User\ProductsController');
-            Route::get('/{category:name}/{childCategory:name?}/{childCategory2?}', [\App\Http\Controllers\User\ProductsController::class, 'category'])->name('category');
-            Route::get('/{category}/{childCategory}/{childCategory2}/{product}', [\App\Http\Controllers\User\ProductsController::class, 'productCategory'])->name('product');
-            Route::get('/{category}/{childCategory}/{childCategory2}/{product}/booking', [\App\Http\Controllers\User\ProductsController::class, 'bookingLot'])->name('bookinglot');
 
-            // Customers
-            Route::resource('/{category}/{childCategory}/{childCategory2}/{product}/customerdetails', '\App\Http\Controllers\User\CustomerController');
-
-            // Orders
-            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/order-details', [\App\Http\Controllers\User\OrderController::class, 'orderPage'])->name('order');
-            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/order-details/store', [\App\Http\Controllers\User\OrderController::class, 'store'])->name('order.details.store');
-        });
-
-        // Downline
+        /** MY DOWNLINE **/
         Route::group(['prefix' => 'downline'], function() {
             Route::get('/my-tree', [\App\Http\Controllers\User\MembersController::class, 'myTree'])->name('myTree');
             Route::get('/my-downline', [\App\Http\Controllers\User\MembersController::class, 'myDownline'])->name('myDownline');
             Route::resource('/my-downline', '\App\Http\Controllers\User\MembersController');
         });
 
-        // Commissions
-        Route::group(['prefix' => 'my-commission'], function() {
-            Route::get('/', [\App\Http\Controllers\User\MembersController::class, 'myCommission'])->name('myCommission');
-        });
-
-        Route::group(['prefix' => 'my-customers'], function() {
-            Route::get('/', [\App\Http\Controllers\User\MembersController::class, 'myCustomers'])->name('myCustomers');
-        });
-
+        /** MY DOCUMENT **/
         Route::group(['prefix' => 'document'], function() {
             Route::resource('my-documents', '\App\Http\Controllers\User\MyDocumentController');
             Route::delete('my-documents/destroy', [\App\Http\Controllers\User\MyDocumentController::class, 'massDestroy'])->name('my-documents.massDestroy');
@@ -183,6 +169,14 @@ Route::group(['middleware' => 'auth'], function() {
             Route::post('my-documents/ckmedia', [\App\Http\Controllers\User\MyDocumentController::class, 'storeCKEditorImages'])->name('my-documents.storeCKEditorImages');
         });
 
+        // My Commissions
+        Route::get('/my-commission', [\App\Http\Controllers\User\MembersController::class, 'myCommission'])->name('myCommission');
+
+        // My Customers
+        Route::get('/my-customers', [\App\Http\Controllers\User\MembersController::class, 'myCustomers'])->name('myCustomers');
+
+
+        // My Orders
         Route::resource('/my-orders', '\App\Http\Controllers\User\OrderDetailsController');
     });
 

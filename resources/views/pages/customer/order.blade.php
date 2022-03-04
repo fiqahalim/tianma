@@ -198,6 +198,7 @@
 </div>
 {{session()->forget('customer')}}
 {{session()->forget('products')}}
+{{session()->forget('searchCust')}}
 @endsection
 
 @section('styles')

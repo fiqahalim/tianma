@@ -13,7 +13,7 @@ return [
     'cancel'                         => 'Cancel',
     'clear'                          => 'Clear',
     'helps'                          => 'Helps',
-    'bookingDetails'                 => 'Booking Details',
+    'bookingDetails'                 => 'Review Order',
     'confirmBooking'                 => 'Confirm Booking',
     'downloadFile'                   => 'Download file',
     'products_view'                  => 'View Product',

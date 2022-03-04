@@ -3,7 +3,7 @@
 @section('content')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('user.products.index') }}">{{ trans('global.products.title') }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.new-order.index') }}">{{ trans('global.products.title') }}</a></li>
             <li class="breadcrumb-item">{{ trans('global.products.bookingView') }}</li>
             <li class="breadcrumb-item">{{ $product->product_name }}</li>
             <li class="breadcrumb-item active" aria-current="page">{{ trans('global.products.bookingLot') }}</li>
@@ -73,9 +73,8 @@
                 </p>
 
                   <div class="text-center">
-                    <a class="btn btn-outline-primary mt-2" id="bookConfirm" href="{{ route('user.customerdetails.index', [$product->categories->first()->parentCategory->name,
-                        $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
-                            {{ trans('global.products.product_select') }}
+                    <a class="btn btn-outline-primary mt-2" id="bookConfirm" href="{{ route('admin.reviewOrder', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
+                        {{ trans('global.products.product_select') }}
                     </a>
                 </div>
             </div>

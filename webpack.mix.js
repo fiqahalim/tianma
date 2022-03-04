@@ -16,7 +16,8 @@ const cssPath = 'resources/css/';
 mix.js(jsPath + 'app.js', 'public/js')
     .js(jsPath + 'pages/booking.js', 'public/js/pages')
     .js(jsPath + 'pages/profile.js', 'public/js/pages')
-    .js(jsPath + 'pages/hierarchy.js', 'public/js/pages');
+    .js(jsPath + 'pages/hierarchy.js', 'public/js/pages')
+    .js(jsPath + 'pages/reviewOrder.js', 'public/js/pages');
 
 mix.postCss('resources/css/app.css', 'public/css', [
         //

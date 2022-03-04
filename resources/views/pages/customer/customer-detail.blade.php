@@ -3,12 +3,8 @@
 @section('content')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                {{ trans('global.products.title') }}
-            </li>
-            <li class="breadcrumb-item">
-                {{ trans('global.products.bookingLot') }}
-            </li>
+            <li class="breadcrumb-item">{{ trans('cruds.order.title') }}</li>
+            <li class="breadcrumb-item">{{ trans('cruds.order.fields.createOrder') }}</li>
             <li aria-current="page" class="breadcrumb-item active">
                 {{ trans('global.customerDetails') }}
             </li>
@@ -16,8 +12,8 @@
     </nav>
 
     <div class="container-fluid">
-        <form method="POST" action="{{ route("user.customerdetails.store", [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}" enctype="multipart/form-data">
-            @csrf
+        <form method="POST" action="{{ route("admin.customer-details.store", [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}" enctype="multipart/form-data">
+                @csrf
 
             <div class="accordion" id="accordionExample">
                 <div class="card">
@@ -160,7 +156,9 @@
                                             {{ $errors->first('state') }}
                                         </div>
                                     @endif
-                                    <span class="help-block">{{ trans('cruds.customer.fields.state_helper') }}</span>
+                                    <span class="help-block">
+                                        {{ trans('cruds.customer.fields.state_helper') }}
+                                    </span>
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label for="city">{{ trans('cruds.customer.fields.city') }}</label>
@@ -215,8 +213,8 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="font-weight-bold required" for="agent_code">
-                                        Referral {{ trans('global.register.agent_code') }}
-                                    </label>
+                                            Referral {{ trans('global.register.agent_code') }}
+                                        </label>
                                     <select class="form-control select2 {{ $errors->has('created_by') ? 'is-invalid' : '' }}" name="created_by" id="created_by">
                                         @include('components.parent-child')
                                     </select>
@@ -228,7 +226,7 @@
             </div>
 
             <div class="form-group float-right">
-                <a class="btn btn-default" href="{{ route('user.products.index') }}">
+                <a class="btn btn-default" href="{{ route('admin.search', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
                     {{ trans('global.back') }}
                 </a>
                 <button class="btn btn-primary" type="submit">

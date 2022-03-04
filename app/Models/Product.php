@@ -9,14 +9,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Cviebrock\EloquentSluggable\Sluggable;
 
 class Product extends Model implements HasMedia
 {
     use SoftDeletes;
     use InteractsWithMedia;
     use HasFactory;
-    use Sluggable;
 
     public $table = 'products';
 
@@ -45,7 +43,6 @@ class Product extends Model implements HasMedia
         'point_value',
         'quantity_per_unit',
         'total_cost',
-        'slug',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -97,15 +94,6 @@ class Product extends Model implements HasMedia
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
-    }
-
-    public function sluggable(): array
-    {
-        return [
-            'slug' => [
-                'source' => 'product_name'
-            ]
-        ];
     }
 
     public function bookingSection()

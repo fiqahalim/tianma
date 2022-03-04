@@ -1,22 +1,28 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use App\Lib\LotLayout;
+
 use App\Models\Product;
 use App\Models\ProductCategory;
-use App\Models\ProductBooking;
-use App\Models\BookingSection;
-use App\Lib\LotLayout;
+use App\Models\Customer;
+use App\Models\Order;
+use App\Models\User;
+use App\Models\Installment;
+use App\Models\Transaction;
+use App\Models\Commission;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Session;
+use Alert;
 
-class ProductsController extends Controller
+class ProductOrderController extends Controller
 {
     public function index()
     {
-        $products = Product::with('categories.parentCategory.parentCategory')
+        $products = Product::with('categories.parentCategory')
             ->inRandomOrder()
             ->take(9)
             ->get();
@@ -50,9 +56,9 @@ class ProductsController extends Controller
         $products = Product::whereHas('categories', function ($query) use ($ids) {
                 $query->whereIn('id', $ids);
             })
-            ->with('categories.parentCategory.parentCategory')
+            ->with('categories.parentCategory')
             ->paginate(9);
-            
+
         return view('pages.product.index', compact('products', 'selectedCategories'));
     }
 
@@ -75,31 +81,6 @@ class ProductsController extends Controller
 
         session(['products' => $product]);
 
-        return view('pages.product.booking-lot', compact('product', 'selectedCategories'));
-    }
-
-    // save to booking
-    public function productBooked(Request $request, $id)
-    {
-        $customer = session('customer');
-
-        $request->validate([
-            "seats"           => "required|string",
-        ],[
-            "seats.required"  => "Please Select at Least One Lot"
-        ]);
-
-        $booked_ticket  = ProductBooking::whereJsonContains('seats', rtrim($request->seats, ","))->get();
-
-        $seats = array_filter((explode(',', $request->seats)));
-        $pnr_number = getTrx(10);
-        $bookedTicket = new ProductBooking();
-        $bookedTicket->customer_id = $customer->id;
-        $bookedTicket->seats = $seats;
-        $bookedTicket->ticket_count = sizeof($seats);
-        $bookedTicket->pnr_number = $pnr_number;
-        $bookedTicket->status = 0;
-        $bookedTicket->save();
-        session()->put('pnr_number',$pnr_number);
+        return view('pages.product.index', compact('product', 'selectedCategories'));
     }
 }
