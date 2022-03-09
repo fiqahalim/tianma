@@ -82,11 +82,6 @@
                                 </a>
                             </li>
                         @endcan
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.lot.layouts") }}" class="c-sidebar-nav-link">
-                                {{ trans('cruds.lotLayout.title') }}
-                            </a>
-                        </li>
                     </ul>
                 </li>
             @endcan
@@ -162,40 +157,70 @@
                 </li>
             @endcan
 
-            {{-- Settings --}}
-                <li class="c-sidebar-nav-dropdown">
-                    <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                        <i class="fa-fw fas fa-cogs c-sidebar-nav-icon"></i>
-                        {{ trans('cruds.setting.title') }}
-                    </a>
-                    <ul class="c-sidebar-nav-dropdown-items">
-                        @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
-                            @can('profile_password_edit')
-                                <li class="c-sidebar-nav-item">
-                                    <a class="c-sidebar-nav-link {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'c-active' : '' }}" href="{{ route('profile.password.edit') }}">
-                                        {{ trans('cruds.setting.change_password') }}
-                                    </a>
-                                </li>
-                            @endcan
-                        @endif
-                        <li class="c-sidebar-nav-item">
-                            <a class="c-sidebar-nav-link" href="{{ route('profile.index') }}" >
+            {{-- Profile Settings --}}
+            <li class="c-sidebar-nav-dropdown">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon"></i>
+                    {{ trans('cruds.setting.title') }}
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
+                        @can('profile_password_edit')
+                            <li class="c-sidebar-nav-item">
+                                <a class="c-sidebar-nav-link {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'c-active' : '' }}" href="{{ route('profile.password.edit') }}">
+                                    {{ trans('cruds.setting.change_password') }}
+                                </a>
+                            </li>
+                        @endcan
+                    @endif
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="{{ route('profile.index') }}" >
                                 {{ trans('cruds.setting.profile') }}
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <hr>
 
-            @can('audit_log_access')
+            {{-- Master Settings --}}
+            <li class="c-sidebar-nav-dropdown">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                    <i class="fa fa-desktop c-sidebar-nav-icon"></i>
+                    {{ trans('cruds.masterSetting.title') }}
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="{{ route('admin.manage-buildings.index') }}" >
+                            {{ trans('cruds.masterSetting.fields.building') }}
+                        </a>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route("admin.lot.layouts") }}" class="c-sidebar-nav-link">
+                            {{ trans('cruds.masterSetting.fields.layout') }}
+                        </a>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="{{ route('admin.manage-locations.index') }}" >
+                            {{ trans('cruds.masterSetting.fields.location') }}
+                        </a>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="{{ route('admin.manage-product-types.index') }}" >
+                            {{ trans('cruds.masterSetting.fields.productType') }}
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            {{-- @can('audit_log_access')
                 <li class="c-sidebar-nav-item">
                     <a href="{{ route("admin.audit-logs.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/audit-logs") || request()->is("admin/audit-logs/*") ? "c-active" : "" }}">
                         <i class="c-sidebar-nav-icon fab fa-searchengin"></i>
                         {{ trans('cruds.auditLog.title') }}
                     </a>
                 </li>
-            @endcan
+            @endcan --}}
 
-            <hr>
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('home.help') }}" class="c-sidebar-nav-link">
                     <i class="c-sidebar-nav-icon fas fa-question-circle"></i>

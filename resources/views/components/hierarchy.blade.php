@@ -1,282 +1,102 @@
-<i id="menu-item" class="fas fa-plus-circle" onclick="myFunction()"></i>
 @if(count($user->childUsers))
-    {{-- Level 1 --}}
-    <ul>
+    <ol>
+        {{-- Childs --}}
         @foreach($user->childUsers as $childUser)
-            <li>
-                <div class="sub-menu">
-                    <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="80">
-                    <div class="mt-2">
-                        <span>{{ $childUser->agent_code }}</span>
+            @php
+                $totalComms = $childUser->commissions()->sum('mo_overriding_comm');
+            @endphp
+            @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
+                <li class="sub-menu">
+                    <div>
+                        <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="60" height="60">
+                        <div class="mt-2">
+                            <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Name: {{ $childUser->name }}, Total Commission: {{ $totalComms }}">
+                                {{ $childUser->agent_code }}
+                            </span>
+                        </div>
+                        <i id="child-item1" class="fas fa-plus-circle"></i>
                     </div>
-                </div>
 
-                {{-- Level 2 --}}
-                @if(count($childUser->childUsers))
-                <i id="child-item1" class="fas fa-plus-circle"></i>
-                <ul>
-                    @foreach($childUser->childUsers as $childUser)
-                        @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                            <li>
-                                <div class="child-menu1">
-                                    <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="80">
-                                    <div class="child-menu1 mt-2">
-                                        <span>{{ $childUser->agent_code }}</span>
+                    {{-- Sub Level 1 of Childs --}}
+                    @if(count($childUser->childUsers))
+                        <ol>
+                            @foreach($childUser->childUsers as $childUser)
+                                <li class="child-menu1">
+                                    <div>
+                                        <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="60" height="60">
+                                        <div class="mt-2">
+                                            <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Name: {{ $childUser->name }}, Total Commission: RM{{ $totalComms }}">
+                                                {{ $childUser->agent_code }}
+                                            </span>
+                                        </div>
+                                        <i id="child-item2" class="fas fa-plus-circle"></i>
                                     </div>
-                                </div>
-                            </li>
-                        @endif
-                    @endforeach
-                </ul>
-                @endif
 
-                {{-- Level 3 --}}
-                @if(!empty($childUser) && count($childUser->childUsers))
-                <i id="child-item2" class="fas fa-plus-circle"></i>
-                <ul>
-                    @foreach($childUser->childUsers as $childUser)
-                        @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                            <li>
-                                <div class="child-menu2">
-                                    <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="80">
-                                    <div class="child-menu2 mt-2">
-                                        <span>{{ $childUser->agent_code }}</span>
-                                    </div>
-                                </div>
-                            </li>
-                        @endif
-                    @endforeach
-                </ul>
-                @endif
+                                    {{-- Sub Level 2 of Childs --}}
+                                    <ol>
+                                        @foreach($childUser->childUsers as $childUser)
+                                            @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
+                                                <li class="child-menu2">
+                                                    <div>
+                                                        <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="60" height="60">
+                                                        <div class="mt-2">
+                                                            <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Name: {{ $childUser->name }}, Total Commission: RM{{ $totalComms }}">
+                                                                {{ $childUser->agent_code }}
+                                                            </span>
+                                                        </div>
+                                                        <i id="child-item3" class="fas fa-plus-circle"></i>
+                                                    </div>
 
-                {{-- Level 4 --}}
-                @if(!empty($childUser) && count($childUser->childUsers))
-                <i id="child-item3" class="fas fa-plus-circle"></i>
-                <ul>
-                    @foreach($childUser->childUsers as $childUser)
-                        @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                            <li>
-                                <div class="child-menu3">
-                                    <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="80">
-                                    <div class="child-menu3 mt-2">
-                                        <span>{{ $childUser->agent_code }}</span>
-                                    </div>
-                                </div>
-                            </li>
-                        @endif
-                    @endforeach
-                </ul>
-                @endif
+                                                    {{-- Sub Level 3 of Childs --}}
+                                                    <ol>
+                                                        @foreach($childUser->childUsers as $childUser)
+                                                            @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
+                                                                <li class="child-menu3">
+                                                                    <div>
+                                                                        <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="60" height="60">
+                                                                        <div class="mt-2">
+                                                                            <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Name: {{ $childUser->name }}, Total Commission: RM{{ $totalComms }}">
+                                                                                {{ $childUser->agent_code }}
+                                                                            </span>
+                                                                        </div>
+                                                                        <i id="child-item4" class="fas fa-plus-circle"></i>
+                                                                    </div>
 
-                {{-- Level 5 --}}
-                @if(!empty($childUser) && $childUser->childUsers->count())
-                <i id="child-item4" class="fas fa-plus-circle"></i>
-                <ul>
-                    @foreach($childUser->childUsers as $childUser)
-                        @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                            <li>
-                                <div class="child-menu4">
-                                    <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="80">
-                                    <div class="child-menu4 mt-2">
-                                        <span>{{ $childUser->agent_code }}</span>
-                                    </div>
-                                </div>
-                            </li>
-                        @endif
-                    @endforeach
-                </ul>
-                @endif
+                                                                    {{-- Sub Level 4 of Childs --}}
+                                                                    <ol>
+                                                                        @foreach($childUser->childUsers as $childUser)
+                                                                            @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
+                                                                                <li class="child-menu4">
+                                                                                    <div>
+                                                                                        <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="60" height="60">
+                                                                                        <div class="mt-2">
+                                                                                            <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Name: {{ $childUser->name }}, Total Commission: RM{{ $totalComms }}">
+                                                                                                {{ $childUser->agent_code }}
+                                                                                            </span>
+                                                                                        </div>
+                                                                                        <i id="child-item5" class="fas fa-plus-circle"></i>
+                                                                                    </div>
 
-                {{-- Level 6 --}}
-                @if(!empty($childUser) && $childUser->childUsers->count())
-                <i id="child-item5" class="fas fa-plus-circle"></i>
-                <ul>
-                    @foreach($childUser->childUsers as $childUser)
-                        @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                            <li>
-                                <div class="child-menu5">
-                                    <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="80">
-                                    <div class="child-menu5 mt-2">
-                                        <span>{{ $childUser->agent_code }}</span>
-                                    </div>
-                                </div>
-                            </li>
-                        @endif
-                    @endforeach
-                </ul>
-                @endif
-
-                {{-- Level 7 --}}
-                @if(!empty($childUser) && $childUser->childUsers->count())
-                <i id="child-item6" class="fas fa-plus-circle"></i>
-                <ul>
-                    @foreach($childUser->childUsers as $childUser)
-                        @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                            <li>
-                                <div class="child-menu6">
-                                    <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="80">
-                                    <div class="child-menu6 mt-2">
-                                        <span>{{ $childUser->agent_code }}</span>
-                                    </div>
-                                </div>
-                            </li>
-                        @endif
-                    @endforeach
-                </ul>
-                @endif
-
-                {{-- Level 8 --}}
-                @if(!empty($childUser) && $childUser->childUsers->count())
-                <i id="child-item7" class="fas fa-plus-circle"></i>
-                <ul>
-                    @foreach($childUser->childUsers as $childUser)
-                        @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                            <li>
-                                <div class="child-menu7">
-                                    <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="80">
-                                    <div class="child-menu7 mt-2">
-                                        <span>{{ $childUser->agent_code }}</span>
-                                    </div>
-                                </div>
-                            </li>
-                        @endif
-                    @endforeach
-                </ul>
-                @endif
-
-                {{-- Level 9 --}}
-                @if(!empty($childUser) && $childUser->childUsers->count())
-                <i id="child-item8" class="fas fa-plus-circle"></i>
-                <ul>
-                    @foreach($childUser->childUsers as $childUser)
-                        @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                            <li>
-                                <div class="child-menu8">
-                                    <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="80">
-                                    <div class="child-menu8 mt-2">
-                                        <span>{{ $childUser->agent_code }}</span>
-                                    </div>
-                                </div>
-                            </li>
-                        @endif
-                    @endforeach
-                </ul>
-                @endif
-
-                {{-- Level 10 --}}
-                @if(!empty($childUser) && $childUser->childUsers->count())
-                <i id="child-item9" class="fas fa-plus-circle"></i>
-                <ul>
-                    @foreach($childUser->childUsers as $childUser)
-                        @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                            <li>
-                                <div class="child-menu9">
-                                    <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="80">
-                                    <div class="child-menu9 mt-2">
-                                        <span>{{ $childUser->agent_code }}</span>
-                                    </div>
-                                </div>
-                            </li>
-                        @endif
-                    @endforeach
-                </ul>
-                @endif
-
-                {{-- Level 11 --}}
-                @if(!empty($childUser) && $childUser->childUsers->count())
-                <i id="child-item10" class="fas fa-plus-circle"></i>
-                <ul>
-                    @foreach($childUser->childUsers as $childUser)
-                        @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                            <li>
-                                <div class="child-menu10">
-                                    <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="80">
-                                    <div class="child-menu10 mt-2">
-                                        <span>{{ $childUser->agent_code }}</span>
-                                    </div>
-                                </div>
-                            </li>
-                        @endif
-                    @endforeach
-                </ul>
-                @endif
-
-                {{-- Level 12 --}}
-                @if(!empty($childUser) && $childUser->childUsers->count())
-                <i id="child-item11" class="fas fa-plus-circle"></i>
-                <ul>
-                    @foreach($childUser->childUsers as $childUser)
-                        @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                            <li>
-                                <div class="child-menu11">
-                                    <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="80">
-                                    <div class="child-menu11 mt-2">
-                                        <span>{{ $childUser->agent_code }}</span>
-                                    </div>
-                                </div>
-                            </li>
-                        @endif
-                    @endforeach
-                </ul>
-                @endif
-
-                {{-- Level 13 --}}
-                @if(!empty($childUser) && $childUser->childUsers->count())
-                <i id="child-item12" class="fas fa-plus-circle"></i>
-                <ul>
-                    @foreach($childUser->childUsers as $childUser)
-                        @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                            <li>
-                                <div class="child-menu12">
-                                    <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="80">
-                                    <div class="child-menu12 mt-2">
-                                        <span>{{ $childUser->agent_code }}</span>
-                                    </div>
-                                </div>
-                            </li>
-                        @endif
-                    @endforeach
-                </ul>
-                @endif
-
-                {{-- Level 14 --}}
-                @if(!empty($childUser) && $childUser->childUsers->count())
-                <i id="child-item12" class="fas fa-plus-circle"></i>
-                <ul>
-                    @foreach($childUser->childUsers as $childUser)
-                        @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                            <li>
-                                <div class="child-menu12">
-                                    <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="80">
-                                    <div class="child-menu12 mt-2">
-                                        <span>{{ $childUser->agent_code }}</span>
-                                    </div>
-                                </div>
-                            </li>
-                        @endif
-                    @endforeach
-                </ul>
-                @endif
-
-                {{-- Level 15 --}}
-                @if(!empty($childUser) && $childUser->childUsers->count())
-                <i id="child-item12" class="fas fa-plus-circle"></i>
-                <ul>
-                    @foreach($childUser->childUsers as $childUser)
-                        @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                            <li>
-                                <div class="child-menu12">
-                                    <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="80">
-                                    <div class="child-menu12 mt-2">
-                                        <span>{{ $childUser->agent_code }}</span>
-                                    </div>
-                                </div>
-                            </li>
-                        @endif
-                    @endforeach
-                </ul>
-                @endif
-            </li>
+                                                                                    {{-- Sub Level 5 onwards --}}
+                                                                                    @include('components.child-hierarchy')
+                                                                                </li>
+                                                                            @endif
+                                                                        @endforeach
+                                                                    </ol>
+                                                                </li>
+                                                            @endif
+                                                        @endforeach
+                                                    </ol>
+                                                </li>
+                                            @endif
+                                        @endforeach
+                                    </ol>
+                                </li>
+                            @endforeach
+                        </ol>
+                    @endif
+                </li>
+            @endif
         @endforeach
-    </ul>
+    </ol>
 @endif

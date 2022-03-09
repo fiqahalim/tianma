@@ -40,7 +40,7 @@
                             {{ trans('cruds.user.fields.email') }}
                         </th>
                         <th>
-                            {{ trans('cruds.user.fields.username') }}
+                            {{ trans('cruds.commission.fields.comm_monthly') }}
                         </th>
                         <th>
                             {{ trans('cruds.user.fields.approved') }}
@@ -61,6 +61,9 @@
                 </thead>
                 <tbody>
                     @foreach($users as $key => $user)
+                        @php
+                            $totalComms = $user->commissions()->sum('mo_overriding_comm');
+                        @endphp
                         <tr data-entry-id="{{ $user->id }}">
                             <td>
 
@@ -74,9 +77,15 @@
                             <td>
                                 {{ $user->email ?? '' }}
                             </td>
-                            <td>
-                                {{ $user->username ?? '' }}
-                            </td>
+                            @if($totalComms > 0)
+                                <td>
+                                    RM {{ $totalComms ?? '' }}
+                                </td>
+                            @else
+                                <td>
+                                    {{ 'No commission yet' }}
+                                </td>
+                            @endif
                             <td>
                                 <span style="display:none">{{ $user->approved ?? '' }}</span>
                                 <input type="checkbox" disabled="disabled" {{ $user->approved ? 'checked' : '' }}>

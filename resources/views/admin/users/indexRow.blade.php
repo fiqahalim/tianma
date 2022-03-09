@@ -18,7 +18,7 @@
         {{ $user->email ?? '' }}
     </td>
     <td>
-        {{ $user->username ?? '' }}
+        {{ $totalComms ?? '' }}
     </td>
     <td>
         <span style="display:none">{{ $user->approved ?? '' }}</span>

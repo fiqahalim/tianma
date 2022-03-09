@@ -90,12 +90,6 @@ Route::group(['middleware' => 'auth'], function() {
             // Tags
             Route::resource('product-tags', '\App\Http\Controllers\Admin\ProductTagController');
             Route::delete('product-tags/destroy', [\App\Http\Controllers\Admin\ProductTagController::class, 'massDestroy'])->name('product-tags.massDestroy');
-
-            // Manage Layouts
-            Route::get('lot_layouts', [\App\Http\Controllers\Admin\LotLayoutController::class, 'lotLayouts'])->name('lot.layouts');
-            Route::post('lot_layouts', [\App\Http\Controllers\Admin\LotLayoutController::class, 'lotLayoutStore'])->name('lot.layouts.store');
-            Route::post('lot_layouts/{id}', [\App\Http\Controllers\Admin\LotLayoutController::class, 'lotLayoutUpdate'])->name('lot.layouts.update');
-            Route::post('lot_layouts/destroy', [\App\Http\Controllers\Admin\LotLayoutController::class, 'lotLayoutDelete'])->name('lot.layouts.delete');
         });
 
         /** DOCUMENT MANAGEMENT **/
@@ -105,6 +99,24 @@ Route::group(['middleware' => 'auth'], function() {
             Route::delete('my-documents/destroy', [\App\Http\Controllers\Admin\MyDocumentController::class, 'massDestroy'])->name('my-documents.massDestroy');
             Route::post('my-documents/media', [\App\Http\Controllers\Admin\MyDocumentController::class, 'storeMedia'])->name('my-documents.storeMedia');
             Route::post('my-documents/ckmedia', [\App\Http\Controllers\Admin\MyDocumentController::class, 'storeCKEditorImages'])->name('my-documents.storeCKEditorImages');
+        });
+
+        /** MASTER SETTINGS **/
+        Route::group(['prefix' => 'master-settings'], function() {
+            // Manage Layouts
+            Route::get('lot_layouts', [\App\Http\Controllers\Admin\LotLayoutController::class, 'lotLayouts'])->name('lot.layouts');
+            Route::post('lot_layouts', [\App\Http\Controllers\Admin\LotLayoutController::class, 'lotLayoutStore'])->name('lot.layouts.store');
+            Route::post('lot_layouts/{id}', [\App\Http\Controllers\Admin\LotLayoutController::class, 'lotLayoutUpdate'])->name('lot.layouts.update');
+            Route::post('lot_layouts/destroy', [\App\Http\Controllers\Admin\LotLayoutController::class, 'lotLayoutDelete'])->name('lot.layouts.delete');
+
+            // Manage Location
+            Route::resource('manage-locations', '\App\Http\Controllers\Admin\LocationController');
+
+            // Manage Product Type
+            Route::resource('manage-product-types', '\App\Http\Controllers\Admin\ProductTypeController');
+
+            // Manage Building Type
+            Route::resource('manage-buildings', '\App\Http\Controllers\Admin\BuildingTypeController');
         });
 
         /** ORDERS MANAGEMENT **/

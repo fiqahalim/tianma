@@ -201,7 +201,6 @@ return [
         ],
     ],
     'lotLayout' => [
-        'title'          => 'Manage Layout',
         'title_singular' => 'Layout',
         'fields'         => [
             'id'                => 'ID',
@@ -404,8 +403,8 @@ return [
         ],
     ],
     'setting' => [
-        'title'           => 'Settings',
-        'title_singular'  => 'Setting',
+        'title'           => 'Profile Settings',
+        'title_singular'  => 'Profile Setting',
         'profile'         => 'My Profile',
         'change_password' => 'Change Password',
     ],
@@ -415,5 +414,14 @@ return [
         'myRanking'       => 'My Ranking',
         'currentRank'     => 'Current Category',
         'remoteDemote'    => 'Promotion / Demotion',
+    ],
+    'masterSetting' => [
+        'title'     => 'Master Settings',
+        'fields'    => [
+            'layout'      => 'Manage Layouts',
+            'location'    => 'Manage Locations',
+            'building'    => 'Manage Building Types',
+            'productType' => 'Manage Product Type',
+        ],
     ],
 ];
