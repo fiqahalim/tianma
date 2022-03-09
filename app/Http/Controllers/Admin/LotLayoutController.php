@@ -15,7 +15,7 @@ class LotLayoutController extends Controller
     {
         $pageTitle = 'Lot Layouts';
         $emptyMessage = 'No layouts found';
-        $layouts = BookingLot::orderBy('id','desc')->paginate(getPaginate());
+        $layouts = BookingLot::orderBy('id','desc');
 
         return view('admin.lotLayout.index', compact('pageTitle', 'emptyMessage', 'layouts'));
     }
