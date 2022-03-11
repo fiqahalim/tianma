@@ -110,17 +110,24 @@ Route::group(['middleware' => 'auth'], function() {
             Route::post('lot_layouts/destroy', [\App\Http\Controllers\Admin\LotLayoutController::class, 'lotLayoutDelete'])->name('lot.layouts.delete');
 
             // Manage Location
-            Route::resource('manage-locations', '\App\Http\Controllers\Admin\LocationController');
+            Route::delete('locations/destroy', '\App\Http\Controllers\Admin\LocationController@massDestroy')->name('locations.massDestroy');
+            Route::resource('locations', '\App\Http\Controllers\Admin\LocationController');
 
             // Manage Product Type
-            Route::resource('manage-product-types', '\App\Http\Controllers\Admin\ProductTypeController');
+            Route::delete('product-types/destroy', '\App\Http\Controllers\Admin\ProductTypeController@massDestroy')->name('product-types.massDestroy');
+            Route::resource('product-types', '\App\Http\Controllers\Admin\ProductTypeController');
 
             // Manage Building Type
-            Route::resource('manage-buildings', '\App\Http\Controllers\Admin\BuildingTypeController');
+            Route::delete('building-types/destroy', '\App\Http\Controllers\Admin\BuildingTypeController@massDestroy')->name('building-types.massDestroy');
+            Route::resource('building-types', '\App\Http\Controllers\Admin\BuildingTypeController');
         });
 
         /** ORDERS MANAGEMENT **/
         Route::group(['prefix' => 'order-management'], function() {
+
+            // Locations
+            Route::match(['get', 'post'], 'locations', [\App\Http\Controllers\Admin\ProductOrderController::class, 'location'])->name('showLocation');
+
             // Order Lists
             Route::delete('orders/destroy', [\App\Http\Controllers\Admin\OrdersController::class,'massDestroy'])->name('orders.massDestroy');
             Route::resource('orders', '\App\Http\Controllers\Admin\OrdersController');

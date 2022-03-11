@@ -10,6 +10,8 @@ use App\Models\ProductCategory;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\Customer;
+use App\Models\ContactPerson;
+use App\Models\CorresspondenceAddress;
 use Carbon\Carbon;
 use Alert;
 
@@ -47,16 +49,18 @@ class CustomerDetailsController extends Controller
             'address_2' => 'required',
             'mode' => 'required',
             'created_by' => 'required',
+            'relationships' => 'required',
+            'gender' => 'required',
         ]);
 
+        // save new customers details
         $customer = null;
         $customer = new Customer;
         $customer->full_name = $request->full_name;
         $customer->id_type = $request->id_type;
         $customer->id_number = $request->id_number;
         $customer->email = $request->email;
-        $customer->contact_person_name = $request->contact_person_name;
-        $customer->contact_person_no = $request->contact_person_no;
+        $customer->gender = $request->gender;
         $customer->postcode = $request->postcode;
         $customer->state = $request->state;
         $customer->city = $request->city;
@@ -69,6 +73,31 @@ class CustomerDetailsController extends Controller
         $customer->created_at = $current = Carbon::now();
         $customer->updated_at = $current = Carbon::now();
         $customer->save();
+
+        // save intended user
+        $contactPerson = null;
+        $contactPerson = new ContactPerson;
+        $contactPerson->cid_type = $request->cid_type;
+        $contactPerson->cid_number = $request->cid_number;
+        $contactPerson->cemail = $request->cemail;
+        $contactPerson->cperson_name = $request->cperson_name;
+        $contactPerson->cperson_no = $request->cperson_no;
+        $contactPerson->relationships = $request->relationships;
+        $contactPerson->created_at = $current = Carbon::now();
+        $contactPerson->updated_at = $current = Carbon::now();
+        $contactPerson->save();
+
+        // save correspondence address
+        $curAddr = null;
+        $curAddr = new CorresspondenceAddress;
+        $curAddr->curpostcode = $request->curpostcode;
+        $curAddr->curstate = $request->curstate;
+        $curAddr->curcity = $request->curcity;
+        $curAddr->curaddress_1 = $request->curaddress_1;
+        $curAddr->curaddress_2 = $request->curaddress_2;
+        $curAddr->curnationality = $request->curnationality;
+        $curAddr->curcountry = $request->curcountry;
+        $curAddr->save();
 
         session(['customer' => $customer]);
 
@@ -94,8 +123,7 @@ class CustomerDetailsController extends Controller
             'id_type' => $request->id_type,
             'id_number' => $request->id_number,
             'email' => $request->email,
-            'contact_person_name' => $request->contact_person_name,
-            'contact_person_no' => $request->contact_person_no,
+            'gender' => $request->gender,
             'postcode' => $request->postcode,
             'state' => $request->state,
             'city' => $request->city,
@@ -139,10 +167,10 @@ class CustomerDetailsController extends Controller
 
         if (count($searchCust) > 0) {
             session(['searchCust' => $searchCust]);
-            alert()->info(__('Record found!'))->toToast();
+            alert()->info(__('Record found! This is returning purchaser'))->toToast();
             return view('pages.customer.customer-update', compact('product', 'users', 'searchCust'));
         } else {
-            alert()->info(__('No records found. This is new customer!'))->toToast();
+            alert()->info(__('No records found. This is new purchaser!'))->toToast();
             return view('pages.customer.customer-detail', compact('product', 'users'));
         }
 

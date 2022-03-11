@@ -25,6 +25,11 @@ class Customer extends Model
         'Full Payment'  => 'Full Payment',
     ];
 
+    public const GENDER_SELECT = [
+        'Female'    => 'Female',
+        'Male'      => 'Male',
+    ];
+
     public $table = 'customers';
 
     protected $dates = [
@@ -84,5 +89,10 @@ class Customer extends Model
     public function installments()
     {
         return $this->belongsTo(Installment::class);
+    }
+
+    public function contactPersons()
+    {
+        return $this->hasMany(ContactPerson::class);
     }
 }

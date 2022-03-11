@@ -83,4 +83,9 @@ class ProductOrderController extends Controller
 
         return view('pages.product.index', compact('product', 'selectedCategories'));
     }
+
+    public function location()
+    {
+        return view('pages.product.location');
+    }
 }
