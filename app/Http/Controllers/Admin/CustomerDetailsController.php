@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\User;
 use App\Models\Customer;
 use App\Models\ContactPerson;
+use App\Models\PaymentMode;
 use App\Models\CorresspondenceAddress;
 use Carbon\Carbon;
 use Alert;
@@ -40,6 +41,7 @@ class CustomerDetailsController extends Controller
             'full_name' => 'required',
             'id_number' => 'required|unique:users',
             'email' => 'required|unique:users',
+            'gender' => 'required',
             'contact_person_name' => 'required',
             'contact_person_no' => 'required',
             'postcode' => 'required',
@@ -49,8 +51,10 @@ class CustomerDetailsController extends Controller
             'address_2' => 'required',
             'mode' => 'required',
             'created_by' => 'required',
+            'cperson_name' => 'required',
+            'cperson_no' => 'required',
+            'cid_number' => 'required|unique:users',
             'relationships' => 'required',
-            'gender' => 'required',
         ]);
 
         // save new customers details
@@ -98,6 +102,11 @@ class CustomerDetailsController extends Controller
         $curAddr->curnationality = $request->curnationality;
         $curAddr->curcountry = $request->curcountry;
         $curAddr->save();
+
+        // save payment modes
+        // $payments = null;
+        // $payments = new PaymentMode;
+        // $payments['payment_name'] = $request->
 
         session(['customer' => $customer]);
 

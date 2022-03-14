@@ -22,7 +22,7 @@
                 <div class="col-md-6">
                   <label class="sr-only" for="inlineFormInputGroup"></label>
                   <div class="input-group mb-2 mb-sm-0">
-                    <input type="search" class="form-control" id="inlineFormInputGroup" placeholder="Please enter last 4 digits of ID / Passport number" name="query">
+                    <input type="search" class="form-control" id="inlineFormInputGroup" placeholder="Please enter ID / Passport number" name="query">
                   </div>
                 </div>
                 <div class="col-md-6">

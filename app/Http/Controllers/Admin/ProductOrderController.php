@@ -15,6 +15,9 @@ use App\Models\User;
 use App\Models\Installment;
 use App\Models\Transaction;
 use App\Models\Commission;
+use App\Models\Location;
+use App\Models\ProductType;
+use App\Models\BuildingType;
 use Carbon\Carbon;
 use Alert;
 
@@ -86,6 +89,17 @@ class ProductOrderController extends Controller
 
     public function location()
     {
-        return view('pages.product.location');
+        $locations = Location::pluck('location_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $properties = ProductType::pluck('property_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $buildings = BuildingType::pluck('building_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        session(['locations' => $locations, 'properties' => $properties, 'buildings' => $buildings]);
+
+        return view('pages.product.location', compact('locations', 'properties', 'buildings'));
+    }
+
+    public function store(Request $reqs)
+    {
+        return view('pages.product.index');
     }
 }

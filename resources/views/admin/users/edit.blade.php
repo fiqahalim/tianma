@@ -198,7 +198,7 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label>{{ trans('cruds.user.fields.ref_name') }}</label>
-                    <input class="form-control" type="text" value="{{ $user->parent ? $user->parent->agent_code : '' }}" readonly>
+                    <input class="form-control" type="text" value="{{ $user->parent ? $user->parent->agent_code : 'No Upperline' }}" readonly>
                 </div>
                 {{-- Commissions --}}
                 <div class="form-group col-md-6">

@@ -1,4 +1,4 @@
-<div class="card" id="card3">
+ <div class="card" id="card3">
     <div class="card-header" id="headingThree" data-target="#collapseThree" data-toggle="collapse">
         <h2 class="mb-0">
             <button aria-controls="collapseThree" aria-expanded="false" class="btn collapsed" data-target="#collapseThree" data-toggle="collapse" type="button">
@@ -12,44 +12,28 @@
         <div class="card-body">
             <div class="form-row">
                 <div class="form-group col-md-3">
-                    <label for="address_1" class="required">{{ trans('cruds.customer.fields.address_1') }}</label>
-                    <input class="form-control {{ $errors->has('address_1') ? 'is-invalid' : '' }}" type="text" name="address_1" id="address_1" value="{{ old('address_1', '') }}">
-                    @if($errors->has('address_1'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('address_1') }}
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="payment_name[]" value="cheque">
+                        <label class="ml-2">Cheque No.</label>
                     </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.customer.fields.address_1_helper') }}</span>
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="address_2">{{ trans('cruds.customer.fields.address_2') }}</label>
-                    <input class="form-control {{ $errors->has('address_2') ? 'is-invalid' : '' }}" type="text" name="address_2" id="address_2" value="{{ old('address_2', '') }}">
-                    @if($errors->has('address_2'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('address_2') }}
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="payment_name[]" value="cash">
+                        <label class="ml-2">Cash</label>
                     </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.customer.fields.address_2_helper') }}</span>
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="address_2">{{ trans('cruds.customer.fields.address_2') }}</label>
-                    <input class="form-control {{ $errors->has('address_2') ? 'is-invalid' : '' }}" type="text" name="address_2" id="address_2" value="{{ old('address_2', '') }}">
-                    @if($errors->has('address_2'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('address_2') }}
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="payment_name[]" value="card">
+                        <label class="ml-2">Credit Card</label>
                     </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.customer.fields.address_2_helper') }}</span>
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="address_2">{{ trans('cruds.customer.fields.address_2') }}</label>
-                    <input class="form-control {{ $errors->has('address_2') ? 'is-invalid' : '' }}" type="text" name="address_2" id="address_2" value="{{ old('address_2', '') }}">
-                    @if($errors->has('address_2'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('address_2') }}
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="payment_name[]" value="others">
+                        <label class="ml-2">Others</label>
                     </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.customer.fields.address_2_helper') }}</span>
                 </div>
             </div>
 
@@ -74,6 +58,7 @@
                         {{ trans('cruds.customer.fields.id_type_helper') }}
                     </span>
                 </div>
+
                 <div class="form-group col-md-6">
                     <label class="font-weight-bold required" for="agent_code">
                         Referral {{ trans('global.register.agent_code') }}
