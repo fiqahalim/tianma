@@ -33,6 +33,7 @@ class LocationController extends Controller
         $location = Location::create($request->all());
         $location->property_names()->sync($request->input('property_names', []));
 
+        alert()->success(__('global.create_success'))->toToast();
         return redirect()->route('admin.locations.index');
     }
 
@@ -50,6 +51,7 @@ class LocationController extends Controller
         $location->update($request->all());
         $location->property_names()->sync($request->input('property_names', []));
 
+        alert()->success(__('global.update_success'))->toToast();
         return redirect()->route('admin.locations.index');
     }
 
@@ -64,6 +66,7 @@ class LocationController extends Controller
     {
         $location->delete();
 
+        alert()->success(__('global.delete_success'))->toToast();
         return back();
     }
 

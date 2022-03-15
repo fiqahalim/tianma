@@ -141,8 +141,8 @@ Route::group(['middleware' => 'auth'], function() {
             Route::resource('/{category}/{childCategory}/{childCategory2}/{product}/customer-details', '\App\Http\Controllers\Admin\CustomerDetailsController');
 
             // Search Customer Details
-            Route::get('/{category}/{childCategory}/{childCategory2}/{product}/search', [\App\Http\Controllers\Admin\CustomerDetailsController::class, 'search'])->name('search');
-            Route::post('/{category}/{childCategory}/{childCategory2}/{product}/searchCustomer', [\App\Http\Controllers\Admin\CustomerDetailsController::class, 'searchCustomer'])->name('searchCustomer');
+            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/search', [\App\Http\Controllers\Admin\CustomerDetailsController::class, 'search'])->name('search');
+            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/searchCustomer', [\App\Http\Controllers\Admin\CustomerDetailsController::class, 'searchCustomer'])->name('searchCustomer');
 
             // Booking
             Route::resource('product-booking', '\App\Http\Controllers\Admin\ProductBookingController');

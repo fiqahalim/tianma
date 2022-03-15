@@ -46,7 +46,7 @@ class ProductBooking extends Model
 
     public function customers()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 
     public function scopePending()

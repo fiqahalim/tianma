@@ -42,19 +42,15 @@ class CustomerDetailsController extends Controller
             'id_number' => 'required|unique:users',
             'email' => 'required|unique:users',
             'gender' => 'required',
-            'contact_person_name' => 'required',
-            'contact_person_no' => 'required',
             'postcode' => 'required',
             'state' => 'required',
             'city' => 'required',
             'address_1' => 'required',
-            'address_2' => 'required',
             'mode' => 'required',
             'created_by' => 'required',
             'cperson_name' => 'required',
             'cperson_no' => 'required',
-            'cid_number' => 'required|unique:users',
-            'relationships' => 'required',
+            'cid_number' => 'required|unique:contact_persons',
         ]);
 
         // save new customers details
@@ -78,6 +74,8 @@ class CustomerDetailsController extends Controller
         $customer->updated_at = $current = Carbon::now();
         $customer->save();
 
+        session(['customer' => $customer]);
+
         // save intended user
         $contactPerson = null;
         $contactPerson = new ContactPerson;
@@ -87,6 +85,7 @@ class CustomerDetailsController extends Controller
         $contactPerson->cperson_name = $request->cperson_name;
         $contactPerson->cperson_no = $request->cperson_no;
         $contactPerson->relationships = $request->relationships;
+        $contactPerson->customer_id = $customer->id;
         $contactPerson->created_at = $current = Carbon::now();
         $contactPerson->updated_at = $current = Carbon::now();
         $contactPerson->save();
@@ -107,8 +106,6 @@ class CustomerDetailsController extends Controller
         // $payments = null;
         // $payments = new PaymentMode;
         // $payments['payment_name'] = $request->
-
-        session(['customer' => $customer]);
 
         return view('pages.product.booking-lot', compact('product', 'users'));
     }

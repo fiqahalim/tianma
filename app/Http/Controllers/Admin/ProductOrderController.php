@@ -93,13 +93,13 @@ class ProductOrderController extends Controller
         $properties = ProductType::pluck('property_name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $buildings = BuildingType::pluck('building_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        session(['locations' => $locations, 'properties' => $properties, 'buildings' => $buildings]);
-
         return view('pages.product.location', compact('locations', 'properties', 'buildings'));
     }
 
-    public function store(Request $reqs)
+    public function store(Request $request)
     {
+        session(['location' => $location_name->id]);
+
         return view('pages.product.index');
     }
 }

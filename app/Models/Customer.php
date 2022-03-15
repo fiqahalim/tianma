@@ -44,8 +44,6 @@ class Customer extends Model
         'id_type',
         'id_number',
         'email',
-        'contact_person_name',
-        'contact_person_no',
         'birth_date',
         'postcode',
         'state',

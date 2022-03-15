@@ -18,17 +18,18 @@ class ContactPerson extends Model
     ];
 
     protected $fillable = [
-        'contact_person_name',
-        'contact_person_no',
-        'id_type',
-        'id_number',
-        'email',
-        'relationships'
+        'cperson_name',
+        'cperson_no',
+        'cid_type',
+        'cid_number',
+        'cemail',
+        'relationships',
+        'customer_id',
     ];
 
     public function customers()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 
     protected function serializeDate(DateTimeInterface $date)

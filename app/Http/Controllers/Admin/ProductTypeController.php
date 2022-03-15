@@ -33,6 +33,7 @@ class ProductTypeController extends Controller
         $productType = ProductType::create($request->all());
         $productType->building_types()->sync($request->input('building_types', []));
 
+        alert()->success(__('global.create_success'))->toToast();
         return redirect()->route('admin.product-types.index');
     }
 
@@ -50,6 +51,7 @@ class ProductTypeController extends Controller
         $productType->update($request->all());
         $productType->building_types()->sync($request->input('building_types', []));
 
+        alert()->success(__('global.update_success'))->toToast();
         return redirect()->route('admin.product-types.index');
     }
 
@@ -64,6 +66,7 @@ class ProductTypeController extends Controller
     {
         $productType->delete();
 
+        alert()->success(__('global.delete_success'))->toToast();
         return back();
     }
 
