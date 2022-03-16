@@ -48,14 +48,91 @@ class ProductBookingController extends Controller
         session()->put('pnr_number',$pnr_number);
     }
 
+    // show seat
+    public function showSeat($id)
+    {
+        $product = Product::with(['bookingSection', 'productBooked'])
+            ->where('id', $id)
+            ->firstOrFail();
+
+        $lotLayout = new LotLayout($product);
+
+        return view('pages.product.booking-lot');
+    }
+
     public function reviewOrder(Request $request, $category, $childCategory, $childCategory2, Product $product)
     {
         $customer = session('customer');
         $searchCust = session('searchCust');
+                
+        if (!is_null($searchCust)) {
+            $perAddr = [
+                $searchCust->address_1,
+                $searchCust->address_2,
+                $searchCust->postcode,
+                $searchCust->state,
+                $searchCust->city,
+                $searchCust->country,
+            ];
+
+            $corAddr = Customer::with(['correspondenceAddress', 'contactPersons'])
+            ->where('id', $searchCust->id)
+            ->get();
+
+            foreach ($corAddr as $k => $addr) {
+                $corrAddr = [
+                    $addr->correspondenceAddress->curaddress_1,
+                    $addr->correspondenceAddress->curaddress_2,
+                    $addr->correspondenceAddress->curpostcode,
+                    $addr->correspondenceAddress->curstate,
+                    $addr->correspondenceAddress->curcity,
+                    $addr->correspondenceAddress->curcountry,
+                ];
+            }
+
+            $concat_perAddr = implode(" ", $perAddr);
+            $cust_details['per_address'] = $concat_perAddr;
+
+            $concat_corAddr = implode(" ", $corrAddr);
+            $cust_details['cor_address'] = $concat_corAddr;
+        } else {
+            $perAddr = array(
+                $customer->address_1,
+                $customer->address_2,
+                $customer->postcode,
+                $customer->state,
+                $customer->city,
+                $customer->country,
+            );
+
+            $curAddr = Customer::with(['correspondenceAddress', 'contactPersons'])
+            ->where('id', $customer->id)
+            ->get();
+
+            foreach($curAddr as $k => $addr) {
+                $corrAddr = [
+                    $addr->correspondenceAddress->curaddress_1,
+                    $addr->correspondenceAddress->curaddress_2,
+                    $addr->correspondenceAddress->curpostcode,
+                    $addr->correspondenceAddress->curstate,
+                    $addr->correspondenceAddress->curcity,
+                    $addr->correspondenceAddress->curcountry,
+                ];
+            }
+
+            $concat_perAddr = implode(" ", $perAddr);
+            $cust_details['per_address'] = $concat_perAddr;
+
+            $concat_corAddr = implode(" ", $corrAddr);
+            $cust_details['cor_address'] = $concat_corAddr;
+        }
 
         $product->load('categories.parentCategory');
         session(['products' => $product]);
 
-        return view('pages.product.booking-detail', compact('product', 'customer' ,'searchCust'));
+        return view('pages.product.booking-detail', compact(
+            'product', 'customer' ,'searchCust', 'cust_details',
+            'curAddr'
+        ));
     }
 }

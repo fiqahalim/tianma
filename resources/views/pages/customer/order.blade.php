@@ -71,7 +71,7 @@
                                     Order Reference Number: #{{ $order->ref_no }}
                                 </h6>
                                 <span class="d-block mb-0">
-                                    Customer Name:{{ $customer->name }}
+                                    Customer Name:{{ $customer->full_name }}
                                 </span>
                                 <small>
                                     {{ trans('global.order.order_status') }}: {{ $order->order_status }}

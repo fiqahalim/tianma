@@ -93,4 +93,9 @@ class Customer extends Model
     {
         return $this->hasMany(ContactPerson::class);
     }
+
+    public function correspondenceAddress()
+    {
+        return $this->belongsTo(CorresspondenceAddress::class, 'id', 'customer_id');
+    }
 }

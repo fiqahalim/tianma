@@ -39,10 +39,11 @@ class CustomerDetailsController extends Controller
 
         $validated = $request->validate([
             'full_name' => 'required',
-            'id_number' => 'required|unique:users',
-            'email' => 'required|unique:users',
+            'id_number' => 'required|unique:customers',
+            'email' => 'required|unique:customers',
             'gender' => 'required',
             'postcode' => 'required',
+            'contact_person_no' => 'required',
             'state' => 'required',
             'city' => 'required',
             'address_1' => 'required',
@@ -61,6 +62,7 @@ class CustomerDetailsController extends Controller
         $customer->id_number = $request->id_number;
         $customer->email = $request->email;
         $customer->gender = $request->gender;
+        $customer->contact_person_no = $request->contact_person_no;
         $customer->postcode = $request->postcode;
         $customer->state = $request->state;
         $customer->city = $request->city;
@@ -70,8 +72,6 @@ class CustomerDetailsController extends Controller
         $customer->country = $request->country;
         $customer->mode = $request->mode;
         $customer->created_by = $request->created_by;
-        $customer->created_at = $current = Carbon::now();
-        $customer->updated_at = $current = Carbon::now();
         $customer->save();
 
         session(['customer' => $customer]);
@@ -86,8 +86,6 @@ class CustomerDetailsController extends Controller
         $contactPerson->cperson_no = $request->cperson_no;
         $contactPerson->relationships = $request->relationships;
         $contactPerson->customer_id = $customer->id;
-        $contactPerson->created_at = $current = Carbon::now();
-        $contactPerson->updated_at = $current = Carbon::now();
         $contactPerson->save();
 
         // save correspondence address
@@ -100,6 +98,7 @@ class CustomerDetailsController extends Controller
         $curAddr->curaddress_2 = $request->curaddress_2;
         $curAddr->curnationality = $request->curnationality;
         $curAddr->curcountry = $request->curcountry;
+        $curAddr->customer_id = $customer->id;
         $curAddr->save();
 
         // save payment modes
@@ -124,12 +123,14 @@ class CustomerDetailsController extends Controller
         $product->load('categories.parentCategory');
 
         $customer = Customer::find($searchCust);
+
         $customer->update([
             'full_name' => $request->full_name,
             'id_type' => $request->id_type,
             'id_number' => $request->id_number,
             'email' => $request->email,
             'gender' => $request->gender,
+            'contact_person_no' => $request->contact_person_no,
             'postcode' => $request->postcode,
             'state' => $request->state,
             'city' => $request->city,
@@ -162,6 +163,7 @@ class CustomerDetailsController extends Controller
     {
         $query = $request->input('query');
 
+
         $searchCust = Customer::where('id_number', 'like', "%$query")
             ->get();
 
@@ -173,8 +175,13 @@ class CustomerDetailsController extends Controller
 
         if (count($searchCust) > 0) {
             session(['searchCust' => $searchCust]);
+
+            $corAddr = Customer::with(['correspondenceAddress', 'contactPersons'])
+            ->where('id', $searchCust[0]->id)
+            ->get();
+            
             alert()->info(__('Record found! This is returning purchaser'))->toToast();
-            return view('pages.customer.customer-update', compact('product', 'users', 'searchCust'));
+            return view('pages.customer.customer-update', compact('product', 'users', 'searchCust', 'corAddr'));
         } else {
             alert()->info(__('No records found. This is new purchaser!'))->toToast();
             return view('pages.customer.customer-detail', compact('product', 'users'));

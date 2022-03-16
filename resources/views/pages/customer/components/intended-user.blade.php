@@ -57,13 +57,13 @@
                 </div>
 
                 <div class="form-group col-md-3">
-                    <label class="required" for="relationship">
+                    <label class="required" for="relationships">
                         Relationships
                     </label>
-                    <input class="form-control {{ $errors->has('relationship') ? 'is-invalid' : '' }}" type="text" name="relationship" id="relationship" value="{{ old('relationship', '') }}" required>
-                    @if($errors->has('relationship'))
+                    <input class="form-control {{ $errors->has('relationships') ? 'is-invalid' : '' }}" type="text" name="relationships" id="relationships" value="{{ old('relationships', '') }}" required>
+                    @if($errors->has('relationships'))
                         <div class="invalid-feedback">
-                            {{ $errors->first('relationship') }}
+                            {{ $errors->first('relationships') }}
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.customer.fields.id_number_helper') }}</span>

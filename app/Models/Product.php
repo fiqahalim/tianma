@@ -78,7 +78,7 @@ class Product extends Model implements HasMedia
         return $this->belongsToMany(ProductTag::class);
     }
 
-    public function customer()
+    public function customers()
     {
         return $this->belongsTo(Customer::class);
     }
