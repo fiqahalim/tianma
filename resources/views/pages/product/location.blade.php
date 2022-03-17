@@ -22,7 +22,7 @@
                                     <strong>Please select location:</strong>
                                 </label>
                                 @if(isset($locations))
-                                    <select class="form-control {{ $errors->has('location_name') ? 'is-invalid' : '' }}" id="location_name" name="location_name">
+                                    <select class="form-control {{ $errors->has('location_name') ? 'is-invalid' : '' }}" id="location_name" name="location_name" required>
                                         @forelse($locations as $key => $location)
                                             <option value="{{ $key }}" {{ old('location_name', '') === (string) $key ? 'selected' : '' }}>
                                                 {{ $location }}
@@ -41,7 +41,7 @@
                                     <strong>Please select product type:</strong>
                                 </label>
                                 @if(isset($properties))
-                                    <select class="form-control {{ $errors->has('property_name') ? 'is-invalid' : '' }}" id="property_name" name="property_name" onchange="displayDivDemo('building_name', this)">
+                                    <select class="form-control {{ $errors->has('property_name') ? 'is-invalid' : '' }}" id="property_name" name="property_name" onchange="displayDivDemo('building_name', this)" required>
                                         @forelse($properties as $keys => $property)
                                             <option value="{{ $keys }}" {{ old('property_name', '') === (string) $keys ? 'selected' : '' }}>
                                                 {{ $property }}

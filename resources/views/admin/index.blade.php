@@ -108,9 +108,9 @@
                                     <th>
                                         {{ trans('cruds.order.fields.created_by') }}
                                     </th>
-                                    <th>
+                                    {{-- <th>
                                         {{ trans('cruds.order.fields.commissions') }} Per Order
-                                    </th>
+                                    </th> --}}
                                     <th>
                                         &nbsp;
                                     </th>
@@ -118,7 +118,7 @@
                             </thead>
                             <tbody>
                                 @foreach($allOrders as $key => $order)
-                                    @if(!empty($order->commissions) && $order->commissions->mo_overriding_comm > 0)
+                                    {{-- @if(!empty($order->commissions) && $order->commissions->mo_overriding_comm > 0) --}}
                                         <tr data-entry-id="{{ $order->id }}">
                                             <td>
 
@@ -148,9 +148,9 @@
                                             <td>
                                                 {{ $order->createdBy->agent_code ?? '' }}
                                             </td>
-                                            <td>
+                                            {{-- <td>
                                                 RM {{ $order->commissions->mo_overriding_comm ?? '' }}
-                                            </td>
+                                            </td> --}}
                                             <td>
                                                 @can('order_edit')
                                                     <a class="btn btn-xs btn-info" href="{{ route('admin.orders.edit', $order->id) }}">
@@ -160,7 +160,7 @@
                                                 @endcan
                                             </td>
                                         </tr>
-                                    @endif
+                                    {{-- @endif --}}
                                     @endforeach
                             </tbody>
                         </table>

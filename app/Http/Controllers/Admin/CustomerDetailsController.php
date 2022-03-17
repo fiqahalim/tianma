@@ -124,6 +124,10 @@ class CustomerDetailsController extends Controller
 
         $customer = Customer::find($searchCust);
 
+        $corAddr = Customer::with(['correspondenceAddress', 'contactPersons'])
+            ->where('id', $searchCust[0]->id)
+            ->get();
+
         $customer->update([
             'full_name' => $request->full_name,
             'id_type' => $request->id_type,
@@ -145,7 +149,7 @@ class CustomerDetailsController extends Controller
 
         session(['customer' => $customer]);
 
-        return view('pages.product.booking-lot', compact('product', 'users', 'searchCust'));
+        return view('pages.product.booking-lot', compact('product', 'users', 'searchCust', 'corAddr'));
     }
 
     public function search($category, $childCategory, $childCategory2, Product $product)

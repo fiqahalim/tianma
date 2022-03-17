@@ -151,6 +151,9 @@ Route::group(['middleware' => 'auth'], function() {
             // Order Summary
             Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/order-details', [\App\Http\Controllers\Admin\OrderConfirmationController::class, 'orderPage'])->name('order');
             Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/order-details/store', [\App\Http\Controllers\Admin\OrderConfirmationController::class, 'store'])->name('order.details.store');
+
+            // Installment Calculator
+            Route::resource('installment', '\App\Http\Controllers\Admin\InstallmentController');
         });
 
         // Customer

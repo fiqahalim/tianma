@@ -59,46 +59,11 @@ class OrderConfirmationController extends Controller
         $order->save();
 
         // payment mode calculation
-        if ($customer->mode == 'Installment') {
-            $paymentInfo = $this->installmentCalculatorPage();
-            // $commissions = $this->commissions();
-        } else {
+        if ($customer->mode == 'Full Payment') {
             $paymentInfo = $this->fullpaymentCalculate();
-            // $commissions = $this->commissions();
         }
 
         return view('pages.customer.order', compact('order', 'customer', 'paymentInfo'));
-    }
-
-    private function installmentCalculate()
-    {
-        $cust = session('customer');
-        $odr = Order::select('amount', 'id')
-            ->latest()->first();
-
-        $outstanding_balance = $monthly_installment = $installment_balance = $downpayment = $totalCost = 0;
-
-        $totalCost = $odr->amount;
-
-        $downpayment = $totalCost * (20/100);
-        $outstanding_balance = $totalCost - $downpayment;
-        $monthly_installment = round($outstanding_balance / 12);
-        $installment_balance = ($outstanding_balance - ($monthly_installment * 11));
-
-        // stored into installments
-        $installments = null;
-        $installments = new Installment;
-        $installments->downpayment = $downpayment;
-        $installments->outstanding_balance = $outstanding_balance;
-        $installments->monthly_installment = $monthly_installment;
-        $installments->installment_balance = $installment_balance;
-        $installments->created_at = Carbon::now();
-        $installments->customer_id = $cust->id;
-        $installments->created_by = $cust->created_by;
-        $installments->order_id = $odr->id;
-        $installments->save();
-
-        return $installments;
     }
 
     private function fullpaymentCalculate()
@@ -118,11 +83,5 @@ class OrderConfirmationController extends Controller
         $tr->save();
 
         return $tr;
-    }
-
-    // installment Calculator Page
-    public function installmentCalculatorPage()
-    {
-        return view('pages.installment.index');
     }
 }

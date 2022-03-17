@@ -1,0 +1,42 @@
+.results {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.card-1 {
+    color: white;
+    background-color: #47a386;
+    padding: 20px;
+    margin-left: 170px;
+    width: 350px;
+    height: 120px;
+    border-radius: 5px;
+}
+.card-3 {
+    color: white;
+    background-color: #5445db;
+    padding: 20px;
+    margin-right: 170px;
+    width: 350px;
+    height: 120px;
+    border-radius: 5px;
+}
+#installment, #balance {
+    font-size: 2em;
+}
+.indicators {
+    font-size: 1.3em;
+}
+
+@media (max-width: 480px) {
+    .results {
+        justify-content: center;
+    }
+    .card-1, .card-2, .card-3 {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}

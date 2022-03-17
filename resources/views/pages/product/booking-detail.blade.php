@@ -159,7 +159,11 @@
                         </form>
                     @endforeach
                 @else
-                    @include('pages.product.components.new-review-order')
+                    @if($customer->mode == 'Installment')
+                        @include('pages.installment.index')
+                    @else
+                        @include('pages.product.components.new-review-order')
+                    @endif
                 @endif
             </div>
         </div>
