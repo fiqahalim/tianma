@@ -19,7 +19,7 @@
                             <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .Auth::user()->avatar) ?? '/images/avatar.png' }}" width="60" height="60" data-toggle="modal" data-target="#userDetailsModal">
                             <div class="mt-2">
                                 <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Name: {{ $user->name }}, Total Commission: RM{{ $totalComms }}">
-                                    <strong>{{ $user->agent_code }}</strong>
+                                    <strong>{{ $user->name }} {{ $user->agent_code }}</strong>
                                 </span>
                             </div>
                             <i id="menu-item" class="fas fa-plus-circle" onclick="myFunction()"></i>
