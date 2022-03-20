@@ -55,6 +55,9 @@
                             {{ trans('cruds.user.fields.roles') }}
                         </th>
                         <th>
+                            {{ trans('cruds.user.fields.team') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -101,6 +104,9 @@
                                 @foreach($user->roles as $key => $item)
                                     <span class="badge badge-info">{{ $item->title }}</span>
                                 @endforeach
+                            </td>
+                            <td>
+                                {{ $user->agency_code ?? '' }}
                             </td>
                             <td>
                                 @can('user_show')

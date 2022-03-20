@@ -11,15 +11,27 @@
     </nav>
 
     <div class="container-fluid">
-        <form method="POST" action="" enctype="multipart/form-data" id="bookingForm">
+        <form method="POST" action="#" enctype="multipart/form-data" id="bookingForm">
             @method('PUT')
             @csrf
             <img src="{{ $product->photo->url ?? '/images/product/luxury_1.png' }}" class="rounded mx-auto d-block" >
             <div class="movie-container">
                 <h5><strong>Category Selected:</strong> {{ $product->product_name }}
                 </h5>
+                {{-- select levels --}}
+                <select class="form-control {{ $errors->has('level_name') ? 'is-invalid' : '' }} mb-3" name="level_name" required>
+                    @forelse($levels as $l => $level)
+                        <option value="{{ $l }}" {{ old('level_name', '') === (string) $l ? 'selected' : '' }}>
+                            {{ $level }}
+                        </option>
+                    @empty
+                        <option>No levels founds</option>
+                    @endforelse
+                </select>
+
+                {{-- select sections --}}
                 <select class="form-control {{ $errors->has('section') ? 'is-invalid' : '' }}" name="section" id="wings">
-                    <option selected>{{ trans('global.pleaseSelect') }}</option>
+                    <option selected>{{ trans('global.pleaseSelect') }} section</option>
                     <option value="DA">DA</option>
                     <option value="DB">DB</option>
                     <option value="DC">DC</option>
@@ -73,7 +85,7 @@
                 </p>
 
                   <div class="text-center">
-                    <a class="btn btn-outline-primary mt-2" id="bookConfirm" href="{{ route('admin.reviewOrder', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
+                    <a class="btn btn-outline-primary mt-2" id="bookConfirm" href="{{ route('admin.search', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
                         {{ trans('global.products.product_select') }}
                     </a>
                 </div>

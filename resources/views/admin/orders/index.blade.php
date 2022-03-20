@@ -52,7 +52,7 @@
                 </thead>
                 <tbody>
                     @foreach($orders as $key => $order)
-                        {{-- @if(!empty($order->commissions) && $order->commissions->mo_overriding_comm > 0) --}}
+                        @if(!empty($order->commissions) && $order->commissions->mo_overriding_comm > 0)
                             <tr data-entry-id="{{ $order->id }}">
                                 <td>
 
@@ -114,7 +114,7 @@
                                     @endcan
                                 </td>
                             </tr>
-                        {{-- @endif --}}
+                        @endif
                     @endforeach
                 </tbody>
             </table>

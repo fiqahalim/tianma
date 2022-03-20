@@ -153,17 +153,19 @@
                                 </div>
                             </div>
 
-                            <button class="btn btn-primary float-right mb-3 mr-3" type="submit" id="confirmBooking">
-                                {{ trans('global.confirmBooking') }}
-                            </button>
+                            @if($customer->mode == 'Installment')
+                                <a class="btn btn-primary float-right mb-3 mr-3" id="installment" href="{{ route('admin.installment.index', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
+                                    {{ trans('global.products.product_select') }}
+                                </a>
+                            @else
+                                <button class="btn btn-primary float-right mb-3 mr-3" type="submit" id="confirmBooking">
+                                    {{ trans('global.confirmBooking') }}
+                                </button>
+                            @endif
                         </form>
                     @endforeach
                 @else
-                    @if($customer->mode == 'Installment')
-                        @include('pages.installment.index')
-                    @else
-                        @include('pages.product.components.new-review-order')
-                    @endif
+                    @include('pages.product.components.new-review-order')
                 @endif
             </div>
         </div>

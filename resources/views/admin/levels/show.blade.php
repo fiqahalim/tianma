@@ -1,55 +1,57 @@
 @extends('layouts.admin')
-
 @section('content')
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">{{ trans('cruds.userManagement.title') }}</li>
-        <li class="breadcrumb-item">{{ trans('cruds.agency.title') }}</li>
-        <li class="breadcrumb-item active" aria-current="page">View {{ trans('cruds.agency.title') }}</li>
-    </ol>
-</nav>
 
 <div class="card">
-    <div class="card-header font-weight-bold">
-        {{ trans('global.show') }} {{ trans('cruds.agency.title') }}
+    <div class="card-header">
+        {{ trans('global.show') }} {{ trans('cruds.level.title') }}
     </div>
 
     <div class="card-body">
         <div class="form-group">
+            <div class="form-group">
+                <a class="btn btn-default" href="{{ route('admin.levels.index') }}">
+                    {{ trans('global.back_to_list') }}
+                </a>
+            </div>
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.agency.fields.id') }}
+                            {{ trans('cruds.level.fields.id') }}
                         </th>
                         <td>
-                            {{ $team->id }}
+                            {{ $level->id }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.agency.fields.name') }}
+                            {{ trans('cruds.level.fields.level_name') }}
                         </th>
                         <td>
-                            {{ $team->name }}
+                            {{ $level->level_name }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.agency.fields.owner') }}
+                            {{ trans('cruds.level.fields.building_type') }}
                         </th>
                         <td>
-                            {{ $team->owner->name ?? '' }}
+                            @foreach($level->building_types as $key => $building_type)
+                                <span class="label label-info">{{ $building_type->building_name }}</span>
+                            @endforeach
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.teams.index') }}">
+                <a class="btn btn-default" href="{{ route('admin.levels.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
         </div>
     </div>
 </div>
+
+
+
 @endsection

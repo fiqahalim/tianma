@@ -53,7 +53,7 @@ class UsersController extends Controller
         $user = User::create($request->all());
         $user->roles()->sync($request->input('roles', []));
 
-        alert()->success(__('global.update_success'))->toToast();
+        alert()->success(__('global.create_success'))->toToast();
         return redirect()->route('admin.users.index');
     }
 
@@ -118,7 +118,7 @@ class UsersController extends Controller
 
         $user->delete();
 
-        alert()->success(__('global.update_success'))->toToast();
+        alert()->success(__('global.delete_success'))->toToast();
         return back();
     }
 

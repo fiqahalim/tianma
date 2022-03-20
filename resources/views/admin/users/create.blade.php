@@ -165,27 +165,23 @@
 
             {{-- Teams Details --}}
             <div class="form-row">
-                {{-- <div class="form-group col-md-4">
-                    <label for="team_id">{{ trans('cruds.user.fields.team') }}</label>
-                    <select class="form-control form-select {{ $errors->has('team') ? 'is-invalid' : '' }}" name="team_id" id="team_id" required>
-                        @foreach($teams as $id => $entry)
-                            <option value="{{ $id }}" {{ old('team_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                        @endforeach
-                    </select>
-                    @if($errors->has('team'))
+                <div class="form-group col-md-4">
+                    <label for="agency_code">{{ trans('cruds.user.fields.team') }}</label>
+                    <input class="form-control {{ $errors->has('agency_code') ? 'is-invalid' : '' }}" type="text" name="agency_code" id="agency_code" value="{{ old('agency_code', '') }}">
+                    @if($errors->has('agency_code'))
                         <div class="invalid-feedback">
-                            {{ $errors->first('team') }}
+                            {{ $errors->first('agency_code') }}
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.user.fields.team_helper') }}</span>
-                </div> --}}
-                <div class="form-group col-md-6">
+                </div>
+                <div class="form-group col-md-4">
                     <label class="required">{{ trans('cruds.user.fields.ref_name') }}</label>
                     <select class="form-control form-select {{ $errors->has('parent') ? 'is-invalid' : '' }}" name="parent_id" id="parent_id">
                         @include('components.parent-child')
                     </select>
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-4">
                     <label class="required">{{ trans('cruds.ranking.title') }}</label>
                     <select class="form-control form-select {{ $errors->has('rankings') ? 'is-invalid' : '' }}" name="ranking_id" id="ranking_id">
                         @foreach($rankings as $id => $data)

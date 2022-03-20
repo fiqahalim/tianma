@@ -101,7 +101,7 @@ return [
             'country_helper'              => ' ',
             'nationality'                 => 'Nationality',
             'nationality_helper'          => ' ',
-            'team'                        => 'Team',
+            'team'                        => 'Agency Code',
             'team_helper'                 => ' ',
             'ref_name'                    => 'Referral Agent Code',
             'ref_name_helper'             => ' ',
@@ -358,9 +358,9 @@ return [
             'createOrder'         => 'Create New Order',
         ],
     ],
-    'team' => [
-        'title'          => 'Teams',
-        'title_singular' => 'Team',
+    'agency' => [
+        'title'          => 'Agencies',
+        'title_singular' => 'Agency',
         'fields'         => [
             'id'                => 'ID',
             'id_helper'         => ' ',
@@ -370,7 +370,7 @@ return [
             'updated_at_helper' => ' ',
             'deleted_at'        => 'Deleted At',
             'deleted_at_helper' => ' ',
-            'name'              => 'Name',
+            'name'              => 'Agency Code',
             'name_helper'       => ' ',
             'owner'             => 'User',
             'owner_helper'      => ' ',
@@ -422,6 +422,7 @@ return [
             'location'    => 'Locations',
             'building'    => 'Building Types',
             'productType' => 'Product Type',
+            'levels'      => 'Level',
         ],
     ],
     'location' => [
@@ -476,7 +477,7 @@ return [
         'fields'         => [
             'id'                   => 'ID',
             'id_helper'            => ' ',
-            'property_name'        => 'Property Name',
+            'property_name'        => 'Product Type Name',
             'property_name_helper' => ' ',
             'created_at'           => 'Created at',
             'created_at_helper'    => ' ',
@@ -486,6 +487,24 @@ return [
             'deleted_at_helper'    => ' ',
             'building_type'        => 'Building Type',
             'building_type_helper' => ' ',
+        ],
+    ],
+    'level' => [
+        'title'          => 'Level',
+        'title_singular' => 'Level',
+        'fields'         => [
+            'id'                   => 'ID',
+            'id_helper'            => ' ',
+            'level_name'           => 'Level Name',
+            'level_name_helper'    => ' ',
+            'building_type'        => 'Building Type',
+            'building_type_helper' => ' ',
+            'created_at'           => 'Created at',
+            'created_at_helper'    => ' ',
+            'updated_at'           => 'Updated at',
+            'updated_at_helper'    => ' ',
+            'deleted_at'           => 'Deleted at',
+            'deleted_at_helper'    => ' ',
         ],
     ],
 ];

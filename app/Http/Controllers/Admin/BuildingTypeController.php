@@ -8,7 +8,6 @@ use App\Http\Requests\StoreBuildingTypeRequest;
 use App\Http\Requests\UpdateBuildingTypeRequest;
 use App\Models\BuildingType;
 use Gate;
-use Alert;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -49,6 +48,8 @@ class BuildingTypeController extends Controller
 
     public function show(BuildingType $buildingType)
     {
+        $buildingType->load('buildingTypeLevels');
+
         return view('admin.buildingTypes.show', compact('buildingType'));
     }
 

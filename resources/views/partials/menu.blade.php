@@ -146,13 +146,11 @@
                                 </a>
                             </li>
                         @endcan --}}
-                        {{-- @can('team_access')
-                            <li class="c-sidebar-nav-item">
-                                <a href="{{ route("admin.teams.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/teams") || request()->is("admin/teams/*") ? "c-active" : "" }}">
-                                    {{ trans('cruds.team.title') }}
-                                </a>
-                            </li>
-                        @endcan --}}
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.teams.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/teams") || request()->is("admin/teams/*") ? "c-active" : "" }}">
+                            {{ trans('cruds.agency.title') }}
+                            </a>
+                        </li>
                     </ul>
                 </li>
             @endcan
@@ -197,6 +195,11 @@
                     <li class="c-sidebar-nav-item">
                         <a href="{{ route("admin.lot.layouts") }}" class="c-sidebar-nav-link">
                             Manage {{ trans('cruds.masterSetting.fields.layout') }}
+                        </a>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="{{ route('admin.levels.index') }}" >
+                            Manage {{ trans('cruds.masterSetting.fields.levels') }}
                         </a>
                     </li>
                     <li class="c-sidebar-nav-item">

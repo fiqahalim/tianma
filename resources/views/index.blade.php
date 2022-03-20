@@ -104,14 +104,14 @@
                                     <th>
                                         {{ trans('cruds.order.fields.customer') }}
                                     </th>
-                                    {{-- <th>
+                                    <th>
                                         {{ trans('cruds.order.fields.commissions') }}
-                                    </th> --}}
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($agentComms as $key => $order)
-                                    {{-- @if(!empty($order->mo_overriding_comm) && $order->mo_overriding_comm > 0) --}}
+                                    @if(!empty($order->mo_overriding_comm) && $order->mo_overriding_comm > 0)
                                         <tr data-entry-id="{{ $order->id }}">
                                             <td></td>
                                             <td>
@@ -133,15 +133,15 @@
                                             <td>
                                                 {{ $order->customer->full_name ?? '' }}
                                             </td>
-                                            {{-- <td>
+                                            <td>
                                                 @if($order->approved == 1)
                                                     {{ $order->mo_overriding_comm ?? '' }}
                                                 @else
                                                     Only display when order approved
                                                 @endif
-                                            </td> --}}
+                                            </td>
                                         </tr>
-                                    {{-- @endif --}}
+                                    @endif
                                 @endforeach
                             </tbody>
                         </table>

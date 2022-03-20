@@ -30,22 +30,24 @@
         {{-- Intended User Details --}}
         <h5 class="my-3">Intended User Information</h5>
         <div class="form-row">
-            @foreach($curAddr as $v => $contactPerson)
-                @foreach($contactPerson->contactPersons as $cp)
-                    <div class="form-group col-md-4">
-                        <label for="cperson_name">{{ trans('cruds.customer.fields.full_name') }}</label>
-                        <input class="form-control" id="cperson_name" type="name" value="{{ old('cperson_name', $cp->cperson_name) }}" readonly>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="cid_number">{{ trans('cruds.customer.fields.id_number') }}</label>
-                        <input class="form-control" id="cid_number" type="text" value="{{ old('cid_number', $cp->cid_number) }}" readonly>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="relationships">Relationships</label>
-                        <input class="form-control" id="relationships" type="text" value="{{ old('relationships', $cp->relationships) }}" readonly>
-                    </div>
+            @if(isset($curAddr))
+                @foreach($curAddr as $v => $contactPerson)
+                    @foreach($contactPerson->contactPersons as $cp)
+                        <div class="form-group col-md-4">
+                            <label for="cperson_name">{{ trans('cruds.customer.fields.full_name') }}</label>
+                            <input class="form-control" id="cperson_name" type="name" value="{{ old('cperson_name', $cp->cperson_name) }}" readonly>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="cid_number">{{ trans('cruds.customer.fields.id_number') }}</label>
+                            <input class="form-control" id="cid_number" type="text" value="{{ old('cid_number', $cp->cid_number) }}" readonly>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="relationships">Relationships</label>
+                            <input class="form-control" id="relationships" type="text" value="{{ old('relationships', $cp->relationships) }}" readonly>
+                        </div>
+                    @endforeach
                 @endforeach
-            @endforeach
+            @endif
         </div>
         <hr>
 
@@ -103,16 +105,18 @@
 
         {{-- Billing Info --}}
         <h5 class="my-3">Billing Information</h5>
-        <div class="form-row row-cols-2">
-            <div class="col">
-                <label><strong>Permanent Address</strong></label>
-                <textarea class="form-control bg-white" readonly>{{Str::upper($cust_details['per_address']) ?? 'Not Available'}}</textarea>
+        @if(isset($cust_details))
+            <div class="form-row row-cols-2">
+                <div class="col">
+                    <label><strong>Permanent Address</strong></label>
+                    <textarea class="form-control bg-white" readonly>{{Str::upper($cust_details['per_address']) ?? 'Not Available'}}</textarea>
+                </div>
+                <div class="col">
+                    <label><strong>Correspondence Address</strong></label>
+                    <textarea class="form-control bg-white" readonly>{{Str::upper($cust_details['cor_address']) ?? 'Not Available'}}</textarea>
+                </div>
             </div>
-            <div class="col">
-                <label><strong>Correspondence Address</strong></label>
-                <textarea class="form-control bg-white" readonly>{{Str::upper($cust_details['cor_address']) ?? 'Not Available'}}</textarea>
-            </div>
-        </div>
+        @endif
         <hr>
 
         {{-- Payment Info --}}
@@ -125,7 +129,13 @@
         </div>
     </div>
 
-    <button class="btn btn-primary float-right mb-3 mr-3" type="submit" id="confirmBooking">
-        {{ trans('global.confirmBooking') }}
-    </button>
+    @if($customer->mode == 'Installment')
+        <a class="btn btn-primary float-right mb-3 mr-3" id="installment" href="{{ route('admin.installment.index', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
+            {{ trans('global.products.product_select') }}
+        </a>
+    @else
+        <button class="btn btn-primary float-right mb-3 mr-3" type="submit" id="confirmBooking">
+            {{ trans('global.confirmBooking') }}
+        </button>
+    @endif
 </form>

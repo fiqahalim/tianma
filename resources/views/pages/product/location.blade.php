@@ -65,7 +65,21 @@
                                             {{ $building }}
                                         </option>
                                     @empty
-                                        <option>No product type founds</option>
+                                        <option>No building type founds</option>
+                                    @endforelse
+                                </select>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="level_name" class="form-label">
+                                    <strong>Please select level:</strong>
+                                </label>
+                                <select class="form-control {{ $errors->has('level_name') ? 'is-invalid' : '' }}" name="level_name">
+                                    @forelse($levels as $l => $level)
+                                        <option value="{{ $l }}" {{ old('level_name', '') === (string) $l ? 'selected' : '' }}>
+                                            {{ $level }}
+                                        </option>
+                                    @empty
+                                        <option>No levels founds</option>
                                     @endforelse
                                 </select>
                             </div>
@@ -83,7 +97,7 @@
 
 @section('styles')
 <style>
-   #building_name {
+   #building_name, #level_name {
       display: none;
    }
 </style>
@@ -92,8 +106,8 @@
 @section('scripts')
 @parent
 <script>
-   function displayDivDemo(id, elementValue) {
-      document.getElementById(id).style.display = elementValue.value == 2 ? 'block' : 'none';
-   }
+    function displayDivDemo(id, elementValue) {
+        document.getElementById(id).style.display = elementValue.value == 2 ? 'block' : 'none';
+    }
 </script>
 @endsection

@@ -18,6 +18,7 @@ use App\Models\Commission;
 use App\Models\Location;
 use App\Models\ProductType;
 use App\Models\BuildingType;
+use App\Models\Level;
 use Carbon\Carbon;
 use Alert;
 
@@ -92,8 +93,9 @@ class ProductOrderController extends Controller
         $locations = Location::pluck('location_name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $properties = ProductType::pluck('property_name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $buildings = BuildingType::pluck('building_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $levels = Level::pluck('level_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('pages.product.location', compact('locations', 'properties', 'buildings'));
+        return view('pages.product.location', compact('locations', 'properties', 'buildings', 'levels'));
     }
 
     public function store(Request $request)

@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class BuildingType extends Model
+class Level extends Model
 {
     use SoftDeletes;
     use HasFactory;
 
-    public $table = 'building_types';
+    public $table = 'levels';
 
     protected $dates = [
         'created_at',
@@ -21,15 +21,15 @@ class BuildingType extends Model
     ];
 
     protected $fillable = [
-        'building_name',
+        'level_name',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
-    public function buildingTypeLevels()
+    public function building_types()
     {
-        return $this->belongsToMany(Level::class);
+        return $this->belongsToMany(BuildingType::class);
     }
 
     protected function serializeDate(DateTimeInterface $date)

@@ -120,6 +120,10 @@ Route::group(['middleware' => 'auth'], function() {
             // Manage Building Type
             Route::delete('building-types/destroy', '\App\Http\Controllers\Admin\BuildingTypeController@massDestroy')->name('building-types.massDestroy');
             Route::resource('building-types', '\App\Http\Controllers\Admin\BuildingTypeController');
+
+            // Manage Level
+            Route::delete('levels/destroy', '\App\Http\Controllers\Admin\LevelController@massDestroy')->name('levels.massDestroy');
+            Route::resource('levels', '\App\Http\Controllers\Admin\LevelController');
         });
 
         /** ORDERS MANAGEMENT **/
@@ -145,7 +149,7 @@ Route::group(['middleware' => 'auth'], function() {
             Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/searchCustomer', [\App\Http\Controllers\Admin\CustomerDetailsController::class, 'searchCustomer'])->name('searchCustomer');
 
             // Booking
-            Route::resource('product-booking', '\App\Http\Controllers\Admin\ProductBookingController');
+            Route::resource('/{category}/{childCategory}/{childCategory2}/{product}/product-booking', '\App\Http\Controllers\Admin\ProductBookingController');
             Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/review-order', [\App\Http\Controllers\Admin\ProductBookingController::class, 'reviewOrder'])->name('reviewOrder');
 
             // Order Summary
@@ -153,7 +157,7 @@ Route::group(['middleware' => 'auth'], function() {
             Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/order-details/store', [\App\Http\Controllers\Admin\OrderConfirmationController::class, 'store'])->name('order.details.store');
 
             // Installment Calculator
-            Route::resource('installment', '\App\Http\Controllers\Admin\InstallmentController');
+            Route::resource('/{category}/{childCategory}/{childCategory2}/{product}/installment', '\App\Http\Controllers\Admin\InstallmentController');
         });
 
         // Customer

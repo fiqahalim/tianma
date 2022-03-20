@@ -106,7 +106,7 @@ class CustomerDetailsController extends Controller
         // $payments = new PaymentMode;
         // $payments['payment_name'] = $request->
 
-        return view('pages.product.booking-lot', compact('product', 'users'));
+        return view('pages.product.booking-detail', compact('product', 'customer', 'users', 'curAddr'));
     }
 
     public function update(Request $request, $category, $childCategory, $childCategory2, Product $product, $searchCust)
@@ -125,7 +125,7 @@ class CustomerDetailsController extends Controller
         $customer = Customer::find($searchCust);
 
         $corAddr = Customer::with(['correspondenceAddress', 'contactPersons'])
-            ->where('id', $searchCust[0]->id)
+            ->where('id', $searchCust[0])
             ->get();
 
         $customer->update([
@@ -149,7 +149,7 @@ class CustomerDetailsController extends Controller
 
         session(['customer' => $customer]);
 
-        return view('pages.product.booking-lot', compact('product', 'users', 'searchCust', 'corAddr'));
+        return view('pages.product.booking-detail', compact('product', 'customer', 'users', 'corAddr'));
     }
 
     public function search($category, $childCategory, $childCategory2, Product $product)
