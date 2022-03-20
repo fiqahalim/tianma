@@ -25,7 +25,7 @@ installmentForm.addEventListener('submit', function (e) {
   // const monthlyPayment = monthly.toFixed(2);
 
   var monthly = calculatedOutstanding / calculatedPayments;
-  var monthlyPayment = monthly.toFixed(2);
+  var monthlyPayment = monthly.toFixed(1);
   console.log(monthly);
   console.log(monthlyPayment); //calculating the total interest
 

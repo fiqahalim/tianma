@@ -25,6 +25,7 @@ class CustomerDetailsController extends Controller
             ->get();
 
         $product->load('categories.parentCategory');
+        session(['products' => $product]);
 
         return view('pages.customer.customer-detail', compact('product', 'users'));
     }
@@ -36,6 +37,7 @@ class CustomerDetailsController extends Controller
             ->get();
 
         $product->load('categories.parentCategory');
+        session(['products' => $product]);
 
         $validated = $request->validate([
             'full_name' => 'required',
@@ -148,6 +150,7 @@ class CustomerDetailsController extends Controller
         ]);
 
         session(['customer' => $customer]);
+        session(['products' => $product]);
 
         return view('pages.product.booking-detail', compact('product', 'customer', 'users', 'corAddr'));
     }

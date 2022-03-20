@@ -42,7 +42,8 @@ class OrderConfirmationController extends Controller
     public function store(Order $order)
     {
         $products = session('products');
-        $customer = session('customer');
+        $customer = session('customer') ? session('searchCust')[0] : '';
+
         $pv = session('products')['point_value'];
 
         $totalProductAmount = 0;
@@ -63,13 +64,12 @@ class OrderConfirmationController extends Controller
             $paymentInfo = $this->fullpaymentCalculate();
             $commissions = $this->commissions();
         }
-
         return view('pages.customer.order', compact('order', 'customer', 'paymentInfo'));
     }
 
     private function fullpaymentCalculate()
     {
-        $cust = session('customer');
+        $cust = session('customer') ? session('searchCust')[0] : '';
         $odr = Order::select('amount', 'id')
             ->latest()->first();
 
@@ -93,7 +93,7 @@ class OrderConfirmationController extends Controller
     private function commissions()
     {
         $pv = session('products')['point_value'];
-        $cust = session('customer');
+        $cust = session('customer') ? session('searchCust')[0] : '';
 
         $totalCommission = 0;
 
@@ -158,7 +158,7 @@ class OrderConfirmationController extends Controller
     public function getParent()
     {
         $pv = session('products')['point_value'];
-        $cust = session('customer');
+        $cust = session('customer') ? session('searchCust')[0] : '';
 
         $totalCommission = 0;
 
@@ -167,10 +167,6 @@ class OrderConfirmationController extends Controller
 
         $odr = Order::select('amount', 'id')
             ->latest()->first();
-
-        $team = User::select('team_id')
-            ->where('id', $cust->created_by)
-            ->first();
 
         $p = User::where('id', $user->parent_id)->with('parent')->get();
 
@@ -215,13 +211,9 @@ class OrderConfirmationController extends Controller
     public function getPP()
     {
         $pv = session('products')['point_value'];
-        $cust = session('customer');
+        $cust = session('customer') ? session('searchCust')[0] : '';
 
         $totalCommission = 0;
-
-        $team = User::select('team_id')
-            ->where('id', $cust->created_by)
-            ->first();
 
         $user = User::select('ranking_id', 'id', 'parent_id')
             ->where('id', $cust->created_by)->first();

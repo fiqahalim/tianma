@@ -25,7 +25,7 @@ installmentForm.addEventListener('submit', (e) => {
     // const monthlyPayment = monthly.toFixed(2);
 
     const monthly = (calculatedOutstanding) / (calculatedPayments);
-    const monthlyPayment = monthly.toFixed(2);
+    const monthlyPayment = monthly.toFixed(1);
 
     console.log(monthly);
     console.log(monthlyPayment);

@@ -24,6 +24,8 @@ class ProductBookingController extends Controller
         $product->load('categories.parentCategory');
         $levels = Level::pluck('level_name', 'id')->prepend(trans('Please select level'), '');
 
+        session(['products' => $product]);
+
         return view('pages.product.booking-lot', compact('product', 'levels'));
     }
 
