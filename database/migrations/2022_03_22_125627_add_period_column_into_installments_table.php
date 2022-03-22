@@ -26,7 +26,7 @@ class AddPeriodColumnIntoInstallmentsTable extends Migration
     public function down()
     {
         Schema::table('installments', function (Blueprint $table) {
-            $table->dropColumn(['installment_year'])
+            $table->dropColumn(['installment_year']);
         });
     }
 }
