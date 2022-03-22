@@ -12,7 +12,7 @@
                 {{ trans('global.products_view') }}
             </li>
             <li class="breadcrumb-item">
-                {{ $product->product_name }}
+                {{ $products->product_name }}
             </li>
             <li aria-current="page" class="breadcrumb-item active">
                 Installment
@@ -26,7 +26,7 @@
         </div>
 
         <div class="card-body">
-            <form method="POST" action="" enctype="multipart/form-data" id="installment-form">
+            <form method="POST" action="{{ route('admin.installment.store', [$products->categories->first()->parentCategory->name, $products->categories->first()->parentCategory->name, $products->categories->first()->name, $products]) }}" enctype="multipart/form-data" id="installment-form">
                 @csrf
 
                 <div class="form-row">
@@ -55,7 +55,7 @@
                                     <i>RM</i>
                                 </span>
                             </div>
-                            <input class="form-control" type="text" name="downpayment" id="downpayment" required>
+                            <input class="form-control" type="text" name="downpayment" id="downpayment" value="" required>
                             @if($errors->has('downpayment'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('downpayment') }}
@@ -66,7 +66,7 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="period">Installment Period (Years)</label>
-                        <input class="form-control" type="text" name="period" id="period" required>
+                        <input class="form-control" type="text" name="period" id="period" value="" required>
                         @if($errors->has('period'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('period') }}
@@ -79,19 +79,27 @@
                 <div class="form-group mb-3">
                     <button type="submit" class="btn btn-danger btn-lg calculate-btn" style="width: 100%;">Calculate</button>
                 </div>
+
+                <div class="results mt-5">
+                    <div class="card-1">
+                        <p id="installment" name="installment">RM</p>
+                        <p class="indicators">Monthly Installments</p>
+                    </div>
+
+                    <div class="card-3">
+                        <p id="balance" name="balance">RM</p>
+                        <p class="indicators">Outstanding Payments</p>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                <div class="form-group float-right">
+                    <a class="btn btn-primary btn-sm mb-3 mr-3" href="{{ route('admin.order', [$products->categories->first()->parentCategory->name, $products->categories->first()->parentCategory->name, $products->categories->first()->name, $products]) }}">
+                        {{ trans('global.proceed') }}
+                    </a>
+                </div>
+                </div>
             </form>
-
-            <div class="results mt-5">
-                <div class="card-1">
-                    <p id="installment">RM</p>
-                    <p class="indicators">Monthly Installments</p>
-                </div>
-
-                <div class="card-3">
-                    <p id="balance">RM</p>
-                    <p class="indicators">Outstanding Payments</p>
-                </div>
-            </div>
         </div>
     </div>
 @endsection

@@ -27,38 +27,36 @@
                 <h4 class="mt-5 text-center">Review Order</h4>
 
                 @if(isset($searchCust) && !empty($searchCust))
-                    @foreach($searchCust as $customer)
-                        <form method="POST" action="{{ route('admin.order.details.store', [$product->categories->first()->parentCategory->name,
-                        $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}" enctype="multipart/form-data" id="review-order">
+                    <form method="POST" action="{{ route('admin.order.details.store', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}" enctype="multipart/form-data" id="review-order">
                         @csrf
-                            <div class="card-body">
+                        <div class="card-body">
                                 <h5 class="my-3">Purchaser Information</h5>
                                 <div class="form-row">
                                     <div class="form-group col-md-5">
                                         <label for="full_name">{{ trans('cruds.customer.fields.full_name') }} as in NRIC/Passport</label>
-                                        <input class="form-control" id="full_name" type="name" value="{{ old('full_name', $customer->full_name) }}" readonly>
+                                        <input class="form-control" id="full_name" type="name" value="{{ old('full_name', $searchCust->full_name) }}" readonly>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="id_type">{{ trans('cruds.customer.fields.id_type') }}</label>
-                                        <input class="form-control" id="id_type" type="text" value="{{ old('id_type', $customer->id_type) }}" readonly>
+                                        <input class="form-control" id="id_type" type="text" value="{{ old('id_type', $searchCust->id_type) }}" readonly>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="id_number">{{ trans('cruds.customer.fields.id_number') }}</label>
-                                        <input class="form-control" id="id_number" type="text" value="{{ old('id_number', $customer->id_number) }}" readonly>
+                                        <input class="form-control" id="id_number" type="text" value="{{ old('id_number', $searchCust->id_number) }}" readonly>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <label for="gender">Gender</label>
-                                        <input class="form-control" id="gender" type="text" value="{{ old('gender', $customer->gender) }}" readonly>
+                                        <input class="form-control" id="gender" type="text" value="{{ old('gender', $searchCust->gender) }}" readonly>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="contact_person_no">{{ trans('cruds.customer.fields.contact_person_no') }}</label>
-                                        <input class="form-control" id="contact_person_no" type="text" value="{{ old('contact_person_no', $customer->contact_person_no) }}" readonly>
+                                        <input class="form-control" id="contact_person_no" type="text" value="{{ old('contact_person_no', $searchCust->contact_person_no) }}" readonly>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="email">Email</label>
-                                        <input class="form-control" id="email" type="text" value="{{ old('email', $customer->email) }}" readonly>
+                                        <input class="form-control" id="email" type="text" value="{{ old('email', $searchCust->email) }}" readonly>
                                     </div>
                                 </div>
                                 <hr>
@@ -115,32 +113,19 @@
                                 </div>
                                 <hr>
 
-                                {{-- Billing Info --}}
                                 <h5 class="my-3">Billing Information</h5>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="address_1">{{ trans('cruds.customer.fields.address_1') }}</label>
-                                        <input class="form-control" id="address_1" type="text" value="{{ old('address_1', $customer->address_1) }}" readonly>
+                                @if(isset($cust_details))
+                                    <div class="form-row row-cols-2">
+                                        <div class="col">
+                                            <label><strong>Permanent Address</strong></label>
+                                            <textarea class="form-control bg-white" readonly>{{Str::upper($cust_details['per_address']) ?? 'Not Available'}}</textarea>
+                                        </div>
+                                        <div class="col">
+                                            <label><strong>Correspondence Address</strong></label>
+                                            <textarea class="form-control bg-white" readonly>{{Str::upper($cust_details['cor_address']) ?? 'Not Available'}}</textarea>
+                                        </div>
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="address_2">{{ trans('cruds.customer.fields.address_2') }}</label>
-                                        <input class="form-control" id="address_2" type="text" value="{{ old('address_2', $customer->address_2) }}" readonly>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-4">
-                                        <label for="city">{{ trans('cruds.customer.fields.city') }}</label>
-                                        <input class="form-control" id="city" type="text" value="{{ old('city', $customer->city) }}" readonly>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="state">{{ trans('cruds.customer.fields.state') }}</label>
-                                        <input class="form-control" id="state" type="text" value="{{ old('state', $customer->state) }}" readonly>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="postcode">{{ trans('cruds.customer.fields.postcode') }}</label>
-                                        <input class="form-control" id="postcode" type="text" value="{{ old('postcode', $customer->postcode) }}" readonly>
-                                    </div>
-                                </div>
+                                @endif
                                 <hr>
 
                                 {{-- Payment Info --}}
@@ -148,22 +133,21 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="mode">{{ trans('cruds.customer.fields.mode') }}</label>
-                                        <input class="form-control" id="mode" type="text" value="{{ old('mode', $customer->mode) }}" readonly>
+                                        <input class="form-control" id="mode" type="text" value="{{ old('mode', $searchCust->mode) }}" readonly>
                                     </div>
                                 </div>
-                            </div>
+                        </div>
 
-                            @if($customer->mode == 'Installment')
-                                <a class="btn btn-primary float-right mb-3 mr-3" id="installment" href="{{ route('admin.installment.index', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
-                                    {{ trans('global.products.product_select') }}
-                                </a>
-                            @else
-                                <button class="btn btn-primary float-right mb-3 mr-3" type="submit" id="confirmBooking">
-                                    {{ trans('global.confirmBooking') }}
-                                </button>
-                            @endif
-                        </form>
-                    @endforeach
+                        @if($customer->mode == 'Installment')
+                            <a class="btn btn-primary float-right mb-3 mr-3" id="installment" href="{{ route('admin.installment.index', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
+                                {{ trans('global.products.product_select') }}
+                            </a>
+                        @else
+                            <button class="btn btn-primary float-right mb-3 mr-3" type="submit" id="confirmBooking">
+                                {{ trans('global.confirmBooking') }}
+                            </button>
+                        @endif
+                    </form>
                 @else
                     @include('pages.product.components.new-review-order')
                 @endif

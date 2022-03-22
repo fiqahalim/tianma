@@ -108,11 +108,13 @@ class CustomerDetailsController extends Controller
         // $payments = new PaymentMode;
         // $payments['payment_name'] = $request->
 
-        return view('pages.product.booking-detail', compact('product', 'customer', 'users', 'curAddr'));
+        return redirect()->route('admin.reviewOrder', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]);
     }
 
     public function update(Request $request, $category, $childCategory, $childCategory2, Product $product, $searchCust)
     {
+        $existCust = session('searchCust');
+
         $validated = $request->validate([
             'mode' => 'required',
             'created_by' => 'required',
@@ -152,7 +154,7 @@ class CustomerDetailsController extends Controller
         session(['customer' => $customer]);
         session(['products' => $product]);
 
-        return view('pages.product.booking-detail', compact('product', 'customer', 'users', 'corAddr'));
+        return redirect()->route('admin.reviewOrder', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]);
     }
 
     public function search($category, $childCategory, $childCategory2, Product $product)

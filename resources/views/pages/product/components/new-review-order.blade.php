@@ -30,8 +30,8 @@
         {{-- Intended User Details --}}
         <h5 class="my-3">Intended User Information</h5>
         <div class="form-row">
-            @if(isset($curAddr))
-                @foreach($curAddr as $v => $contactPerson)
+            @if(isset($corAddr))
+                @foreach($corAddr as $v => $contactPerson)
                     @foreach($contactPerson->contactPersons as $cp)
                         <div class="form-group col-md-4">
                             <label for="cperson_name">{{ trans('cruds.customer.fields.full_name') }}</label>

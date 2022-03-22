@@ -20,6 +20,7 @@ class OrderConfirmationController extends Controller
     public function orderPage()
     {
         $customer = session('customer');
+        $existCust = session('searchCust');
 
         return view('pages.customer.order');
     }
@@ -27,6 +28,8 @@ class OrderConfirmationController extends Controller
     public function invoice()
     {
         $customer = session('customer');
+        $existCust = session('searchCust');
+
         return view('pages.customer.order');
     }
 
@@ -42,7 +45,8 @@ class OrderConfirmationController extends Controller
     public function store(Order $order)
     {
         $products = session('products');
-        $customer = session('customer') ? session('searchCust')[0] : '';
+        $customer = session('customer');
+        $existCust = session('searchCust');
 
         $pv = session('products')['point_value'];
 
@@ -69,7 +73,9 @@ class OrderConfirmationController extends Controller
 
     private function fullpaymentCalculate()
     {
-        $cust = session('customer') ? session('searchCust')[0] : '';
+        $cust = session('customer');
+        $existCust = session('searchCust');
+
         $odr = Order::select('amount', 'id')
             ->latest()->first();
 
@@ -93,7 +99,8 @@ class OrderConfirmationController extends Controller
     private function commissions()
     {
         $pv = session('products')['point_value'];
-        $cust = session('customer') ? session('searchCust')[0] : '';
+        $cust = session('customer');
+        $existCust = session('searchCust');
 
         $totalCommission = 0;
 
@@ -158,7 +165,8 @@ class OrderConfirmationController extends Controller
     public function getParent()
     {
         $pv = session('products')['point_value'];
-        $cust = session('customer') ? session('searchCust')[0] : '';
+        $cust = session('customer');
+        $existCust = session('searchCust');
 
         $totalCommission = 0;
 
@@ -211,7 +219,8 @@ class OrderConfirmationController extends Controller
     public function getPP()
     {
         $pv = session('products')['point_value'];
-        $cust = session('customer') ? session('searchCust')[0] : '';
+        $cust = session('customer');
+        $existCust = session('searchCust');
 
         $totalCommission = 0;
 

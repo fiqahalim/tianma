@@ -14,7 +14,7 @@
         <form method="POST" action="#" enctype="multipart/form-data" id="bookingForm">
             @method('PUT')
             @csrf
-            <img src="{{ $product->photo->url ?? '/images/product/luxury_1.png' }}" class="rounded mx-auto d-block" >
+            <img src="{{ $product->photo->url ?? '/images/product/luxury_1.png' }}" class="rounded mx-auto d-block" style="height: 300px; width: 485px;">
             <div class="movie-container">
                 <h5><strong>Category Selected:</strong> {{ $product->product_name }}
                 </h5>
@@ -30,7 +30,7 @@
                 </select>
 
                 {{-- select sections --}}
-                <select class="form-control {{ $errors->has('section') ? 'is-invalid' : '' }}" name="section" id="wings">
+                <select class="form-control {{ $errors->has('section') ? 'is-invalid' : '' }}" name="section" id="wings" required>
                     <option selected>{{ trans('global.pleaseSelect') }} section</option>
                     <option value="DA">DA</option>
                     <option value="DB">DB</option>
