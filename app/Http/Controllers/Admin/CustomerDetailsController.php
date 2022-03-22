@@ -126,13 +126,13 @@ class CustomerDetailsController extends Controller
 
         $product->load('categories.parentCategory');
 
-        $customer = Customer::find($searchCust);
+        $updateCustomer = Customer::find($searchCust);
 
         $corAddr = Customer::with(['correspondenceAddress', 'contactPersons'])
             ->where('id', $searchCust[0])
             ->get();
 
-        $customer->update([
+        $updateCustomer->update([
             'full_name' => $request->full_name,
             'id_type' => $request->id_type,
             'id_number' => $request->id_number,
@@ -150,8 +150,7 @@ class CustomerDetailsController extends Controller
             'created_by' => $request->created_by,
             'updated_at' => $current = Carbon::now(),
         ]);
-
-        session(['customer' => $customer]);
+        
         session(['products' => $product]);
 
         return redirect()->route('admin.reviewOrder', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]);
