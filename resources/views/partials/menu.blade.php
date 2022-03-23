@@ -82,6 +82,11 @@
                                 </a>
                             </li>
                         @endcan
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.add-on-products.index") }}" class="c-sidebar-nav-link">
+                                {{ trans('cruds.addOnProduct.title') }}
+                            </a>
+                        </li>
                     </ul>
                 </li>
             @endcan

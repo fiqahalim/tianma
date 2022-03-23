@@ -90,6 +90,12 @@ Route::group(['middleware' => 'auth'], function() {
             // Tags
             Route::resource('product-tags', '\App\Http\Controllers\Admin\ProductTagController');
             Route::delete('product-tags/destroy', [\App\Http\Controllers\Admin\ProductTagController::class, 'massDestroy'])->name('product-tags.massDestroy');
+
+            // Add-ons products
+            Route::delete('add-on-products/destroy', [\App\Http\Controllers\Admin\AddOnProductController::class, 'massDestroy'])->name('add-on-products.massDestroy');
+            Route::post('add-on-products/media', [\App\Http\Controllers\Admin\AddOnProductController::class, 'storeMedia'])->name('add-on-products.storeMedia');
+            Route::post('add-on-products/ckmedia', [\App\Http\Controllers\Admin\AddOnProductController::class, 'storeCKEditorImages'])->name('add-on-products.storeCKEditorImages');
+            Route::resource('add-on-products', '\App\Http\Controllers\Admin\AddOnProductController');
         });
 
         /** DOCUMENT MANAGEMENT **/
@@ -158,6 +164,13 @@ Route::group(['middleware' => 'auth'], function() {
 
             // Installment Calculator
             Route::resource('/{category}/{childCategory}/{childCategory2}/{product}/installment', '\App\Http\Controllers\Admin\InstallmentController');
+
+            // Carts
+            Route::get('cart', [\App\Http\Controllers\Admin\CartController::class, 'cartList'])->name('cart.list');
+            Route::post('cart', [\App\Http\Controllers\Admin\CartController::class, 'addToCart'])->name('cart.store');
+            Route::post('update-cart', [\App\Http\Controllers\Admin\CartController::class, 'updateCart'])->name('cart.update');
+            Route::post('remove', [\App\Http\Controllers\Admin\CartController::class, 'removeCart'])->name('cart.remove');
+            Route::post('clear', [\App\Http\Controllers\Admin\CartController::class, 'clearAllCart'])->name('cart.clear');
         });
 
         // Customer
