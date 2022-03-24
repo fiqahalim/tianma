@@ -8,20 +8,14 @@
 
 .card-1 {
     color: white;
-    background-color: #47a386;
+    background-color: #DAA520;
     padding: 20px;
-    margin-left: 170px;
-    width: 350px;
-    height: 120px;
     border-radius: 5px;
 }
 .card-3 {
     color: white;
-    background-color: #5445db;
+    background-color: #47a386;
     padding: 20px;
-    margin-right: 170px;
-    width: 350px;
-    height: 120px;
     border-radius: 5px;
 }
 #installment, #balance {
@@ -31,12 +25,3 @@
     font-size: 1.3em;
 }
 
-@media (max-width: 480px) {
-    .results {
-        justify-content: center;
-    }
-    .card-1, .card-2, .card-3 {
-        margin-left: 0;
-        margin-right: 0;
-    }
-}

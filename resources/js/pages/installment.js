@@ -12,7 +12,7 @@ installmentForm.addEventListener('submit', (e) => {
     const principal = parseFloat(amount);
     // const calculatedInterest = parseFloat(interest) / 100 / 12;
     const calculatedInterest = 0;
-    const calculatedPayments = parseFloat(period) * 12;
+    const calculatedPayments = period;
     const calculatedOutstanding = principal - parseFloat(downpayment);
 
     console.log(principal);
@@ -25,16 +25,16 @@ installmentForm.addEventListener('submit', (e) => {
     // const monthlyPayment = monthly.toFixed(2);
 
     const monthly = (calculatedOutstanding) / (calculatedPayments);
-    const monthlyPayment = monthly.toFixed(1);
+    const monthlyPayment = monthly.toFixed();
 
     console.log(monthly);
     console.log(monthlyPayment);
 
     //calculating the total interest
-    const totalInterest = (monthly * calculatedPayments - principal).toFixed(2);
+    // const totalInterest = (monthly * calculatedPayments - principal).toFixed(2);
 
     //calculating the total payment
-    const totalPayment = (monthly * calculatedPayments).toFixed(2);
+    // const totalPayment = (monthly * calculatedPayments).toFixed(2);
 
     //Display elements using DOM manipulation
     document.getElementById("installment").innerHTML = "RM " + monthlyPayment;

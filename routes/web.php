@@ -130,6 +130,10 @@ Route::group(['middleware' => 'auth'], function() {
             // Manage Level
             Route::delete('levels/destroy', '\App\Http\Controllers\Admin\LevelController@massDestroy')->name('levels.massDestroy');
             Route::resource('levels', '\App\Http\Controllers\Admin\LevelController');
+
+            // Manage Room
+            Route::delete('rooms/destroy', '\App\Http\Controllers\Admin\RoomController@massDestroy')->name('rooms.massDestroy');
+            Route::resource('rooms', '\App\Http\Controllers\Admin\RoomController');
         });
 
         /** ORDERS MANAGEMENT **/

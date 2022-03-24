@@ -65,13 +65,21 @@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="period">Installment Period (Years)</label>
-                        <input class="form-control" type="text" name="period" id="period" value="" required>
-                        @if($errors->has('period'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('period') }}
+                        <label for="period">Installment Period</label>
+                        <div class="input-group mb-3">
+                            <input class="form-control" type="text" name="period" id="period" value="" required>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    Month(s)
+                                </span>
                             </div>
-                        @endif
+                            @if($errors->has('downpayment'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('downpayment') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.order.fields.amount_helper') }}</span>
+                        </div>
                         <span class="help-block">{{ trans('cruds.order.fields.ref_no_helper') }}</span>
                     </div>
                 </div>
@@ -80,24 +88,27 @@
                     <button type="submit" class="btn btn-danger btn-lg calculate-btn" style="width: 100%;">Calculate</button>
                 </div>
 
-                <div class="results mt-5">
-                    <div class="card-1">
-                        <p id="installment" name="installment">RM</p>
-                        <p class="indicators">Monthly Installments</p>
+                <div class="row justify-content-around">
+                    <div class="col-sm-6 col-md-5 col-lg-6 mt-2 mb-2">
+                        <div class="card-1">
+                            <p id="installment" name="installment">RM</p>
+                            <p>Monthly Installments</p>
+                        </div>
                     </div>
-
-                    <div class="card-3">
-                        <p id="balance" name="balance">RM</p>
-                        <p class="indicators">Outstanding Payments</p>
+                    <div class="col-sm-6 col-md-5 col-lg-6 mt-2">
+                        <div class="card-3">
+                            <p id="balance" name="balance">RM</p>
+                            <p>Outstanding Payments</p>
+                        </div>
                     </div>
                 </div>
 
                 <div class="text-center">
-                <div class="form-group float-right">
-                    <a class="btn btn-primary btn-sm mb-3 mr-3" href="{{ route('admin.order', [$products->categories->first()->parentCategory->name, $products->categories->first()->parentCategory->name, $products->categories->first()->name, $products]) }}">
-                        {{ trans('global.proceed') }}
-                    </a>
-                </div>
+                    <div class="form-group float-right">
+                        <a class="btn btn-primary btn-sm mt-4 mb-2 mr-3" href="{{ route('admin.order', [$products->categories->first()->parentCategory->name, $products->categories->first()->parentCategory->name, $products->categories->first()->name, $products]) }}">
+                            {{ trans('global.proceed') }}
+                        </a>
+                    </div>
                 </div>
             </form>
         </div>

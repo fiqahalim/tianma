@@ -217,6 +217,11 @@
                             Manage {{ trans('cruds.masterSetting.fields.productType') }}
                         </a>
                     </li>
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="{{ route('admin.rooms.index') }}" >
+                            Manage {{ trans('cruds.room.title') }}
+                        </a>
+                    </li>
                 </ul>
             </li>
 
