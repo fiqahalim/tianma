@@ -171,6 +171,9 @@ Route::group(['middleware' => 'auth'], function() {
             Route::post('update-cart', [\App\Http\Controllers\Admin\CartController::class, 'updateCart'])->name('cart.update');
             Route::post('remove', [\App\Http\Controllers\Admin\CartController::class, 'removeCart'])->name('cart.remove');
             Route::post('clear', [\App\Http\Controllers\Admin\CartController::class, 'clearAllCart'])->name('cart.clear');
+
+            // addons page
+            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/addons', [\App\Http\Controllers\Admin\ProductOrderController::class, 'addOns'])->name('addons');
         });
 
         // Customer

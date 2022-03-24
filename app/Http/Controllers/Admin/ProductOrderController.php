@@ -104,4 +104,9 @@ class ProductOrderController extends Controller
 
         return view('pages.product.index');
     }
+
+    public function addOns(Request $request)
+    {
+        return view('pages.cart.addon');
+    }
 }
