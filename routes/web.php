@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth'], function() {
     |--------------------------------------------------------------------------
     */
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['can:admin_only']], function () {
+
         /** USERS MANAGEMENT **/
         Route::group(['prefix' => 'user-management'], function() {
             // Permissions
@@ -54,7 +55,6 @@ Route::group(['middleware' => 'auth'], function() {
             // Users
             Route::resource('users', '\App\Http\Controllers\Admin\UsersController');
             Route::delete('users/destroy', [\App\Http\Controllers\Admin\UsersController::class, 'massDestroy'])->name('users.massDestroy');
-            // Route::get('users/{id}/hierarchy', [\App\Http\Controllers\Admin\UsersController::class, 'hierarchy'])->name('users.hierarchy');
 
             // Team
             Route::delete('teams/destroy', [\App\Http\Controllers\Admin\TeamController::class, 'massDestroy'])->name('teams.massDestroy');
@@ -91,11 +91,11 @@ Route::group(['middleware' => 'auth'], function() {
             Route::resource('product-tags', '\App\Http\Controllers\Admin\ProductTagController');
             Route::delete('product-tags/destroy', [\App\Http\Controllers\Admin\ProductTagController::class, 'massDestroy'])->name('product-tags.massDestroy');
 
-            // Manage Layouts
-            Route::get('lot_layouts', [\App\Http\Controllers\Admin\LotLayoutController::class, 'lotLayouts'])->name('lot.layouts');
-            Route::post('lot_layouts', [\App\Http\Controllers\Admin\LotLayoutController::class, 'lotLayoutStore'])->name('lot.layouts.store');
-            Route::post('lot_layouts/{id}', [\App\Http\Controllers\Admin\LotLayoutController::class, 'lotLayoutUpdate'])->name('lot.layouts.update');
-            Route::post('lot_layouts/destroy', [\App\Http\Controllers\Admin\LotLayoutController::class, 'lotLayoutDelete'])->name('lot.layouts.delete');
+            // Add-ons products
+            Route::delete('add-on-products/destroy', [\App\Http\Controllers\Admin\AddOnProductController::class, 'massDestroy'])->name('add-on-products.massDestroy');
+            Route::post('add-on-products/media', [\App\Http\Controllers\Admin\AddOnProductController::class, 'storeMedia'])->name('add-on-products.storeMedia');
+            Route::post('add-on-products/ckmedia', [\App\Http\Controllers\Admin\AddOnProductController::class, 'storeCKEditorImages'])->name('add-on-products.storeCKEditorImages');
+            Route::resource('add-on-products', '\App\Http\Controllers\Admin\AddOnProductController');
         });
 
         /** DOCUMENT MANAGEMENT **/
@@ -107,6 +107,79 @@ Route::group(['middleware' => 'auth'], function() {
             Route::post('my-documents/ckmedia', [\App\Http\Controllers\Admin\MyDocumentController::class, 'storeCKEditorImages'])->name('my-documents.storeCKEditorImages');
         });
 
+        /** MASTER SETTINGS **/
+        Route::group(['prefix' => 'master-settings'], function() {
+            // Manage Layouts
+            Route::get('lot_layouts', [\App\Http\Controllers\Admin\LotLayoutController::class, 'lotLayouts'])->name('lot.layouts');
+            Route::post('lot_layouts', [\App\Http\Controllers\Admin\LotLayoutController::class, 'lotLayoutStore'])->name('lot.layouts.store');
+            Route::post('lot_layouts/{id}', [\App\Http\Controllers\Admin\LotLayoutController::class, 'lotLayoutUpdate'])->name('lot.layouts.update');
+            Route::post('lot_layouts/destroy', [\App\Http\Controllers\Admin\LotLayoutController::class, 'lotLayoutDelete'])->name('lot.layouts.delete');
+
+            // Manage Location
+            Route::delete('locations/destroy', '\App\Http\Controllers\Admin\LocationController@massDestroy')->name('locations.massDestroy');
+            Route::resource('locations', '\App\Http\Controllers\Admin\LocationController');
+
+            // Manage Product Type
+            Route::delete('product-types/destroy', '\App\Http\Controllers\Admin\ProductTypeController@massDestroy')->name('product-types.massDestroy');
+            Route::resource('product-types', '\App\Http\Controllers\Admin\ProductTypeController');
+
+            // Manage Building Type
+            Route::delete('building-types/destroy', '\App\Http\Controllers\Admin\BuildingTypeController@massDestroy')->name('building-types.massDestroy');
+            Route::resource('building-types', '\App\Http\Controllers\Admin\BuildingTypeController');
+
+            // Manage Level
+            Route::delete('levels/destroy', '\App\Http\Controllers\Admin\LevelController@massDestroy')->name('levels.massDestroy');
+            Route::resource('levels', '\App\Http\Controllers\Admin\LevelController');
+
+            // Manage Room
+            Route::delete('rooms/destroy', '\App\Http\Controllers\Admin\RoomController@massDestroy')->name('rooms.massDestroy');
+            Route::resource('rooms', '\App\Http\Controllers\Admin\RoomController');
+        });
+
+        /** ORDERS MANAGEMENT **/
+        Route::group(['prefix' => 'order-management'], function() {
+
+            // Locations
+            Route::match(['get', 'post'], 'locations', [\App\Http\Controllers\Admin\ProductOrderController::class, 'location'])->name('showLocation');
+
+            // Order Lists
+            Route::delete('orders/destroy', [\App\Http\Controllers\Admin\OrdersController::class,'massDestroy'])->name('orders.massDestroy');
+            Route::resource('orders', '\App\Http\Controllers\Admin\OrdersController');
+
+            // New Order
+            Route::resource('new-order', '\App\Http\Controllers\Admin\ProductOrderController');
+            Route::get('/{category:name}/{childCategory:name?}/{childCategory2?}', [\App\Http\Controllers\Admin\ProductOrderController::class, 'category'])->name('category');
+            Route::get('/{category}/{childCategory}/{childCategory2}/{product}', [\App\Http\Controllers\Admin\ProductOrderController::class, 'productCategory'])->name('product');
+
+            // Customer Details
+            Route::resource('/{category}/{childCategory}/{childCategory2}/{product}/customer-details', '\App\Http\Controllers\Admin\CustomerDetailsController');
+
+            // Search Customer Details
+            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/search', [\App\Http\Controllers\Admin\CustomerDetailsController::class, 'search'])->name('search');
+            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/searchCustomer', [\App\Http\Controllers\Admin\CustomerDetailsController::class, 'searchCustomer'])->name('searchCustomer');
+
+            // Booking
+            Route::resource('/{category}/{childCategory}/{childCategory2}/{product}/product-booking', '\App\Http\Controllers\Admin\ProductBookingController');
+            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/review-order', [\App\Http\Controllers\Admin\ProductBookingController::class, 'reviewOrder'])->name('reviewOrder');
+
+            // Order Summary
+            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/order-details', [\App\Http\Controllers\Admin\OrderConfirmationController::class, 'orderPage'])->name('order');
+            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/order-details/store', [\App\Http\Controllers\Admin\OrderConfirmationController::class, 'store'])->name('order.details.store');
+
+            // Installment Calculator
+            Route::resource('/{category}/{childCategory}/{childCategory2}/{product}/installment', '\App\Http\Controllers\Admin\InstallmentController');
+
+            // Carts
+            Route::get('cart', [\App\Http\Controllers\Admin\CartController::class, 'cartList'])->name('cart.list');
+            Route::post('cart', [\App\Http\Controllers\Admin\CartController::class, 'addToCart'])->name('cart.store');
+            Route::post('update-cart', [\App\Http\Controllers\Admin\CartController::class, 'updateCart'])->name('cart.update');
+            Route::post('remove', [\App\Http\Controllers\Admin\CartController::class, 'removeCart'])->name('cart.remove');
+            Route::post('clear', [\App\Http\Controllers\Admin\CartController::class, 'clearAllCart'])->name('cart.clear');
+
+            // addons page
+            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/addons', [\App\Http\Controllers\Admin\ProductOrderController::class, 'addOns'])->name('addons');
+        });
+
         // Customer
         Route::delete('customers/destroy', [\App\Http\Controllers\Admin\CustomerController::class,'massDestroy'])->name('customers.massDestroy');
         Route::resource('customers', '\App\Http\Controllers\Admin\CustomerController');
@@ -115,27 +188,8 @@ Route::group(['middleware' => 'auth'], function() {
         Route::delete('commissions/destroy', [\App\Http\Controllers\Admin\CommissionController::class, 'massDestroy'])->name('commissions.massDestroy');
         Route::resource('commissions', '\App\Http\Controllers\Admin\CommissionController');
 
-        /** ORDERS **/
-        Route::group(['prefix' => 'order-management'], function() {
-            Route::delete('orders/destroy', [\App\Http\Controllers\Admin\OrdersController::class,'massDestroy'])->name('orders.massDestroy');
-            Route::resource('orders', '\App\Http\Controllers\Admin\OrdersController');
-            Route::resource('new-order', '\App\Http\Controllers\User\ProductsController');
-            Route::get('/{category:name}/{childCategory:name?}/{childCategory2?}', [\App\Http\Controllers\User\ProductsController::class, 'category'])->name('category');
-            Route::get('/{category}/{childCategory}/{childCategory2}/{product}', [\App\Http\Controllers\User\ProductsController::class, 'productCategory'])->name('product');
-            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/booking', [\App\Http\Controllers\User\ProductsController::class, 'bookingLot'])->name('bookinglot');
-
-            // Customers
-            Route::resource('/{category}/{childCategory}/{childCategory2}/{product}/customerdetails', '\App\Http\Controllers\User\CustomerController');
-
-            // Orders
-            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/order-details', [\App\Http\Controllers\User\OrderController::class, 'orderPage'])->name('order');
-            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/order-details/store', [\App\Http\Controllers\User\OrderController::class, 'store'])->name('order.details.store');
-
-        });
-
         // Audit Logs
         Route::resource('audit-logs', '\App\Http\Controllers\Admin\AuditLogsController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);
-
     });
 
 
@@ -145,37 +199,15 @@ Route::group(['middleware' => 'auth'], function() {
     |--------------------------------------------------------------------------
     */
     Route::group(['prefix' => 'user', 'as' => 'user.'], function() {
-        // Products
-        Route::group(['prefix' => 'products'], function() {
-            Route::resource('products', '\App\Http\Controllers\User\ProductsController');
-            Route::get('/{category:name}/{childCategory:name?}/{childCategory2?}', [\App\Http\Controllers\User\ProductsController::class, 'category'])->name('category');
-            Route::get('/{category}/{childCategory}/{childCategory2}/{product}', [\App\Http\Controllers\User\ProductsController::class, 'productCategory'])->name('product');
-            Route::get('/{category}/{childCategory}/{childCategory2}/{product}/booking', [\App\Http\Controllers\User\ProductsController::class, 'bookingLot'])->name('bookinglot');
 
-            // Customers
-            Route::resource('/{category}/{childCategory}/{childCategory2}/{product}/customerdetails', '\App\Http\Controllers\User\CustomerController');
-
-            // Orders
-            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/order-details', [\App\Http\Controllers\User\OrderController::class, 'orderPage'])->name('order');
-            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/order-details/store', [\App\Http\Controllers\User\OrderController::class, 'store'])->name('order.details.store');
-        });
-
-        // Downline
+        /** MY DOWNLINE **/
         Route::group(['prefix' => 'downline'], function() {
             Route::get('/my-tree', [\App\Http\Controllers\User\MembersController::class, 'myTree'])->name('myTree');
             Route::get('/my-downline', [\App\Http\Controllers\User\MembersController::class, 'myDownline'])->name('myDownline');
             Route::resource('/my-downline', '\App\Http\Controllers\User\MembersController');
         });
 
-        // Commissions
-        Route::group(['prefix' => 'my-commission'], function() {
-            Route::get('/', [\App\Http\Controllers\User\MembersController::class, 'myCommission'])->name('myCommission');
-        });
-
-        Route::group(['prefix' => 'my-customers'], function() {
-            Route::get('/', [\App\Http\Controllers\User\MembersController::class, 'myCustomers'])->name('myCustomers');
-        });
-
+        /** MY DOCUMENT **/
         Route::group(['prefix' => 'document'], function() {
             Route::resource('my-documents', '\App\Http\Controllers\User\MyDocumentController');
             Route::delete('my-documents/destroy', [\App\Http\Controllers\User\MyDocumentController::class, 'massDestroy'])->name('my-documents.massDestroy');
@@ -183,6 +215,14 @@ Route::group(['middleware' => 'auth'], function() {
             Route::post('my-documents/ckmedia', [\App\Http\Controllers\User\MyDocumentController::class, 'storeCKEditorImages'])->name('my-documents.storeCKEditorImages');
         });
 
+        // My Commissions
+        Route::get('/my-commission', [\App\Http\Controllers\User\MembersController::class, 'myCommission'])->name('myCommission');
+
+        // My Customers
+        Route::get('/my-customers', [\App\Http\Controllers\User\MembersController::class, 'myCustomers'])->name('myCustomers');
+
+
+        // My Orders
         Route::resource('/my-orders', '\App\Http\Controllers\User\OrderDetailsController');
     });
 

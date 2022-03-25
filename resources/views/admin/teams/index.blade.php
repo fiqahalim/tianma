@@ -4,7 +4,7 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">{{ trans('cruds.userManagement.title') }}</li>
-        <li class="breadcrumb-item active" aria-current="page">{{ trans('cruds.team.title') }}</li>
+        <li class="breadcrumb-item active" aria-current="page">{{ trans('cruds.agency.title') }}</li>
     </ol>
 </nav>
 
@@ -12,14 +12,14 @@
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.teams.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.team.title_singular') }}
+                {{ trans('global.add') }} {{ trans('cruds.agency.title_singular') }}
             </a>
         </div>
     </div>
 @endcan
 <div class="card">
     <div class="card-header font-weight-bold">
-        {{ trans('cruds.team.title_singular') }} {{ trans('global.list') }}
+        Agencies {{ trans('global.list') }}
     </div>
 
     <div class="card-body">
@@ -30,13 +30,13 @@
 
                     </th>
                     <th>
-                        {{ trans('cruds.team.fields.id') }}
+                        {{ trans('cruds.agency.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.team.fields.name') }}
+                        {{ trans('cruds.agency.fields.name') }}
                     </th>
                     <th>
-                        {{ trans('cruds.team.fields.owner') }}
+                        {{ trans('cruds.agency.fields.owner') }}
                     </th>
                     <th>
                         &nbsp;

@@ -84,9 +84,6 @@
                                     <th width="10">
 
                                     </th>
-                                    {{-- <th>
-                                        {{ trans('cruds.order.fields.id') }}
-                                    </th> --}}
                                     <th>
                                         {{ trans('cruds.order.fields.order_date') }}
                                     </th>
@@ -123,9 +120,6 @@
                                             <td>
 
                                             </td>
-                                            {{-- <td>
-                                                {{ $order->id ?? '' }}
-                                            </td> --}}
                                             <td>
                                                 {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y H:i:s') }}
                                             </td>
@@ -161,7 +155,7 @@
                                             </td>
                                         </tr>
                                     @endif
-                                    @endforeach
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

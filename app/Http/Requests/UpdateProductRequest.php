@@ -55,10 +55,10 @@ class UpdateProductRequest extends FormRequest
             'total_cost' => [
                 'required',
             ],
-            'slug' => [
-                'string',
-                'required',
-            ],
+            // 'slug' => [
+            //     'string',
+            //     'required',
+            // ],
             'categories.*' => [
                 'integer',
             ],

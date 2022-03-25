@@ -16,7 +16,9 @@ const cssPath = 'resources/css/';
 mix.js(jsPath + 'app.js', 'public/js')
     .js(jsPath + 'pages/booking.js', 'public/js/pages')
     .js(jsPath + 'pages/profile.js', 'public/js/pages')
-    .js(jsPath + 'pages/hierarchy.js', 'public/js/pages');
+    .js(jsPath + 'pages/hierarchy.js', 'public/js/pages')
+    .js(jsPath + 'pages/reviewOrder.js', 'public/js/pages')
+    .js(jsPath + 'pages/installment.js', 'public/js/pages');
 
 mix.postCss('resources/css/app.css', 'public/css', [
         //
@@ -25,7 +27,8 @@ mix.postCss('resources/css/app.css', 'public/css', [
 mix.css(cssPath + 'pages/tree.css', 'public/css/pages')
     .css(cssPath + 'pages/booking.css', 'public/css/pages')
     .css(cssPath + 'pages/order.css', 'public/css/pages')
-    .css(cssPath + 'pages/invoice.css', 'public/css/pages');
+    .css(cssPath + 'pages/invoice.css', 'public/css/pages')
+    .css(cssPath + 'pages/installment.css', 'public/css/pages');
 
 mix.webpackConfig({
     output: {

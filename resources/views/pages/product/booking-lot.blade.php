@@ -3,7 +3,7 @@
 @section('content')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('user.products.index') }}">{{ trans('global.products.title') }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.new-order.index') }}">{{ trans('global.products.title') }}</a></li>
             <li class="breadcrumb-item">{{ trans('global.products.bookingView') }}</li>
             <li class="breadcrumb-item">{{ $product->product_name }}</li>
             <li class="breadcrumb-item active" aria-current="page">{{ trans('global.products.bookingLot') }}</li>
@@ -11,15 +11,28 @@
     </nav>
 
     <div class="container-fluid">
-        <form method="POST" action="" enctype="multipart/form-data" id="bookingForm">
+        <form method="POST" action="#" enctype="multipart/form-data" id="bookingForm">
             @method('PUT')
             @csrf
-            <img src="{{ $product->photo->url ?? '/images/product/luxury_1.png' }}" class="rounded mx-auto d-block" >
+            <img src="{{ $product->photo->url ?? '/images/product/luxury_1.png' }}" class="rounded mx-auto d-block" style="height: 300px; width: 485px;">
             <div class="movie-container">
                 <h5><strong>Category Selected:</strong> {{ $product->product_name }}
                 </h5>
-                <select class="form-control {{ $errors->has('section') ? 'is-invalid' : '' }}" name="section" id="wings">
-                    <option selected>{{ trans('global.pleaseSelect') }}</option>
+
+                {{-- select rooms --}}
+                <select class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }} mb-3" name="name" required>
+                    @forelse($rooms as $r => $room)
+                        <option value="{{ $r }}" {{ old('name', '') === (string) $r ? 'selected' : '' }}>
+                            {{ $room }}
+                        </option>
+                    @empty
+                        <option>No rooms founds</option>
+                    @endforelse
+                </select>
+
+                {{-- select sections --}}
+                <select class="form-control {{ $errors->has('section') ? 'is-invalid' : '' }}" name="section" id="wings" required>
+                    <option selected>{{ trans('global.pleaseSelect') }} section</option>
                     <option value="DA">DA</option>
                     <option value="DB">DB</option>
                     <option value="DC">DC</option>
@@ -73,9 +86,8 @@
                 </p>
 
                   <div class="text-center">
-                    <a class="btn btn-outline-primary mt-2" id="bookConfirm" href="{{ route('user.customerdetails.index', [$product->categories->first()->parentCategory->name,
-                        $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
-                            {{ trans('global.products.product_select') }}
+                    <a class="btn btn-outline-primary mt-2" id="bookConfirm" href="{{ route('admin.customer-details.index', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
+                        {{ trans('global.products.product_select') }}
                     </a>
                 </div>
             </div>

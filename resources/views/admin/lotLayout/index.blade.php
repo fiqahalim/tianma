@@ -3,8 +3,10 @@
 @section('content')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item">{{ trans('cruds.productManagement.title') }}</li>
-        <li class="breadcrumb-item active" aria-current="page">{{ trans('cruds.lotLayout.title') }}</li>
+        <li class="breadcrumb-item">{{ trans('cruds.masterSetting.title') }}</li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Manage {{ trans('cruds.masterSetting.fields.layout') }}
+        </li>
     </ol>
 </nav>
 

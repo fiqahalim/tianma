@@ -32,6 +32,7 @@ class UsersTableSeeder extends Seeder
                 'postcode'           => '50100',
                 'country'            => 'Malaysia',
                 'nationality'        => 'MALAYSIAN',
+                'created_at'         => '2021-12-25 13:30:27',
                 'ranking_id'         => 5,
             ],
             [
@@ -56,6 +57,7 @@ class UsersTableSeeder extends Seeder
                 'postcode'           => '50100',
                 'country'            => 'USA',
                 'nationality'        => 'USA',
+                'created_at'         => '2021-12-25 13:43:15'
                 'ranking_id'         => 1,
             ],
         ];

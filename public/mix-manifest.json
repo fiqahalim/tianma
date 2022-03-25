@@ -3,9 +3,12 @@
     "/js/pages/booking.js": "/js/pages/booking.js",
     "/js/pages/profile.js": "/js/pages/profile.js",
     "/js/pages/hierarchy.js": "/js/pages/hierarchy.js",
+    "/js/pages/reviewOrder.js": "/js/pages/reviewOrder.js",
+    "/js/pages/installment.js": "/js/pages/installment.js",
     "/css/pages/invoice.css": "/css/pages/invoice.css",
     "/css/pages/order.css": "/css/pages/order.css",
     "/css/pages/booking.css": "/css/pages/booking.css",
     "/css/pages/tree.css": "/css/pages/tree.css",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/css/pages/installment.css": "/css/pages/installment.css"
 }

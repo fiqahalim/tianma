@@ -10,6 +10,7 @@ use App\Models\Role;
 use App\Models\Team;
 use App\Models\User;
 use App\Models\Ranking;
+use App\Models\Order;
 use App\Models\Commission;
 use Gate;
 use Alert;
@@ -52,7 +53,7 @@ class UsersController extends Controller
         $user = User::create($request->all());
         $user->roles()->sync($request->input('roles', []));
 
-        alert()->success(__('global.update_success'))->toToast();
+        alert()->success(__('global.create_success'))->toToast();
         return redirect()->route('admin.users.index');
     }
 
@@ -100,9 +101,15 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $user->load('roles', 'team', 'parent', 'userUserAlerts', 'childUsers');
+        $user->load('roles', 'team', 'parent', 'userUserAlerts', 'childUsers', 'commissions');
 
-        return view('admin.users.show', compact('user'));
+        $totalComms = Commission::join('orders', 'orders.id', '=', 'commissions.order_id')
+            ->where('commissions.user_id', $user->id)
+            ->whereMonth('commissions.created_at', Carbon::now()->month)
+            ->whereYear('commissions.created_at', Carbon::now()->year)
+            ->sum('commissions.mo_overriding_comm');
+
+        return view('admin.users.show', compact('user', 'totalComms'));
     }
 
     public function destroy(User $user)
@@ -111,7 +118,7 @@ class UsersController extends Controller
 
         $user->delete();
 
-        alert()->success(__('global.update_success'))->toToast();
+        alert()->success(__('global.delete_success'))->toToast();
         return back();
     }
 

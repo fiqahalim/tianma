@@ -4,14 +4,14 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">{{ trans('cruds.userManagement.title') }}</li>
-        <li class="breadcrumb-item">{{ trans('cruds.team.title') }}</li>
-        <li class="breadcrumb-item active" aria-current="page">Create {{ trans('cruds.team.title') }}</li>
+        <li class="breadcrumb-item">{{ trans('cruds.agency.title') }}</li>
+        <li class="breadcrumb-item active" aria-current="page">Create {{ trans('cruds.agency.title') }}</li>
     </ol>
 </nav>
 
 <div class="card">
     <div class="card-header font-weight-bold">
-        {{ trans('global.edit') }} {{ trans('cruds.team.title_singular') }}
+        {{ trans('global.edit') }} {{ trans('cruds.agency.title_singular') }}
     </div>
 
     <div class="card-body">
@@ -19,14 +19,14 @@
             @method('PUT')
             @csrf
             <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.team.fields.name') }}</label>
+                <label class="required" for="name">{{ trans('cruds.agency.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $team->name) }}" required>
                 @if($errors->has('name'))
                     <div class="invalid-feedback">
                         {{ $errors->first('name') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.team.fields.name_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.agency.fields.name_helper') }}</span>
             </div>
             <div class="form-group">
                 <a class="btn btn-default" href="{{ route('admin.teams.index') }}">

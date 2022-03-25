@@ -4,14 +4,14 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">{{ trans('cruds.userManagement.title') }}</li>
-        <li class="breadcrumb-item">{{ trans('cruds.team.title') }}</li>
-        <li class="breadcrumb-item active" aria-current="page">View {{ trans('cruds.team.title') }}</li>
+        <li class="breadcrumb-item">{{ trans('cruds.agency.title') }}</li>
+        <li class="breadcrumb-item active" aria-current="page">View {{ trans('cruds.agency.title') }}</li>
     </ol>
 </nav>
 
 <div class="card">
     <div class="card-header font-weight-bold">
-        {{ trans('global.show') }} {{ trans('cruds.team.title') }}
+        {{ trans('global.show') }} {{ trans('cruds.agency.title') }}
     </div>
 
     <div class="card-body">
@@ -20,7 +20,7 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.team.fields.id') }}
+                            {{ trans('cruds.agency.fields.id') }}
                         </th>
                         <td>
                             {{ $team->id }}
@@ -28,7 +28,7 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.team.fields.name') }}
+                            {{ trans('cruds.agency.fields.name') }}
                         </th>
                         <td>
                             {{ $team->name }}
@@ -36,7 +36,7 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.team.fields.owner') }}
+                            {{ trans('cruds.agency.fields.owner') }}
                         </th>
                         <td>
                             {{ $team->owner->name ?? '' }}

@@ -47,13 +47,14 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label class="required" for="id_number">{{ trans('cruds.user.fields.id_number') }}</label>
+                    <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="{{ trans('cruds.customer.fields.id_number_helper') }}">
+                    </i>
                     <input class="form-control {{ $errors->has('id_number') ? 'is-invalid' : '' }}" type="text" name="id_number" id="id_number" value="{{ old('id_number', $user->id_number) }}" required>
                     @if($errors->has('id_number'))
                         <div class="invalid-feedback">
                             {{ $errors->first('id_number') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.user.fields.id_number_helper') }}</span>
                 </div>
             </div>
 
@@ -160,41 +161,82 @@
             <hr>
 
             {{-- Team Details --}}
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label>{{ trans('cruds.user.fields.ref_name') }}</label>
-                    <input class="form-control" type="text" value="{{ $user->parent ? $user->parent->agent_code : '' }}" readonly>
-                </div>
-                {{-- Commissions --}}
-                <div class="form-group col-md-6">
-                    <label>{{ trans('cruds.ranking.currentRank') }}</label>
-                    <input class="form-control" type="text" name="rankings_id" id="rankings_id" value="{{ $user->rankings ? $user->rankings->category : '' }}" readonly>
-                </div>
-                <div class="form-group col-md-6">
-                    <label>{{ trans('cruds.commission.fields.comm_monthly') }}</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i>RM</i>
-                            </span>
+            @if($user->ranking_id == 1)
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>{{ trans('cruds.user.fields.ref_name') }}</label>
+                        <input class="form-control" type="text" value="{{ $user->parent ? $user->parent->agent_code : 'No Upperline' }}" readonly>
+                    </div>
+                    {{-- Commissions --}}
+                    <div class="form-group col-md-6">
+                        <label>{{ trans('cruds.ranking.currentRank') }}</label>
+                        <input class="form-control" type="text" name="rankings_id" id="rankings_id" value="{{ $user->rankings ? $user->rankings->category : '' }}" readonly>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>{{ trans('cruds.commission.fields.comm_monthly') }}</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i>RM</i>
+                                </span>
+                            </div>
+                            <input class="form-control" type="text" value="{{ $totalComms ?? '' }}" readonly>
                         </div>
-                        <input class="form-control" type="text" value="{{ $totalComms ?? '' }}" readonly>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>{{ trans('cruds.ranking.remoteDemote') }}</label>
+                        @if(!empty($totalComms) && $totalComms > 50000)
+                            <select class="form-control form-select {{ $errors->has('rankings') ? 'is-invalid' : '' }}" name="ranking_id" id="rankings_id">
+                                @foreach($rankings as $id => $data)
+                                    <option value="{{ $id }}" {{ (old('rankings_id') ? old('rankings_id') : $user->rankings->id ?? '') == $id ? 'selected' : '' }}>{{ $data }}</option>
+                                @endforeach
+                            </select>
+                        @else
+                            <input class="form-control" type="text" value="Not eligible to do this option until total commissions reach the target!" readonly>
+                        @endif
                     </div>
                 </div>
-
-                <div class="form-group col-md-6">
-                    <label>{{ trans('cruds.ranking.remoteDemote') }}</label>
-                    @if(!empty($totalComms) && $totalComms > 50000)
-                        <select class="form-control form-select {{ $errors->has('rankings') ? 'is-invalid' : '' }}" name="ranking_id" id="rankings_id">
-                            @foreach($rankings as $id => $data)
-                                <option value="{{ $id }}" {{ (old('rankings_id') ? old('rankings_id') : $user->rankings->id ?? '') == $id ? 'selected' : '' }}>{{ $data }}</option>
-                            @endforeach
-                        </select>
-                    @else
-                        <input class="form-control" type="text" value="Not eligible to do this option until total commissions reach the target!" readonly>
-                    @endif
+            @else
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label>{{ trans('cruds.user.fields.ref_name') }}</label>
+                        <input class="form-control" type="text" value="{{ $user->parent ? $user->parent->agent_code : 'No Upperline' }}" readonly>
+                    </div>
+                    {{-- Agency Code --}}
+                    <div class="form-group col-md-4">
+                        <label>{{ trans('cruds.user.fields.team') }}</label>
+                        <input class="form-control" type="text" name="agency_code" id="agency_code" value="{{ $user->agency_code ? $user->agency_code : '' }}">
+                    </div>
+                    {{-- Commissions --}}
+                    <div class="form-group col-md-4">
+                        <label>{{ trans('cruds.ranking.currentRank') }}</label>
+                        <input class="form-control" type="text" name="rankings_id" id="rankings_id" value="{{ $user->rankings ? $user->rankings->category : '' }}" readonly>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>{{ trans('cruds.commission.fields.comm_monthly') }}</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i>RM</i>
+                                </span>
+                            </div>
+                            <input class="form-control" type="text" value="{{ $totalComms ?? '' }}" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>{{ trans('cruds.ranking.remoteDemote') }}</label>
+                        @if(!empty($totalComms) && $totalComms > 50000)
+                            <select class="form-control form-select {{ $errors->has('rankings') ? 'is-invalid' : '' }}" name="ranking_id" id="rankings_id">
+                                @foreach($rankings as $id => $data)
+                                    <option value="{{ $id }}" {{ (old('rankings_id') ? old('rankings_id') : $user->rankings->id ?? '') == $id ? 'selected' : '' }}>{{ $data }}</option>
+                                @endforeach
+                            </select>
+                        @else
+                            <input class="form-control" type="text" value="Not eligible to do this option until total commissions reach the target!" readonly>
+                        @endif
+                    </div>
                 </div>
-            </div>
+            @endif
             <hr>
 
             <div class="form-group">

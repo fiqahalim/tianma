@@ -40,7 +40,7 @@
                     </a>
                     <ul class="c-sidebar-nav-dropdown-items">
                         <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.new-order.index") }}" class="c-sidebar-nav-link">
+                            <a href="{{ route("admin.showLocation") }}" class="c-sidebar-nav-link">
                                 {{ trans('cruds.order.fields.createOrder') }}
                             </a>
                         </li>
@@ -83,8 +83,8 @@
                             </li>
                         @endcan
                         <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.lot.layouts") }}" class="c-sidebar-nav-link">
-                                {{ trans('cruds.lotLayout.title') }}
+                            <a href="{{ route("admin.add-on-products.index") }}" class="c-sidebar-nav-link">
+                                {{ trans('cruds.addOnProduct.title') }}
                             </a>
                         </li>
                     </ul>
@@ -151,51 +151,84 @@
                                 </a>
                             </li>
                         @endcan --}}
-                        {{-- @can('team_access')
-                            <li class="c-sidebar-nav-item">
-                                <a href="{{ route("admin.teams.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/teams") || request()->is("admin/teams/*") ? "c-active" : "" }}">
-                                    {{ trans('cruds.team.title') }}
-                                </a>
-                            </li>
-                        @endcan --}}
                     </ul>
                 </li>
             @endcan
 
-            {{-- Settings --}}
-                <li class="c-sidebar-nav-dropdown">
-                    <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                        <i class="fa-fw fas fa-cogs c-sidebar-nav-icon"></i>
-                        {{ trans('cruds.setting.title') }}
-                    </a>
-                    <ul class="c-sidebar-nav-dropdown-items">
-                        @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
-                            @can('profile_password_edit')
-                                <li class="c-sidebar-nav-item">
-                                    <a class="c-sidebar-nav-link {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'c-active' : '' }}" href="{{ route('profile.password.edit') }}">
-                                        {{ trans('cruds.setting.change_password') }}
-                                    </a>
-                                </li>
-                            @endcan
-                        @endif
-                        <li class="c-sidebar-nav-item">
-                            <a class="c-sidebar-nav-link" href="{{ route('profile.index') }}" >
+            {{-- Profile Settings --}}
+            <li class="c-sidebar-nav-dropdown">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon"></i>
+                    {{ trans('cruds.setting.title') }}
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
+                        @can('profile_password_edit')
+                            <li class="c-sidebar-nav-item">
+                                <a class="c-sidebar-nav-link {{ request()->is('profile/password') || request()->is('profile/password/*') ? 'c-active' : '' }}" href="{{ route('profile.password.edit') }}">
+                                    {{ trans('cruds.setting.change_password') }}
+                                </a>
+                            </li>
+                        @endcan
+                    @endif
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="{{ route('profile.index') }}" >
                                 {{ trans('cruds.setting.profile') }}
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <hr>
 
-            @can('audit_log_access')
+            {{-- Master Settings --}}
+            <li class="c-sidebar-nav-dropdown">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                    <i class="fa fa-desktop c-sidebar-nav-icon"></i>
+                    {{ trans('cruds.masterSetting.title') }}
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="{{ route('admin.building-types.index') }}" >
+                            Manage {{ trans('cruds.masterSetting.fields.building') }}
+                        </a>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route("admin.lot.layouts") }}" class="c-sidebar-nav-link">
+                            Manage {{ trans('cruds.masterSetting.fields.layout') }}
+                        </a>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="{{ route('admin.levels.index') }}" >
+                            Manage {{ trans('cruds.masterSetting.fields.levels') }}
+                        </a>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="{{ route('admin.locations.index') }}" >
+                            Manage {{ trans('cruds.masterSetting.fields.location') }}
+                        </a>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="{{ route('admin.product-types.index') }}" >
+                            Manage {{ trans('cruds.masterSetting.fields.productType') }}
+                        </a>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="{{ route('admin.rooms.index') }}" >
+                            Manage {{ trans('cruds.room.title') }}
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            {{-- @can('audit_log_access')
                 <li class="c-sidebar-nav-item">
                     <a href="{{ route("admin.audit-logs.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/audit-logs") || request()->is("admin/audit-logs/*") ? "c-active" : "" }}">
                         <i class="c-sidebar-nav-icon fab fa-searchengin"></i>
                         {{ trans('cruds.auditLog.title') }}
                     </a>
                 </li>
-            @endcan
+            @endcan --}}
 
-            <hr>
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('home.help') }}" class="c-sidebar-nav-link">
                     <i class="c-sidebar-nav-icon fas fa-question-circle"></i>
@@ -214,119 +247,5 @@
     </div>
 @else
 {{-- This is users sidebar --}}
-    <div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show">
-        <div class="c-sidebar-brand d-md-down-none">
-            <img src="{{ asset('/images/tianma_logo_op-03.png') }}" style="width: 190px;">
-        </div>
-
-        <ul class="c-sidebar-nav">
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route("home.index") }}" class="c-sidebar-nav-link">
-                    <i class="c-sidebar-nav-icon fas fa-fw fa-tachometer-alt">
-
-                    </i>
-                    {{ trans('global.dashboard') }}
-                </a>
-            </li>
-
-            {{-- My Customers --}}
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route("user.myCustomers") }}" class="c-sidebar-nav-link">
-                    <i class="fas fa-user c-sidebar-nav-icon"></i>
-                    {{ trans('global.order.myCust') }}
-                </a>
-            </li>
-
-            {{-- Commissions --}}
-            <li class="c-sidebar-nav-item">
-                <a class="c-sidebar-nav-link" href="{{ route('user.myCommission') }}" >
-                    <i class="fas fa-dollar-sign c-sidebar-nav-icon"></i>
-                    {{ trans('global.reports.title_singular') }}
-                </a>
-            </li>
-
-            {{-- Downline --}}
-            <li class="c-sidebar-nav-dropdown">
-                <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                    <i class="fa-fw fas fa-code-fork c-sidebar-nav-icon"></i>
-                    {{ trans('global.downline.title') }}
-                </a>
-                <ul class="c-sidebar-nav-dropdown-items">
-                    <li class="c-sidebar-nav-item">
-                        <a href="{{ route('user.myTree') }}" class="c-sidebar-nav-link" >
-                            {{ trans('global.downline.my_tree') }}
-                        </a>
-                    </li>
-                    <li class="c-sidebar-nav-item">
-                        <a href="{{ route('user.my-downline.index') }}" class="c-sidebar-nav-link">
-                            {{ trans('global.downline.my_downline') }}
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
-
-            {{-- My Orders --}}
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route("user.my-orders.index") }}" class="c-sidebar-nav-link">
-                    <i class="fa-fw fab fa-first-order-alt c-sidebar-nav-icon"></i>
-                    {{ trans('global.order.myOrder') }}
-                </a>
-            </li>
-
-
-
-            {{-- Products --}}
-            {{-- <li class="c-sidebar-nav-item">
-                <a href="{{ route('user.products.index') }}" class="c-sidebar-nav-link">
-                    <i class="fa-fw fas fa-shopping-bag c-sidebar-nav-icon"></i>
-                        {{ trans('global.products.title') }}
-                </a>
-            </li> --}}
-
-            {{-- Documents --}}
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route('user.my-documents.index') }}" class="c-sidebar-nav-link">
-                    <i class="fa-fw fas fa-folder c-sidebar-nav-icon"></i>
-                        {{ trans('global.documents.title') }}
-                </a>
-            </li>
-
-            {{-- Settings --}}
-            <li class="c-sidebar-nav-dropdown">
-                <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon"></i>
-                    {{ trans('cruds.setting.title') }}
-                </a>
-                <ul class="c-sidebar-nav-dropdown-items">
-                    <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link" href="{{ route('profile.index') }}" >
-                            {{ trans('cruds.setting.profile') }}
-                        </a>
-                    </li>
-                    @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
-                        <li class="c-sidebar-nav-item">
-                            <a class="c-sidebar-nav-link" href="{{ route('profile.password.edit') }}">
-                                {{ trans('cruds.setting.change_password') }}
-                            </a>
-                        </li>
-                    @endif
-                </ul>
-            </li>
-
-            <hr>
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route('home.help') }}" class="c-sidebar-nav-link">
-                    <i class="c-sidebar-nav-icon fas fa-question-circle"></i>
-                        {{ trans('global.helps') }}
-                </a>
-            </li>
-            <li class="c-sidebar-nav-item">
-                <a href="#" class="c-sidebar-nav-link" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
-                    <i class="c-sidebar-nav-icon fas fa-fw fa-sign-out-alt"></i>
-                        {{ trans('global.logout') }}
-                </a>
-            </li>
-        </ul>
-    </div>
+    @include('partials.user-menu')
 @endcan

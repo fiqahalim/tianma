@@ -18,27 +18,27 @@
     
     <div class="container-fluid mt-5 mb-5">
         <div class="row g-2">
-            <div class="col-md-3">
+            {{-- <div class="col-md-3">
                 <div class="list-group">
-                    {{-- Display all product list menu item --}}
+                    Display all product list menu item
                     @include('pages.product.list')
                 </div>
             </div>
-            {{-- product list --}}
-            <div class="col-md-9">
+ --}}            {{-- product list --}}
+            <div class="col-md-12">
                 <div class="row g-2">
                     @forelse($products as $product)
                         <div class="col-md-4 mb-4">
-                            <div class="card h-100">
+                            <div class="card h-80">
                                 <!-- Product image-->
-                                <a href="{{ route('user.product', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
-                                    <img class="card-img-top" src="{{ $product->photo->url ?? '/images/home-urns.png' }}" style="height: 200px;">
+                                <a href="{{ route('admin.product', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
+                                    <img class="card-img-top" src="{{ $product->photo->url ?? '/images/home-urns.png' }}" style="height: 200px; width: 18rem;">
                                 </a>
                                 <!-- Product details-->
                                 <div class="card-body p-4">
                                     <div class="text-center">
                                         <h5 class="fw-bolder">
-                                            <a href="{{ route('user.product', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
+                                            <a href="{{ route('admin.product', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
                                                 {{ $product->product_name }}
                                             </a>
                                         </h5>
@@ -50,11 +50,10 @@
                                 <!-- Product actions-->
                                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                     <div class="text-center">
-                                        <form action="{{ route('user.products.store') }}" method="POST">
+                                        <form action="#" method="POST">
                                             @csrf
                                             <input type="hidden" name="id" value="{{ $product->id }}">
-                                            <a class="btn btn-outline-primary mt-2" href="{{ route('user.product', [$product->categories->first()->parentCategory->name,
-                                                $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
+                                            <a class="btn btn-outline-primary mt-2" href="{{ route('admin.product-booking.index', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
                                                 {{ trans('global.products.product_select') }}
                                             </a>
                                         </form>

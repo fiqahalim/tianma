@@ -1,0 +1,61 @@
+@extends('layouts.admin')
+
+@section('content')
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">{{ trans('cruds.masterSetting.title') }}</li>
+            <li class="breadcrumb-item">
+                Manage {{ trans('cruds.room.title_singular') }}
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                View {{ trans('cruds.room.title_singular') }}
+            </li>
+        </ol>
+    </nav>
+
+    <div class="card">
+        <div class="card-header font-weight-bold">
+            {{ trans('global.show') }} {{ trans('cruds.room.title') }}
+        </div>
+
+        <div class="card-body">
+            <div class="form-group">
+                <table class="table table-bordered table-striped">
+                    <tbody>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.room.fields.id') }}
+                            </th>
+                            <td>
+                                {{ $room->id }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.room.fields.name') }}
+                            </th>
+                            <td>
+                                {{ $room->name }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.room.fields.levels') }}
+                            </th>
+                            <td>
+                                @foreach($room->levels as $key => $levels)
+                                    <span class="label label-info">{{ $levels->level_name }}</span>
+                                @endforeach
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="form-group">
+                    <a class="btn btn-default" href="{{ route('admin.rooms.index') }}">
+                        {{ trans('global.back_to_list') }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection

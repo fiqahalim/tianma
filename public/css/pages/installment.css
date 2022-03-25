@@ -1,0 +1,27 @@
+.results {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.card-1 {
+    color: white;
+    background-color: #DAA520;
+    padding: 20px;
+    border-radius: 5px;
+}
+.card-3 {
+    color: white;
+    background-color: #47a386;
+    padding: 20px;
+    border-radius: 5px;
+}
+#installment, #balance {
+    font-size: 2em;
+}
+.indicators {
+    font-size: 1.3em;
+}
+

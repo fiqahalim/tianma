@@ -54,7 +54,11 @@
                         </div>
                     </div>
                     <div class="col-md-6 background-muted">
-                        <div class="p-3 border-bottom">
+                        @php
+                         $customer = session('customer');
+                        @endphp
+                        @if ($customer->mode == 'Fullpayment')
+                            <div class="p-3 border-bottom">
                             <div class="d-flex justify-content-between align-items-center">
                                 <span>
                                     <i class="fas fa-calendar-check"></i>
@@ -71,7 +75,7 @@
                                     Order Reference Number: #{{ $order->ref_no }}
                                 </h6>
                                 <span class="d-block mb-0">
-                                    Customer Name:{{ $customer->name }}
+                                    Customer Name: {{ $customer->full_name }}
                                 </span>
                                 <small>
                                     {{ trans('global.order.order_status') }}: {{ $order->order_status }}
@@ -89,10 +93,62 @@
                                     </small>
                                 </div>
                             </div>
-                        </div>
+                            </div>
+                            <div class="row g-0">
+                                    <div class="col-md-6">
+                                        <div class="p-3 d-flex justify-content-center align-items-center">
+                                            <span class="font-weight-bold">
+                                                Total
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="p-3 d-flex justify-content-center align-items-center">
+                                            <span class="font-weight-bold">
+                                                RM {{ $order->amount }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>   
+                        @else
+                            <div class="p-3 border-bottom">
+                            {{-- <div class="d-flex justify-content-between align-items-center">
+                                <span>
+                                    <i class="fas fa-calendar-check"></i>
+                                    {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y') }}
+                                </span>
+                                <span>
+                                    <i class="fa fa-clock-o text-muted">
+                                    </i>
+                                    {{ Carbon\Carbon::parse($order->created_at)->format('h:i:s') }}
+                                </span>
+                            </div> --}}
+                                <div class="mt-3">
+                                    <h6 class="mb-0">
+                                        Order Reference Number: #{{-- {{ $order->ref_no }} --}}
+                                    </h6>
+                                    <span class="d-block mb-0">
+                                        Customer Name: {{ $customer->full_name }}
+                                    </span>
+                                    <small>
+                                        {{ trans('global.order.order_status') }}: 
+                                    </small>
+                                    <div class="d-flex flex-column mt-3">
+                                        {{-- <small>
+                                            <i class="fa fa-check text-muted">
+                                            </i>
+                                            Agent Code: {{ Auth::user()->agent_code }}
+                                        </small> --}}
+                                        <small>
+                                            <i class="fa fa-check text-muted">
+                                            </i>
+                                            Payment Method: {{ $customer->mode }}
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
 
-                        @if ($customer->mode == 'Installment')
-                            <div class="row g-0 border-bottom">
+                                <div class="row g-0 border-bottom">
                                 <div class="col-md-6 border-right">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span>
@@ -103,7 +159,7 @@
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span>
-                                            RM {{ $order->amount }}
+                                            RM 
                                         </span>
                                     </div>
                                 </div>
@@ -119,7 +175,7 @@
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span>
-                                            RM {{ $paymentInfo->downpayment }}
+                                            RM 
                                         </span>
                                     </div>
                                 </div>
@@ -135,7 +191,7 @@
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span>
-                                            RM {{ $paymentInfo->monthly_installment }}
+                                            RM 
                                         </span>
                                     </div>
                                 </div>
@@ -151,7 +207,7 @@
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span>
-                                            RM {{ $paymentInfo->installment_balance }}
+                                            RM 
                                         </span>
                                     </div>
                                 </div>
@@ -167,24 +223,7 @@
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span class="font-weight-bold">
-                                            RM {{ $paymentInfo->outstanding_balance }}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        @else
-                            <div class="row g-0">
-                                <div class="col-md-6">
-                                    <div class="p-3 d-flex justify-content-center align-items-center">
-                                        <span class="font-weight-bold">
-                                            Total
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="p-3 d-flex justify-content-center align-items-center">
-                                        <span class="font-weight-bold">
-                                            RM {{ $order->amount }}
+                                            RM 
                                         </span>
                                     </div>
                                 </div>
@@ -198,6 +237,7 @@
 </div>
 {{session()->forget('customer')}}
 {{session()->forget('products')}}
+{{session()->forget('searchCust')}}
 @endsection
 
 @section('styles')
