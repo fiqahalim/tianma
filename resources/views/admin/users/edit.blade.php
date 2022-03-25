@@ -47,13 +47,14 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label class="required" for="id_number">{{ trans('cruds.user.fields.id_number') }}</label>
+                    <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="{{ trans('cruds.customer.fields.id_number_helper') }}">
+                    </i>
                     <input class="form-control {{ $errors->has('id_number') ? 'is-invalid' : '' }}" type="text" name="id_number" id="id_number" value="{{ old('id_number', $user->id_number) }}" required>
                     @if($errors->has('id_number'))
                         <div class="invalid-feedback">
                             {{ $errors->first('id_number') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.user.fields.id_number_helper') }}</span>
                 </div>
             </div>
 

@@ -54,6 +54,9 @@
                         </div>
                     </div>
                     <div class="col-md-6 background-muted">
+                        @php
+                         $customer = session('customer');
+                        @endphp
                         @if ($customer->mode == 'Fullpayment')
                             <div class="p-3 border-bottom">
                             <div class="d-flex justify-content-between align-items-center">

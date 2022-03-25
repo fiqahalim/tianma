@@ -13,6 +13,7 @@ use App\Models\ProductBooking;
 use App\Models\BookingSection;
 use App\Models\Customer;
 use App\Models\Level;
+use App\Models\Room;
 use App\Models\User;
 use Carbon\Carbon;
 use Alert;
@@ -22,11 +23,11 @@ class ProductBookingController extends Controller
     public function index(Request $request, $category, $childCategory, $childCategory2, Product $product)
     {
         $product->load('categories.parentCategory');
-        $levels = Level::pluck('level_name', 'id')->prepend(trans('Please select level'), '');
+        $rooms = Room::pluck('name', 'id')->prepend(trans('Please select room'), '');
 
         session(['products' => $product]);
 
-        return view('pages.product.booking-lot', compact('product', 'levels'));
+        return view('pages.product.booking-lot', compact('product', 'rooms'));
     }
 
     // save booking

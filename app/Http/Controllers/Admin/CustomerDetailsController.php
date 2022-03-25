@@ -43,17 +43,17 @@ class CustomerDetailsController extends Controller
             'full_name' => 'required',
             'id_number' => 'required|unique:customers',
             'email' => 'required|unique:customers',
+            'mobile' => 'required',
             'gender' => 'required',
             'postcode' => 'required',
+            'contact_person_name' => 'required',
             'contact_person_no' => 'required',
+            'cperson_id_number' => 'required',
             'state' => 'required',
             'city' => 'required',
             'address_1' => 'required',
             'mode' => 'required',
             'created_by' => 'required',
-            'cperson_name' => 'required',
-            'cperson_no' => 'required',
-            'cid_number' => 'required|unique:contact_persons',
         ]);
 
         // save new customers details
@@ -63,8 +63,11 @@ class CustomerDetailsController extends Controller
         $customer->id_type = $request->id_type;
         $customer->id_number = $request->id_number;
         $customer->email = $request->email;
+        $customer->mobile = $request->mobile;
         $customer->gender = $request->gender;
+        $customer->contact_person_name = $request->contact_person_name;
         $customer->contact_person_no = $request->contact_person_no;
+        $customer->cperson_id_number = $request->cperson_id_number;
         $customer->postcode = $request->postcode;
         $customer->state = $request->state;
         $customer->city = $request->city;

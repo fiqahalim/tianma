@@ -19,7 +19,7 @@
 @endcan
 <div class="card">
     <div class="card-header font-weight-bold">
-        {{ trans('cruds.team.title_singular') }} {{ trans('global.list') }}
+        Agencies {{ trans('global.list') }}
     </div>
 
     <div class="card-body">

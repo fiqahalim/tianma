@@ -22,13 +22,13 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-12 mb-4">
+        <div class="col-12 mb-4">
             <div class="card">
                 <h4 class="mt-5 text-center">Review Order</h4>
 
                 @if(isset($searchCust) && !empty($searchCust))
                     @foreach($searchCust as $customer)
-                        <form method="POST" action="{{ route('admin.order.details.store', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}" enctype="multipart/form-data" id="review-order">
+                        <form method="POST" action="" enctype="multipart/form-data" id="review-order">
                             @csrf
                             <div class="card-body">
                                     <h5 class="my-3">Purchaser Information</h5>
@@ -141,7 +141,7 @@
 
                             @if($customer->mode == 'Installment')
                                 <a class="btn btn-primary float-right mb-3 mr-3" id="installment" href="{{ route('admin.installment.index', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
-                                    {{ trans('global.products.product_select') }}
+                                    {{ trans('global.confirmBooking') }}
                                 </a>
                             @else
                                 <button class="btn btn-primary float-right mb-3 mr-3" type="submit" id="confirmBooking">
@@ -157,6 +157,10 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('styles')
+
 @endsection
 
 @section('scripts')

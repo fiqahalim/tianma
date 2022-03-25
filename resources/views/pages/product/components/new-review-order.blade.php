@@ -17,7 +17,7 @@
                 <input class="form-control" id="gender" type="text" value="{{ old('gender', $customer->gender) }}" readonly>
             </div>
             <div class="form-group col-md-2">
-                <label for="contact_person_no">{{ trans('cruds.customer.fields.contact_person_no') }}</label>
+                <label for="contact_person_no">Mobile</label>
                 <input class="form-control" id="contact_person_no" type="text" value="{{ old('contact_person_no', $customer->contact_person_no) }}" readonly>
             </div>
             <div class="form-group col-md-3">
@@ -25,6 +25,18 @@
                 <input class="form-control" id="email" type="text" value="{{ old('email', $customer->email) }}" readonly>
             </div>
         </div>
+        @if(isset($cust_details))
+            <div class="form-row row-cols-2">
+                <div class="col">
+                    <label><strong>Permanent Address</strong></label>
+                    <textarea class="form-control bg-white" readonly>{{Str::upper($cust_details['per_address']) ?? 'Not Available'}}</textarea>
+                </div>
+                <div class="col">
+                    <label><strong>Correspondence Address</strong></label>
+                    <textarea class="form-control bg-white" readonly>{{Str::upper($cust_details['cor_address']) ?? 'Not Available'}}</textarea>
+                </div>
+            </div>
+        @endif
         <hr>
 
         {{-- Intended User Details --}}
@@ -52,7 +64,7 @@
         <hr>
 
         {{-- Product Info --}}
-        <h5 class="my-3">Product Information</h5>
+        <h5 class="my-3">Purchase Price Information</h5>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="product_name">{{ trans('cruds.product.fields.product_name') }}</label>
@@ -103,35 +115,49 @@
         </div>
         <hr>
 
-        {{-- Billing Info --}}
-        <h5 class="my-3">Billing Information</h5>
-        @if(isset($cust_details))
-            <div class="form-row row-cols-2">
-                <div class="col">
-                    <label><strong>Permanent Address</strong></label>
-                    <textarea class="form-control bg-white" readonly>{{Str::upper($cust_details['per_address']) ?? 'Not Available'}}</textarea>
-                </div>
-                <div class="col">
-                    <label><strong>Correspondence Address</strong></label>
-                    <textarea class="form-control bg-white" readonly>{{Str::upper($cust_details['cor_address']) ?? 'Not Available'}}</textarea>
+        {{-- Payment Information --}}
+        <div class="row">
+            <div class="col">
+                <h5 class="my-3">Payment Information</h5>
+            </div>
+            <div class="col">
+                <h5 class="my-3">Certificate Collection Information</h5>
+            </div>
+            <div class="w-100"></div>
+            <div class="col">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="mode">Payment Mode Type</label>
+                        <input class="form-control" id="mode" type="text" value="{{ old('mode', $customer->mode) }}" readonly>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="mode">{{ trans('cruds.customer.fields.mode') }}</label>
+                        <input class="form-control" id="mode" type="text" value="{{ old('mode', $customer->mode) }}" readonly>
+                    </div>
                 </div>
             </div>
-        @endif
-        <hr>
-
-        {{-- Payment Info --}}
-        <h5 class="my-3">Payment Information</h5>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="mode">{{ trans('cruds.customer.fields.mode') }}</label>
-                <input class="form-control" id="mode" type="text" value="{{ old('mode', $customer->mode) }}" readonly>
+            <div class="col">
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="mode">Representative Name</label>
+                        <input class="form-control" id="mode" type="text" value="{{ old('mode', $customer->contact_person_name) }}" readonly>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="mode">NRIC/Passport No.</label>
+                        <input class="form-control" id="mode" type="text" value="{{ old('mode', $customer->mode) }}" readonly>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="mode">Contact No.</label>
+                        <input class="form-control" id="mode" type="text" value="{{ old('mode', $customer->contact_person_no) }}" readonly>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     @if($customer->mode == 'Installment')
         <a class="btn btn-primary float-right mb-3 mr-3" id="installment" href="{{ route('admin.installment.index', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
-            {{ trans('global.products.product_select') }}
+            {{ trans('global.confirmBooking') }}
         </a>
     @else
         <button class="btn btn-primary float-right mb-3 mr-3" type="submit" id="confirmBooking">

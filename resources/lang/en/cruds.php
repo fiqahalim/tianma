@@ -264,7 +264,7 @@ return [
             'full_name'                  => 'Full Name',
             'full_name_helper'           => ' ',
             'id_number'                  => 'New NRIC / Passport',
-            'id_number_helper'           => ' ',
+            'id_number_helper'           => 'No dash "-" for NRIC',
             'email'                      => 'Contact Person Email',
             'email_helper'               => ' ',
             'contact_person_name'        => 'Contact Person Name',

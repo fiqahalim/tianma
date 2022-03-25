@@ -151,11 +151,6 @@
                                 </a>
                             </li>
                         @endcan --}}
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.teams.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/teams") || request()->is("admin/teams/*") ? "c-active" : "" }}">
-                            {{ trans('cruds.agency.title') }}
-                            </a>
-                        </li>
                     </ul>
                 </li>
             @endcan

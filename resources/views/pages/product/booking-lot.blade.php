@@ -18,14 +18,15 @@
             <div class="movie-container">
                 <h5><strong>Category Selected:</strong> {{ $product->product_name }}
                 </h5>
-                {{-- select levels --}}
-                <select class="form-control {{ $errors->has('level_name') ? 'is-invalid' : '' }} mb-3" name="level_name" required>
-                    @forelse($levels as $l => $level)
-                        <option value="{{ $l }}" {{ old('level_name', '') === (string) $l ? 'selected' : '' }}>
-                            {{ $level }}
+
+                {{-- select rooms --}}
+                <select class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }} mb-3" name="name" required>
+                    @forelse($rooms as $r => $room)
+                        <option value="{{ $r }}" {{ old('name', '') === (string) $r ? 'selected' : '' }}>
+                            {{ $room }}
                         </option>
                     @empty
-                        <option>No levels founds</option>
+                        <option>No rooms founds</option>
                     @endforelse
                 </select>
 
@@ -85,7 +86,7 @@
                 </p>
 
                   <div class="text-center">
-                    <a class="btn btn-outline-primary mt-2" id="bookConfirm" href="{{ route('admin.search', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
+                    <a class="btn btn-outline-primary mt-2" id="bookConfirm" href="{{ route('admin.customer-details.index', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
                         {{ trans('global.products.product_select') }}
                     </a>
                 </div>

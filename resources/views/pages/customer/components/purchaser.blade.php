@@ -31,13 +31,14 @@
 
     <div class="form-group col-md-4">
         <label class="required" for="id_number">{{ trans('cruds.customer.fields.id_number') }}</label>
+        <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="{{ trans('cruds.customer.fields.id_number_helper') }}">
+        </i>
         <input class="form-control {{ $errors->has('id_number') ? 'is-invalid' : '' }}" type="text" name="id_number" id="id_number" value="{{ old('id_number', '') }}" required>
         @if($errors->has('id_number'))
         <div class="invalid-feedback">
             {{ $errors->first('id_number') }}
         </div>
         @endif
-        <span class="help-block">{{ trans('cruds.customer.fields.id_number_helper') }}</span>
     </div>
 </div>
 
@@ -61,13 +62,13 @@
     </div>
 
     <div class="form-group col-md-4">
-        <label for="contact_person_no" class="required">
+        <label for="mobile" class="required">
             Mobile
         </label>
-        <input class="form-control {{ $errors->has('contact_person_no') ? 'is-invalid' : '' }}" type="text" name="contact_person_no" id="contact_person_no" value="{{ old('contact_person_no', '') }}">
-        @if($errors->has('contact_person_no'))
+        <input class="form-control {{ $errors->has('mobile') ? 'is-invalid' : '' }}" type="text" name="mobile" id="mobile" value="{{ old('mobile', '') }}">
+        @if($errors->has('mobile'))
         <div class="invalid-feedback">
-            {{ $errors->first('contact_person_no') }}
+            {{ $errors->first('mobile') }}
         </div>
         @endif
         <span class="help-block">{{ trans('cruds.customer.fields.contact_person_no_helper') }}</span>

@@ -11,7 +11,7 @@
         <div class="card-body">
             <div class="form-row">
                 <div class="form-group col-md-3">
-                    <label for="cperson_name" class="required">
+                    <label for="cperson_name">
                         Name
                     </label>
                     <input class="form-control {{ $errors->has('cperson_name') ? 'is-invalid' : '' }}" type="text" name="cperson_name" id="cperson_name" value="{{ old('cperson_name', '') }}">
@@ -46,8 +46,10 @@
                 </div>
 
                 <div class="form-group col-md-3">
-                    <label class="required" for="cid_number">{{ trans('cruds.customer.fields.id_number') }}</label>
-                    <input class="form-control {{ $errors->has('cid_number') ? 'is-invalid' : '' }}" type="text" name="cid_number" id="cid_number" value="{{ old('cid_number', '') }}" required>
+                    <label for="cid_number">{{ trans('cruds.customer.fields.id_number') }}</label>
+                    <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="{{ trans('cruds.customer.fields.id_number_helper') }}">
+                    </i>
+                    <input class="form-control {{ $errors->has('cid_number') ? 'is-invalid' : '' }}" type="text" name="cid_number" id="cid_number" value="{{ old('cid_number', '') }}">
                     @if($errors->has('cid_number'))
                     <div class="invalid-feedback">
                         {{ $errors->first('cid_number') }}
@@ -57,10 +59,10 @@
                 </div>
 
                 <div class="form-group col-md-3">
-                    <label class="required" for="relationships">
+                    <label for="relationships">
                         Relationships
                     </label>
-                    <input class="form-control {{ $errors->has('relationships') ? 'is-invalid' : '' }}" type="text" name="relationships" id="relationships" value="{{ old('relationships', '') }}" required>
+                    <input class="form-control {{ $errors->has('relationships') ? 'is-invalid' : '' }}" type="text" name="relationships" id="relationships" value="{{ old('relationships', '') }}">
                     @if($errors->has('relationships'))
                         <div class="invalid-feedback">
                             {{ $errors->first('relationships') }}
