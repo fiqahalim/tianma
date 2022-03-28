@@ -38,7 +38,7 @@
                                     <i>RM</i>
                                 </span>
                             </div>
-                            <input class="form-control" type="text" name="amount" id="amount" value="amount" required>
+                            <input class="form-control" type="text" name="amount" id="amount" value="{{ old('amount', '') }}" required>
                             @if($errors->has('amount'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('amount') }}
@@ -55,7 +55,7 @@
                                     <i>RM</i>
                                 </span>
                             </div>
-                            <input class="form-control" type="text" name="downpayment" id="downpayment" value="downpayment" required>
+                            <input class="form-control" type="text" name="downpayment" id="downpayment" value="{{ old('downpayment', '') }}" required>
                             @if($errors->has('downpayment'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('downpayment') }}
@@ -67,7 +67,7 @@
                     <div class="form-group col-md-4">
                         <label for="installment_year">Installment Period</label>
                         <div class="input-group mb-3">
-                            <input class="form-control" type="text" name="installment_year" id="installment_year" value="installment_year" required>
+                            <input class="form-control" type="text" name="installment_year" id="installment_year" value="{{ old('installment_year', '') }}" required>
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
                                     Month(s)
@@ -92,17 +92,18 @@
                     <div class="col-sm-6 col-md-5 col-lg-6 mt-2 mb-2">
                         <div class="card-1">
                             <p id="monthly_installment" name="monthly_installment">RM</p>
-                            <p>Monthly Installments</p>
+                            <input id="monthly_installment" name="monthly_installment" type="hidden" value="{{ old('monthly_installment') }}">
+                            <h>Monthly Installments</p>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-5 col-lg-6 mt-2">
                         <div class="card-3">
                             <p id="outstanding_balance" name="outstanding_balance">RM</p>
+                            <input id="outstanding_balance" name="outstanding_balance" type="hidden" value="{{ old('outstanding_balance') }}">
                             <p>Outstanding Payments</p>
                         </div>
                     </div>
                 </div>
-
                 <div class="text-center">
                     <div class="form-group float-right">
                         <a class="btn btn-primary btn-sm mt-4 mb-2 mr-3" href="{{ route('admin.order', [$products->categories->first()->parentCategory->name, $products->categories->first()->parentCategory->name, $products->categories->first()->name, $products]) }}">

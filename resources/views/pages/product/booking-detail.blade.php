@@ -188,12 +188,12 @@
                             <div class="col">
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
-                                        <label for="mode">Representative Name</label>
-                                        <input class="form-control" id="mode" type="text" value="{{ old('mode', $customer->contact_person_name) }}" readonly>
+                                        <label for="contact_person_name">Representative Name</label>
+                                        <input class="form-control" id="contact_person_name" type="text" value="{{ old('contact_person_name', $customer->contact_person_name) }}" readonly>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label for="mode">NRIC/Passport No.</label>
-                                        <input class="form-control" id="mode" type="text" value="{{ old('mode', $customer->mode) }}" readonly>
+                                        <label for="cperson_id_number">NRIC/Passport No.</label>
+                                        <input class="form-control" id="cperson_id_number" type="text" value="{{ old('cperson_id_number', $customer->cperson_id_number) }}" readonly>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="mode">Contact No.</label>
