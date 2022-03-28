@@ -63,7 +63,15 @@
             <div class="container">
                 <div id="container-seats">
                     {{-- @php
-                        echo $busLayout->getDeckHeader($loop->index);
+                        echo $lotLayout->getDeckHeader($loop->index);
+                    @endphp
+
+                    @php
+                        $totalRow = $lotLayout->getTotalRow($seat);
+                        $lastRowSeat = $lotLayout->getLastRowSit($seat);
+                        $chr = 'A';
+                        $seatlayout = $lotLayout->lotLayouts();
+                        $rowItem = $seatlayout->left + $seatlayout->right;
                     @endphp --}}
                     <div class="DA GFG">
                         @include('pages.product.components.da')

@@ -217,6 +217,11 @@
                             Manage {{ trans('cruds.room.title') }}
                         </a>
                     </li>
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="{{ route('admin.sections.index') }}" >
+                            Manage {{ trans('cruds.masterSetting.fields.section') }}
+                        </a>
+                    </li>
                 </ul>
             </li>
 

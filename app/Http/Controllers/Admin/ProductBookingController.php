@@ -25,6 +25,12 @@ class ProductBookingController extends Controller
         $product->load('categories.parentCategory');
         $rooms = Room::pluck('name', 'id')->prepend(trans('Please select room'), '');
 
+        // $items = Room::with(['sections'])
+        //     ->where('id', $product->id)
+        //     ->firstOrFail();
+
+        // $lotLayout = new LotLayout($items);
+
         session(['products' => $product]);
 
         return view('pages.product.booking-lot', compact('product', 'rooms'));
@@ -70,24 +76,22 @@ class ProductBookingController extends Controller
     public function reviewOrder(Request $request, $category, $childCategory, $childCategory2, Product $product)
     {
         $customer = session('customer');
-        $searchCust = session('searchCust');
-                
-        if (!is_null($searchCust)) {
-            foreach($searchCust as $sc) {
-                $perAddr = [
-                    $sc->address_1,
-                    $sc->address_2,
-                    $sc->postcode,
-                    $sc->state,
-                    $sc->city,
-                    $sc->country,
-                ];
 
-                $corAddr = Customer::with(['correspondenceAddress', 'contactPersons'])
-                ->where('id', $sc->id)
-                ->get();
+        $perAddr = array(
+                $customer->address_1,
+                $customer->address_2,
+                $customer->postcode,
+                $customer->state,
+                $customer->city,
+                $customer->country,
+            );
 
-                foreach ($corAddr as $k => $addr) {
+            $corAddr = Customer::with(['correspondenceAddress', 'contactPersons', 'payments'])
+            ->where('id', $customer->id)
+            ->get();
+
+            if (!is_null($corAddr)) {
+                foreach($corAddr as $k => $addr) {
                     $corrAddr = [
                         $addr->correspondenceAddress->curaddress_1,
                         $addr->correspondenceAddress->curaddress_2,
@@ -104,43 +108,12 @@ class ProductBookingController extends Controller
                 $concat_corAddr = implode(" ", $corrAddr);
                 $cust_details['cor_address'] = $concat_corAddr;
             }
-        } else {
-            $perAddr = array(
-                $customer->address_1,
-                $customer->address_2,
-                $customer->postcode,
-                $customer->state,
-                $customer->city,
-                $customer->country,
-            );
-
-            $corAddr = Customer::with(['correspondenceAddress', 'contactPersons'])
-            ->where('id', $customer->id)
-            ->get();
-
-            foreach($corAddr as $k => $addr) {
-                $corrAddr = [
-                    $addr->correspondenceAddress->curaddress_1,
-                    $addr->correspondenceAddress->curaddress_2,
-                    $addr->correspondenceAddress->curpostcode,
-                    $addr->correspondenceAddress->curstate,
-                    $addr->correspondenceAddress->curcity,
-                    $addr->correspondenceAddress->curcountry,
-                ];
-            }
-
-            $concat_perAddr = implode(" ", $perAddr);
-            $cust_details['per_address'] = $concat_perAddr;
-
-            $concat_corAddr = implode(" ", $corrAddr);
-            $cust_details['cor_address'] = $concat_corAddr;
-        }
 
         $product->load('categories.parentCategory');
         session(['products' => $product]);
 
         return view('pages.product.booking-detail', compact(
-            'product', 'customer' ,'searchCust', 'cust_details', 'corAddr'
+            'product', 'customer', 'cust_details', 'corAddr'
         ));
     }
 }

@@ -5,6 +5,7 @@
     "/js/pages/hierarchy.js": "/js/pages/hierarchy.js",
     "/js/pages/reviewOrder.js": "/js/pages/reviewOrder.js",
     "/js/pages/installment.js": "/js/pages/installment.js",
+    "/js/pages/customer-details.js": "/js/pages/customer-details.js",
     "/css/pages/invoice.css": "/css/pages/invoice.css",
     "/css/pages/order.css": "/css/pages/order.css",
     "/css/pages/booking.css": "/css/pages/booking.css",

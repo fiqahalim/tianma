@@ -36,4 +36,9 @@ class Room extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
+
+    public function sections()
+    {
+        return $this->belongsToMany(BookingSection::class);
+    }
 }

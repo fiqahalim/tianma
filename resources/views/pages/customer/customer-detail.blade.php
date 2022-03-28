@@ -59,6 +59,7 @@
 @endsection
 
 @section('scripts')
+<script type="text/javascript" src="{{ mix('/js/pages/customer-details.js') }}"></script>
 <script>
     function FillAddressInput() {
         let flexCheckChecked= document.getElementById('flexCheckChecked');

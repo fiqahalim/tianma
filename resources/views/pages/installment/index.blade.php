@@ -15,7 +15,7 @@
                 {{ $products->product_name }}
             </li>
             <li aria-current="page" class="breadcrumb-item active">
-                Installment
+                Installment Calculator
             </li>
         </ol>
     </nav>
@@ -38,7 +38,7 @@
                                     <i>RM</i>
                                 </span>
                             </div>
-                            <input class="form-control" type="text" name="amount" id="amount" required>
+                            <input class="form-control" type="text" name="amount" id="amount" value="amount" required>
                             @if($errors->has('amount'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('amount') }}
@@ -55,7 +55,7 @@
                                     <i>RM</i>
                                 </span>
                             </div>
-                            <input class="form-control" type="text" name="downpayment" id="downpayment" value="" required>
+                            <input class="form-control" type="text" name="downpayment" id="downpayment" value="downpayment" required>
                             @if($errors->has('downpayment'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('downpayment') }}
@@ -65,9 +65,9 @@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="period">Installment Period</label>
+                        <label for="installment_year">Installment Period</label>
                         <div class="input-group mb-3">
-                            <input class="form-control" type="text" name="period" id="period" value="" required>
+                            <input class="form-control" type="text" name="installment_year" id="installment_year" value="installment_year" required>
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
                                     Month(s)
@@ -91,13 +91,13 @@
                 <div class="row justify-content-around">
                     <div class="col-sm-6 col-md-5 col-lg-6 mt-2 mb-2">
                         <div class="card-1">
-                            <p id="installment" name="installment">RM</p>
+                            <p id="monthly_installment" name="monthly_installment">RM</p>
                             <p>Monthly Installments</p>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-5 col-lg-6 mt-2">
                         <div class="card-3">
-                            <p id="balance" name="balance">RM</p>
+                            <p id="outstanding_balance" name="outstanding_balance">RM</p>
                             <p>Outstanding Payments</p>
                         </div>
                     </div>

@@ -55,7 +55,6 @@
                         {{ $errors->first('cid_number') }}
                     </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.customer.fields.id_number_helper') }}</span>
                 </div>
 
                 <div class="form-group col-md-3">
@@ -68,7 +67,6 @@
                             {{ $errors->first('relationships') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.customer.fields.id_number_helper') }}</span>
                 </div>
             </div>
         </div>

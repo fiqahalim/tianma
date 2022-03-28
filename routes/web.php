@@ -134,6 +134,10 @@ Route::group(['middleware' => 'auth'], function() {
             // Manage Room
             Route::delete('rooms/destroy', '\App\Http\Controllers\Admin\RoomController@massDestroy')->name('rooms.massDestroy');
             Route::resource('rooms', '\App\Http\Controllers\Admin\RoomController');
+
+            // Manage Section
+            Route::delete('sections/destroy', '\App\Http\Controllers\Admin\BookingSectionController@massDestroy')->name('sections.massDestroy');
+            Route::resource('sections', '\App\Http\Controllers\Admin\BookingSectionController');
         });
 
         /** ORDERS MANAGEMENT **/

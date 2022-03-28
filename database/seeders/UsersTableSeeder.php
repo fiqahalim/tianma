@@ -57,7 +57,7 @@ class UsersTableSeeder extends Seeder
                 'postcode'           => '50100',
                 'country'            => 'USA',
                 'nationality'        => 'USA',
-                'created_at'         => '2021-12-25 13:43:15'
+                'created_at'         => '2021-12-25 13:43:15',
                 'ranking_id'         => 1,
             ],
         ];

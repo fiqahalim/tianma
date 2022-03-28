@@ -55,9 +55,9 @@
                     </div>
                     <div class="col-md-6 background-muted">
                         @php
-                         $customer = session('customer');
+                            $customer = session('customer');
                         @endphp
-                        @if ($customer->mode == 'Fullpayment')
+                        @if ($customer->mode == 'Full Payment')
                             <div class="p-3 border-bottom">
                             <div class="d-flex justify-content-between align-items-center">
                                 <span>
@@ -168,7 +168,7 @@
                                 <div class="col-md-6 border-right">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span>
-                                            Downpayment (20%)
+                                            Downpayment
                                         </span>
                                     </div>
                                 </div>
@@ -184,23 +184,7 @@
                                 <div class="col-md-6 border-right">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span>
-                                            Monthly Installment (11 months)
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="p-3 d-flex justify-content-center align-items-center">
-                                        <span>
-                                            RM 
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row g-0 border-bottom">
-                                <div class="col-md-6 border-right">
-                                    <div class="p-3 d-flex justify-content-center align-items-center">
-                                        <span>
-                                            Installment Balance
+                                            Monthly Installment
                                         </span>
                                     </div>
                                 </div>

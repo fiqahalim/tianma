@@ -1,19 +1,17 @@
 <?php
 namespace App\Lib;
 
+use App\Models\Room;
+
 class LotLayout
 {
-    protected $product;
-    protected $section;
-    protected $totalRow;
-    protected $levelNumber;
-    protected $lotNumber;
+    private $prods, $section, $totalRow, $levelNumber, $lotNumber;
     public $lotLayouts;
 
-    public function __construct($product)
+    public function __construct(Room $room)
     {
-        $this->product = $product;
-        $this->section = $product->bookingSection;
+        $this->rooms = $room;
+        $this->section = $room->bookingSection;
         $this->lotLayouts = $this->lotLayouts();
     }
 
@@ -36,7 +34,7 @@ class LotLayout
                 <span class="lower"></span>
             ';
         } else {
-            $html .= '<span class="driver">Deck :  '.($levelNumber+1) .'</span>';
+            $html .= '<span class="driver">Level :  '.($levelNumber+1) .'</span>';
         }
         return $html;
     }

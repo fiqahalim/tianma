@@ -44,9 +44,19 @@ class BookingSection extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
+    public function rooms()
+    {
+        return $this->belongsToMany(Room::class);
+    }
+
+    public function levels()
+    {
+        return $this->belongsToMany(Level::class);
+    }
+
     public function products()
     {
-        return $this->hasMany(Product::class);
+        return $this->belongsToMany(Product::class);
     }
 
     /**

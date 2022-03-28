@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Room;
+use App\Models\BookingSection;
 use Illuminate\Foundation\Http\FormRequest;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Response;
 
-class StoreRoomRequest extends FormRequest
+class StoreSectionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,9 +26,26 @@ class StoreRoomRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => [
+            'section' => [
                 'string',
                 'required',
+            ],
+            'seat_layout' => [
+                'string',
+                'nullable',
+            ],
+            'deck' => [
+                'numeric',
+            ],
+            'deck_seats' => [
+                'string',
+                'nullable',
+            ],
+            'rooms.*' => [
+                'integer',
+            ],
+            'rooms' => [
+                'array',
             ],
             'levels.*' => [
                 'integer',
@@ -36,10 +53,10 @@ class StoreRoomRequest extends FormRequest
             'levels' => [
                 'array',
             ],
-            'sections.*' => [
+            'products.*' => [
                 'integer',
             ],
-            'sections' => [
+            'products' => [
                 'array',
             ],
         ];
