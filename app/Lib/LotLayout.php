@@ -1,23 +1,23 @@
 <?php
 namespace App\Lib;
 
-use App\Models\Room;
+use App\Models\BookingSection;
 
 class LotLayout
 {
-    private $prods, $section, $totalRow, $levelNumber, $lotNumber;
+    private $books, $section, $totalRow, $levelNumber, $lotNumber;
     public $lotLayouts;
 
-    public function __construct(Room $room)
+    public function __construct(BookingSection $book)
     {
-        $this->rooms = $room;
-        $this->section = $room->bookingSection;
+        $this->books = $book;
+        $this->section = $book->bookingLots;
         $this->lotLayouts = $this->lotLayouts();
     }
 
     public function lotLayouts()
     {
-        $lotLayout = explode('x', str_replace(' ','', $this->section->seat_layout));
+        $lotLayout = explode('x', str_replace(' ','', $this->section->layout));
         $layout['left'] = $lotLayout[0];
         $layout['right'] = $lotLayout[1];
         return (object)$layout;
@@ -39,10 +39,10 @@ class LotLayout
         return $html;
     }
 
-    public function getLots($levelNumber,$lotNumber)
+    public function getLots()
     {
-        $this->levelNumber = $levelNumber;
-        $this->lotNumber = $lotNumber;
+        $this->levelNumber = 9;
+        $this->lotNumber = 15;
         $lots = [
             'left'=>$this->leftLots(),
             'right'=>$this->rightLots(),
@@ -92,18 +92,18 @@ class LotLayout
                 </div>";
     }
 
-    public function getTotalRow($seat)
+    public function getTotalRow()
     {
         $rowItem    = $this->lotLayouts->left + $this->lotLayouts->right;
-        $totalRow   = floor ($seat / $rowItem);
+        $totalRow   = floor (20 / $rowItem);
         $this->totalRow = $totalRow;
         return $this->totalRow;
     }
 
-    public function getLastRowSit($seat)
+    public function getLastRowSit()
     {
         $rowItem = $this->lotLayouts->left + $this->lotLayouts->right;
-        $lastRowSeat = $seat - $this->getTotalRow($seat) * $rowItem;
+        $lastRowSeat = (40) - $this->getTotalRow() * $rowItem;
         return $lastRowSeat;
     }
 }

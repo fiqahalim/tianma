@@ -44,6 +44,11 @@ class Installment extends Model
         return $this->belongsTo(Order::class, 'order_id');
     }
 
+    public function payment_monthlies()
+    {
+        return $this->belongsToMany(PaymentMonthly::class);
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');

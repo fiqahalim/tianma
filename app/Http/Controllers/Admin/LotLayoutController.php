@@ -28,7 +28,7 @@ class LotLayoutController extends Controller
         $lotLayout->layout = $request->layout;
         $lotLayout->save();
 
-        alert()->success(__('global.update_success'))->toToast();
+        alert()->success(__('global.create_success'))->toToast();
         return redirect()->route('admin.lot.layouts');
     }
 
@@ -51,7 +51,7 @@ class LotLayoutController extends Controller
         $request->validate(['id' => 'required|integer']);
         BookingLot::find($request->id)->delete();
 
-        alert()->success(__('global.update_success'))->toToast();
+        alert()->success(__('global.delete_success'))->toToast();
         return redirect()->route('admin.lot.layouts');
     }
 }

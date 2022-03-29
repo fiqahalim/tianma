@@ -24,23 +24,40 @@ class ProductBookingController extends Controller
     {
         $product->load('categories.parentCategory');
         $rooms = Room::pluck('name', 'id')->prepend(trans('Please select room'), '');
+        $sections = BookingSection::pluck('section', 'id')->prepend(trans('Please select section'), '');
 
-        // $items = Room::with(['sections'])
-        //     ->where('id', $product->id)
-        //     ->firstOrFail();
+        $items = BookingSection::with(['bookingLots'])->get();
 
-        // $lotLayout = new LotLayout($items);
+        foreach($items as $item) {
+            $lotLayout = new LotLayout($item);
+        }
 
         session(['products' => $product]);
 
-        return view('pages.product.booking-lot', compact('product', 'rooms'));
+        return view('pages.product.booking-lot', compact('product', 'rooms', 'sections', 'lotLayout'));
+    }
+
+    public function store(Request $request, $category, $childCategory, $childCategory2, Product $product)
+    {
+        $products = session('products');
+
+        // $request->validate([
+        //     "seat"           => "required",
+        // ],[
+        //     "seat.required"  => "Please Select at Least One Lot"
+        // ]);
+
+        $booking = new ProductBooking;
+        $booking->seats = $request->seat;
+        $booking->product_id = $products->id;
+        $booking->save();
+
+        return redirect()->route('admin.customer-details.index', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]);
     }
 
     // save booking
     public function productBooked(Request $request, $id)
     {
-        $customer = session('customer');
-
         $request->validate([
             "seats"           => "required|string",
         ],[
@@ -115,5 +132,12 @@ class ProductBookingController extends Controller
         return view('pages.product.booking-detail', compact(
             'product', 'customer', 'cust_details', 'corAddr'
         ));
+    }
+
+    public function getSection(Request $request)
+    {
+        $sections = BookingSection::where("lot_layout_id", $request->lot_layout_id)
+            ->pluck("name", "id");
+        return response()->json($sections);
     }
 }

@@ -40,7 +40,7 @@
                                     <i>RM</i>
                                 </span>
                             </div>
-                            <input class="form-control" type="text" name="amount" id="amount" value="{{ old('amount', isset($order) ?? $order->amount) }}" required>
+                            <input class="form-control" type="text" name="amount" id="amount" value="{{ old('amount', $order->amount) }}" required>
                             @if($errors->has('amount'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('amount') }}
@@ -57,7 +57,7 @@
                                     <i>RM</i>
                                 </span>
                             </div>
-                            <input class="form-control" type="text" name="downpayment" id="downpayment" value="{{ old('downpayment', isset($installments) ?? $installments->downpayment) }}" required>
+                            <input class="form-control" type="text" name="downpayment" id="downpayment" value="{{ old('downpayment', $installments->downpayment) }}" required>
                             @if($errors->has('downpayment'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('downpayment') }}
@@ -69,7 +69,7 @@
                     <div class="form-group col-md-4">
                         <label for="installment_year">Installment Period</label>
                         <div class="input-group mb-3">
-                            <input class="form-control" type="text" name="installment_year" id="installment_year" value="{{ old('installment_year', isset($installments) ?? $installments->installment_year) }}" required>
+                            <input class="form-control" type="text" name="installment_year" id="installment_year" value="{{ old('installment_year', $installments->installment_year) }}" required>
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
                                     Month(s)
@@ -94,7 +94,7 @@
                     <div class="col-sm-6 col-md-5 col-lg-6 mt-2 mb-2">
                         <div class="card-1">
                             <p id="monthly_installment" name="monthly_installment" style="font-size:180%;">
-                                RM {{ isset($installments) ?? $installments->monthly_installment }}
+                                RM {{ $installments->monthly_installment }}
                             </p>
                             <h>Monthly Installments</p>
                         </div>
@@ -102,7 +102,7 @@
                     <div class="col-sm-6 col-md-5 col-lg-6 mt-2">
                         <div class="card-3">
                             <p id="outstanding_balance" name="outstanding_balance" style="font-size:180%;">
-                                RM {{ isset($installments) ?? $installments->outstanding_balance }}
+                                RM {{ $installments->outstanding_balance }}
                             </p>
                             <p>Outstanding Payments</p>
                         </div>

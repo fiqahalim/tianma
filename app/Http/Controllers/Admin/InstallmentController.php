@@ -16,7 +16,7 @@ use Carbon\Carbon;
 
 class InstallmentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $products = session('products');
         $customer = session('customer');
@@ -45,11 +45,10 @@ class InstallmentController extends Controller
 
         $requestData = $request->all();
 
-        $order = null;
         $order = new Order;
         $order->ref_no = $this->getOrderNumber();
         $order->order_status = 'NEW';
-        $order->amount = $totalProductAmount;
+        $order->amount = $requestData['amount'];
         $order->order_date = $current = Carbon::now();
         $order->customer_id = $customer->id;
         $order->created_by = $customer->created_by;
@@ -60,24 +59,23 @@ class InstallmentController extends Controller
 
         // payment mode calculation
         if ($customer->mode == 'Installment') {
-            $installments = null;
             $installments = new Installment;
             $installments->downpayment = $requestData['downpayment'];
-            $installments->outstanding_balance = $request['balance'];
-            $installments->monthly_installment = $request['installment'];
-            $installments->installment_balance = $request['period'];
+            $installments->outstanding_balance = $request['outstanding_balance'];
+            $installments->monthly_installment = $request['monthly_installment'];
+            $installments->installment_year = $request['installment_year'];
             $installments->created_at = Carbon::now();
             $installments->customer_id = $customer->id;
             $installments->created_by = $customer->created_by;
             $installments->order_id = $order->id;
             $installments->save();
 
-            session(['paymentInfo' => $installments]);
-
             $commissions = $this->commissions();
         }
-        
-        return view('pages.installment.installment-order', compact('order', 'customer', 'installments', 'product'));
+
+        session(['paymentInfo' => $installments]);
+
+        return view('pages.installment.result', compact('customer', 'products', 'order', 'installments'));
     }
 
     /**

@@ -5,8 +5,8 @@ var __webpack_exports__ = {};
   \*******************************************/
 var installmentForm = document.querySelector('#installment-form');
 installmentForm.addEventListener('submit', function (e) {
-  e.preventDefault(); //Computing the results
-
+  // e.preventDefault();
+  //Computing the results
   var amount = document.getElementById('amount').value; // const interest = document.getElementById('interest').value;
 
   var installment_year = document.getElementById('installment_year').value;
@@ -35,6 +35,8 @@ installmentForm.addEventListener('submit', function (e) {
 
   document.getElementById("monthly_installment").innerHTML = "RM " + monthlyPayment;
   document.getElementById("outstanding_balance").innerHTML = "RM " + calculatedOutstanding;
+  document.getElementById("monthly_installment").value = monthlyPayment;
+  document.getElementById("outstanding_balance").value = calculatedOutstanding;
 });
 /******/ })()
 ;

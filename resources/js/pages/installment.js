@@ -1,6 +1,6 @@
 const installmentForm = document.querySelector('#installment-form');
 installmentForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
     //Computing the results
     const amount = document.getElementById('amount').value;
@@ -39,4 +39,7 @@ installmentForm.addEventListener('submit', (e) => {
     //Display elements using DOM manipulation
     document.getElementById("monthly_installment").innerHTML = "RM " + monthlyPayment;
     document.getElementById("outstanding_balance").innerHTML = "RM " + calculatedOutstanding;
+
+    document.getElementById("monthly_installment").value = monthlyPayment;
+    document.getElementById("outstanding_balance").value = calculatedOutstanding;
 });

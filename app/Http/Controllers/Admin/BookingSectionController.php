@@ -10,77 +10,61 @@ use App\Http\Requests\MassDestroySectionRequest;
 use App\Http\Requests\StoreSectionRequest;
 use App\Http\Requests\UpdateSectionRequest;
 
-use App\Models\Level;
-use App\Models\Product;
-use App\Models\Room;
 use App\Models\BookingSection;
+use App\Models\BookingLot;
 use Alert;
 
 class BookingSectionController extends Controller
 {
     public function index()
     {
-        $sections = BookingSection::with(['rooms', 'levels', 'products'])->get();
+        $bookingSections = BookingSection::with(['bookingLots'])->get();
 
-        return view('admin.sections.index', compact('sections'));
+        return view('admin.bookingSections.index', compact('bookingSections'));
     }
 
     public function create()
     {
-        $rooms = Room::pluck('name', 'id');
+        $lot_layouts = BookingLot::pluck('layout', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $levels = Level::pluck('level_name', 'id');
-
-        $products = Product::pluck('product_name', 'id');
-
-        return view('admin.sections.create', compact('levels', 'products', 'rooms'));
+        return view('admin.bookingSections.create', compact('lot_layouts'));
     }
 
     public function store(StoreSectionRequest $request)
     {
-        $section = BookingSection::create($request->all());
-        $section->rooms()->sync($request->input('rooms', []));
-        $section->levels()->sync($request->input('levels', []));
-        $section->products()->sync($request->input('products', []));
+        $bookingSection = BookingSection::create($request->all());
 
         alert()->success(__('global.create_success'))->toToast();
         return redirect()->route('admin.sections.index');
     }
 
-    public function edit(BookingSection $section)
+    public function edit(BookingSection $bookingSection)
     {
-        $rooms = Room::pluck('name', 'id');
+        $lot_layouts = BookingLot::pluck('layout', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $levels = Level::pluck('level_name', 'id');
+        $bookingSection->load('bookingLots');
 
-        $products = Product::pluck('product_name', 'id');
-
-        $section->load('rooms', 'levels', 'products');
-
-        return view('admin.sections.edit', compact('levels', 'products', 'rooms', 'section'));
+        return view('admin.bookingSections.edit', compact('bookingSection', 'lot_layouts'));
     }
 
-    public function update(UpdateSectionRequest $request, BookingSection $section)
+    public function update(UpdateSectionRequest $request, BookingSection $bookingSection)
     {
-        $section->update($request->all());
-        $section->rooms()->sync($request->input('rooms', []));
-        $section->levels()->sync($request->input('levels', []));
-        $section->products()->sync($request->input('products', []));
+        $bookingSection->update($request->all());
 
         alert()->success(__('global.update_success'))->toToast();
         return redirect()->route('admin.sections.index');
     }
 
-    public function show(BookingSection $section)
+    public function show(BookingSection $bookingSection)
     {
-        $section->load('rooms', 'levels', 'products');
+        $bookingSection->load('bookingLots');
 
-        return view('admin.sections.show', compact('section'));
+        return view('admin.bookingSections.show', compact('bookingSection'));
     }
 
-    public function destroy(BookingSection $section)
+    public function destroy(BookingSection $bookingSection)
     {
-        $section->delete();
+        $bookingSection->delete();
 
         alert()->success(__('global.delete_success'))->toToast();
         return back();

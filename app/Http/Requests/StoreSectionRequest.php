@@ -37,10 +37,6 @@ class StoreSectionRequest extends FormRequest
             'deck' => [
                 'numeric',
             ],
-            'deck_seats' => [
-                'string',
-                'nullable',
-            ],
             'rooms.*' => [
                 'integer',
             ],

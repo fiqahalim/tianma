@@ -1,4 +1,4 @@
-<div class="page-content container">
+<div class="page-content container" style="background: white;">
     <div class="page-header text-blue-d2">
         <h1 class="page-title text-secondary-d1">
             Reference No: <strong>#{{ $order->ref_no ?? '' }}</strong>
@@ -13,7 +13,7 @@
         </div>
     </div>
 
-    <div class="container px-0">
+    <div class="container">
         <div class="row mt-4">
             <div class="col-12 col-lg-12">
                 <div class="row">
@@ -149,6 +149,7 @@
                                     <th>Description</th>
                                     <th>Product ID Number</th>
                                     <th>Product Code</th>
+                                    <th>Installment Period</th>
                                     <th width="140">Amount</th>
                                 </tr>
                             </thead>
@@ -166,11 +167,13 @@
                                         {{ $order->products->product_code ?? '' }}
                                     </td>
                                     <td></td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         {{ trans('cruds.product.fields.selling_price') }}
                                     </td>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td>
@@ -183,6 +186,7 @@
                                     </td>
                                     <td></td>
                                     <td></td>
+                                    <td></td>
                                     <td>
                                         RM {{ $order->products->maintenance_price ?? '' }}
                                     </td>
@@ -193,6 +197,7 @@
                                     </td>
                                     <td></td>
                                     <td></td>
+                                    <td></td>
                                     <td>
                                         RM {{ $order->products->promotion_price ?? '' }}
                                     </td>
@@ -200,48 +205,58 @@
                                 {{-- Installment Details --}}
                                 <tr>
                                     <td>
-                                        Monthly Installment
+                                        Monthly Installment Payment
                                     </td>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td>
                                         RM {{ $order->installments->monthly_installment ?? '' }}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td align="center">
+                                        <i>{{ $order->installments->installment_year ?? '' }} month(s)</i>
+                                    </td>
+                                    <td></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
 
                     <div class="row border-b-2 brc-default-l2"></div>
-
+                    <hr>
                     <div class="row mt-3">
-                        <div class="col-12 col-sm-7 text-grey-d2 text-95 mt-2 mt-lg-0">
+                        <div class="col-12 col-sm-8 text-grey-d2 text-95 mt-2 mt-lg-0">
                         </div>
 
-                        <div class="col-12 col-sm-5 text-grey text-90 order-first order-sm-last">
+                        <div class="col-12 col-sm-4 text-grey text-90 order-first order-sm-last">
                             <div class="row my-2">
-                                <div class="col-7 text-right">
+                                <div class="col-5 text-right">
                                     SubTotal
                                 </div>
-                                <div class="col-5">
+                                <div class="col-7">
                                     <span class="text-120 text-secondary-d1">RM {{ $order->products->total_cost ?? '' }}</span>
                                 </div>
                             </div>
 
                             <div class="row my-2">
-                                <div class="col-7 text-right">
+                                <div class="col-5 text-right">
                                     Downpayment
                                 </div>
-                                <div class="col-5">
+                                <div class="col-7">
                                     <span class="text-110 text-secondary-d1">RM {{ $order->installments->downpayment ?? '' }}</span>
                                 </div>
                             </div>
 
                             <div class="row my-2 align-items-center bgc-primary-l3 p-2">
-                                <div class="col-7 text-right">
+                                <div class="col-5 text-right">
                                     Outstanding Amount
                                 </div>
-                                <div class="col-5">
+                                <div class="col-7">
                                     <span class="text-150 text-success-d3 opacity-2">
                                         <b>RM {{ $order->installments->outstanding_balance ?? '' }}</b>
                                     </span>
@@ -249,6 +264,7 @@
                             </div>
                         </div>
                     </div>
+                    <small>This is a computer generated statement. No signature is required.</small>
                     <hr>
                 </div>
             </div>

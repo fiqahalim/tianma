@@ -11,8 +11,7 @@
     </nav>
 
     <div class="container-fluid">
-        <form method="POST" action="#" enctype="multipart/form-data" id="bookingForm">
-            @method('PUT')
+        <form method="POST" action="{{ route('admin.product-booking.store', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}" enctype="multipart/form-data" id="bookingForm">
             @csrf
             <img src="{{ $product->photo->url ?? '/images/product/luxury_1.png' }}" class="rounded mx-auto d-block" style="height: 300px; width: 485px;">
             <div class="movie-container">
@@ -31,6 +30,21 @@
                 </select>
 
                 {{-- select sections --}}
+                {{-- <select class="form-control {{ $errors->has('sections') ? 'is-invalid' : '' }}" name="sections" id="sections" required>
+                    @forelse($sections as $sc => $section)
+                        <option value="{{ $sc }}" {{ old('section', '') === (string) $sc ? 'selected' : '' }}>
+                            {{ $section }}
+                        </option>
+                    @empty
+                        <option>No section founds</option>
+                    @endforelse
+                </select>
+                @if($errors->has('sections'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('section') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.order.fields.order_status_helper') }}</span> --}}
                 <select class="form-control {{ $errors->has('section') ? 'is-invalid' : '' }}" name="section" id="wings" required>
                     <option selected>{{ trans('global.pleaseSelect') }} section</option>
                     <option value="DA">DA</option>
@@ -62,17 +76,6 @@
 
             <div class="container">
                 <div id="container-seats">
-                    {{-- @php
-                        echo $lotLayout->getDeckHeader($loop->index);
-                    @endphp
-
-                    @php
-                        $totalRow = $lotLayout->getTotalRow($seat);
-                        $lastRowSeat = $lotLayout->getLastRowSit($seat);
-                        $chr = 'A';
-                        $seatlayout = $lotLayout->lotLayouts();
-                        $rowItem = $seatlayout->left + $seatlayout->right;
-                    @endphp --}}
                     <div class="DA GFG">
                         @include('pages.product.components.da')
                     </div>
@@ -94,16 +97,36 @@
                 </p>
 
                   <div class="text-center">
-                    <a class="btn btn-outline-primary mt-2" id="bookConfirm" href="{{ route('admin.customer-details.index', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
-                        {{ trans('global.products.product_select') }}
-                    </a>
+                    <input type="text" name="seat" hidden>
+                    <button type="submit" class="btn btn-outline-dark mt-2 book-bus-btn">{{ trans('global.products.product_select') }}</button>
                 </div>
             </div>
         </form>
+        {{-- <a class="btn btn-outline-primary mt-2 text-right" href="{{ route('admin.customer-details.index', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
+            Proceed
+        </a> --}}
     </div>
 
     {{-- modal --}}
-
+    <div class="modal fade" id="bookConfirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"> @lang('Confirm Booking')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>@lang('Are you sure to book these seats?')</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success" id="btnBookConfirm">@lang("Confirm")</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('styles')
@@ -137,6 +160,13 @@
             } else {
                 notify('error', 'Select at least one lot.');
             }
+        });
+
+        //confirmation modal
+        $(document).on('click', '#btnBookConfirm', function(e) {
+            var modal = $('#bookConfirm');
+            modal.modal('hide');
+            document.getElementById("bookingForm").submit();
         });
     </script>
 @endsection
