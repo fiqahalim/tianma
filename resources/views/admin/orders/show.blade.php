@@ -8,14 +8,6 @@
         </ol>
     </nav>
 
-    <div style="margin-bottom: 10px;" class="row text-right">
-        <div class="col-lg-12">
-            <a class="btn btn-dark" href="#" data-toggle="modal" data-target="#invoiceDetailsModal">
-                Invoice Settings
-            </a>
-        </div>
-    </div>
-
     <div class="card">
         <div class="card-body">
             <div class="form-group">
@@ -33,9 +25,6 @@
             </div>
         </div>
     </div>
-
-    {{-- Modal --}}
-    @include('admin.orders.components.modal')
 @endsection
 
 

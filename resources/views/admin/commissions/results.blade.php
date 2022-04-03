@@ -4,7 +4,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item">{{ trans('cruds.commission.title') }}</li>
-            <li class="breadcrumb-item">{{ $order->id }}</li>
+            <li class="breadcrumb-item">{{ $orders->id }}</li>
             <li class="breadcrumb-item active" aria-current="page">
                 {{ trans('cruds.commission.title') }} Calculator
             </li>
@@ -17,7 +17,7 @@
         </div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route("admin.commissions.calculatorStore", $order->id) }}" enctype="multipart/form-data" id="commission-form">
+            <form method="POST" action="{{ route("admin.commissions.calculatorStore", $orders->id) }}" enctype="multipart/form-data" id="commission-form">
                 @csrf
 
                 <input type="hidden" id="point_value" name="point_value" value="{{ old('point_value', '') }}" />
@@ -100,7 +100,7 @@
                     <th scope="col">Agent Ranking</th>
                     <th scope="col">Point Value (PV)</th>
                     <th scope="col">Commissions (Per Month)</th>
-                    @if($order->customer->mode == 'Installment')
+                    @if($orders->customer->mode == 'Installment')
                         <th scope="col">Installments Period (Months)</th>
                     @endif
                 </tr>
@@ -108,16 +108,16 @@
             <tbody>
                 <tr>
                     <td>
-                        {{ $order->createdBy->agent_code }}
+                        {{ $orders->createdBy->agent_code }}
                     </td>
                     <td>
-                        @if($order->createdBy->ranking_id == 1)
+                        @if($orders->createdBy->ranking_id == 1)
                             SD
-                        @elseif($order->createdBy->ranking_id == 2)
+                        @elseif($orders->createdBy->ranking_id == 2)
                             DSD
-                        @elseif($order->createdBy->ranking_id == 3)
+                        @elseif($orders->createdBy->ranking_id == 3)
                             BDD A
-                        @elseif($order->createdBy->ranking_id == 4)
+                        @elseif($orders->createdBy->ranking_id == 4)
                             BDD B
                         @else
                             CBDD
@@ -130,7 +130,7 @@
                         RM {{ $comms->mo_overriding_comm }}
                     </td>
                     <td>
-                        {{ $order->installments->installment_year }} months
+                        {{ $orders->installments->installment_year }} months
                     </td>
                 </tr>
             </tbody>

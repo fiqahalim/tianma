@@ -32,7 +32,7 @@ class TransactionController extends Controller
 
         $balances = Order::join('transactions', 'transactions.order_id', '=', 'orders.id')
             ->where('transactions.order_id', '=', $order->id)
-            ->latest('transactions.transaction_date')
+            ->latest('transactions.created_at')
             ->take(1)->get()->sum('balance');
 
         $validated = $request->validate([
@@ -45,6 +45,7 @@ class TransactionController extends Controller
 
         $transaction = new Transaction();
         $transaction->transaction_date = Carbon::now();
+        $transaction->trans_no = $this->transactionNo();
         $transaction->amount = $amount;
         $transaction->status = $request->status;
         $transaction->balance = $newBalance;
@@ -80,5 +81,14 @@ class TransactionController extends Controller
         Transaction::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function transactionNo()
+    {
+        do {
+            $trans_no = random_int(100000000, 999999999);
+        } while (Transaction::where("trans_no", "=", $trans_no)->first());
+
+        return $trans_no;
     }
 }

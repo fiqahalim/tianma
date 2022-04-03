@@ -13,15 +13,16 @@
     <div class="container-fluid">
         <form method="POST" action="{{ route('admin.product-booking.store', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}" enctype="multipart/form-data" id="bookingForm">
             @csrf
+
             <img src="{{ $product->photo->url ?? '/images/product/luxury_1.png' }}" class="rounded mx-auto d-block" style="height: 300px; width: 485px;">
             <div class="movie-container">
                 <h5><strong>Category Selected:</strong> {{ $product->product_name }}
                 </h5>
 
                 {{-- select rooms --}}
-                <select class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }} mb-3" name="name" required>
+                <select class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }} mb-3" name="rooms" required id="rooms">
                     @forelse($rooms as $r => $room)
-                        <option value="{{ $r }}" {{ old('name', '') === (string) $r ? 'selected' : '' }}>
+                        <option value="{{ $room }}" {{ old('name', '') === (string) $room ? 'selected' : '' }}>
                             {{ $room }}
                         </option>
                     @empty
@@ -45,6 +46,7 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.order.fields.order_status_helper') }}</span> --}}
+
                 <select class="form-control {{ $errors->has('section') ? 'is-invalid' : '' }}" name="section" id="wings" required>
                     <option selected>{{ trans('global.pleaseSelect') }} section</option>
                     <option value="DA">DA</option>
@@ -74,33 +76,103 @@
                 </li>
             </ul>
 
-            <div class="container">
-                <div id="container-seats">
-                    <div class="DA GFG">
-                        @include('pages.product.components.da')
-                    </div>
-                    <div class="DB GFG">
-                        @include('pages.product.components.db')
-                    </div>
-                    <div class="DC GFG">
-                        @include('pages.product.components.dc')
-                    </div>
-                    <div class="DD GFG">
-                        @include('pages.product.components.dd')
-                    </div>
-                </div>
+            @if(isset($locations->product_type) && !empty($locations->product_type == 'Niche'))
+                @if($locations->build_type == 'Tower 1')
+                    @if($room == 'Room A')
+                        <div class="container">
+                            <div id="container-seats">
+                                <div class="DA GFG">
+                                    @include('pages.product.components.room_a.da')
+                                </div>
+                                <div class="DB GFG">
+                                    @include('pages.product.components.room_a.db')
+                                </div>
+                                <div class="DC GFG">
+                                    @include('pages.product.components.room_a.dc')
+                                </div>
+                                <div class="DD GFG">
+                                    @include('pages.product.components.room_a.dd')
+                                </div>
+                            </div>
 
-                <p class="text-center mt-3">
-                    You have selected <span id="count">
-                        0
-                    </span> lot(s)
-                </p>
+                              <div class="text-center">
+                                <input type="text" name="seat" hidden>
+                                <button type="submit" class="btn btn-outline-dark mt-2 book-bus-btn">{{ trans('global.products.product_select') }}</button>
+                            </div>
+                        </div>
+                    @else
+                        <div class="container">
+                            <div id="container-seats">
+                                <div class="DA GFG">
+                                    @include('pages.product.components.room_b.da')
+                                </div>
+                                <div class="DB GFG">
+                                    @include('pages.product.components.room_b.db')
+                                </div>
+                                <div class="DC GFG">
+                                    @include('pages.product.components.room_b.dc')
+                                </div>
+                                <div class="DD GFG">
+                                    @include('pages.product.components.room_b.dd')
+                                </div>
+                            </div>
 
-                  <div class="text-center">
-                    <input type="text" name="seat" hidden>
-                    <button type="submit" class="btn btn-outline-dark mt-2 book-bus-btn">{{ trans('global.products.product_select') }}</button>
-                </div>
-            </div>
+                              <div class="text-center">
+                                <input type="text" name="seat" hidden>
+                                <button type="submit" class="btn btn-outline-dark mt-2 book-bus-btn">{{ trans('global.products.product_select') }}</button>
+                            </div>
+                        </div>
+                    @endif
+                @elseif($locations->build_type == 'Tower 2')
+                    @if($room == 'Room A')
+                        <div class="container">
+                            <div id="container-seats">
+                                <div class="DA GFG">
+                                    @include('pages.product.components.tower_2.room_a.da')
+                                </div>
+                                <div class="DB GFG">
+                                    @include('pages.product.components.tower_2.room_a.db')
+                                </div>
+                                <div class="DC GFG">
+                                    @include('pages.product.components.tower_2.room_a.dc')
+                                </div>
+                                <div class="DD GFG">
+                                    @include('pages.product.components.tower_2.room_a.dd')
+                                </div>
+                            </div>
+
+                              <div class="text-center">
+                                <input type="text" name="seat" hidden>
+                                <button type="submit" class="btn btn-outline-dark mt-2 book-bus-btn">{{ trans('global.products.product_select') }}</button>
+                            </div>
+                        </div>
+                    @else
+                        <div class="container">
+                            <div id="container-seats">
+                                <div class="DA GFG">
+                                    @include('pages.product.components.tower_2.room_b.da')
+                                </div>
+                                <div class="DB GFG">
+                                    @include('pages.product.components.tower_2.room_b.db')
+                                </div>
+                                <div class="DC GFG">
+                                    @include('pages.product.components.tower_2.room_b.dc')
+                                </div>
+                                <div class="DD GFG">
+                                    @include('pages.product.components.tower_2.room_b.dd')
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <input type="text" name="seat" hidden>
+                                <button type="submit" class="btn btn-outline-dark mt-2 book-bus-btn" onclick="updateTextArea()">
+                                    {{ trans('global.products.product_select') }}
+                                </button>
+                            </div>
+                        </div>
+                    @endif
+                @endif
+            @endif
         </form>
     </div>
 

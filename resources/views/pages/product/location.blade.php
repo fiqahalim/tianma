@@ -13,7 +13,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <form action="{{ route('admin.new-order.store') }}" id="locationForm">
+                <form method="POST" action="{{ route('admin.new-order.store') }}" id="locationForm" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="form-row">
@@ -24,7 +24,7 @@
                                 @if(isset($locations))
                                     <select class="form-control {{ $errors->has('location_name') ? 'is-invalid' : '' }}" id="location_name" name="location_name" required>
                                         @forelse($locations as $key => $location)
-                                            <option value="{{ $key }}" {{ old('location_name', '') === (string) $key ? 'selected' : '' }}>
+                                            <option value="{{ $location }}" {{ old('location_name', '') === (string) $location ? 'selected' : '' }}>
                                                 {{ $location }}
                                             </option>
                                         @empty
@@ -43,7 +43,7 @@
                                 @if(isset($properties))
                                     <select class="form-control {{ $errors->has('property_name') ? 'is-invalid' : '' }}" id="property_name" name="property_name" onchange="displayDivDemo('building_name', this)" required>
                                         @forelse($properties as $keys => $property)
-                                            <option value="{{ $keys }}" {{ old('property_name', '') === (string) $keys ? 'selected' : '' }}>
+                                            <option value="{{ $property }}" {{ old('property_name', '') === (string) $property ? 'selected' : '' }}>
                                                 {{ $property }}
                                             </option>
                                         @empty
@@ -61,7 +61,7 @@
                                 </label>
                                 <select class="form-control {{ $errors->has('building_name') ? 'is-invalid' : '' }}" name="building_name">
                                     @forelse($buildings as $k => $building)
-                                        <option value="{{ $k }}" {{ old('building_name', '') === (string) $k ? 'selected' : '' }}>
+                                        <option value="{{ $building }}" {{ old('building_name', '') === (string) $building ? 'selected' : '' }}>
                                             {{ $building }}
                                         </option>
                                     @empty
@@ -75,7 +75,7 @@
                                 </label>
                                 <select class="form-control {{ $errors->has('level_name') ? 'is-invalid' : '' }}" name="level_name">
                                     @forelse($levels as $l => $level)
-                                        <option value="{{ $l }}" {{ old('level_name', '') === (string) $l ? 'selected' : '' }}>
+                                        <option value="{{ $level }}" {{ old('level_name', '') === (string) $level ? 'selected' : '' }}>
                                             {{ $level }}
                                         </option>
                                     @empty
@@ -107,7 +107,7 @@
 @parent
 <script>
     function displayDivDemo(id, elementValue) {
-        document.getElementById(id).style.display = elementValue.value == 2 ? 'block' : 'none';
+        document.getElementById(id).style.display = elementValue.value === 'Niche' ? 'block' : 'none';
     }
 </script>
 @endsection

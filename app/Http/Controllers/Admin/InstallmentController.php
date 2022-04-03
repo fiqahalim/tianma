@@ -34,15 +34,11 @@ class InstallmentController extends Controller
         return $ref_no;
     }
 
-    public function transactionNo()
-    {
-        $randomNumber = random_int(100000, 999999);
-    }
-
     public function store(Request $request, $category, $childCategory, $childCategory2, Product $product)
     {
         $products = session('products');
         $customer = session('customer');
+        $locations = session('bookLocation');
 
         $requestData = $request->all();
 
@@ -54,6 +50,7 @@ class InstallmentController extends Controller
         $order->customer_id = $customer->id;
         $order->created_by = $customer->created_by;
         $order->product_id = $products->id;
+        $order->book_locations_id = $locations->id;
         $order->save();
 
         session(['order' => $order]);
@@ -74,7 +71,7 @@ class InstallmentController extends Controller
 
             $trans = new Transaction();
             $trans->transaction_date = Carbon::now();
-            $trans->trans_no = $this->transactionNo();
+            // $trans->trans_no = $this->transactionNo();
             $trans->amount = 0;
             $trans->balance = $installments->outstanding_balance;
             $trans->status = 'Paid';

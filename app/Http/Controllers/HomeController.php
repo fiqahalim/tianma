@@ -42,17 +42,16 @@ class HomeController extends Controller
         $allOrders = Order::with(['commissions', 'customer'])->get();
 
         // Agent View
-        $customers = Customer::where('created_by', auth()->user()->id)
+        $customers = Order::join('customers', 'customers.id', '=', 'orders.customer_id')
+            ->where('orders.created_by', auth()->user()->id)
+            ->where('orders.approved', '=', 1)
             ->count();
 
         $agentComms = Order::join('commissions', 'commissions.order_id', '=', 'orders.id')
-            ->where('orders.approved', '=', 1)
             ->where('commissions.user_id', auth()->user()->id)
             ->get(['orders.*', 'commissions.mo_overriding_comm']);
 
-        $myEarnings = Commission::join('orders', 'orders.id', '=', 'commissions.order_id')
-            ->where('commissions.user_id', auth()->user()->id)
-            ->where('orders.approved', '=', 1)
+        $myEarnings = Commission::where('commissions.user_id', auth()->user()->id)
             ->whereMonth('commissions.created_at', Carbon::now()->month)
             ->whereYear('commissions.created_at', Carbon::now()->year)
             ->sum('commissions.mo_overriding_comm');
@@ -60,9 +59,9 @@ class HomeController extends Controller
         $myOrders = Order::where([
                 ['created_by', auth()->user()->id]
             ])
+            ->where('approved', '=', 1)
             ->whereMonth('created_at', Carbon::now()->month)
             ->whereYear('created_at', Carbon::now()->year)
-            ->get()
             ->count();
 
         return view('home', compact(

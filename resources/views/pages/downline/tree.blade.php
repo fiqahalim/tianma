@@ -13,15 +13,17 @@
 <div class="container-fluid">
     <div class="text-center">
         <div class="tree">
-            <ul>
+            <ol class="organizational-chart">
                 <li>
-                    <img class="rounded-circle mt-2" src="{{ asset('/images/profile/'.Auth::user()->avatar ?? 'avatar.png') }}" width="80" data-toggle="modal" data-target="#userDetailsModal">
-                    <div class="mt-2">
-                        <span><strong>{{ Auth::user()->agent_code ?? 'Not Available' }}</strong></span>
+                    <div>
+                        <img class="rounded-circle mt-2" src="{{ asset('/images/profile/'.Auth::user()->avatar ?? 'avatar.png') }}" width="80" data-toggle="modal" data-target="#userDetailsModal">
+                        <div class="mt-2">
+                            <span><strong>{{ Auth::user()->agent_code ?? 'Not Available' }}</strong></span>
+                        </div>
+                        <i id="menu-item" class="fas fa-plus-circle" onclick="myFunction()"></i>
                     </div>
                     @if(count($user))
-                    <i id="menu-item" class="fas fa-plus-circle" onclick="myFunction()"></i>
-                        <ul>
+                        <ol>
                             @foreach($user as $key => $childUser)
                                 <li class="sub-menu">
                                     <img class="rounded-circle mt-2" src="{{ asset('/images/profile/'.$childUser->avatar ?? 'avatar.png') }}" width="80">
@@ -29,7 +31,7 @@
                                         <span>{{ $childUser->agent_code ?? 'Not Available' }}</span>
                                     </div>
                                     {{-- @if(count($childUser->childUsers))
-                                    <ul>
+                                    <ol>
                                         @foreach($childUser->childUsers as $childs)
                                             <li class="sub-menu">
                                                 <img class="rounded-circle mt-2" src="https://bootdey.com/img/Content/avatar/avatar7.png" width="80">
@@ -38,14 +40,14 @@
                                                 </div>
                                             </li>
                                         @endforeach
-                                    </ul>
+                                    </ol>
                                     @endif --}}
                                 </li>
                             @endforeach
-                        </ul>
+                        </ol>
                     @endif
                 </li>
-            </ul>
+            </ol>
         </div>
     </div>
 

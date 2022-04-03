@@ -107,7 +107,7 @@
                                         {{ trans('cruds.order.fields.created_by') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.order.fields.commissions') }} Per Order
+                                        {{ trans('cruds.order.fields.commissions') }} Per Month
                                     </th>
                                     <th>
                                         &nbsp;
@@ -116,7 +116,7 @@
                             </thead>
                             <tbody>
                                 @foreach($allOrders as $key => $order)
-                                    @if(!empty($order->commissions) && $order->commissions->mo_overriding_comm > 0)
+                                    {{-- @if(!empty($order->commissions) && $order->commissions->mo_overriding_comm > 0) --}}
                                         <tr data-entry-id="{{ $order->id }}">
                                             <td>
 
@@ -156,7 +156,7 @@
                                                 @endcan
                                             </td>
                                         </tr>
-                                    @endif
+                                    {{-- @endif --}}
                                 @endforeach
                             </tbody>
                         </table>

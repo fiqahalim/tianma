@@ -12,6 +12,7 @@ use App\Models\Order;
 use App\Models\User;
 use Gate;
 use Alert;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -36,34 +37,6 @@ class CommissionController extends Controller
 
         return view('admin.commissions.create', compact('orders', 'users'));
     }
-
-    // public function store(Request $request, Commission $commission)
-    // {
-    //     $requestData = $request->all();
-
-    //     $newPV = isset($requestData['point_value']) ? $requestData['point_value'] : null;
-
-    //     $totalCommission = 0;
-
-    //     $comms = Commission::join('orders', 'orders.id', '=', 'commissions.order_id')
-    //         ->where('commissions.id', '=', $commission->id)
-    //         ->get(['orders.*']);
-
-    //     $rankings = User::select('ranking_id')
-    //             ->where('id', $cust->created_by)
-    //             ->first();
-
-    //     // calculate commission based on ranking
-
-    //     $comms = new Commission;
-    //     $comms->point_value = $requestData['point_value'];
-    //     $comms->percentage = $requestData['percentage'];
-    //     $comms->first_month = $requestData['first_month'];
-    //     $comms->save();
-
-    //     // alert()->success(__('global.create_success'))->toToast();
-    //     return redirect()->route('admin.commissions.show');
-    // }
 
     public function edit(Commission $commission)
     {
@@ -122,49 +95,54 @@ class CommissionController extends Controller
     public function commissionCalculator(Order $order)
     {
         $order->load('customer', 'team', 'createdBy', 'commissions', 'installments');
+        session(['orders' => $order]);
+
         return view('admin.commissions.calculator', compact('order'));
     }
 
     public function commissionStore(Request $request, Order $order)
     {
+        $orders = session('orders');
+
         $requestData = $request->all();
 
         $newPV = isset($requestData['point_value']) ? $requestData['point_value'] : null;
         $totalCommission = $installmentPV = 0;
 
-        $order->load('customer', 'team', 'createdBy', 'commissions', 'installments');
-        $rankings = isset($order->createdBy) ? $order->createdBy : '';
-        $parent = isset($order->createdBy->parent_id) ? $order->createdBy->parent_id : '';
-        $installmentMonths = isset($order->installments->installment_year) ? $order->installments->installment_year : '';
+        // $order->load('customer', 'team', 'createdBy', 'commissions', 'installments');
+
+        $rankings = isset($orders->createdBy) ? $orders->createdBy : '';
+        $installmentMonths = isset($orders->installments->installment_year) ? $orders->installments->installment_year : '';
 
         // check method payment
-        if ($order->customer->mode == 'Installment') {
+        if ($orders->customer->mode == 'Installment') {
             $installmentPV = ($newPV / $installmentMonths);
+            session(['installmentPV' => $installmentPV]);
 
             switch ($rankings->ranking_id) {
                 case 1:
                     $totalCommission += round(($installmentPV * 0.16), 2);
-                    // $parentCommission = $this->getParent();
+                    $parentCommission = $this->getParent();
                     // $pp = $this->getPP();
                     break;
                 case 2:
                     $totalCommission += round(($installmentPV * 0.04), 2);
-                    // $parentCommission = $this->getParent();
+                    $parentCommission = $this->getParent();
                     // $pp = $this->getPP();
                     break;
                 case 3:
                     $totalCommission += round(($installmentPV * 0.02), 2);
-                    // $parentCommission = $this->getParent();
+                    $parentCommission = $this->getParent();
                     // $pp = $this->getPP();
                     break;
                 case 4:
                     $totalCommission += round(($installmentPV * 0.04),2);
-                    // $parentCommission = $this->getParent();
+                    $parentCommission = $this->getParent();
                     // $pp = $this->getPP();
                     break;
                 case 5:
                     $totalCommission += round(($installmentPV * 0.05), 2);
-                    // $parentCommission = $this->getParent();
+                    $parentCommission = $this->getParent();
                     // $pp = $this->getPP();
                     break;
                 default:
@@ -174,27 +152,27 @@ class CommissionController extends Controller
             switch ($rankings->ranking_id) {
                 case 1:
                     $totalCommission += round(($newPV * 0.16), 2);
-                    // $parentCommission = $this->getParent();
+                    $parentCommission = $this->getParent();
                     // $pp = $this->getPP();
                     break;
                 case 2:
                     $totalCommission += round(($newPV * 0.04), 2);
-                    // $parentCommission = $this->getParent();
+                    $parentCommission = $this->getParent();
                     // $pp = $this->getPP();
                     break;
                 case 3:
                     $totalCommission += round(($newPV * 0.02), 2);
-                    // $parentCommission = $this->getParent();
+                    $parentCommission = $this->getParent();
                     // $pp = $this->getPP();
                     break;
                 case 4:
                     $totalCommission += round(($newPV * 0.04),2);
-                    // $parentCommission = $this->getParent();
+                    $parentCommission = $this->getParent();
                     // $pp = $this->getPP();
                     break;
                 case 5:
                     $totalCommission += round(($newPV * 0.05), 2);
-                    // $parentCommission = $this->getParent();
+                    $parentCommission = $this->getParent();
                     // $pp = $this->getPP();
                     break;
                 default:
@@ -208,10 +186,56 @@ class CommissionController extends Controller
         $comms->point_value = $requestData['point_value'];
         $comms->percentage = $requestData['percentage'];
         $comms->first_month = $requestData['first_month'];
-        $comms->order_id = $order->id;
-        $comms->user_id = $order->createdBy->id;
+        $comms->order_id = $orders->id;
+        $comms->user_id = $orders->createdBy->id;
         $comms->save();
 
-        return view('admin.commissions.results', compact('order', 'comms'));
+        return view('admin.commissions.results', compact('orders', 'comms'));
+    }
+
+    // calling the getparent function
+    public function getParent()
+    {
+        $orders = session('orders');
+        $installmentPV = session('installmentPV');
+
+        $user = isset($orders->createdBy) ? $orders->createdBy : '';
+
+        $totalCommission = 0;
+
+        if(!empty($user->parent_id)) {
+            $parent = User::select('ranking_id')->where('id', $user->parent_id)->first();
+            if($parent->ranking_id !== $user->ranking_id) {
+                // switch statement
+                switch ($parent->ranking_id) {
+                    case 1:
+                        $totalCommission += round(($installmentPV * 0.16), 2);
+                        break;
+                    case 2:
+                        $totalCommission += round(($installmentPV * 0.04), 2);
+                        break;
+                    case 3:
+                        $totalCommission += round(($installmentPV * 0.02), 2);
+                        break;
+                    case 4:
+                        $totalCommission += round(($installmentPV * 0.04),2);
+                        break;
+                    case 5:
+                        $totalCommission += round(($installmentPV * 0.05), 2);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        $commissions = null;
+        $commissions = new Commission;
+        $commissions->mo_overriding_comm = $totalCommission;
+        $commissions->created_at = $current = Carbon::now();
+        $commissions->user_id = $user->parent_id;
+        $commissions->save();
+
+        return $commissions;
     }
 }

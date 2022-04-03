@@ -64,12 +64,12 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <span>
                                     <i class="fas fa-calendar-check"></i>
-                                    {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y') }}
+                                    {{ Carbon\Carbon::parse($order->created_at)->format('d/M/Y') }}
                                 </span>
                                 <span>
                                     <i class="fa fa-clock-o text-muted">
                                     </i>
-                                    {{ Carbon\Carbon::parse($order->created_at)->format('h:i:s') }}
+                                    {{ Carbon\Carbon::parse($order->created_at)->format('H:i:s') }}
                                 </span>
                             </div>
                             <div class="mt-3">
@@ -117,12 +117,12 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <span>
                                     <i class="fas fa-calendar-check"></i>
-                                    {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y') }}
+                                    {{ Carbon\Carbon::parse($order->created_at)->format('d/M/Y') }}
                                 </span>
                                 <span>
                                     <i class="fa fa-clock-o text-muted">
                                     </i>
-                                    {{ Carbon\Carbon::parse($order->created_at)->format('h:i:s') }}
+                                    {{ Carbon\Carbon::parse($order->created_at)->format('H:i:s') }}
                                 </span>
                             </div>
                                 <div class="mt-3">

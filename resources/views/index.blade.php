@@ -112,7 +112,7 @@
                             </thead>
                             <tbody>
                                 @foreach($agentComms as $key => $order)
-                                    @if(!empty($order->mo_overriding_comm) && $order->mo_overriding_comm > 0)
+                                    @if($order->mo_overriding_comm > 0)
                                         <tr data-entry-id="{{ $order->id }}">
                                             <td></td>
                                             <td>{{  $order->id }}</td>
@@ -136,11 +136,7 @@
                                                 {{ $order->customer->full_name ?? '' }}
                                             </td>
                                             <td>
-                                                @if($order->approved == 1)
-                                                    {{ $order->mo_overriding_comm ?? '' }}
-                                                @else
-                                                    Only display when order approved
-                                                @endif
+                                                {{ $order->mo_overriding_comm ?? '' }}
                                             </td>
                                         </tr>
                                     @endif

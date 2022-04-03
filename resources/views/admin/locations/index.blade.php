@@ -39,6 +39,9 @@
                                 State
                             </th>
                             <th>
+                                Product Types
+                            </th>
+                            <th>
                                 &nbsp;
                             </th>
                         </tr>
@@ -78,7 +81,6 @@
                                         </button>
                                     </form>
                                 </td>
-
                             </tr>
                         @endforeach
                     </tbody>

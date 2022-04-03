@@ -21,6 +21,8 @@ class ProductOrderController extends Controller
 {
     public function index()
     {
+        $locations = session('bookLocation');
+
         $products = Product::with('categories.parentCategory')
             ->inRandomOrder()
             ->take(9)
@@ -95,6 +97,7 @@ class ProductOrderController extends Controller
 
     public function store(Request $request)
     {
+        $bookLocation = null;
         $bookLocation = new BookLocation;
         $bookLocation->location = $request->location_name;
         $bookLocation->product_type = $request->property_name;
@@ -102,7 +105,7 @@ class ProductOrderController extends Controller
         $bookLocation->level = $request->level_name;
         $bookLocation->save();
 
-        session(['location' => $bookLocation]);
+        session(['bookLocation' => $bookLocation]);
 
         return redirect()->route('admin.new-order.index');
     }
