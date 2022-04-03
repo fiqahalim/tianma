@@ -14,10 +14,11 @@
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-Commission">
+            <table class="table table-bordered table-striped table-hover datatable datatable-Commission">
                 <thead>
                     <tr>
                         <th width="10"></th>
+                        <th>{{ trans('cruds.commission.fields.id') }}</th>
                         <th>
                             {{ trans('global.createdDate') }}
                         </th>
@@ -34,43 +35,61 @@
                             {{ trans('cruds.commission.fields.order') }}
                         </th>
                         <th>
+                            Payment Mode
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($commissions as $key => $commission)
-                    @if(!empty($commission->mo_overriding_comm) && $commission->mo_overriding_comm > 0)
-                        <tr data-entry-id="{{ $commission->id }}">
+                    @foreach($orders as $key => $order)
+                    @if(!empty($order->commissions->mo_overriding_comm) && $order->commissions->mo_overriding_comm > 0)
+                        <tr data-entry-id="{{ $order->id }}">
                             <td></td>
+                            <td>{{ $order->id }}</td>
                             <td>
-                                {{ Carbon\Carbon::parse($commission->created_at)->format('d/m/Y H:i:s') }}
+                                {{ Carbon\Carbon::parse($order->commissions->created_at)->format('d/M/Y H:i:s') }}
                             </td>
                             <td>
-                                {{ $commission->mo_overriding_comm ?? '' }}
+                                {{ $order->commissions->mo_overriding_comm ?? '' }}
                             </td>
                             <td>
-                                {{ $commission->mo_spin_off ?? 'Not eligible yet' }}
+                                {{ $order->commissions->mo_spin_off ?? 'Not eligible yet' }}
                             </td>
                             <td>
-                                {{ $commission->user->agent_code ?? '' }}
+                                {{ $order->createdBy->agent_code ?? '' }}
                             </td>
                             <td>
-                                #{{ $commission->orders->ref_no ?? '' }}
+                                #{{ $order->ref_no ?? '' }}
                             </td>
                             <td>
-                                <a class="btn btn-xs btn-warning" href="">
+                                @if($order->customer->mode == 'Installment')
+                                    <span class="badge bg-success text-white">
+                                        {{ $order->customer->mode ?? '' }}
+                                    </span>
+                                    @else
+                                    <span class="badge bg-primary text-white">
+                                        {{ $order->customer->mode ?? '' }}
+                                    </span>
+                                @endif
+                            </td>
+                            <td>
+                                {{-- <a class="btn btn-xs btn-warning" href="">
                                     {{ trans('global.withdraw') }}
-                                </a>
+                                </a> --}}
 
-                                @can('commission_edit')
+                                {{-- @can('commission_edit')
                                     <a class="btn btn-xs btn-info" href="{{ route('admin.commissions.edit', $commission->id) }}">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
-                                @endcan
+                                @endcan --}}
+                                <a class="btn btn-xs btn-dark" href="{{ route('admin.commissions.calculator', $order->id) }}">
+                                    <i class="fas fa-calculator"></i>
+                                </a>
 
                                 @can('commission_delete')
-                                    <form action="{{ route('admin.commissions.destroy', $commission->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                    <form action="{{ route('admin.commissions.destroy', $order->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <button type="submit" class="btn btn-xs btn-danger">
@@ -93,7 +112,7 @@
 @parent
 <script>
     $(function () {
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+        let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('commission_delete')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
@@ -125,8 +144,16 @@
 @endcan
 
   $.extend(true, $.fn.dataTable.defaults, {
+    columnDefs: [{
+            targets: 0,
+        },
+        {
+            targets: 1,
+            visible: false
+        }
+    ],
     orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
+    order: [[1, 'desc']],
     pageLength: 10,
   });
   let table = $('.datatable-Commission:not(.ajaxTable)').DataTable({ buttons: dtButtons })

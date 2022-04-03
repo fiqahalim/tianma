@@ -4,6 +4,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item">{{ trans('cruds.commission.title') }}</li>
+            <li class="breadcrumb-item">{{ $order->id }}</li>
             <li class="breadcrumb-item active" aria-current="page">
                 {{ trans('cruds.commission.title') }} Calculator
             </li>
@@ -16,7 +17,7 @@
         </div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route("admin.commissions.store") }}" enctype="multipart/form-data" id="commission-form">
+            <form method="POST" action="{{ route("admin.commissions.calculatorStore", $order->id) }}" enctype="multipart/form-data" id="commission-form">
                 @csrf
 
                 <input type="hidden" id="point_value" name="point_value" value="{{ old('point_value', '') }}" />
@@ -80,33 +81,60 @@
                 <div class="form-group mb-3">
                     <button type="submit" id="calculateBtn" class="btn btn-danger btn-lg" style="width: 100%;">Calculate</button>
                 </div>
-
-                {{-- <div class="row justify-content-around">
-                    <div class="col-sm-6 col-md-5 col-lg-6 mt-2 mb-2">
-                        <div class="card-1">
-                            <p id="point_value" name="point_value" style="font-size:180%;">
-                                RM {{ isset($installments) ?? $installments->point_value }}
-                            </p>
-                            <h>Monthly Installments</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-5 col-lg-6 mt-2">
-                        <div class="card-3">
-                            <p id="outstanding_balance" name="outstanding_balance" style="font-size:180%;">
-                                RM {{ isset($installments) ?? $installments->outstanding_balance }}
-                            </p>
-                            <p>Outstanding Payments</p>
-                        </div>
-                    </div>
-                </div> --}}
             </form>
         </div>
     </div>
 
     <div class="form-group">
-        <a class="btn btn-default" href="{{ route('admin.commissions.index') }}">
+        <a class="btn btn-secondary" href="{{ route('admin.commissions.index') }}">
             {{ trans('global.back_to_list') }}
         </a>
+    </div>
+
+    {{-- results --}}
+    <div class="mt-2">
+        <table class="table table-light table-bordered">
+            <thead>
+                <tr class="table-info">
+                    <th scope="col">Agent Code</th>
+                    <th scope="col">Agent Ranking</th>
+                    <th scope="col">Point Value (PV)</th>
+                    <th scope="col">Commissions (Per Month)</th>
+                    @if($order->customer->mode == 'Installment')
+                        <th scope="col">Installments Period (Months)</th>
+                    @endif
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        {{ $order->createdBy->agent_code }}
+                    </td>
+                    <td>
+                        @if($order->createdBy->ranking_id == 1)
+                            SD
+                        @elseif($order->createdBy->ranking_id == 2)
+                            DSD
+                        @elseif($order->createdBy->ranking_id == 3)
+                            BDD A
+                        @elseif($order->createdBy->ranking_id == 4)
+                            BDD B
+                        @else
+                            CBDD
+                        @endif
+                    </td>
+                    <td id="point_value" name="point_value">
+                        {{ $comms->point_value }}
+                    </td>
+                    <td>
+                        RM {{ $comms->mo_overriding_comm }}
+                    </td>
+                    <td>
+                        {{ $order->installments->installment_year }} months
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 @endsection
 

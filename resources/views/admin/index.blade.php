@@ -84,6 +84,7 @@
                                     <th width="10">
 
                                     </th>
+                                    <th>{{ trans('cruds.order.fields.id') }}</th>
                                     <th>
                                         {{ trans('cruds.order.fields.order_date') }}
                                     </th>
@@ -120,8 +121,9 @@
                                             <td>
 
                                             </td>
+                                            <td>{{ $order->id }}</td>
                                             <td>
-                                                {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y H:i:s') }}
+                                                {{ Carbon\Carbon::parse($order->created_at)->format('d/M/Y H:i:s') }}
                                             </td>
                                             <td>
                                                 #{{ $order->ref_no ?? '' }}
@@ -203,6 +205,14 @@
 @endcan
 
   $.extend(true, $.fn.dataTable.defaults, {
+    columnDefs: [{
+            targets: 0,
+        },
+        {
+            targets: 1,
+            visible: false
+        }
+    ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 10,

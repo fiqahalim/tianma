@@ -13,7 +13,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <form action="{{ route('admin.new-order.index') }}" id="locationForm">
+                <form action="{{ route('admin.new-order.store') }}" id="locationForm">
                     @csrf
                     <div class="card-body">
                         <div class="form-row">

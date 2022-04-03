@@ -9,8 +9,7 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Models\User;
 use App\Models\ProductCategory;
-use App\Models\Installment;
-use App\Models\Transaction;
+use App\Models\PaymentMonthly;
 use App\Models\Customer;
 use App\Models\Commission;
 use Carbon\Carbon;
@@ -62,10 +61,11 @@ class OrderConfirmationController extends Controller
         $order->product_id = $products->id;
         $order->save();
 
+        session(['order' => $order]);
+
         // payment mode calculation
         if ($customer->mode == 'Full Payment') {
             $paymentInfo = $this->fullpaymentCalculate();
-            $commissions = $this->commissions();
         }
 
         return view('pages.customer.order', compact('order', 'customer', 'paymentInfo'));
@@ -79,16 +79,15 @@ class OrderConfirmationController extends Controller
             ->latest()->first();
 
         // stored into transactions
-        $tr = null;
-        $tr = new Transaction;
-        $tr->amount = $odr->amount;
-        $tr->transaction_date = $current = Carbon::now();
-        $tr->customer_id = $cust->id;
-        $tr->created_by = $cust->created_by;
-        $tr->order_id = $odr->id;
-        $tr->save();
+        $fullpays = null;
+        $fullpays = new PaymentMonthly;
+        $fullpays->amount = $odr->amount;
+        $fullpays->customer_id = $cust->id;
+        $fullpays->created_by = $cust->created_by;
+        $fullpays->order_id = $odr->id;
+        $fullpays->save();
 
-        return $tr;
+        return $fullpays;
     }
 
     /**

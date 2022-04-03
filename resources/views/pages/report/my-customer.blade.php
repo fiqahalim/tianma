@@ -23,6 +23,7 @@
                          <th>
                             {{ trans('global.createdDate') }}
                         </th>
+                        <th>{{ trans('cruds.customer.fields.id') }}</th>
                         <th>
                             {{ trans('cruds.customer.fields.full_name') }}
                         </th>
@@ -47,8 +48,9 @@
                     @foreach($customers as $key => $customer)
                         <tr data-entry-id="{{ $customer->id }}">
                             <td></td>
+                            <td>{{ $customer->id }}</td>
                             <td>
-                                {{ Carbon\Carbon::parse($customer->created_at)->format('d/m/Y H:i:s') }}
+                                {{ Carbon\Carbon::parse($customer->created_at)->format('d/M/Y H:i:s') }}
                             </td>
                             <td>
                                 {{ $customer->full_name ?? '' }}
@@ -84,6 +86,14 @@
         let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 
         $.extend(true, $.fn.dataTable.defaults, {
+            columnDefs: [{
+                    targets: 0,
+                },
+                {
+                    targets: 1,
+                    visible: false
+                }
+            ],
             orderCellsTop: true,
             order: [[ 1, 'desc' ]],
             pageLength: 10,

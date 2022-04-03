@@ -239,7 +239,7 @@
                                     SubTotal
                                 </div>
                                 <div class="col-7">
-                                    <span class="text-120 text-secondary-d1">RM {{ $order->products->total_cost ?? '' }}</span>
+                                    <span class="text-120 text-secondary-d1">RM {{ $order->installments->amount ?? '' }}</span>
                                 </div>
                             </div>
 

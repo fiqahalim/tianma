@@ -17,13 +17,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CommissionController extends Controller
 {
-    public function index()
+    public function index(Order $order)
     {
         abort_if(Gate::denies('commission_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $commissions = Commission::with(['user', 'orders', 'team', 'installments'])->get();
+        $orders = Order::with(['customer', 'team', 'createdBy', 'commissions'])->get();
 
-        return view('admin.commissions.index', compact('commissions'));
+        return view('admin.commissions.index', compact('orders'));
     }
 
     public function create()
@@ -37,13 +37,33 @@ class CommissionController extends Controller
         return view('admin.commissions.create', compact('orders', 'users'));
     }
 
-    public function store(StoreCommissionRequest $request)
-    {
-        $commission = Commission::create($request->all());
+    // public function store(Request $request, Commission $commission)
+    // {
+    //     $requestData = $request->all();
 
-        alert()->success(__('global.create_success'))->toToast();
-        return redirect()->route('admin.commissions.index');
-    }
+    //     $newPV = isset($requestData['point_value']) ? $requestData['point_value'] : null;
+
+    //     $totalCommission = 0;
+
+    //     $comms = Commission::join('orders', 'orders.id', '=', 'commissions.order_id')
+    //         ->where('commissions.id', '=', $commission->id)
+    //         ->get(['orders.*']);
+
+    //     $rankings = User::select('ranking_id')
+    //             ->where('id', $cust->created_by)
+    //             ->first();
+
+    //     // calculate commission based on ranking
+
+    //     $comms = new Commission;
+    //     $comms->point_value = $requestData['point_value'];
+    //     $comms->percentage = $requestData['percentage'];
+    //     $comms->first_month = $requestData['first_month'];
+    //     $comms->save();
+
+    //     // alert()->success(__('global.create_success'))->toToast();
+    //     return redirect()->route('admin.commissions.show');
+    // }
 
     public function edit(Commission $commission)
     {
@@ -97,5 +117,101 @@ class CommissionController extends Controller
         // get total commission by certain agent
 
         // deduct the total commission and save into debit_amount column
+    }
+
+    public function commissionCalculator(Order $order)
+    {
+        $order->load('customer', 'team', 'createdBy', 'commissions', 'installments');
+        return view('admin.commissions.calculator', compact('order'));
+    }
+
+    public function commissionStore(Request $request, Order $order)
+    {
+        $requestData = $request->all();
+
+        $newPV = isset($requestData['point_value']) ? $requestData['point_value'] : null;
+        $totalCommission = $installmentPV = 0;
+
+        $order->load('customer', 'team', 'createdBy', 'commissions', 'installments');
+        $rankings = isset($order->createdBy) ? $order->createdBy : '';
+        $parent = isset($order->createdBy->parent_id) ? $order->createdBy->parent_id : '';
+        $installmentMonths = isset($order->installments->installment_year) ? $order->installments->installment_year : '';
+
+        // check method payment
+        if ($order->customer->mode == 'Installment') {
+            $installmentPV = ($newPV / $installmentMonths);
+
+            switch ($rankings->ranking_id) {
+                case 1:
+                    $totalCommission += round(($installmentPV * 0.16), 2);
+                    // $parentCommission = $this->getParent();
+                    // $pp = $this->getPP();
+                    break;
+                case 2:
+                    $totalCommission += round(($installmentPV * 0.04), 2);
+                    // $parentCommission = $this->getParent();
+                    // $pp = $this->getPP();
+                    break;
+                case 3:
+                    $totalCommission += round(($installmentPV * 0.02), 2);
+                    // $parentCommission = $this->getParent();
+                    // $pp = $this->getPP();
+                    break;
+                case 4:
+                    $totalCommission += round(($installmentPV * 0.04),2);
+                    // $parentCommission = $this->getParent();
+                    // $pp = $this->getPP();
+                    break;
+                case 5:
+                    $totalCommission += round(($installmentPV * 0.05), 2);
+                    // $parentCommission = $this->getParent();
+                    // $pp = $this->getPP();
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            switch ($rankings->ranking_id) {
+                case 1:
+                    $totalCommission += round(($newPV * 0.16), 2);
+                    // $parentCommission = $this->getParent();
+                    // $pp = $this->getPP();
+                    break;
+                case 2:
+                    $totalCommission += round(($newPV * 0.04), 2);
+                    // $parentCommission = $this->getParent();
+                    // $pp = $this->getPP();
+                    break;
+                case 3:
+                    $totalCommission += round(($newPV * 0.02), 2);
+                    // $parentCommission = $this->getParent();
+                    // $pp = $this->getPP();
+                    break;
+                case 4:
+                    $totalCommission += round(($newPV * 0.04),2);
+                    // $parentCommission = $this->getParent();
+                    // $pp = $this->getPP();
+                    break;
+                case 5:
+                    $totalCommission += round(($newPV * 0.05), 2);
+                    // $parentCommission = $this->getParent();
+                    // $pp = $this->getPP();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        // save to commission tables
+        $comms = new Commission;
+        $comms->mo_overriding_comm = $totalCommission;
+        $comms->point_value = $requestData['point_value'];
+        $comms->percentage = $requestData['percentage'];
+        $comms->first_month = $requestData['first_month'];
+        $comms->order_id = $order->id;
+        $comms->user_id = $order->createdBy->id;
+        $comms->save();
+
+        return view('admin.commissions.results', compact('order', 'comms'));
     }
 }

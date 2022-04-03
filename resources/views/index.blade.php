@@ -86,6 +86,7 @@
                             <thead>
                                 <tr class="table-info">
                                     <th></th>
+                                    <th>{{ trans('cruds.order.fields.id') }}</th>
                                     <th>
                                         {{ trans('cruds.order.fields.order_date') }}
                                     </th>
@@ -114,8 +115,9 @@
                                     @if(!empty($order->mo_overriding_comm) && $order->mo_overriding_comm > 0)
                                         <tr data-entry-id="{{ $order->id }}">
                                             <td></td>
+                                            <td>{{  $order->id }}</td>
                                             <td>
-                                                {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y H:i:s') }}
+                                                {{ Carbon\Carbon::parse($order->created_at)->format('d/M/Y H:i:s') }}
                                             </td>
                                             <td>
                                                 #{{ $order->ref_no ?? '' }}
@@ -162,6 +164,14 @@
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 
   $.extend(true, $.fn.dataTable.defaults, {
+    columnDefs: [{
+            targets: 0,
+        },
+        {
+            targets: 1,
+            visible: false
+        }
+    ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 10,

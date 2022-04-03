@@ -6,44 +6,40 @@ use \DateTimeInterface;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PaymentMonthly extends Model
 {
-    use SoftDeletes;
     use HasFactory;
 
-    public const STATUS_SELECT = [
-        'Paid'   => 'Paid',
-        'Unpaid' => 'Unpaid',
-    ];
-
-    public $table = 'payment_monthlies';
+    public $table = 'full_payments';
 
     protected $dates = [
-        'month',
         'created_at',
         'updated_at',
-        'deleted_at',
     ];
 
     protected $fillable = [
-        'month',
-        'paid_amount',
-        'status',
+        'amount',
         'created_at',
         'updated_at',
-        'deleted_at',
+        'order_id',
+        'created_by',
+        'customer_id',
     ];
 
-    public function getMonthAttribute($value)
+    public function customer()
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 
-    public function setMonthAttribute($value)
+    public function createdBy()
     {
-        $this->attributes['month'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function orders()
+    {
+        return $this->belongsTo(Order::class, 'order_id');
     }
 
     protected function serializeDate(DateTimeInterface $date)

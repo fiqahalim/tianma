@@ -84,4 +84,15 @@ class OrdersController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+    public function transactionDetails(Order $order)
+    {
+        $order->load('customer', 'team', 'createdBy', 'commissions', 'installments', 'transactions');
+
+        $transactions = Order::join('transactions', 'transactions.order_id', '=', 'orders.id')
+            ->where('transactions.order_id', '=', $order->id)
+            ->get(['transactions.*']);
+
+        return view('admin.paymentMonthlies.index', compact('order', 'transactions'));
+    }
 }

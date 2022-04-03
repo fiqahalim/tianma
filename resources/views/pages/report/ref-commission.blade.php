@@ -20,6 +20,7 @@
                 <thead>
                     <tr class="table-info">
                         <th width="10"></th>
+                        <th>{{ trans('cruds.commission.fields.id') }}</th>
                         <th>
                             {{ trans('global.createdDate') }}
                         </th>
@@ -41,8 +42,9 @@
                             <td>
 
                             </td>
+                            <td>{{ $commission->id }}</td>
                             <td>
-                                {{ Carbon\Carbon::parse($commission->created_at)->format('d/m/Y H:i:s') }}
+                                {{ Carbon\Carbon::parse($commission->created_at)->format('d/M/Y H:i:s') }}
                             </td>
                             <td>
                                 {{ $commission->mo_overriding_comm ?? '' }}
@@ -70,6 +72,14 @@
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 
   $.extend(true, $.fn.dataTable.defaults, {
+    columnDefs: [{
+            targets: 0,
+        },
+        {
+            targets: 1,
+            visible: false
+        }
+    ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 10,

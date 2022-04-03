@@ -56,11 +56,11 @@
                                 <td>
                                     {{ $location->state ?? '' }}
                                 </td>
-                                {{-- <td>
+                                <td>
                                     @foreach($location->property_names as $key => $item)
                                         <span class="badge badge-info">{{ $item->property_name }}</span>
                                     @endforeach
-                                </td> --}}
+                                </td>
                                 <td>
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.locations.show', $location->id) }}">
                                         <i class="fas fa-eye"></i>

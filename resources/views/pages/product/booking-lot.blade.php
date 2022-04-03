@@ -49,8 +49,8 @@
                     <option selected>{{ trans('global.pleaseSelect') }} section</option>
                     <option value="DA">DA</option>
                     <option value="DB">DB</option>
-                    <option value="DC">DC</option>
-                    <option value="DD">DD</option>
+                    {{-- <option value="DC">DC</option>
+                    <option value="DD">DD</option> --}}
                 </select>
                 @if($errors->has('section'))
                     <div class="invalid-feedback">
@@ -102,9 +102,6 @@
                 </div>
             </div>
         </form>
-        {{-- <a class="btn btn-outline-primary mt-2 text-right" href="{{ route('admin.customer-details.index', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
-            Proceed
-        </a> --}}
     </div>
 
     {{-- modal --}}
@@ -118,7 +115,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>@lang('Are you sure to book these seats?')</p>
+                    <p>@lang('Are you sure to book these lot(s)?')</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>

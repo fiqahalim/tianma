@@ -34,7 +34,7 @@ class ProductBookingController extends Controller
 
         session(['products' => $product]);
 
-        return view('pages.product.booking-lot', compact('product', 'rooms', 'sections', 'lotLayout'));
+        return view('pages.product.booking-lot', compact('product', 'rooms', 'sections'));
     }
 
     public function store(Request $request, $category, $childCategory, $childCategory2, Product $product)

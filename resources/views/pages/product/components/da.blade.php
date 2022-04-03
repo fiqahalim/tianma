@@ -1,5 +1,5 @@
 <div class="row-seat">
-    <div class="seat"></div>
+    <div class="seat occupied"></div>
     <div class="seat"></div>
     <div class="seat"></div>
     <div class="seat"></div>
