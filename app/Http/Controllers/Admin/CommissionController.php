@@ -109,8 +109,6 @@ class CommissionController extends Controller
         $newPV = isset($requestData['point_value']) ? $requestData['point_value'] : null;
         $totalCommission = $installmentPV = 0;
 
-        // $order->load('customer', 'team', 'createdBy', 'commissions', 'installments');
-
         $rankings = isset($orders->createdBy) ? $orders->createdBy : '';
         $installmentMonths = isset($orders->installments->installment_year) ? $orders->installments->installment_year : '';
 
@@ -237,5 +235,56 @@ class CommissionController extends Controller
         $commissions->save();
 
         return $commissions;
+    }
+
+    public function getPP()
+    {
+        $orders = session('orders');
+        $installmentPV = session('installmentPV');
+
+        $user = isset($orders->createdBy) ? $orders->createdBy : '';
+
+        $p = User::where('id', $user->parent_id)->with('parent')->get();
+
+        $totalCommission = 0;
+
+        if(isset($p) && !empty($p)) {
+            foreach ($p as $pss) {
+                if (!empty($pss->parent_id)) {
+                    $pRank = User::select('ranking_id')->where('id', $pss->parent_id)->first();
+                    if ($pRank->ranking_id !== $pss->ranking_id) {
+                        switch ($pRank->ranking_id) {
+                            case 1:
+                                $totalCommission += round(($installmentPV * 0.16), 2);
+                                break;
+                            case 2:
+                                $totalCommission += round(($installmentPV * 0.04), 2);
+                                break;
+                            case 3:
+                                $totalCommission += round(($installmentPV * 0.02), 2);
+                                break;
+                            case 4:
+                                $totalCommission += round(($installmentPV * 0.04),2);
+                                break;
+                            case 5:
+                                $totalCommission += round(($installmentPV * 0.05), 2);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+
+                $commissions = null;
+                $commissions = new Commission;
+                $commissions->mo_overriding_comm = $totalCommission;
+                $commissions->created_at = $current = Carbon::now();
+                $commissions->user_id = $pss->parent_id;
+                // $commissions->order_id = $odr->id;
+                $commissions->save();
+
+                return $commissions;
+            }
+        }
     }
 }

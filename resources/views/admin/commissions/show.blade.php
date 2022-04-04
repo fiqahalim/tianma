@@ -4,102 +4,94 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item">{{ trans('cruds.commission.title') }}</li>
-            <li class="breadcrumb-item active" aria-current="page">
-                {{ trans('cruds.commission.title') }} Calculator
-            </li>
+            <li class="breadcrumb-item active" aria-current="page">View {{ trans('cruds.commission.title') }}</li>
         </ol>
     </nav>
 
     <div class="card">
         <div class="card-header font-weight-bold">
-            {{ trans('cruds.commission.title') }} Calculator
+            {{ trans('global.show') }} {{ trans('cruds.commission.title') }}
         </div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route("admin.commissions.store") }}" enctype="multipart/form-data" id="commission-form">
-                @csrf
-
-                <input type="hidden" id="point_value" name="point_value" value="{{ old('point_value', '') }}" />
-
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="pv">Point Value</label>
-                        <div class="input-group mb-3">
-                            <input class="form-control" type="text" name="pv" id="pv" value="{{ old('pv', '')}}" required>
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i>PV</i>
-                                </span>
-                            </div>
-                            @if($errors->has('pv'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('pv') }}
-                                </div>
+            <div class="form-group">
+                <table class="table table-light table-bordered">
+                    <thead>
+                        <tr class="table-info">
+                            <th scope="col">Agent Code</th>
+                            <th scope="col">Agent Ranking</th>
+                            <th scope="col">Point Value (PV)</th>
+                            <th scope="col">Commissions (Per Month)</th>
+                            @if($commission->orders->customer->mode == 'Installment')
+                                <th scope="col">Installments Period (Months)</th>
                             @endif
-                            <span class="help-block">{{ trans('cruds.order.fields.amount_helper') }}</span>
-                        </div>
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="percentage">Percentage</label>
-                        <div class="input-group mb-3">
-                            <input class="form-control" type="text" name="percentage" id="percentage" value="{{ old('percentage', '') }}" required>
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i>%</i>
-                                </span>
-                            </div>
-                            @if($errors->has('percentage'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('percentage') }}
-                                </div>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                {{ $commission->user->agent_code }}
+                            </td>
+                            <td>
+                                @if($commission->user->ranking_id == 1)
+                                    SD
+                                @elseif($commission->user->ranking_id == 2)
+                                    DSD
+                                @elseif($commission->user->ranking_id == 3)
+                                    BDD A
+                                @elseif($commission->user->ranking_id == 4)
+                                    BDD B
+                                @else
+                                    CBDD
+                                @endif
+                            </td>
+                            <td id="point_value" name="point_value">
+                                {{ $commission->point_value }}
+                            </td>
+                            <td>
+                                RM {{ $commission->mo_overriding_comm }}
+                            </td>
+                            @if($commission->orders->customer->mode == 'Installment')
+                                <td>
+                                    {{ $commission->orders->installments->installment_year }} months
+                                </td>
                             @endif
-                            <span class="help-block">{{ trans('cruds.order.fields.amount_helper') }}</span>
-                        </div>
-                    </div>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="first_month">1st Payment</label>
-                        <div class="input-group mb-3">
-                            <input class="form-control" type="text" name="first_month" id="first_month" value="{{ old('first_month', '') }}" required>
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    only first month
-                                </span>
-                            </div>
-                            @if($errors->has('first_month'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('first_month') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.order.fields.amount_helper') }}</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group mb-3">
-                    <button type="submit" id="calculateBtn" class="btn btn-danger btn-lg" style="width: 100%;">Calculate</button>
-                </div>
-
-                {{-- <div class="row justify-content-around">
-                    <div class="col-sm-6 col-md-5 col-lg-6 mt-2 mb-2">
-                        <div class="card-1">
-                            <p id="point_value" name="point_value" style="font-size:180%;">
-                                RM {{ isset($installments) ?? $installments->point_value }}
-                            </p>
-                            <h>Monthly Installments</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-5 col-lg-6 mt-2">
-                        <div class="card-3">
-                            <p id="outstanding_balance" name="outstanding_balance" style="font-size:180%;">
-                                RM {{ isset($installments) ?? $installments->outstanding_balance }}
-                            </p>
-                            <p>Outstanding Payments</p>
-                        </div>
-                    </div>
-                </div> --}}
-            </form>
+            {{-- Upperline Info --}}
+            <div class="form-group mt-5">
+                <table class="table table-light table-bordered">
+                    <thead>
+                        <tr class="table-primary">
+                            <th scope="col">Upperline Agent Code</th>
+                            <th scope="col">Upperline Agent Ranking</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                {{ $commission->user->parent->agent_code }}
+                            </td>
+                            <td>
+                                @if($commission->user->parent->ranking_id == 1)
+                                    SD
+                                @elseif($commission->user->parent->ranking_id == 2)
+                                    DSD
+                                @elseif($commission->user->parent->ranking_id == 3)
+                                    BDD A
+                                @elseif($commission->user->parent->ranking_id == 4)
+                                    BDD B
+                                @else
+                                    CBDD
+                                @endif
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -108,12 +100,4 @@
             {{ trans('global.back_to_list') }}
         </a>
     </div>
-@endsection
-
-@section('styles')
-    <link href="{{ mix('/css/pages/installment.css') }}" media="screen,projection" rel="stylesheet" type="text/css"/>
-@endsection
-
-@section('scripts')
-    <script type="text/javascript" src="{{ mix('/js/pages/commission.js') }}"></script>
 @endsection

@@ -73,7 +73,7 @@
             <div class="form-row">
                 <div class="form-group col-md-3">
                     <label for="point_value">{{ trans('cruds.product.fields.point_value') }}</label>
-                    <input class="form-control" type="text" value="{{ $order->products ? $order->products->point_value : '' }}" readonly>
+                    <input class="form-control" type="text" value="{{ $order->commissions ? $order->commissions->point_value : '' }}" readonly>
                 </div>
                 <div class="form-group col-md-3">
                     <label>{{ trans('cruds.commission.fields.comm_per_order') }}</label>
@@ -87,12 +87,12 @@
                     </div>
                 </div>
                 <div class="form-group col-md-3">
-                    <label>{{ trans('cruds.user.fields.ref_name') }}</label>
+                    <label>Agent Code</label>
                     <input class="form-control" type="text" value="{{ $order->createdBy ? $order->createdBy->agent_code : '' }}" readonly>
                 </div>
                 <div class="form-group col-md-3">
                     <label>{{ trans('cruds.order.fields.order_date') }}</label>
-                    <input class="form-control" type="text" value="{{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y H:i:s') }}" readonly>
+                    <input class="form-control" type="text" value="{{ Carbon\Carbon::parse($order->created_at)->format('d/M/Y H:i:s') }}" readonly>
                 </div>
             </div>
 

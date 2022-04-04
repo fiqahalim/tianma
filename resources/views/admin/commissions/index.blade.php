@@ -75,9 +75,9 @@
                                 @endif
                             </td>
                             <td>
-                                {{-- <a class="btn btn-xs btn-warning" href="">
-                                    {{ trans('global.withdraw') }}
-                                </a> --}}
+                                <a class="btn btn-xs btn-primary" href="{{ route("admin.commissions.show", $order->id) }}">
+                                    <i class="fas fa-eye"></i>
+                                </a>
 
                                 {{-- @can('commission_edit')
                                     <a class="btn btn-xs btn-info" href="{{ route('admin.commissions.edit', $commission->id) }}">
