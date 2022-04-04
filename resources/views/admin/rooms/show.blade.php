@@ -38,16 +38,6 @@
                                 {{ $room->name }}
                             </td>
                         </tr>
-                        <tr>
-                            <th>
-                                {{ trans('cruds.room.fields.levels') }}
-                            </th>
-                            <td>
-                                @foreach($room->levels as $key => $levels)
-                                    <span class="label label-info">{{ $levels->level_name }}</span>
-                                @endforeach
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
                 <div class="form-group">
