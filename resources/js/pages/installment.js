@@ -1,18 +1,18 @@
 const installmentForm = document.querySelector('#installment-form');
 installmentForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
     //Computing the results
     const amount = document.getElementById('amount').value;
     // const interest = document.getElementById('interest').value;
-    const period = document.getElementById('period').value;
+    const installment_year = document.getElementById('installment_year').value;
     const downpayment = document.getElementById('downpayment').value;
 
     //Calculate
     const principal = parseFloat(amount);
     // const calculatedInterest = parseFloat(interest) / 100 / 12;
     const calculatedInterest = 0;
-    const calculatedPayments = period;
+    const calculatedPayments = installment_year;
     const calculatedOutstanding = principal - parseFloat(downpayment);
 
     console.log(principal);
@@ -37,6 +37,9 @@ installmentForm.addEventListener('submit', (e) => {
     // const totalPayment = (monthly * calculatedPayments).toFixed(2);
 
     //Display elements using DOM manipulation
-    document.getElementById("installment").innerHTML = "RM " + monthlyPayment;
-    document.getElementById("balance").innerHTML = "RM " + calculatedOutstanding;
+    document.getElementById("monthly_installment").innerHTML = "RM " + monthlyPayment;
+    document.getElementById("outstanding_balance").innerHTML = "RM " + calculatedOutstanding;
+
+    document.getElementById("monthly_installment").value = monthlyPayment;
+    document.getElementById("outstanding_balance").value = calculatedOutstanding;
 });

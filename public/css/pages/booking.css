@@ -118,6 +118,38 @@
     transform: rotateX(-30deg);
 }
 
+.seatGap
+{
+  width:40px;
+}
+
+.seatVGap
+{
+  height:40px;
+}
+
+input[type=checkbox] {
+    width:0px;
+    margin-right:45px;
+    margin-bottom: 30px;
+}
+
+input[type=checkbox]:before {
+    content: "";
+    width: 45px;
+    height: 45px;
+    display: inline-block;
+    vertical-align:middle;
+    text-align: center;
+    box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
+    background-color: #444451;
+}
+
+input[type=checkbox]:checked:before {
+    background-color: #6feaf6;
+    font-size: 15px;
+}
+
 /*MEDIA QUERYS*/
 @media only screen and (max-width:599px) {
     .seat {

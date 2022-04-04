@@ -192,11 +192,11 @@
                             Manage {{ trans('cruds.masterSetting.fields.building') }}
                         </a>
                     </li>
-                    <li class="c-sidebar-nav-item">
+                    {{-- <li class="c-sidebar-nav-item">
                         <a href="{{ route("admin.lot.layouts") }}" class="c-sidebar-nav-link">
                             Manage {{ trans('cruds.masterSetting.fields.layout') }}
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="c-sidebar-nav-item">
                         <a class="c-sidebar-nav-link" href="{{ route('admin.levels.index') }}" >
                             Manage {{ trans('cruds.masterSetting.fields.levels') }}
@@ -217,6 +217,11 @@
                             Manage {{ trans('cruds.room.title') }}
                         </a>
                     </li>
+                    {{-- <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="{{ route('admin.sections.index') }}" >
+                            Manage {{ trans('cruds.masterSetting.fields.section') }}
+                        </a>
+                    </li> --}}
                 </ul>
             </li>
 

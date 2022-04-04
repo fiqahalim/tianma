@@ -63,4 +63,14 @@ class ProductBooking extends Model
     {
         return $this->where('status', 0);
     }
+
+    public function setSeatAttribute($value)
+    {
+        $this->attributes['seats'] = json_encode($value);
+    }
+
+    public function getSeatAttribute($value)
+    {
+        return $this->attributes['seats'] = json_decode($value);
+    }
 }

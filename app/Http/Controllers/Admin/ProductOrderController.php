@@ -9,12 +9,7 @@ use App\Lib\LotLayout;
 
 use App\Models\Product;
 use App\Models\ProductCategory;
-use App\Models\Customer;
-use App\Models\Order;
-use App\Models\User;
-use App\Models\Installment;
-use App\Models\Transaction;
-use App\Models\Commission;
+use App\Models\BookLocation;
 use App\Models\Location;
 use App\Models\ProductType;
 use App\Models\BuildingType;
@@ -26,6 +21,8 @@ class ProductOrderController extends Controller
 {
     public function index()
     {
+        $locations = session('bookLocation');
+
         $products = Product::with('categories.parentCategory')
             ->inRandomOrder()
             ->take(9)
@@ -100,9 +97,17 @@ class ProductOrderController extends Controller
 
     public function store(Request $request)
     {
-        session(['location' => $location_name->id]);
+        $bookLocation = null;
+        $bookLocation = new BookLocation;
+        $bookLocation->location = $request->location_name;
+        $bookLocation->product_type = $request->property_name;
+        $bookLocation->build_type = $request->building_name;
+        $bookLocation->level = $request->level_name;
+        $bookLocation->save();
 
-        return view('pages.product.index');
+        session(['bookLocation' => $bookLocation]);
+
+        return redirect()->route('admin.new-order.index');
     }
 
     public function addOns(Request $request)

@@ -29,9 +29,9 @@
                         <th width="10">
 
                         </th>
-                        {{-- <th>
+                        <th>
                             {{ trans('cruds.customer.fields.id') }}
-                        </th> --}}
+                        </th>
                          <th>
                             {{ trans('global.createdDate') }}
                         </th>
@@ -67,8 +67,9 @@
                             <td>
 
                             </td>
+                            <td>{{ $customer->id }}</td>
                             <td>
-                                {{ Carbon\Carbon::parse($customer->created_at)->format('d/m/Y H:i:s') }}
+                                {{ Carbon\Carbon::parse($customer->created_at)->format('d/M/Y H:i:s') }}
                             </td>
                             <td>
                                 {{ $customer->full_name ?? '' }}
@@ -159,6 +160,14 @@
 @endcan
 
   $.extend(true, $.fn.dataTable.defaults, {
+    columnDefs: [{
+            targets: 0,
+        },
+        {
+            targets: 1,
+            visible: false
+        }
+    ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 10,

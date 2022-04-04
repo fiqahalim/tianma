@@ -55,19 +55,21 @@
                     </div>
                     <div class="col-md-6 background-muted">
                         @php
-                         $customer = session('customer');
+                            $customer = session('customer');
+                            $order = session('order');
+                            $paymentInfo = session('paymentInfo');
                         @endphp
-                        @if ($customer->mode == 'Fullpayment')
+                        @if ($customer->mode == 'Full Payment')
                             <div class="p-3 border-bottom">
                             <div class="d-flex justify-content-between align-items-center">
                                 <span>
                                     <i class="fas fa-calendar-check"></i>
-                                    {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y') }}
+                                    {{ Carbon\Carbon::parse($order->created_at)->format('d/M/Y') }}
                                 </span>
                                 <span>
                                     <i class="fa fa-clock-o text-muted">
                                     </i>
-                                    {{ Carbon\Carbon::parse($order->created_at)->format('h:i:s') }}
+                                    {{ Carbon\Carbon::parse($order->created_at)->format('H:i:s') }}
                                 </span>
                             </div>
                             <div class="mt-3">
@@ -112,26 +114,26 @@
                                 </div>   
                         @else
                             <div class="p-3 border-bottom">
-                            {{-- <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-center">
                                 <span>
                                     <i class="fas fa-calendar-check"></i>
-                                    {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y') }}
+                                    {{ Carbon\Carbon::parse($order->created_at)->format('d/M/Y') }}
                                 </span>
                                 <span>
                                     <i class="fa fa-clock-o text-muted">
                                     </i>
-                                    {{ Carbon\Carbon::parse($order->created_at)->format('h:i:s') }}
+                                    {{ Carbon\Carbon::parse($order->created_at)->format('H:i:s') }}
                                 </span>
-                            </div> --}}
+                            </div>
                                 <div class="mt-3">
                                     <h6 class="mb-0">
-                                        Order Reference Number: #{{-- {{ $order->ref_no }} --}}
+                                        Order Reference Number: #{{ $order->ref_no }}
                                     </h6>
                                     <span class="d-block mb-0">
                                         Customer Name: {{ $customer->full_name }}
                                     </span>
                                     <small>
-                                        {{ trans('global.order.order_status') }}: 
+                                        {{ trans('global.order.order_status') }}: {{ $order->order_status }}
                                     </small>
                                     <div class="d-flex flex-column mt-3">
                                         {{-- <small>
@@ -159,7 +161,7 @@
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span>
-                                            RM 
+                                            RM {{ $order->amount }}
                                         </span>
                                     </div>
                                 </div>
@@ -168,14 +170,14 @@
                                 <div class="col-md-6 border-right">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span>
-                                            Downpayment (20%)
+                                            Downpayment
                                         </span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span>
-                                            RM 
+                                            RM {{ $paymentInfo->downpayment }}
                                         </span>
                                     </div>
                                 </div>
@@ -184,14 +186,14 @@
                                 <div class="col-md-6 border-right">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span>
-                                            Monthly Installment (11 months)
+                                            Installment Period
                                         </span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span>
-                                            RM 
+                                            {{ $paymentInfo->installment_year }} <i>month(s)</i>
                                         </span>
                                     </div>
                                 </div>
@@ -200,14 +202,14 @@
                                 <div class="col-md-6 border-right">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span>
-                                            Installment Balance
+                                            Monthly Installment
                                         </span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span>
-                                            RM 
+                                            RM {{ $paymentInfo->monthly_installment }}
                                         </span>
                                     </div>
                                 </div>
@@ -223,7 +225,7 @@
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span class="font-weight-bold">
-                                            RM 
+                                            RM {{ $paymentInfo->outstanding_balance }}
                                         </span>
                                     </div>
                                 </div>
@@ -237,7 +239,8 @@
 </div>
 {{session()->forget('customer')}}
 {{session()->forget('products')}}
-{{session()->forget('searchCust')}}
+{{session()->forget('paymentInfo')}}
+{{session()->forget('order')}}
 @endsection
 
 @section('styles')

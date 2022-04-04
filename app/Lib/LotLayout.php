@@ -1,25 +1,23 @@
 <?php
 namespace App\Lib;
 
+use App\Models\BookingSection;
+
 class LotLayout
 {
-    protected $product;
-    protected $section;
-    protected $totalRow;
-    protected $levelNumber;
-    protected $lotNumber;
+    private $books, $section, $totalRow, $levelNumber, $lotNumber;
     public $lotLayouts;
 
-    public function __construct($product)
+    public function __construct(BookingSection $book)
     {
-        $this->product = $product;
-        $this->section = $product->bookingSection;
+        $this->books = $book;
+        $this->section = $book->bookingLots;
         $this->lotLayouts = $this->lotLayouts();
     }
 
     public function lotLayouts()
     {
-        $lotLayout = explode('x', str_replace(' ','', $this->section->seat_layout));
+        $lotLayout = explode('x', str_replace(' ','', $this->section->layout));
         $layout['left'] = $lotLayout[0];
         $layout['right'] = $lotLayout[1];
         return (object)$layout;
@@ -36,15 +34,15 @@ class LotLayout
                 <span class="lower"></span>
             ';
         } else {
-            $html .= '<span class="driver">Deck :  '.($levelNumber+1) .'</span>';
+            $html .= '<span class="driver">Level :  '.($levelNumber+1) .'</span>';
         }
         return $html;
     }
 
-    public function getLots($levelNumber,$lotNumber)
+    public function getLots()
     {
-        $this->levelNumber = $levelNumber;
-        $this->lotNumber = $lotNumber;
+        $this->levelNumber = 9;
+        $this->lotNumber = 15;
         $lots = [
             'left'=>$this->leftLots(),
             'right'=>$this->rightLots(),
@@ -94,18 +92,18 @@ class LotLayout
                 </div>";
     }
 
-    public function getTotalRow($seat)
+    public function getTotalRow()
     {
         $rowItem    = $this->lotLayouts->left + $this->lotLayouts->right;
-        $totalRow   = floor ($seat / $rowItem);
+        $totalRow   = floor (20 / $rowItem);
         $this->totalRow = $totalRow;
         return $this->totalRow;
     }
 
-    public function getLastRowSit($seat)
+    public function getLastRowSit()
     {
         $rowItem = $this->lotLayouts->left + $this->lotLayouts->right;
-        $lastRowSeat = $seat - $this->getTotalRow($seat) * $rowItem;
+        $lastRowSeat = (40) - $this->getTotalRow() * $rowItem;
         return $lastRowSeat;
     }
 }

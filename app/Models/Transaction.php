@@ -16,15 +16,22 @@ class Transaction extends Model
         'transaction_date',
     ];
 
+    public const STATUS_SELECT = [
+        'Paid'   => 'Paid',
+        'Unpaid' => 'Unpaid',
+    ];
+
     protected $fillable = [
         'amount',
-        'transaction_date',
-        'trans_name',
+        'trans_no',
         'description',
-        'amount',
+        'status',
+        'balance',
+        'transaction_date',
         'order_id',
         'created_by',
         'customer_id',
+        'installment_id',
     ];
 
     public function customer()
@@ -42,8 +49,23 @@ class Transaction extends Model
         return $this->belongsTo(Order::class, 'order_id');
     }
 
+    public function installments()
+    {
+        return $this->belongsTo(Installment::class, 'installment_id');
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
+    }
+
+    public function getMonthAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+    }
+
+    public function setMonthAttribute($value)
+    {
+        $this->attributes['month'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 }

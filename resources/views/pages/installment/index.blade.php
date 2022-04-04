@@ -15,7 +15,7 @@
                 {{ $products->product_name }}
             </li>
             <li aria-current="page" class="breadcrumb-item active">
-                Installment
+                Installment Calculator
             </li>
         </ol>
     </nav>
@@ -28,6 +28,8 @@
         <div class="card-body">
             <form method="POST" action="{{ route('admin.installment.store', [$products->categories->first()->parentCategory->name, $products->categories->first()->parentCategory->name, $products->categories->first()->name, $products]) }}" enctype="multipart/form-data" id="installment-form">
                 @csrf
+                <input type="hidden" id="monthly_installment" name="monthly_installment" value="{{ old('monthly_installment', '') }}" />
+                <input type="hidden" id="outstanding_balance" name="outstanding_balance" value="{{ old('outstanding_balance', '') }}" />
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
@@ -38,7 +40,7 @@
                                     <i>RM</i>
                                 </span>
                             </div>
-                            <input class="form-control" type="text" name="amount" id="amount" required>
+                            <input class="form-control" type="text" name="amount" id="amount" value="{{ old('amount', isset($order) ?? $order->amount) }}" required>
                             @if($errors->has('amount'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('amount') }}
@@ -55,7 +57,7 @@
                                     <i>RM</i>
                                 </span>
                             </div>
-                            <input class="form-control" type="text" name="downpayment" id="downpayment" value="" required>
+                            <input class="form-control" type="text" name="downpayment" id="downpayment" value="{{ old('downpayment', isset($installments) ?? $installments->downpayment) }}" required>
                             @if($errors->has('downpayment'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('downpayment') }}
@@ -65,9 +67,9 @@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="period">Installment Period</label>
+                        <label for="installment_year">Installment Period</label>
                         <div class="input-group mb-3">
-                            <input class="form-control" type="text" name="period" id="period" value="" required>
+                            <input class="form-control" type="text" name="installment_year" id="installment_year" value="{{ old('installment_year', isset($installments) ?? $installments->installment_year) }}" required>
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
                                     Month(s)
@@ -85,24 +87,27 @@
                 </div>
 
                 <div class="form-group mb-3">
-                    <button type="submit" class="btn btn-danger btn-lg calculate-btn" style="width: 100%;">Calculate</button>
+                    <button type="submit" id="calculateBtn" class="btn btn-danger btn-lg" style="width: 100%;">Calculate</button>
                 </div>
 
                 <div class="row justify-content-around">
                     <div class="col-sm-6 col-md-5 col-lg-6 mt-2 mb-2">
                         <div class="card-1">
-                            <p id="installment" name="installment">RM</p>
-                            <p>Monthly Installments</p>
+                            <p id="monthly_installment" name="monthly_installment" style="font-size:180%;">
+                                RM {{ isset($installments) ?? $installments->monthly_installment }}
+                            </p>
+                            <h>Monthly Installments</p>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-5 col-lg-6 mt-2">
                         <div class="card-3">
-                            <p id="balance" name="balance">RM</p>
+                            <p id="outstanding_balance" name="outstanding_balance" style="font-size:180%;">
+                                RM {{ isset($installments) ?? $installments->outstanding_balance }}
+                            </p>
                             <p>Outstanding Payments</p>
                         </div>
                     </div>
                 </div>
-
                 <div class="text-center">
                     <div class="form-group float-right">
                         <a class="btn btn-primary btn-sm mt-4 mb-2 mr-3" href="{{ route('admin.order', [$products->categories->first()->parentCategory->name, $products->categories->first()->parentCategory->name, $products->categories->first()->name, $products]) }}">

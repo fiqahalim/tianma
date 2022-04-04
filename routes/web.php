@@ -134,6 +134,10 @@ Route::group(['middleware' => 'auth'], function() {
             // Manage Room
             Route::delete('rooms/destroy', '\App\Http\Controllers\Admin\RoomController@massDestroy')->name('rooms.massDestroy');
             Route::resource('rooms', '\App\Http\Controllers\Admin\RoomController');
+
+            // Manage Section
+            Route::delete('sections/destroy', '\App\Http\Controllers\Admin\BookingSectionController@massDestroy')->name('sections.massDestroy');
+            Route::resource('sections', '\App\Http\Controllers\Admin\BookingSectionController');
         });
 
         /** ORDERS MANAGEMENT **/
@@ -145,6 +149,10 @@ Route::group(['middleware' => 'auth'], function() {
             // Order Lists
             Route::delete('orders/destroy', [\App\Http\Controllers\Admin\OrdersController::class,'massDestroy'])->name('orders.massDestroy');
             Route::resource('orders', '\App\Http\Controllers\Admin\OrdersController');
+
+            // Transactions
+            Route::match(['get', 'post'], 'transactions/store/{order}', [\App\Http\Controllers\Admin\TransactionController::class, 'store'])->name('transaction.store');
+            Route::match(['get', 'post'], 'transactions/index/{order}', [\App\Http\Controllers\Admin\TransactionController::class, 'index'])->name('transaction.index');
 
             // New Order
             Route::resource('new-order', '\App\Http\Controllers\Admin\ProductOrderController');
@@ -187,6 +195,10 @@ Route::group(['middleware' => 'auth'], function() {
         // Commission
         Route::delete('commissions/destroy', [\App\Http\Controllers\Admin\CommissionController::class, 'massDestroy'])->name('commissions.massDestroy');
         Route::resource('commissions', '\App\Http\Controllers\Admin\CommissionController');
+
+        // Commission Calculator
+        Route::match(['get', 'post'], 'commissions/calculator/{order}', [\App\Http\Controllers\Admin\CommissionController::class,'commissionCalculator'])->name('commissions.calculator');
+        Route::match(['get', 'post'], 'commissions/calculator/store/{order}', [\App\Http\Controllers\Admin\CommissionController::class,'commissionStore'])->name('commissions.calculatorStore');
 
         // Audit Logs
         Route::resource('audit-logs', '\App\Http\Controllers\Admin\AuditLogsController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);

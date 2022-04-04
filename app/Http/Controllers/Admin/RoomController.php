@@ -10,6 +10,7 @@ use App\Http\Requests\MassDestroyRoomRequest;
 use App\Http\Requests\StoreRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
 use App\Models\Level;
+use App\Models\BookingSection;
 use App\Models\Room;
 use Alert;
 
@@ -17,7 +18,7 @@ class RoomController extends Controller
 {
     public function index()
     {
-        $rooms = Room::with(['levels'])->get();
+        $rooms = Room::with(['levels', 'sections'])->get();
 
         return view('admin.rooms.index', compact('rooms'));
     }
@@ -25,14 +26,16 @@ class RoomController extends Controller
     public function create()
     {
         $levels = Level::pluck('level_name', 'id');
+        $sections = BookingSection::pluck('section', 'id');
 
-        return view('admin.rooms.create', compact('levels'));
+        return view('admin.rooms.create', compact('levels', 'sections'));
     }
 
     public function store(StoreRoomRequest $request)
     {
         $room = Room::create($request->all());
         $room->levels()->sync($request->input('levels', []));
+        $room->sections()->sync($request->input('sections', []));
 
         alert()->success(__('global.create_success'))->toToast();
         return redirect()->route('admin.rooms.index');
@@ -41,16 +44,18 @@ class RoomController extends Controller
     public function edit(Room $room)
     {
         $levels = Level::pluck('level_name', 'id');
+        $sections = BookingSection::pluck('section', 'id');
 
-        $room->load('levels');
+        $room->load('levels', 'sections');
 
-        return view('admin.rooms.edit', compact('levels', 'room'));
+        return view('admin.rooms.edit', compact('levels', 'room', 'sections'));
     }
 
     public function update(UpdateRoomRequest $request, Room $room)
     {
         $room->update($request->all());
         $room->levels()->sync($request->input('levels', []));
+        $room->sections()->sync($request->input('sections', []));
 
         alert()->success(__('global.update_success'))->toToast();
         return redirect()->route('admin.rooms.index');
@@ -58,7 +63,7 @@ class RoomController extends Controller
 
     public function show(Room $room)
     {
-        $room->load('levels');
+        $room->load('levels', 'sections');
 
         return view('admin.rooms.show', compact('room'));
     }

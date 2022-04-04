@@ -36,6 +36,12 @@ class StoreRoomRequest extends FormRequest
             'levels' => [
                 'array',
             ],
+            'sections.*' => [
+                'integer',
+            ],
+            'sections' => [
+                'array',
+            ],
         ];
     }
 }

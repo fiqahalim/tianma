@@ -78,6 +78,11 @@ class Order extends Model
         return $this->belongsTo(Installment::class, 'id', 'order_id');
     }
 
+    public function transactions()
+    {
+        return $this->belongsTo(Transaction::class, 'id', 'order_id');
+    }
+
     public function fullPayments()
     {
         return $this->belongsTo(Transaction::class, 'id', 'order_id');

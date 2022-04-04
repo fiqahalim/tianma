@@ -1,4 +1,4 @@
-<div class="page-content container">
+<div class="page-content container" style="background: white;">
     <div class="page-header text-blue-d2">
         <h1 class="page-title text-secondary-d1">
             Reference No: <strong>#{{ $order->ref_no ?? '' }}</strong>
@@ -13,40 +13,83 @@
         </div>
     </div>
 
-    <div class="container px-0">
+    <div class="container">
         <div class="row mt-4">
             <div class="col-12 col-lg-12">
                 <div class="row">
                     <div class="col-sm-6">
                         <div>
-                            <span class="text-sm text-grey-m2 align-middle">Customer Name:</span>
+                            <span class="text-sm text-grey-m2 align-middle text-600 text-90">Customer Name:</span>
                             <span class="text-600 text-110 text-blue align-middle">
                                 {{ $order->customer->full_name }}
                             </span>
                         </div>
                         <div class="text-grey-m2">
                             <div class="my-1">
-                                <span class="text-sm text-grey-m2 align-middle">
+                                <span class="text-sm text-grey-m2 align-middle text-600 text-90">
                                     {{ trans('cruds.customer.fields.id_number') }}:
                                 </span>
-                                <span class="text-500 text-90 align-middle">
+                                <span class="text-600 text-110 text-blue align-middle text-600 text-90">
                                     {{ $order->customer->id_number }}
                                 </span>
                             </div>
                             <div class="my-1">
-                                <span class="text-sm text-grey-m2 align-middle">
-                                    {{ trans('cruds.customer.fields.contact_person_name') }}:
+                                <span class="text-sm text-grey-m2 align-middle text-600 text-90">
+                                    Mobile:
+                                </span>
+                                <span class="text-600 text-110 text-blue align-middle text-600 text-90">
+                                    <b class="text-600">{{ $order->customer->contact_person_no }}</b>
+                                </span>
+                            </div>
+                            <div class="my-1">
+                                <span class="text-sm text-grey-m2 align-middle text-600 text-90">
+                                    Intended User Name:
+                                </span>
+                                @foreach($order->customer->contactPersons as $intendedUser)
+                                    <span class="text-600 text-110 text-blue align-middle">
+                                        {{ $intendedUser->cperson_name ?? 'Not Available' }}
+                                    </span>
+                                @endforeach
+                            </div>
+                            <div class="my-1">
+                                <span class="text-sm text-grey-m2 align-middle text-600 text-90">
+                                    Intended User NRIC/Passport No.:
+                                </span>
+                                @foreach($order->customer->contactPersons as $intendedUser)
+                                    <span class="text-600 text-110 text-blue align-middle">
+                                        {{ $intendedUser->cid_number ?? 'Not Available' }}
+                                    </span>
+                                @endforeach
+                            </div>
+                            <div class="my-1">
+                                <span class="text-sm text-grey-m2 align-middle text-600 text-90">
+                                    Relationship:
+                                </span>
+                                @foreach($order->customer->contactPersons as $intendedUser)
+                                    <span class="text-600 text-110 text-blue align-middle">
+                                        {{ $intendedUser->relationships ?? 'Not Available' }}
+                                    </span>
+                                @endforeach
+                            </div>
+                            <br>
+                            <div class="my-1">
+                                <span class="text-sm text-grey-m2 align-middle text-600 text-90">
+                                    Representative Name:
                                 </span>
                                 <span class="text-500 text-90 align-middle">
-                                    {{ $order->customer->contact_person_name}}
+                                    <strong>{{ $order->customer->contact_person_name ?? '' }}</strong>
                                 </span>
                             </div>
                             <div class="my-1">
-                                <i class="fa fa-phone fa-flip-horizontal text-secondary"></i>
-                                <b class="text-600">{{ $order->customer->contact_person_no }}</b>
+                                <span class="text-sm text-grey-m2 align-middle text-600 text-90">
+                                    Representative NRIC No.:
+                                </span>
+                                <span class="text-500 text-90 align-middle">
+                                    <strong>{{ $order->customer->cperson_id_number ?? '' }}</strong>
+                                </span>
                             </div>
                             <div class="my-1">
-                                <span class="text-sm text-grey-m2 align-middle">
+                                <span class="text-sm text-grey-m2 align-middle text-600 text-90">
                                     {{ trans('cruds.user.fields.agent_code') }}:
                                 </span>
                                 <span class="text-500 text-90 align-middle">
@@ -56,6 +99,7 @@
                         </div>
                     </div>
 
+                    {{-- order details --}}
                     <div class="text-95 col-sm-6 align-self-start d-sm-flex justify-content-end">
                         <hr class="d-sm-none" />
                         <div class="text-grey-m2">
@@ -105,6 +149,7 @@
                                     <th>Description</th>
                                     <th>Product ID Number</th>
                                     <th>Product Code</th>
+                                    <th>Installment Period</th>
                                     <th width="140">Amount</th>
                                 </tr>
                             </thead>
@@ -122,11 +167,13 @@
                                         {{ $order->products->product_code ?? '' }}
                                     </td>
                                     <td></td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         {{ trans('cruds.product.fields.selling_price') }}
                                     </td>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td>
@@ -139,6 +186,7 @@
                                     </td>
                                     <td></td>
                                     <td></td>
+                                    <td></td>
                                     <td>
                                         RM {{ $order->products->maintenance_price ?? '' }}
                                     </td>
@@ -149,6 +197,7 @@
                                     </td>
                                     <td></td>
                                     <td></td>
+                                    <td></td>
                                     <td>
                                         RM {{ $order->products->promotion_price ?? '' }}
                                     </td>
@@ -156,8 +205,9 @@
                                 {{-- Installment Details --}}
                                 <tr>
                                     <td>
-                                        Monthly Installment <i>(11 months)</i>
+                                        Monthly Installment Payment
                                     </td>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td>
@@ -165,54 +215,56 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>
-                                        Installment Balance <i>(last month)</i>
-                                    </td>
                                     <td></td>
                                     <td></td>
-                                    <td>
-                                        RM {{ $order->installments->installment_balance ?? '' }}
+                                    <td></td>
+                                    <td align="center">
+                                        <i>{{ $order->installments->installment_year ?? '' }} month(s)</i>
                                     </td>
+                                    <td></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
                     <div class="row border-b-2 brc-default-l2"></div>
-
+                    <hr>
                     <div class="row mt-3">
-                        <div class="col-12 col-sm-7 text-grey-d2 text-95 mt-2 mt-lg-0">
+                        <div class="col-12 col-sm-8 text-grey-d2 text-95 mt-2 mt-lg-0">
                         </div>
 
-                        <div class="col-12 col-sm-5 text-grey text-90 order-first order-sm-last">
+                        <div class="col-12 col-sm-4 text-grey text-90 order-first order-sm-last">
                             <div class="row my-2">
-                                <div class="col-7 text-right">
+                                <div class="col-5 text-right">
                                     SubTotal
                                 </div>
-                                <div class="col-5">
-                                    <span class="text-120 text-secondary-d1">RM {{ $order->products->total_cost ?? '' }}</span>
+                                <div class="col-7">
+                                    <span class="text-120 text-secondary-d1">RM {{ $order->installments->amount ?? '' }}</span>
                                 </div>
                             </div>
 
                             <div class="row my-2">
-                                <div class="col-7 text-right">
-                                    Downpayment (20%)
+                                <div class="col-5 text-right">
+                                    Downpayment
                                 </div>
-                                <div class="col-5">
+                                <div class="col-7">
                                     <span class="text-110 text-secondary-d1">RM {{ $order->installments->downpayment ?? '' }}</span>
                                 </div>
                             </div>
 
                             <div class="row my-2 align-items-center bgc-primary-l3 p-2">
-                                <div class="col-7 text-right">
+                                <div class="col-5 text-right">
                                     Outstanding Amount
                                 </div>
-                                <div class="col-5">
-                                    <span class="text-150 text-success-d3 opacity-2">RM {{ $order->installments->outstanding_balance ?? '' }}</span>
+                                <div class="col-7">
+                                    <span class="text-150 text-success-d3 opacity-2">
+                                        <b>RM {{ $order->installments->outstanding_balance ?? '' }}</b>
+                                    </span>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <small>This is a computer generated statement. No signature is required.</small>
                     <hr>
                 </div>
             </div>

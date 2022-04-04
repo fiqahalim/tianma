@@ -44,6 +44,11 @@ class Customer extends Model
         'id_type',
         'id_number',
         'email',
+        'mobile',
+        'gender',
+        'contact_person_name',
+        'contact_person_no',
+        'cperson_id_number',
         'birth_date',
         'postcode',
         'state',
@@ -97,5 +102,10 @@ class Customer extends Model
     public function correspondenceAddress()
     {
         return $this->belongsTo(CorresspondenceAddress::class, 'id', 'customer_id');
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(PaymentMode::class);
     }
 }

@@ -13,25 +13,25 @@
             <div class="form-row">
                 <div class="form-group col-md-3">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="payment_name[]" value="cheque">
+                        <input class="form-check-input" type="checkbox" name="payment_name[]" value="Cheque">
                         <label class="ml-2">Cheque No.</label>
                     </div>
                 </div>
                 <div class="form-group col-md-3">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="payment_name[]" value="cash">
+                        <input class="form-check-input" type="checkbox" name="payment_name[]" value="Cash">
                         <label class="ml-2">Cash</label>
                     </div>
                 </div>
                 <div class="form-group col-md-3">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="payment_name[]" value="card">
+                        <input class="form-check-input" type="checkbox" name="payment_name[]" value="Credit Card">
                         <label class="ml-2">Credit Card</label>
                     </div>
                 </div>
                 <div class="form-group col-md-3">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="payment_name[]" value="others">
+                        <input class="form-check-input" type="checkbox" name="payment_name[]" value="Others">
                         <label class="ml-2">Others</label>
                     </div>
                 </div>

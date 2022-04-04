@@ -32,11 +32,14 @@ class BookingSection extends Model
 
     protected $fillable = [
         'section',
+        'seat_layout',
+        'deck',
+        'deck_seats',
         'created_at',
         'updated_at',
         'product_id',
         'product_bookings_id',
-        'booking_lots_id',
+        'lot_layout_id',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -44,9 +47,19 @@ class BookingSection extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
+    public function rooms()
+    {
+        return $this->belongsToMany(Room::class);
+    }
+
+    public function levels()
+    {
+        return $this->belongsToMany(Level::class);
+    }
+
     public function products()
     {
-        return $this->hasMany(Product::class);
+        return $this->belongsToMany(Product::class);
     }
 
     /**
@@ -59,7 +72,7 @@ class BookingSection extends Model
 
     public function bookingLots()
     {
-        return $this->belongsToMany(BookingLot::class);
+        return $this->belongsTo(BookingLot::class, 'lot_layout_id');
     }
 
     public function scopeActive()

@@ -21,6 +21,7 @@
                         <th width="10">
 
                         </th>
+                        <th>{{ trans('cruds.order.fields.id') }}</th>
                         <th>
                             {{ trans('cruds.order.fields.order_date') }}
                         </th>
@@ -48,73 +49,80 @@
                         <th>
                             &nbsp;
                         </th>
+                        <th>
+                            &nbsp;
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($orders as $key => $order)
-                        @if(!empty($order->commissions) && $order->commissions->mo_overriding_comm > 0)
-                            <tr data-entry-id="{{ $order->id }}">
-                                <td>
-
-                                </td>
-                                <td>
-                                    {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y H:i:s') }}
-                                </td>
-                                <td>
-                                    #{{ $order->ref_no ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $order->amount ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $order->order_status ?? '' }}
-                                </td>
-                                <td>
-                                    <span style="display:none">{{ $order->approved ?? '' }}</span>
-                                    <input type="checkbox" disabled="disabled" {{ $order->approved ? 'checked' : '' }}>
-                                </td>
-                                <td>
-                                    {{ $order->customer->full_name ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $order->createdBy->agent_code ?? '' }}
-                                </td>
-                                <td>
-                                    @if($order->customer->mode == 'Installment')
+                        <tr data-entry-id="{{ $order->id }}">
+                            <td></td>
+                            <td>{{ $order->id }}</td>
+                            <td>
+                                {{ Carbon\Carbon::parse($order->created_at)->format('d/M/Y H:i:s') }}
+                            </td>
+                            <td>
+                                #{{ $order->ref_no ?? '' }}
+                            </td>
+                            <td>
+                                {{ $order->amount ?? '' }}
+                            </td>
+                            <td>
+                                {{ $order->order_status ?? '' }}
+                            </td>
+                            <td>
+                                <span style="display:none">{{ $order->approved ?? '' }}</span>
+                                <input type="checkbox" disabled="disabled" {{ $order->approved ? 'checked' : '' }}>
+                            </td>
+                            <td>
+                                {{ $order->customer->full_name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $order->createdBy->agent_code ?? '' }}
+                            </td>
+                            <td>
+                                @if($order->customer->mode == 'Installment')
                                     <span class="badge bg-success text-white">
                                         {{ $order->customer->mode ?? '' }}
                                     </span>
-                                    @else
+                                @else
                                     <span class="badge bg-primary text-white">
                                         {{ $order->customer->mode ?? '' }}
                                     </span>
-                                    @endif
-                                </td>
-                                <td>
-                                    @can('order_show')
-                                        <a class="btn btn-xs btn-primary" href="{{ route('admin.orders.show', $order->id) }}">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                    @endcan
+                                @endif
+                            </td>
+                            <td>
+                                @can('order_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.orders.show', $order->id) }}">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                @endcan
 
-                                    @can('order_edit')
-                                        <a class="btn btn-xs btn-info" href="{{ route('admin.orders.edit', $order->id) }}">
-                                            <i class="fas fa-pencil-alt"></i>
-                                        </a>
-                                    @endcan
+                                @can('order_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.orders.edit', $order->id) }}">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
+                                @endcan
 
-                                    @can('order_delete')
-                                        <form action="{{ route('admin.orders.destroy', $order->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                            <button type="submit" class="btn btn-xs btn-danger">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </form>
-                                    @endcan
-                                </td>
-                            </tr>
-                        @endif
+                                @can('order_delete')
+                                    <form action="{{ route('admin.orders.destroy', $order->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <button type="submit" class="btn btn-xs btn-danger">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                @endcan
+                            </td>
+                            <td>
+                                @if($order->customer->mode == 'Installment')
+                                    <a class="btn btn-dark" href="{{ route('admin.transaction.index', $order->id) }}">
+                                        Settings
+                                    </a>
+                                @endif
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
@@ -159,6 +167,14 @@
 @endcan
 
   $.extend(true, $.fn.dataTable.defaults, {
+    columnDefs: [{
+            targets: 0,
+        },
+        {
+            targets: 1,
+            visible: false
+        }
+    ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 10,

@@ -32,8 +32,14 @@ class Room extends Model
         return $this->belongsToMany(Level::class);
     }
 
+    public function sections()
+    {
+        return $this->belongsToMany(BookingSection::class);
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
     }
+
 }

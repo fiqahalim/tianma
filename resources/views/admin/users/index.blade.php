@@ -30,6 +30,7 @@
                         <th width="10">
 
                         </th>
+                        <th>{{ trans('cruds.user.fields.id') }}</th>
                         <th>
                             {{ trans('global.createdDate') }}
                         </th>
@@ -72,7 +73,10 @@
 
                             </td>
                             <td>
-                                {{ Carbon\Carbon::parse($user->created_at)->format('d/m/Y H:i:s') }}
+                                {{ $user->id }}
+                            </td>
+                            <td>
+                                {{ Carbon\Carbon::parse($user->created_at)->format('d/M/Y H:i:s') }}
                             </td>
                             <td>
                                 {{ $user->name ?? '' }}
@@ -176,6 +180,14 @@
 @endcan
 
   $.extend(true, $.fn.dataTable.defaults, {
+    columnDefs: [{
+            targets: 0,
+        },
+        {
+            targets: 1,
+            visible: false
+        }
+    ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 10,

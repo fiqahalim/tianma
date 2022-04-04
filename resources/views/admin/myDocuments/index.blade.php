@@ -30,6 +30,7 @@
                         <th width="10">
 
                         </th>
+                        <th>ID</th>
                         <th>
                             {{ trans('global.createdDate') }}
                         </th>
@@ -54,8 +55,9 @@
                     @foreach($myDocuments as $key => $myDocument)
                         <tr data-entry-id="{{ $myDocument->id }}">
                             <td></td>
+                            <td>{{ $myDocument->id }}</td>
                             <td>
-                                {{ $myDocument->created_at ?? '' }}
+                                {{ Carbon\Carbon::parse($myDocument->created_at)->format('d/M/Y H:i:s') }}
                             </td>
                             <td>
                                 {{ $myDocument->document_name ?? '' }}
@@ -135,6 +137,14 @@
 @endcan
 
   $.extend(true, $.fn.dataTable.defaults, {
+    columnDefs: [{
+            targets: 0,
+        },
+        {
+            targets: 1,
+            visible: false
+        }
+    ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 10,
