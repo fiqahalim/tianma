@@ -20,9 +20,17 @@
                         <tr class="table-info">
                             <th scope="col">Agent Code</th>
                             <th scope="col">Agent Ranking</th>
-                            <th scope="col">Point Value (PV)</th>
+                            @if(isset($comms->orders->customer) ?? $comms->orders->customer->mode == 'Installment')
+                                <th scope="col">New Point Value (PV)</th>
+                            @else
+                                <th scope="col">Point Value (PV)</th>
+                            @endif
+                            <th scope="col">Percentage (%)</th>
+                            @if($comms->first_month > 0)
+                                <th scope="col">First Month Payment</th>
+                            @endif
                             <th scope="col">Commissions (Per Month)</th>
-                            @if(isset($commission->orders->customer) ?? $commission->orders->customer->mode == 'Installment')
+                            @if(isset($comms->orders->customer) ?? $comms->orders->customer->mode == 'Installment')
                                 <th scope="col">Installments Period (Months)</th>
                             @endif
                         </tr>
@@ -30,30 +38,36 @@
                     <tbody>
                         <tr>
                             <td>
-                                {{ $commission->user->agent_code }}
+                                {{ $comms->user->agent_code }}
                             </td>
                             <td>
-                                @if($commission->user->ranking_id == 1)
+                                @if($comms->user->ranking_id == 1)
                                     SD
-                                @elseif($commission->user->ranking_id == 2)
+                                @elseif($comms->user->ranking_id == 2)
                                     DSD
-                                @elseif($commission->user->ranking_id == 3)
+                                @elseif($comms->user->ranking_id == 3)
                                     BDD A
-                                @elseif($commission->user->ranking_id == 4)
+                                @elseif($comms->user->ranking_id == 4)
                                     BDD B
                                 @else
                                     CBDD
                                 @endif
                             </td>
                             <td id="point_value" name="point_value">
-                                {{ $commission->point_value }}
+                                {{ $comms->point_value }}
                             </td>
                             <td>
-                                RM {{ $commission->mo_overriding_comm }}
+                                {{ $comms->percentage }}
                             </td>
-                            @if(isset($commission->orders->customer) ?? $commission->orders->customer->mode == 'Installment')
+                            @if($comms->first_month > 0)
+                                <td>Yes</td>
+                            @endif
+                            <td>
+                                RM {{ $comms->mo_overriding_comm }}
+                            </td>
+                            @if(isset($comms->orders->customer) ?? $comms->orders->customer->mode == 'Installment')
                                 <td>
-                                    {{ $commission->orders->installments->installment_year }} months
+                                    {{ $comms->orders->installments->installment_year }} months
                                 </td>
                             @endif
                         </tr>
@@ -62,7 +76,7 @@
             </div>
 
             {{-- Upperline Info --}}
-            @if(isset($commission->user->parent) && !empty($commission->user->parent))
+            @if(isset($comms->user->parent) && !empty($comms->user->parent))
                 <div class="form-group mt-5">
                     <table class="table table-light table-bordered">
                         <thead>
@@ -74,16 +88,16 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    {{ isset($commission->user->parent->agent_code) ? $commission->user->parent->agent_code: 'No Upperline' }}
+                                    {{ isset($comms->user->parent->agent_code) ? $comms->user->parent->agent_code: 'No Upperline' }}
                                 </td>
                                 <td>
-                                    @if($commission->user->parent->ranking_id == 1)
+                                    @if($comms->user->parent->ranking_id == 1)
                                         SD
-                                    @elseif($commission->user->parent->ranking_id == 2)
+                                    @elseif($comms->user->parent->ranking_id == 2)
                                         DSD
-                                    @elseif($commission->user->parent->ranking_id == 3)
+                                    @elseif($comms->user->parent->ranking_id == 3)
                                         BDD A
-                                    @elseif($commission->user->parent->ranking_id == 4)
+                                    @elseif($comms->user->parent->ranking_id == 4)
                                         BDD B
                                     @else
                                         CBDD

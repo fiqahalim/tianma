@@ -20,9 +20,17 @@
                         <tr class="table-info">
                             <th scope="col">Agent Code</th>
                             <th scope="col">Agent Ranking</th>
-                            <th scope="col">Point Value (PV)</th>
+                            @if(isset($commission->orders->customer) ?? $commission->orders->customer->mode == 'Installment')
+                                <th scope="col">New Point Value (PV)</th>
+                            @else
+                                <th scope="col">Point Value (PV)</th>
+                            @endif
+                            <th scope="col">Percentage (%)</th>
+                            @if($commission->first_month > 0)
+                                <th scope="col">First Month Payment</th>
+                            @endif
                             <th scope="col">Commissions (Per Month)</th>
-                            @if($commission->orders->customer->mode == 'Installment')
+                            @if(isset($commission->orders->customer) ?? $commission->orders->customer->mode == 'Installment')
                                 <th scope="col">Installments Period (Months)</th>
                             @endif
                         </tr>
@@ -49,9 +57,15 @@
                                 {{ $commission->point_value }}
                             </td>
                             <td>
+                                {{ $commission->percentage }}
+                            </td>
+                            @if($commission->first_month > 0)
+                                <td>Yes</td>
+                            @endif
+                            <td>
                                 RM {{ $commission->mo_overriding_comm }}
                             </td>
-                            @if($commission->orders->customer->mode == 'Installment')
+                            @if(isset($commission->orders->customer) ?? $commission->orders->customer->mode == 'Installment')
                                 <td>
                                     {{ $commission->orders->installments->installment_year }} months
                                 </td>
@@ -62,36 +76,38 @@
             </div>
 
             {{-- Upperline Info --}}
-            <div class="form-group mt-5">
-                <table class="table table-light table-bordered">
-                    <thead>
-                        <tr class="table-primary">
-                            <th scope="col">Upperline Agent Code</th>
-                            <th scope="col">Upperline Agent Ranking</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                {{ $commission->user->parent->agent_code }}
-                            </td>
-                            <td>
-                                @if($commission->user->parent->ranking_id == 1)
-                                    SD
-                                @elseif($commission->user->parent->ranking_id == 2)
-                                    DSD
-                                @elseif($commission->user->parent->ranking_id == 3)
-                                    BDD A
-                                @elseif($commission->user->parent->ranking_id == 4)
-                                    BDD B
-                                @else
-                                    CBDD
-                                @endif
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            @if(isset($commission->user->parent) ?? !empty($commission->user->parent))
+                <div class="form-group mt-5">
+                    <table class="table table-light table-bordered">
+                        <thead>
+                            <tr class="table-primary">
+                                <th scope="col">Upperline Agent Code</th>
+                                <th scope="col">Upperline Agent Ranking</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    {{ $commission->user->parent->agent_code }}
+                                </td>
+                                <td>
+                                    @if($commission->user->parent->ranking_id == 1)
+                                        SD
+                                    @elseif($commission->user->parent->ranking_id == 2)
+                                        DSD
+                                    @elseif($commission->user->parent->ranking_id == 3)
+                                        BDD A
+                                    @elseif($commission->user->parent->ranking_id == 4)
+                                        BDD B
+                                    @else
+                                        CBDD
+                                    @endif
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            @endif
         </div>
     </div>
 

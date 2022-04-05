@@ -35,20 +35,27 @@ class TransactionController extends Controller
             ->latest('transactions.created_at')
             ->take(1)->get()->sum('balance');
 
+        $installmentB = Order::join('transactions', 'transactions.order_id', '=', 'orders.id')
+            ->where('transactions.order_id', '=', $order->id)
+            ->latest('transactions.created_at')
+            ->take(1)->get()->sum('installment_balance');
+
         $validated = $request->validate([
             'amount' => 'required|numeric',
         ]);
 
-        $newBalance = 0;
+        $newBalance = $installmentBalance = 0;
         $amount = isset($request->amount) ? $request->amount: '';
         $newBalance = ($balances - $amount);
+        $installmentBalance = ($installmentB - 1);
 
         $transaction = new Transaction();
         $transaction->transaction_date = Carbon::now();
-        $transaction->trans_no = $this->transactionNo();
+        // $transaction->trans_no = $this->transactionNo();
         $transaction->amount = $amount;
         $transaction->status = $request->status;
         $transaction->balance = $newBalance;
+        $transaction->installment_balance = $installmentBalance;
         $transaction->order_id = $order->id;
         $transaction->installment_id = $order->installments->id;
         $transaction->save();

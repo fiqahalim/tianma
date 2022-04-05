@@ -74,6 +74,7 @@ class InstallmentController extends Controller
             // $trans->trans_no = $this->transactionNo();
             $trans->amount = 0;
             $trans->balance = $installments->outstanding_balance;
+            $trans->installment_balance = $installments->installment_year;
             $trans->status = 'Paid';
             $trans->installment_id = $installments->id;
             $trans->order_id = $order->id;
@@ -85,5 +86,10 @@ class InstallmentController extends Controller
         session(['paymentInfo' => $installments]);
 
         return view('pages.installment.result', compact('customer', 'products', 'order', 'installments'));
+    }
+
+    public function update(Request $request, $category, $childCategory, $childCategory2, Product $product, Installment $installment)
+    {
+
     }
 }
