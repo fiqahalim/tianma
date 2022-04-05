@@ -12,6 +12,7 @@ use Alert;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use NumberToWords\NumberToWords;
 
 class OrdersController extends Controller
 {
@@ -62,10 +63,15 @@ class OrdersController extends Controller
 
         $order->load('customer', 'team', 'createdBy', 'commissions');
 
+        $amount = $order->amount;
+        $numberToWords = new NumberToWords();
+        $numberTransformer = $numberToWords->getNumberTransformer('en');
+        $amountFormat = $numberTransformer->toWords($amount);
+
         $today = Carbon::today();
         $date = $today->addMonth(1);
 
-        return view('admin.orders.show', compact('order', 'date'));
+        return view('admin.orders.show', compact('order', 'date', 'amountFormat'));
     }
 
     public function destroy(Order $order)

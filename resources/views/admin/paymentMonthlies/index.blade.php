@@ -9,7 +9,7 @@
         </ol>
     </nav>
 
-    <div style="margin-bottom: 10px;" class="row text-right">
+    <div style="margin-bottom: 10px;" class="row text-right pr-4">
         <div class="col-lg-12">
             <a class="btn btn-info" href="{{ route('admin.transaction.index', [$order->id]) }}" data-toggle="modal" data-target="#invoiceDetailsModal">
                 Update Payment
@@ -17,91 +17,132 @@
         </div>
     </div>
 
-    <div class="card">
-        <div class="card-header font-weight-bold">
-            Payment {{ trans('global.list') }}
+    <div class="page-content container" style="background: white;">
+        <div class="row">
+            <div class="col-4 text-center">
+                <figure class="figure">
+                    <img src="{{ '/images/tianma_logo_op-01a.png' }}" class="figure-img img-fluid rounded mt-2" style="height: 125px; width: 13rem;">
+                </figure>
+            </div>
+            <div class="col-8 mt-4">
+                <p style="font-size: 12pt; font-family: Arial, Helvetica, sans-serif;">
+                    <strong>TIANMA MEMORIAL HOLDINGS BERHAD</strong>
+                    <small><b>202101043182 (1443482 A)</b></small><br>
+                    Corporate Tower, Level 5, Jalan Pahat L 15/L, Section 15,<br>
+                    40200 Shah Alam , Selangor<br>
+                    Tel : 010-951 3688 &nbsp;&nbsp; Website : www.tianma.my
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-6 text-center">
+                <h4><strong><u>OFFICIAL RECEIPT</u></strong></h4>
+            </div>
+            <div class="col"></div>
         </div>
 
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class=" table table-bordered table-striped table-hover datatable datatable-PaymentMonthly">
-                    <thead>
-                        <tr>
-                            <th width="10">
-
-                            </th>
-                            {{-- <th>
-                                {{ trans('cruds.paymentMonthly.fields.id') }}
-                            </th> --}}
-                            <th>
-                                Payment Date
-                            </th>
-                            <th>
-                                Paid Amount (RM)
-                            </th>
-                            <th>
-                                Status
-                            </th>
-                            <th>
-                                Balance (RM)
-                            </th>
-                            {{-- <th>
-                                &nbsp;
-                            </th> --}}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($transactions as $transaction)
-                            <tr data-entry-id="{{ $transaction->id }}">
-                                <td>
-                                </td>
-                                {{-- <td>
-                                    {{ $transaction->id ?? '' }}
-                                </td> --}}
-                                <td>
-                                    {{ Carbon\Carbon::parse($transaction->transaction_date)->format('d/M/Y') }}
-                                </td>
-                                <td>
-                                    RM{{ $transaction->amount ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $transaction->status ?? '' }}
-                                </td>
-                                <td>
-                                    RM {{ $transaction->balance ?? '' }}
-                                </td>
-                                {{-- <td>
-                                    @can('payment_monthly_show')
-                                            <a class="btn btn-xs btn-primary" href="{{ route('admin.payment-monthlies.show', $transaction->id) }}">
-                                            {{ trans('global.view') }}
-                                        </a>
-                                    @endcan
-
-                                    @can('payment_monthly_edit')
-                                        <a class="btn btn-xs btn-info" href="{{ route('admin.payment-monthlies.edit', $transaction->id) }}">
-                                            {{ trans('global.edit') }}
-                                        </a>
-                                    @endcan
-
-                                    @can('payment_monthly_delete')
-                                        <form action="{{ route('admin.payment-monthlies.destroy', $transaction->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                            <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                        </form>
-                                    @endcan
-
-                                </td> --}}
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                <div class="form-group">
-                    <a class="btn btn-default" href="{{ route('admin.orders.index') }}">
-                        {{ trans('global.back_to_list') }}
+        <div class="page-header text-blue-d2">
+            <h5 class="text-secondary-d1 ml-3">
+                Transaction No: <strong></strong>
+            </h5>
+            <div class="page-tools">
+                <div class="action-buttons">
+                    <a class="btn bg-white btn-light mx-1px text-95 print-window" href="#" data-title="Print">
+                        <i class="mr-1 fa fa-print text-primary-m1 text-120 w-2"></i>
+                        Print
                     </a>
                 </div>
             </div>
+        </div>
+
+        <div class="container">
+            <div class="row mt-4">
+                <div class="col-12 col-lg-12">
+                    <div class="row ml-3">
+                        <div class="col-sm-6">
+                            <div class="text-grey-m2">
+                                <div class="my-1">
+                                    <p style="font-size: 12pt; font-family: Arial, Helvetica, sans-serif;">
+                                        {{ Str::upper($order->customer->full_name) }} <br>
+                                        {{ $order->customer->id_number }} <br>
+                                        {{ Str::upper($order->customer->address_1) }} <br>
+                                        @if(isset($order->customer->address_2) && !empty($order->customer->address_2))
+                                            {{ Str::upper($order->customer->address_2) }} <br>
+                                        @endif
+                                        {{ Str::upper($order->customer->postcode) }}
+                                        {{ Str::upper($order->customer->city) }}
+                                        {{ Str::upper($order->customer->state) }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- order details --}}
+                        <div class="text-95 col-sm-6 align-self-start d-sm-flex justify-content-end">
+                            <hr class="d-sm-none" />
+                            <div class="text-grey-m2">
+                                <div class="mt-1 mb-2 text-secondary-m1 text-600 text-125">
+                                    Order Details
+                                </div>
+
+                                <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Ref No:</span> #{{ $order->ref_no }}</div>
+
+                                <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">{{ trans('cruds.order.fields.order_date') }}:</span> {{ Carbon\Carbon::parse($order->created_at)->format('d/M/Y') }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <div class="table-responsive">
+                            <table class="table table-bordered datatable datatable-PaymentMonthly">
+                                <thead class="bg-none bgc-default-tp1">
+                                    <tr class="table-dark">
+                                        <th>Payment Date</th>
+                                        <th>Paid Amount (RM)</th>
+                                        <th>Status</th>
+                                        <th>Remaining Installment (months)</th>
+                                        <th>Outstanding Balance</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-95 text-secondary-d3">
+                                    @foreach($transactions as $transaction)
+                                        <tr data-entry-id="{{ $transaction->id }}">
+                                            <td>
+                                                {{ Carbon\Carbon::parse($transaction->transaction_date)->format('d/M/Y') }}
+                                            </td>
+                                            <td>
+                                                RM{{ $transaction->amount ?? '' }}
+                                            </td>
+                                            <td>
+                                                {{ $transaction->status ?? '' }}
+                                            </td>
+                                            <td>
+                                                {{ $transaction->installment_balance ?? '' }}
+                                            </td>
+                                            <td>
+                                                RM {{ $transaction->balance ?? '' }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-center">
+                            <small>This is a computer generated statement. No signature is required.</small>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row mt-3">
+            <a class="btn btn-default" href="{{ route('admin.orders.index') }}">
+                {{ trans('global.back_to_list') }}
+            </a>
         </div>
     </div>
 
@@ -109,53 +150,37 @@
     @include('admin.paymentMonthlies.components.invoice-modal')
 
 @endsection
+
+@section('styles')
+    <link type="text/css" rel="stylesheet" href="{{ mix('/css/pages/invoice.css') }}"  media="screen,projection"/>
+    <link href="{{ mix('/css/pages/invoice.css') }}" rel="stylesheet" media="print" type="text/css">
+@endsection
+
 @section('scripts')
 @parent
 <script>
     $(function () {
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('payment_monthly_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
-  let deleteButton = {
-    text: deleteButtonTrans,
-    url: "{{ route('admin.payment-monthlies.massDestroy') }}",
-    className: 'btn-danger',
-    action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-          return $(entry).data('entry-id')
-      });
+        let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+        $.extend(true, $.fn.dataTable.defaults, {
+            columnDefs: [{
+                targets: 0,
+                visible: false
+            },
+            orderCellsTop: false,
+            order: [[ 1, 'asc' ]],
+            pageLength: 10,
+        });
 
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
+        let table = $('.datatable-PaymentMonthly:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+        $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
+            $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
+        });
+    })
+</script>
 
-        return
-      }
-
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
-    }
-  }
-  dtButtons.push(deleteButton)
-@endcan
-
-  $.extend(true, $.fn.dataTable.defaults, {
-    orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
-    pageLength: 10,
-  });
-  let table = $('.datatable-PaymentMonthly:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
-      $($.fn.dataTable.tables(true)).DataTable()
-          .columns.adjust();
-  });
-  
-})
-
+<script>
+    $('.print-window').click(function() {
+    window.print();
+    });
 </script>
 @endsection

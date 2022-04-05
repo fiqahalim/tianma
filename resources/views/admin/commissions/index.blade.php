@@ -40,6 +40,9 @@
                         <th>
                             &nbsp;
                         </th>
+                        <th>
+                            &nbsp;
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -79,13 +82,8 @@
                                     <i class="fas fa-eye"></i>
                                 </a>
 
-                                {{-- @can('commission_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.commissions.edit', $commission->id) }}">
-                                        <i class="fas fa-pencil-alt"></i>
-                                    </a>
-                                @endcan --}}
-                                <a class="btn btn-xs btn-dark" href="{{ route('admin.commissions.calculator', $order->id) }}">
-                                    <i class="fas fa-calculator"></i>
+                                <a class="btn btn-xs btn-info" href="{{ route('admin.commissions.edit', $order->id) }}">
+                                    <i class="fas fa-pencil-alt"></i>
                                 </a>
 
                                 @can('commission_delete')
@@ -97,6 +95,11 @@
                                         </button>
                                     </form>
                                 @endcan
+                            </td>
+                            <td>
+                                <a class="btn btn-xs btn-dark" href="{{ route('admin.commissions.calculator', $order->id) }}">
+                                    <i class="fas fa-calculator"></i>
+                                </a>
                             </td>
                         </tr>
                     {{-- @endif --}}

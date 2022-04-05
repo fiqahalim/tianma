@@ -54,6 +54,7 @@ class CustomerDetailsController extends Controller
             'address_1' => 'required',
             'mode' => 'required',
             'created_by' => 'required',
+            'payment_name' => 'required',
         ]);
 
         $customer = Customer::where('id_number', '=', $request->input('id_number'))->first();
@@ -111,7 +112,6 @@ class CustomerDetailsController extends Controller
             $payments->payment_name = $request->payment_name;
             $payments->customer_id = $customer->id;
             $payments->save();
-
         } else {
             $customer->update(
                 ['full_name' => request('full_name')],

@@ -41,7 +41,7 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label class="required">{{ trans('cruds.customer.fields.mode') }}</label>
-                    <select class="form-control select2 {{ $errors->has('mode') ? 'is-invalid' : '' }}" name="mode" id="mode">
+                    <select class="form-control select2 {{ $errors->has('mode') ? 'is-invalid' : '' }}" name="mode" id="mode" required>
                         <option value disabled {{ old('mode', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
                         @foreach(App\Models\Customer::MODE_SELECT as $key => $mode)
                             <option value="{{ $key }}" {{ old('mode', '') === (string) $key ? 'selected' : '' }}>
@@ -63,7 +63,7 @@
                     <label class="font-weight-bold required" for="agent_code">
                         Referral {{ trans('global.register.agent_code') }}
                     </label>
-                    <select class="form-control select2 {{ $errors->has('created_by') ? 'is-invalid' : '' }}" name="created_by" id="created_by">
+                    <select class="form-control select2 {{ $errors->has('created_by') ? 'is-invalid' : '' }}" name="created_by" id="created_by" required>
                         @include('components.parent-child')
                     </select>
                 </div>

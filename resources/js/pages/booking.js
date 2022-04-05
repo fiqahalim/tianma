@@ -1,45 +1,49 @@
-$('.container-seats .seat').on('click', function() {
-    var rooms = $('select[name="rooms"]').val();
-    var wings = $('select[name="wings"]').val();
+let selectedSeats = [];
+let selectedSeatsIndexs = [];
+let allSeats = document.querySelectorAll('#container-seats .seat');
 
-    if (rooms && wings) {
-        selectLot();
-    } else {
-        $(this).removeClass('selected');
-        notify('error', "@lang('Please select room and section before select any lot')")
+////////INITIALIZE DATA///////////
+readState();
+updateState();
+
+let containerSeats = document.querySelector('#container-seats');
+containerSeats.addEventListener("click", (e) => {
+    let element = e.target;
+    if (element.classList.contains('seat') && !element.classList.contains('occupied')) {
+        if (element.classList.contains('selected')) {
+            selectedSeatsNumber--;
+            element.classList.remove('selected');
+        } else {
+            selectedSeatsNumber++;
+            element.classList.add('selected');
+        }
     }
-});
+    updateState();
+})
 
-//select and booked lot
-function selectSeat() {
-    let selectedSeats = $('.seat.selected');
-    let seatDetails = ``;
-    // let price = $('input[name=price]').val();
-    // let subtotal = 0;
-    // let currency = '{{ __($general->cur_text) }}';
-    let seats = '';
-    if (selectedSeats.length > 0) {
-        $('.booked-seat-details').removeClass('d-none');
-        $.each(selectedSeats, function(i, value) {
-            seats += $(value).data('seat') + ',';
-            // seatDetails += `<span class="list-group-item d-flex justify-content-between">${$(value).data('seat')} <span>${price} ${currency}</span></span>`;
-            // subtotal = subtotal + parseFloat(price);
-        });
+function updateState() {
+    console.log("allSeats", allSeats);
+    selectedSeats = document.querySelectorAll('.row-seat .seat.selected');
+    selectedSeatsIndexs = [...selectedSeats].map((x) => [...allSeats].indexOf(x));
+    document.querySelector('#count').innerText = selectedSeatsNumber;
+    localStorage.setItem('selectedSeatsNumber', selectedSeatsNumber)
+    localStorage.setItem('selectedSeatsIndexs', JSON.stringify(selectedSeatsIndexs));
+}
 
-        $('input[name=seat]').val(seats);
-        // $('.selected-seat-details').html(seatDetails);
-        // $('.selected-seat-details').append(`<span class="list-group-item d-flex justify-content-between">@lang('Sub total')<span>${subtotal} ${currency}</span></span>`);
-    } else {
-        $('.selected-seat-details').html('');
-        $('.booked-seat-details').addClass('d-none');
-    }
+function readState() {
+    selectedSeatsNumber = +localStorage.getItem('selectedSeatsNumber') || 0;
+    selectedSeatsIndexs = JSON.parse(localStorage.getItem('selectedSeatsIndexs')) || [];
+    [...allSeats].map((seat, index) => {
+        if (selectedSeatsIndexs.includes(index)) {
+            seat.classList.add('selected');
+        }
+    })
 }
 
 function updateTextArea()
 {
-    var allSeatsVals = [];
-
+    // var allSeatsVals = [];
     $('#seatsBlock :checked').each(function() {
-       allSeatsVals.push($(this).val());
+       selectedSeats.push($(this).val());
     });
 }

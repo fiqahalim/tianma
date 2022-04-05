@@ -111,6 +111,19 @@ hr {
     vertical-align: bottom!important;
 }
 
+.alignMe b {
+  display: inline-block;
+  width: 50%;
+  position: relative;
+  padding-right: 10px; /* Ensures colon does not overlay the text */
+}
+
+.alignMe b::after {
+  content: ":";
+  position: absolute;
+  right: 10px;
+}
+
 
 
 
