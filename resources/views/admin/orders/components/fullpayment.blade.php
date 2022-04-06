@@ -80,7 +80,7 @@
                                 <tr data-entry-id="{{ $order->id }}">
                                     <td>1</td>
                                     <td>
-                                        Descrition 1
+                                        {{ Str::upper($order->products->product_name) }}
                                     </td>
                                     <td>
                                         {{ Str::upper($order->customer->mode) }}
@@ -92,7 +92,7 @@
                                         Ref No
                                     </td>
                                     <td>
-                                        {{ $order->installments->amount ?? '' }}
+                                        {{ $order->amount ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
