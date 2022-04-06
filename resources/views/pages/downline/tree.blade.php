@@ -16,9 +16,13 @@
             <ol class="organizational-chart">
                 <li>
                     <div>
-                        <img class="rounded-circle mt-2" src="{{ asset('/images/profile/'.Auth::user()->avatar ?? 'avatar.png') }}" width="80" data-toggle="modal" data-target="#userDetailsModal">
+                        <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ Auth::user()->name }}, Agency Code: {{ Auth::user()->agency_code ? Auth::user()->agency_code : 'Not Available Yet' }}">
+                            <img class="rounded-circle mt-2" src="{{ asset('/images/profile/'.Auth::user()->avatar ?? 'avatar.png') }}" width="80" data-toggle="modal" data-target="#userDetailsModal">
+                        </span>
                         <div class="mt-2">
-                            <span><strong>{{ Auth::user()->agent_code ?? 'Not Available' }}</strong></span>
+                            <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ Auth::user()->name }}, Agency Code: {{ Auth::user()->agency_code ? Auth::user()->agency_code : 'Not Available Yet' }}">
+                                <strong>{{ Auth::user()->agent_code ?? 'Not Available' }}</strong>
+                            </span>
                         </div>
                         <i id="menu-item" class="fas fa-plus-circle" onclick="myFunction()"></i>
                     </div>
@@ -26,7 +30,9 @@
                         <ol>
                             @foreach($user as $key => $childUser)
                                 <li class="sub-menu">
-                                    <img class="rounded-circle mt-2" src="{{ asset('/images/profile/'.$childUser->avatar ?? 'avatar.png') }}" width="80">
+                                    <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}">
+                                        <img class="rounded-circle mt-2" src="{{ asset('/images/profile/'.$childUser->avatar ?? 'avatar.png') }}" width="80">
+                                    </span>
                                     <div class="mt-2">
                                         <span>{{ $childUser->agent_code ?? 'Not Available' }}</span>
                                     </div>

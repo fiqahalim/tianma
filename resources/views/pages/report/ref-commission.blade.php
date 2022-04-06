@@ -4,14 +4,14 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li aria-current="page" class="breadcrumb-item active">
-            {{ trans('global.reports.myCommission') }}
+            {{ trans('global.reports.myCommission') }}s
         </li>
     </ol>
 </nav>
 
 <div class="card">
     <div class="card-header font-weight-bold">
-        {{ trans('cruds.commission.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.commission.title') }} {{ trans('global.list') }}
     </div>
 
     <div class="card-body">
@@ -37,7 +37,7 @@
                 </thead>
                 <tbody>
                     @foreach($commissions as $key => $commission)
-                    @if(!empty($commission->mo_overriding_comm) && $commission->mo_overriding_comm > 0 && $commission->orders->approved == 1)
+                    @if($commission->mo_overriding_comm > 0)
                         <tr data-entry-id="{{ $commission->id }}">
                             <td>
 
@@ -69,28 +69,25 @@
 @parent
 <script>
     $(function () {
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+        let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 
-  $.extend(true, $.fn.dataTable.defaults, {
-    columnDefs: [{
-            targets: 0,
-        },
-        {
-            targets: 1,
-            visible: false
-        }
-    ],
-    orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
-    pageLength: 10,
-  });
-  let table = $('.datatable-Commission:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
-      $($.fn.dataTable.tables(true)).DataTable()
-          .columns.adjust();
-  });
-
-})
-
+        $.extend(true, $.fn.dataTable.defaults, {
+            columnDefs: [{
+                targets: 0,
+            },
+            {
+                targets: 1,
+                visible: false,
+            }
+        ],
+        orderCellsTop: true,
+        order: [[ 1, 'desc' ]],
+        pageLength: 10,
+    });
+        let table = $('.datatable-Commission:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+        $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
+            $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
+        });
+    })
 </script>
 @endsection

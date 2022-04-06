@@ -4,14 +4,14 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            {{ trans('cruds.order.title') }}
+            My {{ trans('cruds.order.title_singular') }}s
         </li>
     </ol>
 </nav>
 
 <div class="card">
     <div class="card-header font-weight-bold">
-        {{ trans('cruds.order.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.order.title_singular') }}s {{ trans('global.list') }}
     </div>
 
     <div class="card-body">

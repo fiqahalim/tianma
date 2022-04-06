@@ -165,7 +165,7 @@
         },
         {
             targets: 1,
-            visible: false
+            visible: false,
         }
     ],
     orderCellsTop: true,

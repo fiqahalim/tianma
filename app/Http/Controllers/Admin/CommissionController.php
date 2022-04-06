@@ -121,27 +121,27 @@ class CommissionController extends Controller
                 case 1:
                     $totalCommission += round(($installmentPV * 0.16), 2);
                     $parentCommission = $this->getParent();
-                    // $pp = $this->getPP();
+                    $pp = $this->getPP();
                     break;
                 case 2:
                     $totalCommission += round(($installmentPV * 0.04), 2);
                     $parentCommission = $this->getParent();
-                    // $pp = $this->getPP();
+                    $pp = $this->getPP();
                     break;
                 case 3:
                     $totalCommission += round(($installmentPV * 0.02), 2);
                     $parentCommission = $this->getParent();
-                    // $pp = $this->getPP();
+                    $pp = $this->getPP();
                     break;
                 case 4:
                     $totalCommission += round(($installmentPV * 0.04),2);
                     $parentCommission = $this->getParent();
-                    // $pp = $this->getPP();
+                    $pp = $this->getPP();
                     break;
                 case 5:
                     $totalCommission += round(($installmentPV * 0.05), 2);
                     $parentCommission = $this->getParent();
-                    // $pp = $this->getPP();
+                    $pp = $this->getPP();
                     break;
                 default:
                     break;

@@ -4,14 +4,14 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li aria-current="page" class="breadcrumb-item active">
-            {{ trans('global.reports.myCust') }}
+            My {{ trans('cruds.customer.title') }}s
         </li>
     </ol>
 </nav>
 
 <div class="card">
     <div class="card-header font-weight-bold">
-        {{ trans('cruds.customer.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.customer.title')}}s {{ trans('global.list') }}
     </div>
 
     <div class="card-body">
@@ -91,7 +91,7 @@
                 },
                 {
                     targets: 1,
-                    visible: false
+                    visible: false,
                 }
             ],
             orderCellsTop: true,

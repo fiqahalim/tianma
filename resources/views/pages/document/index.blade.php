@@ -3,8 +3,9 @@
 @section('content')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item">{{ trans('cruds.documentManagement.title') }}</li>
-        <li class="breadcrumb-item active" aria-current="page">{{ trans('cruds.myDocument.title') }}</li>
+        <li class="breadcrumb-item active" aria-current="page">
+            {{ trans('cruds.myDocument.title') }}s
+        </li>
     </ol>
 </nav>
 
@@ -28,6 +29,7 @@
                 <thead>
                     <tr class="table-info">
                         <th width="10"></th>
+                        <th>ID</th>
                         <th>
                             {{ trans('global.createdDate') }}
                         </th>
@@ -49,6 +51,7 @@
                     @foreach($myDocuments as $key => $myDocument)
                         <tr data-entry-id="{{ $myDocument->id }}">
                             <td></td>
+                            <td>{{ $myDocument->id }}</td>
                             <td>
                                 {{ $myDocument->created_at ?? '' }}
                             </td>
@@ -89,6 +92,14 @@
         let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 
         $.extend(true, $.fn.dataTable.defaults, {
+            columnDefs: [{
+                    targets: 0,
+                },
+                {
+                    targets: 1,
+                    visible: false,
+                }
+            ],
             orderCellsTop: true,
             order: [[ 1, 'desc' ]],
             pageLength: 10,
