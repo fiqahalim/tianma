@@ -47,7 +47,7 @@
             </div>
 
             <div class="form-group float-right">
-                <a class="btn btn-default" href="{{ route('admin.search', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
+                <a class="btn btn-default" href="{{ route('admin.new-order.index') }}">
                     {{ trans('global.back') }}
                 </a>
                 <button class="btn btn-primary" type="submit">
