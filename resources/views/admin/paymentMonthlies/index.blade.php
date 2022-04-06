@@ -37,7 +37,7 @@
         <div class="row">
             <div class="col"></div>
             <div class="col-6 text-center">
-                <h4><strong><u>OFFICIAL RECEIPT</u></strong></h4>
+                <h4><strong><u>TRANSACTION RECEIPT</u></strong></h4>
             </div>
             <div class="col"></div>
         </div>
@@ -98,7 +98,7 @@
                             <table class="table table-bordered datatable datatable-PaymentMonthly">
                                 <thead class="bg-none bgc-default-tp1">
                                     <tr class="table-dark">
-                                        <th>Payment Date</th>
+                                        <th>Transaction Date</th>
                                         <th>Paid Amount (RM)</th>
                                         <th>Status</th>
                                         <th>Remaining Installment (months)</th>
