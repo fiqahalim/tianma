@@ -82,19 +82,9 @@
                                     <i class="fas fa-eye"></i>
                                 </a>
 
-                                {{-- <a class="btn btn-xs btn-info" href="{{ route('admin.commissions.edit', $order->id) }}">
+                                <a class="btn btn-xs btn-info" href="{{ route('admin.commissions.edit', $order->id) }}">
                                     <i class="fas fa-pencil-alt"></i>
-                                </a> --}}
-
-                                @can('commission_delete')
-                                    <form action="{{ route('admin.commissions.destroy', $order->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <button type="submit" class="btn btn-xs btn-danger">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </form>
-                                @endcan
+                                </a>
                             </td>
                             <td>
                                 <a class="btn btn-xs btn-dark" href="{{ route('admin.commissions.calculator', $order->id) }}">

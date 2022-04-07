@@ -1,92 +1,73 @@
 @extends('layouts.admin')
 
 @section('content')
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">{{ trans('cruds.commission.title') }}</li>
-        <li class="breadcrumb-item active" aria-current="page">Edit {{ trans('cruds.commission.title') }}</li>
-    </ol>
-</nav>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">{{ trans('cruds.commission.title') }}</li>
+            <li class="breadcrumb-item active" aria-current="page">Edit {{ trans('cruds.commission.title') }}</li>
+        </ol>
+    </nav>
 
-<div class="card">
-    <div class="card-header font-weight-bold">
-        {{ trans('global.edit') }} {{ trans('cruds.commission.title_singular') }}
+    <div class="card">
+        <div class="card-header font-weight-bold">
+            Commission Installment Calculator
+        </div>
+
+        <div class="card-body">
+            <form method="POST" action="{{ route("admin.commissions.store", [$order->id]) }}" enctype="multipart/form-data" id="commissionInstallment-form">
+                @csrf
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="point_value">Point Value</label>
+                            <div class="input-group mb-3">
+                                <input class="form-control" type="text" name="point_value" id="point_value" value="{{ old('point_value', $order->commissions->point_value)}}" readonly>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i>PV</i>
+                                    </span>
+                                </div>
+                                @if($errors->has('point_value'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('point_value') }}
+                                    </div>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.order.fields.amount_helper') }}</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="installment_year">Monthly Installment</label>
+                            <div class="input-group mb-3">
+                                <input class="form-control" type="text" name="installment_year" id="installment_year" value="{{ old('installment_year', $order->installments->installment_year) }}" readonly>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i>months</i>
+                                    </span>
+                                </div>
+                                @if($errors->has('installment_year'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('installment_year') }}
+                                    </div>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.order.fields.amount_helper') }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <button type="submit" class="btn btn-danger btn-lg" style="width: 100%;">Calculate</button>
+                    </div>
+            </form>
+        </div>
     </div>
 
-    <div class="card-body">
-        <form method="POST" action="{{ route("admin.commissions.update", [$commission->id]) }}" enctype="multipart/form-data">
-            @method('PUT')
-            @csrf
-
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="mo_overriding_comm">{{ trans('cruds.commission.fields.commission') }}</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i>RM</i>
-                            </span>
-                        </div>
-                        <input class="form-control {{ $errors->has('mo_overriding_comm') ? 'is-invalid' : '' }}" type="number" name="commission" id="mo_overriding_comm" value="{{ old('mo_overriding_comm', $commission->mo_overriding_comm) }}" step="0.01" readonly>
-                        @if($errors->has('mo_overriding_comm'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('mo_overriding_comm') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.commission.fields.commission_helper') }}</span>
-                    </div>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="mo_spin_off">{{ trans('cruds.commission.fields.increased_commission') }}</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i>RM</i>
-                            </span>
-                        </div>
-                        <input class="form-control {{ $errors->has('mo_spin_off') ? 'is-invalid' : '' }}" type="number" name="mo_spin_off" id="mo_spin_off" value="{{ old('mo_spin_off', $commission->mo_spin_off) }}" step="0.01" readonly>
-                        @if($errors->has('mo_spin_off'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('mo_spin_off') }}
-                            </div>
-                        @endif
-                        <span class="help-block">{{ trans('cruds.commission.fields.increased_commission_helper') }}</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="user_id">{{ trans('cruds.commission.fields.user') }}</label>
-                    <input class="form-control {{ $errors->has('user') ? 'is-invalid' : '' }}" type="text" name="user_id" id="user_id" value="{{ $commission->user->agent_code }}" readonly>
-                    @if($errors->has('user'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('user') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.commission.fields.user_helper') }}</span>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="order_id">{{ trans('cruds.commission.fields.order') }}</label>
-                    <input class="form-control {{ $errors->has('orders') ? 'is-invalid' : '' }}" type="text" name="order_id" id="order_id" value="#{{ $commission->orders->ref_no }}" readonly>
-                    @if($errors->has('orders'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('orders') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.commission.fields.order_helper') }}</span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.commissions.index') }}">
-                    {{ trans('global.back_to_list') }}
-                </a>
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
-        </form>
+    <div class="form-group">
+        <a class="btn btn-secondary" href="{{ route('admin.commissions.index') }}">
+            {{ trans('global.back_to_list') }}
+        </a>
     </div>
-</div>
+@endsection
+
+@section('styles')
+    <link href="{{ mix('/css/pages/installment.css') }}" media="screen,projection" rel="stylesheet" type="text/css"/>
 @endsection

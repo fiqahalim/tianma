@@ -50,7 +50,8 @@ class OrderConfirmationController extends Controller
         $pv = session('products')['point_value'];
 
         $totalProductAmount = 0;
-        $totalProductAmount += $products->total_cost;
+        $sst = 6;
+        $totalProductAmount = ($products->total_cost) + ($sst/100);
 
         $orders = new Order;
         $order->ref_no = $this->getOrderNumber();

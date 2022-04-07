@@ -20,7 +20,8 @@ mix.js(jsPath + 'app.js', 'public/js')
     .js(jsPath + 'pages/reviewOrder.js', 'public/js/pages')
     .js(jsPath + 'pages/installment.js', 'public/js/pages')
     .js(jsPath + 'pages/customer-details.js', 'public/js/pages')
-    .js(jsPath + 'pages/commission.js', 'public/js/pages');
+    .js(jsPath + 'pages/commission.js', 'public/js/pages')
+    .js(jsPath + 'pages/commission-installment.js', 'public/js/pages');
 
 mix.postCss('resources/css/app.css', 'public/css', [
         //

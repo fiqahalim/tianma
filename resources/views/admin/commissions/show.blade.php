@@ -5,6 +5,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item">{{ trans('cruds.commission.title') }}</li>
             <li class="breadcrumb-item active" aria-current="page">View {{ trans('cruds.commission.title') }}</li>
+            <li class="breadcrumb-item">{{ $order->id }}</li>
         </ol>
     </nav>
 
@@ -14,69 +15,92 @@
         </div>
 
         <div class="card-body">
+            {{-- First Payout --}}
             <div class="form-group">
+                <h5>First Payment</h5>
                 <table class="table table-light table-bordered">
                     <thead>
                         <tr class="table-info">
                             <th scope="col">Agent Code</th>
                             <th scope="col">Agent Ranking</th>
-                            @if(isset($commission->orders->customer) ?? $commission->orders->customer->mode == 'Installment')
+                            @if(isset($order->customer) ?? $order->customer->mode == 'Installment')
                                 <th scope="col">New Point Value (PV)</th>
                             @else
                                 <th scope="col">Point Value (PV)</th>
                             @endif
                             <th scope="col">Percentage (%)</th>
-                            @if($commission->first_month > 0)
+                            @if($order->commissions->first_month > 0)
                                 <th scope="col">First Month Payment</th>
                             @endif
-                            <th scope="col">Commissions (Per Month)</th>
-                            @if(isset($commission->orders->customer) ?? $commission->orders->customer->mode == 'Installment')
-                                <th scope="col">Installments Period (Months)</th>
-                            @endif
+                            <th scope="col">Commissions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>
-                                {{ $commission->user->agent_code }}
+                                {{ $order->createdBy->agent_code }}
                             </td>
                             <td>
-                                @if($commission->user->ranking_id == 1)
+                                @if($order->createdBy->ranking_id == 1)
                                     SD
-                                @elseif($commission->user->ranking_id == 2)
+                                @elseif($order->createdBy->ranking_id == 2)
                                     DSD
-                                @elseif($commission->user->ranking_id == 3)
+                                @elseif($order->createdBy->ranking_id == 3)
                                     BDD A
-                                @elseif($commission->user->ranking_id == 4)
+                                @elseif($order->createdBy->ranking_id == 4)
                                     BDD B
                                 @else
                                     CBDD
                                 @endif
                             </td>
                             <td id="point_value" name="point_value">
-                                {{ $commission->point_value }}
+                                {{ $order->commissions->point_value }}
                             </td>
                             <td>
-                                {{ $commission->percentage }}
+                                {{ $order->commissions->percentage }}
                             </td>
-                            @if($commission->first_month > 0)
+                            @if($order->commissions->first_month > 0)
                                 <td>Yes</td>
                             @endif
                             <td>
-                                RM {{ $commission->mo_overriding_comm }}
+                                RM {{ $order->commissions->mo_overriding_comm }}
                             </td>
-                            @if(isset($commission->orders->customer) ?? $commission->orders->customer->mode == 'Installment')
-                                <td>
-                                    {{ $commission->orders->installments->installment_year }} months
-                                </td>
-                            @endif
                         </tr>
                     </tbody>
                 </table>
             </div>
 
+            {{-- Installment Payment --}}
+            @if(isset($order->customer) ?? $order->customer->mode == 'Installment')
+                <div class="form-group mt-5">
+                    <h5>Installment Payment (<i>{{ $order->installments->installment_year }} months</i>)</h5>
+                    <table class="table table-light table-bordered datatable datatable-installments">
+                        <thead>
+                            @if($order->commissions->mo_overriding_comm != "0")
+                                <tr class="table-info">
+                                    <th></th>
+                                    <th>ID</th>
+                                    <th scope="col">Commissions (Per Month)</th>
+                                </tr>
+                            @endif
+                        </thead>
+                        <tbody>
+                            @foreach($allCommissions as $key => $allCommission)
+                                @if($allCommission->mo_overriding_comm != "0")
+                                    <tr data-entry-id="{{ $allCommission->id }}">
+                                        <td></td>
+                                        <td>{{ $allCommission->id }}</td>
+                                        <td>{{ $allCommission->mo_overriding_comm }}</td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @endif
+
             {{-- Upperline Info --}}
-            @if(isset($commission->user->parent) ?? !empty($commission->user->parent))
+            @if(isset($order->createdBy->parent) ?? !empty($order->createdBy->parent))
                 <div class="form-group mt-5">
                     <table class="table table-light table-bordered">
                         <thead>
@@ -88,16 +112,16 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    {{ $commission->user->parent->agent_code }}
+                                    {{ $order->createdBy->parent->agent_code }}
                                 </td>
                                 <td>
-                                    @if($commission->user->parent->ranking_id == 1)
+                                    @if($order->createdBy->parent->ranking_id == 1)
                                         SD
-                                    @elseif($commission->user->parent->ranking_id == 2)
+                                    @elseif($order->createdBy->parent->ranking_id == 2)
                                         DSD
-                                    @elseif($commission->user->parent->ranking_id == 3)
+                                    @elseif($order->createdBy->parent->ranking_id == 3)
                                         BDD A
-                                    @elseif($commission->user->parent->ranking_id == 4)
+                                    @elseif($order->createdBy->parent->ranking_id == 4)
                                         BDD B
                                     @else
                                         CBDD
@@ -116,4 +140,32 @@
             {{ trans('global.back_to_list') }}
         </a>
     </div>
+@endsection
+
+@section('scripts')
+@parent
+<script>
+    $(function () {
+        let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+
+        $.extend(true, $.fn.dataTable.defaults, {
+            columnDefs: [{
+                targets: 0,
+            },
+            {
+                targets: 1,
+                visible: false,
+            }
+        ],
+        orderCellsTop: true,
+        order: [[ 1, 'desc' ]],
+        pageLength: 10,
+      });
+
+        let table = $('.datatable-installments:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+        $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
+            $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
+        });
+    })
+</script>
 @endsection

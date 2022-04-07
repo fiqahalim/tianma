@@ -194,7 +194,10 @@ Route::group(['middleware' => 'auth'], function() {
 
         // Commission
         Route::delete('commissions/destroy', [\App\Http\Controllers\Admin\CommissionController::class, 'massDestroy'])->name('commissions.massDestroy');
-        Route::resource('commissions', '\App\Http\Controllers\Admin\CommissionController');
+        Route::match(['get', 'post'], 'commissions/index', [\App\Http\Controllers\Admin\CommissionController::class,'index'])->name('commissions.index');
+        Route::match(['get', 'post'], 'commissions/show/{order}', [\App\Http\Controllers\Admin\CommissionController::class,'show'])->name('commissions.show');
+        Route::match(['get', 'post'], 'commissions/edit/{order}', [\App\Http\Controllers\Admin\CommissionController::class,'edit'])->name('commissions.edit');
+        Route::match(['get', 'post'], 'commissions/store/{order}', [\App\Http\Controllers\Admin\CommissionController::class,'store'])->name('commissions.store');
 
         // Commission Calculator
         Route::match(['get', 'post'], 'commissions/calculator/{order}', [\App\Http\Controllers\Admin\CommissionController::class,'commissionCalculator'])->name('commissions.calculator');
