@@ -135,7 +135,11 @@ class CommissionController extends Controller
             ->where('commissions.order_id', $order->id)
             ->get(['commissions.*']);
 
-        return view('admin.commissions.show', compact('order', 'allCommissions'));
+        $firstPayout = Commission::join('orders', 'orders.id', '=', 'commissions.order_id')
+            ->where('commissions.order_id', $order->id)
+            ->first();
+
+        return view('admin.commissions.show', compact('order', 'allCommissions', 'firstPayout'));
     }
 
     public function destroy(Commission $commission)
@@ -296,7 +300,7 @@ class CommissionController extends Controller
         $commissions->mo_overriding_comm = $totalCommission;
         $commissions->created_at = $current = Carbon::now();
         $commissions->user_id = $user->parent_id;
-        $commissions->order_id = $orders->id;
+        // $commissions->order_id = $orders->id;
         $commissions->save();
 
         return $commissions;
@@ -345,7 +349,7 @@ class CommissionController extends Controller
                 $commissions->mo_overriding_comm = $totalCommission;
                 $commissions->created_at = $current = Carbon::now();
                 $commissions->user_id = $pss->parent_id;
-                $commissions->order_id = $orders->id;
+                // $commissions->order_id = $orders->id;
                 $commissions->save();
 
                 return $commissions;
