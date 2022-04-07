@@ -54,16 +54,16 @@
                                 @endif
                             </td>
                             <td id="point_value" name="point_value">
-                                {{ $order->commissions->point_value }}
+                                {{ $firstPayout->point_value }}
                             </td>
                             <td>
-                                {{ $order->commissions->percentage }}
+                                {{ $firstPayout->percentage }}
                             </td>
                             @if($order->commissions->first_month > 0)
                                 <td>Yes</td>
                             @endif
                             <td>
-                                RM {{ $order->commissions->mo_overriding_comm }}
+                                RM {{ $firstPayout->mo_overriding_comm }}
                             </td>
                         </tr>
                     </tbody>
@@ -158,7 +158,7 @@
             }
         ],
         orderCellsTop: true,
-        order: [[ 1, 'desc' ]],
+        order: [[ 1, 'asc' ]],
         pageLength: 10,
       });
 
