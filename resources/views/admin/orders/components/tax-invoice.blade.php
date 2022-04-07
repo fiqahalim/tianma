@@ -59,12 +59,6 @@
                     </div>
                 </div>
 
-                {{-- <div class="row">
-                    <div class="col-sm-6 mt-2">
-                        <h5>Next Payment Date: {{ Carbon\Carbon::parse($date)->format('d-M-Y') }}</h5>
-                    </div>
-                </div> --}}
-
                 <div class="mt-4">
                     <div class="table-responsive">
                         <table class="table table-bordered border-0 border-b-2 brc-default-l1">
@@ -79,22 +73,19 @@
                                 </tr>
                             </thead>
                             @php
-                                $cc = isset($order->customer->payments) ? $order->customer->payments : '';
-                                foreach($cc as $k => $pay) {
-                                    $payments = json_encode($pay->payment_name[0]);
-                                }
+                                $payments = isset($order->customer) ? $order->customer->payments[0] : '';
                             @endphp
                             <tbody class="text-95 text-secondary-d3">
-                                <tr data-entry-id="{{ $order->id }}">
+                                <tr>
                                     <td>1</td>
                                     <td>
-                                        Descrition 1
+                                        {{ Str::upper($order->products->product_name) }}
                                     </td>
                                     <td>
                                         {{ Str::upper($order->customer->mode) }}
                                     </td>
                                     <td>
-                                        {{-- {{ Str::upper($payment_name ?? '') }} --}}
+                                        {{ Str::upper($cc[0]->payment_name ?? '') }}
                                     </td>
                                     <td>
                                         Ref No
