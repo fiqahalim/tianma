@@ -44,8 +44,8 @@ class CommissionController extends Controller
         $totalCommission = $installmentPV = 0;
 
         $rankings = isset($orders->createdBy) ? $orders->createdBy : '';
-        $newPV = isset($orders->commissions->point_value) ? $orders->commissions->point_value : '';
-        $installmentMonths = isset($orders->installments->installment_year) ? $orders->installments->installment_year : '';
+        $newPV = $request->point_value;
+        $installmentMonths = $request->installment_year;
 
         // check method payment
         if ($orders->customer->mode == 'Installment') {
