@@ -20,7 +20,7 @@
                         <div class="form-group col-md-6">
                             <label for="point_value">Point Value</label>
                             <div class="input-group mb-3">
-                                <input class="form-control" type="text" name="point_value" id="point_value" value="{{ old('point_value', $order->commissions->point_value)}}" readonly>
+                                <input class="form-control" type="text" name="point_value" id="point_value" value="{{ old('point_value', $order->commissions->point_value)}}" required>
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
                                         <i>PV</i>
@@ -38,7 +38,7 @@
                         <div class="form-group col-md-6">
                             <label for="installment_year">Monthly Installment</label>
                             <div class="input-group mb-3">
-                                <input class="form-control" type="text" name="installment_year" id="installment_year" value="{{ old('installment_year', $order->installments->installment_year) }}" readonly>
+                                <input class="form-control" type="text" name="installment_year" id="installment_year" value="{{ old('installment_year', $order->installments->installment_year) }}" required>
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
                                         <i>months</i>
