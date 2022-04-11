@@ -86,11 +86,15 @@
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
                             </td>
-                            <td>
-                                <a class="btn btn-xs btn-dark" href="{{ route('admin.commissions.calculator', $order->id) }}">
-                                    <i class="fas fa-calculator"></i>
-                                </a>
-                            </td>
+                            @if(empty($order->commissions->mo_overriding_comm))
+                                <td>
+                                    <a class="btn btn-xs btn-dark" href="{{ route('admin.commissions.calculator', $order->id) }}">
+                                        <i class="fas fa-calculator"></i>
+                                    </a>
+                                </td>
+                            @else
+                                <td></td>
+                            @endif
                         </tr>
                     {{-- @endif --}}
                     @endforeach

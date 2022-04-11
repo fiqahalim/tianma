@@ -113,12 +113,6 @@
                                 {{ $user->agency_code ?? '' }}
                             </td>
                             <td>
-                                @can('user_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.users.show', $user->id) }}">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                @endcan
-
                                 @can('user_edit')
                                     <a class="btn btn-xs btn-info" href="{{ route('admin.users.edit', $user->id) }}">
                                         <i class="fas fa-pencil-alt"></i>

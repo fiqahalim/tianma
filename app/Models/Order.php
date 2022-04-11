@@ -41,6 +41,7 @@ class Order extends Model
         'team_id',
         'created_by',
         'product_id',
+        'book_locations_id',
     ];
 
     public function customer()
@@ -86,5 +87,10 @@ class Order extends Model
     public function fullPayments()
     {
         return $this->belongsTo(Transaction::class, 'id', 'order_id');
+    }
+
+    public function bookLocations()
+    {
+        return $this->hasMany(BookLocation::class, 'id', 'book_locations_id');
     }
 }

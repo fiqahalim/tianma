@@ -61,7 +61,7 @@ class OrdersController extends Controller
     {
         abort_if(Gate::denies('order_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $order->load('customer', 'team', 'createdBy', 'commissions', 'products');
+        $order->load('customer', 'team', 'createdBy', 'commissions', 'products', 'bookLocations');
 
         $amount = $order->amount;
         $numberToWords = new NumberToWords();

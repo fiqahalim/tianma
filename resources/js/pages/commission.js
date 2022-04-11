@@ -27,27 +27,20 @@ commissionForm.addEventListener('submit', (e) => {
 
         //Display elements using DOM manipulation
         document.getElementById("point_value").innerHTML = "" + balancePV;
-        // document.getElementById("outstanding_balance").innerHTML = "RM " + calculatePV;
 
         document.getElementById("point_value").value = balancePV;
-        // document.getElementById("outstanding_balance").value = calculatePV;
 
     } else if (calculatedPercentage == 20) {
         console.log("equal to 20");
         const calcPV = principal * (calculatedPercentage / 100) * calculateMonth;
         const balancePV = calcPV.toFixed();
 
-        console.log(calcPV);
-        console.log(balancePV);
-
         //Display elements using DOM manipulation
         document.getElementById("point_value").innerHTML = "" + balancePV;
-        // document.getElementById("outstanding_balance").innerHTML = "RM " + calculatePV;
 
         document.getElementById("point_value").value = balancePV;
-        // document.getElementById("outstanding_balance").value = calculatePV;
 
-    } else {
+    } else if (calculatedPercentage > 20 && calculatedPercentage < 100) {
         console.log("more than 20");
         const balPercentage = calculatedPercentage - 20;
         const firstPV = principal * (20 / 100) * calculateMonth;
@@ -62,9 +55,17 @@ commissionForm.addEventListener('submit', (e) => {
 
         //Display elements using DOM manipulation
         document.getElementById("point_value").innerHTML = "" + balancePV;
-        // document.getElementById("outstanding_balance").innerHTML = "RM " + calculatePV;
-
         document.getElementById("point_value").value = balancePV;
-        // document.getElementById("outstanding_balance").value = calculatePV;
+
+    } else {
+        console.log("equal to 100");
+        const calcPV = principal * (100 / 100) * calculateMonth;
+        const balancePV = calcPV.toFixed();
+
+        console.log(balancePV);
+
+        //Display elements using DOM manipulation
+        document.getElementById("point_value").innerHTML = "" + balancePV;
+        document.getElementById("point_value").value = balancePV;
     }
 });

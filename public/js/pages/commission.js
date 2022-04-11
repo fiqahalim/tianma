@@ -25,23 +25,19 @@ commissionForm.addEventListener('submit', function (e) {
     console.log(calcPV);
     console.log(balancePV); //Display elements using DOM manipulation
 
-    document.getElementById("point_value").innerHTML = "" + balancePV; // document.getElementById("outstanding_balance").innerHTML = "RM " + calculatePV;
-
-    document.getElementById("point_value").value = balancePV; // document.getElementById("outstanding_balance").value = calculatePV;
+    document.getElementById("point_value").innerHTML = "" + balancePV;
+    document.getElementById("point_value").value = balancePV;
   } else if (calculatedPercentage == 20) {
     console.log("equal to 20");
 
     var _calcPV = principal * (calculatedPercentage / 100) * calculateMonth;
 
-    var _balancePV = _calcPV.toFixed();
+    var _balancePV = _calcPV.toFixed(); //Display elements using DOM manipulation
 
-    console.log(_calcPV);
-    console.log(_balancePV); //Display elements using DOM manipulation
 
-    document.getElementById("point_value").innerHTML = "" + _balancePV; // document.getElementById("outstanding_balance").innerHTML = "RM " + calculatePV;
-
-    document.getElementById("point_value").value = _balancePV; // document.getElementById("outstanding_balance").value = calculatePV;
-  } else {
+    document.getElementById("point_value").innerHTML = "" + _balancePV;
+    document.getElementById("point_value").value = _balancePV;
+  } else if (calculatedPercentage > 20 && calculatedPercentage < 100) {
     console.log("more than 20");
     var balPercentage = calculatedPercentage - 20;
     var firstPV = principal * (20 / 100) * calculateMonth;
@@ -56,9 +52,19 @@ commissionForm.addEventListener('submit', function (e) {
     console.log(secondPV);
     console.log(_balancePV2); //Display elements using DOM manipulation
 
-    document.getElementById("point_value").innerHTML = "" + _balancePV2; // document.getElementById("outstanding_balance").innerHTML = "RM " + calculatePV;
+    document.getElementById("point_value").innerHTML = "" + _balancePV2;
+    document.getElementById("point_value").value = _balancePV2;
+  } else {
+    console.log("equal to 100");
 
-    document.getElementById("point_value").value = _balancePV2; // document.getElementById("outstanding_balance").value = calculatePV;
+    var _calcPV3 = principal * (100 / 100) * calculateMonth;
+
+    var _balancePV3 = _calcPV3.toFixed();
+
+    console.log(_balancePV3); //Display elements using DOM manipulation
+
+    document.getElementById("point_value").innerHTML = "" + _balancePV3;
+    document.getElementById("point_value").value = _balancePV3;
   }
 });
 /******/ })()

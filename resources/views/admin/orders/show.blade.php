@@ -36,16 +36,6 @@
         </div>
     </div>
 
-    {{-- @if($order->customer->mode == 'Installment')
-        <div class="card">
-            <div class="card-body">
-                <div class="form-group">
-                    @include('admin.orders.components.tax-invoice')
-                </div>
-            </div>
-        </div>
-    @endif --}}
-
     <div class="row ml-2">
         <div class="form-group">
             <a class="btn btn-default" href="{{ route('admin.orders.index') }}">

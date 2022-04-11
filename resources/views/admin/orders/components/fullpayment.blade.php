@@ -28,7 +28,7 @@
             <div class="col-12 col-lg-12">
                 <div class="row">
                     <div class="col-8">
-                        <div class="text-dark">
+                        <div class="text-dark-m2">
                             <div class="my-1">
                                 <p style="font-size: 12pt; font-family: Arial, Helvetica, sans-serif;">
                                     {{ Str::upper($order->customer->full_name) }} <br>
@@ -47,6 +47,13 @@
                     <div class="col-4 justify-content-end">
                         <div class="text-dark">
                             <div>
+                                @php
+                                    $getUnitNo = isset($order->bookLocations) ? $order->bookLocations : '';
+                                    foreach($getUnitNo as $unit) {
+                                        $bookLots = $unit->lotBookings->seats;
+                                        $unitNo = implode(", ", $bookLots);
+                                    }
+                                @endphp
                                 <p style="font-size: 12pt; font-family: Arial, Helvetica, sans-serif;" class="alignMe">
                                     <b>RECEIPT NO</b><br>
                                     <b>ORDER ID</b> #{{ $order->ref_no ?? '' }} <br>
@@ -73,8 +80,11 @@
                                 </tr>
                             </thead>
                             @php
-                                $payments = isset($order->customer) ? $order->customer->payments[0]->payment_name : '';
-                                $payment_name = implode(", ", $payments);
+                                $payments = isset($order->customer->payments) ? $order->customer->payments : '';
+                                foreach($payments as $pay) {
+                                    $payName = $pay->payment_name;
+                                    $payment_name = implode(", ", $payName);
+                                }
                             @endphp
                             <tbody class="text-95 text-secondary-d3">
                                 <tr data-entry-id="{{ $order->id }}">

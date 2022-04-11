@@ -24,10 +24,16 @@ class BookLocation extends Model
         'level',
         'created_at',
         'updated_at',
+        'book_locations_id',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
+    }
+
+    public function lotBookings()
+    {
+        return $this->belongsTo(ProductBooking::class, 'id', 'book_locations_id');
     }
 }

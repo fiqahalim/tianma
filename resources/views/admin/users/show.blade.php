@@ -15,11 +15,11 @@
                 <ol class="organizational-chart">
                     <li>
                         <div>
-                            <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $user->name }}, Agency Code: {{ $user->agency_code ? $user->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totalComms }}">
+                            <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $user->name }}, Agency Code: {{ $user->agency_code ? $user->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totalComms }}, Ranking: {{ $user->rankings->category }}">
                                 <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .Auth::user()->avatar) ?? '/images/avatar.png' }}" width="60" height="60">
                             </span>
                             <div class="mt-2">
-                                <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $user->name }}, Agency Code: {{ $user->agency_code ? $user->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totalComms }}">
+                                <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $user->name }}, Agency Code: {{ $user->agency_code ? $user->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totalComms }}, Ranking: {{ $user->rankings->category }}">
                                     <strong>{{ $user->agent_code }}</strong>
                                 </span>
                             </div>

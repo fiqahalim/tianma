@@ -67,7 +67,7 @@
                             </td>
                             @if(isset($comms->orders->customer) ?? $comms->orders->customer->mode == 'Installment')
                                 <td>
-                                    {{ $comms->orders->installments->installment_year }} months
+                                    {{ isset($comms->orders->installments->installment_year) ?? $comms->orders->installments->installment_year  }} months
                                 </td>
                             @endif
                         </tr>
