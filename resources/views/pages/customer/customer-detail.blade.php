@@ -105,5 +105,42 @@
             curcountry.value      = "";
         }
     }
+
+    function getPurchaser() {
+        let purchaser = document.getElementById('purchaser');
+        let purchaserName = document.getElementById('full_name');
+        let purchaserIDNumber = document.getElementById("id_number");
+        let purchaserMobile = document.getElementById("mobile");
+
+        let contact_person_name = document.getElementById('contact_person_name');
+        let cperson_id_number = document.getElementById("cperson_id_number");
+        let contact_person_no = document.getElementById("contact_person_no");
+
+        if(purchaser.checked == true) {
+            let full_nameValue = full_name.value;
+            let id_numberValue = id_number.value;
+            let mobileValue = mobile.value;
+
+            contact_person_name.value = full_nameValue;
+            cperson_id_number.value = id_numberValue;
+            contact_person_no.value = mobileValue;
+        } else {
+            contact_person_name.value = "";
+            cperson_id_number = "";
+            contact_person_no = "";
+        }
+    }
+</script>
+<script>
+    var i = 0;
+    $("#dynamic-ar").click(function () {
+        ++i;
+        $("#dynamicAddRemove").append('<div class="form-row"><div class="form-group col-md-4"><input type="text" name="moreFields[' + i +
+            '][cperson_name]" placeholder="Intended Name" class="form-control" /></div><div><button type="button" class="btn btn-outline-danger remove-input-field">Remove</button></div></div>'
+            );
+    });
+    $(document).on('click', '.remove-input-field', function () {
+        $(this).parents('div').remove();
+    });
 </script>
 @endsection

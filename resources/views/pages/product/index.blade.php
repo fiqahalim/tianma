@@ -43,8 +43,9 @@
                                             </a>
                                         </h5>
                                         <!-- Product price-->
+                                        <span><strong>Product Price</strong></span><br>
                                         RM{{ $product->price }}
-                                        <p class="card-text">{{ $product->product_code }}</p>
+                                        <p class="card-text mt-3">{{ $product->product_code }}</p>
                                     </div>
                                 </div>
                                 <!-- Product actions-->
