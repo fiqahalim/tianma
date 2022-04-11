@@ -10,39 +10,17 @@
     <div aria-labelledby="headingTwo" class="collapse" data-parent="#accordionExample" id="collapseTwo">
         <div class="card-body">
             <div class="form-row">
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4">
                     <label for="cperson_name">
                         Name
                     </label>
-                    <input class="form-control {{ $errors->has('cperson_name') ? 'is-invalid' : '' }}" type="text" name="cperson_name" id="cperson_name" value="{{ old('cperson_name', '') }}">
+                    <input class="form-control {{ $errors->has('cperson_name') ? 'is-invalid' : '' }}" type="text" name="moreFields[0][cperson_name]" id="cperson_name" value="{{ old('cperson_name', '') }}">
                     @if($errors->has('cperson_name'))
                     <div class="invalid-feedback">
                         {{ $errors->first('cperson_name') }}
                     </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.customer.fields.contact_person_name_helper') }}</span>
-                </div>
-
-                <div class="form-group col-md-3">
-                    <label>{{ trans('cruds.customer.fields.id_type') }}</label>
-                    <select class="form-control {{ $errors->has('cid_type') ? 'is-invalid' : '' }}" name="cid_type" id="cid_type">
-                        <option value disabled {{ old('cid_type', null) === null ? 'selected' : '' }}>
-                            {{ trans('global.pleaseSelect') }}
-                        </option>
-                            @foreach(App\Models\Customer::ID_TYPE_SELECT as $key => $label)
-                                <option value="{{ $key }}" {{ old('cid_type', '') === (string) $key ? 'selected' : '' }}>
-                                    {{ $label }}
-                                </option>
-                            @endforeach
-                    </select>
-                    @if($errors->has('cid_type'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('cid_type') }}
-                        </div>
-                    @endif
-                    <span class="help-block">
-                        {{ trans('cruds.customer.fields.id_type_helper') }}
-                    </span>
                 </div>
 
                 <div class="form-group col-md-3">
@@ -67,6 +45,11 @@
                             {{ $errors->first('relationships') }}
                         </div>
                     @endif
+                </div>
+                <div class="form-group col-md-2 mt-4">
+                    <button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary">
+                        Add More
+                    </button>
                 </div>
             </div>
         </div>

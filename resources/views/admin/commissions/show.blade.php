@@ -29,7 +29,7 @@
                                 <th scope="col">Point Value (PV)</th>
                             @endif
                             <th scope="col">Percentage (%)</th>
-                            @if($order->commissions->first_month > 0)
+                            @if(isset($order->commissions->first_month) && $order->commissions->first_month > 0)
                                 <th scope="col">First Month Payment</th>
                             @endif
                             <th scope="col">Commissions</th>
@@ -54,16 +54,16 @@
                                 @endif
                             </td>
                             <td id="point_value" name="point_value">
-                                {{ $firstPayout->point_value }}
+                                {{ isset($firstPayout->point_value) ? $firstPayout->point_value : '' }}
                             </td>
                             <td>
-                                {{ $firstPayout->percentage }}
+                                {{ isset($firstPayout->point_value) ? $firstPayout->percentage : '' }}
                             </td>
-                            @if($order->commissions->first_month > 0)
+                            @if(isset($order->commissions->first_month) && $order->commissions->first_month > 0)
                                 <td>Yes</td>
                             @endif
                             <td>
-                                RM {{ $firstPayout->mo_overriding_comm }}
+                                RM {{ isset($firstPayout->mo_overriding_comm) ? $firstPayout->mo_overriding_comm : '' }}
                             </td>
                         </tr>
                     </tbody>
@@ -76,11 +76,12 @@
                     <h5>Installment Payment (<i>{{ $order->installments->installment_year }} months</i>)</h5>
                     <table class="table table-light table-bordered datatable datatable-installments">
                         <thead>
-                            @if($order->commissions->mo_overriding_comm != "0")
+                            @if(isset($order->commissions) && $order->commissions->mo_overriding_comm != "0")
                                 <tr class="table-info">
                                     <th></th>
                                     <th>ID</th>
                                     <th scope="col">Commissions (Per Month)</th>
+                                    <th scope="col">Last Point Value (PV)</th>
                                 </tr>
                             @endif
                         </thead>
@@ -91,6 +92,7 @@
                                         <td></td>
                                         <td>{{ $allCommission->id }}</td>
                                         <td>{{ $allCommission->mo_overriding_comm }}</td>
+                                        <td>{{ $allCommission->point_value }}</td>
                                     </tr>
                                 @endif
                             @endforeach

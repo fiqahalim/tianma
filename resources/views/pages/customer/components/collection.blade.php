@@ -12,26 +12,26 @@
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <div class="form-check">
-                        <label class="form-check-label" for="flexCheckDefault">
+                        <label class="form-check-label" for="representative">
                             Authorized Representative
                         </label>
-                        <input class="form-check-input ml-3" type="checkbox" value="" id="flexCheckDefault">
+                        <input class="form-check-input ml-3" type="checkbox" value="representative" id="representative">
                     </div>
                 </div>
                 <div class="form-group col-md-4">
                     <div class="form-check">
-                        <label class="form-check-label" for="flexCheckDefault">
+                        <label class="form-check-label" for="purchaser">
                             Purchaser
                         </label>
-                        <input class="form-check-input ml-3" type="checkbox" value="" id="flexCheckDefault">
+                        <input class="form-check-input ml-3" type="checkbox" value="purchaser" id="purchaser" onclick="getPurchaser()">
                     </div>
                 </div>
                 <div class="form-group col-md-4">
                     <div class="form-check">
-                        <label class="form-check-label" for="flexCheckDefault">
+                        <label class="form-check-label" for="Mail">
                             Mail
                         </label>
-                        <input class="form-check-input ml-3" type="checkbox" value="" id="flexCheckDefault">
+                        <input class="form-check-input ml-3" type="checkbox" value="mail" id="mail">
                     </div>
                 </div>
             </div>

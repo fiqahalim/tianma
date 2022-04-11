@@ -51,7 +51,7 @@ class OrderConfirmationController extends Controller
 
         $totalProductAmount = 0;
         $sst = 6;
-        $totalProductAmount = ($products->total_cost) + ($sst/100);
+        $totalProductAmount = ($products->total_cost) + ($products->total_cost * ($sst/100));
 
         $orders = new Order;
         $order->ref_no = $this->getOrderNumber();
