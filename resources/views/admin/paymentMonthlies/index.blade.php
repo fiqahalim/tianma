@@ -9,8 +9,8 @@
         </ol>
     </nav>
 
-    <div style="margin-bottom: 10px;" class="row text-right pr-4">
-        <div class="col-lg-12">
+    <div class="container mb-3">
+        <div class="row mt-3 justify-content-end">
             <a class="btn btn-info" href="{{ route('admin.transaction.index', [$order->id]) }}" data-toggle="modal" data-target="#invoiceDetailsModal">
                 Update Payment
             </a>
@@ -37,15 +37,15 @@
         <div class="row">
             <div class="col"></div>
             <div class="col-6 text-center">
-                <h4><strong><u>TRANSACTION RECEIPT</u></strong></h4>
+                <h5><strong><u>TRANSACTION DETAILS</u></strong></h5>
             </div>
             <div class="col"></div>
         </div>
 
-        <div class="page-header text-blue-d2">
-            <h5 class="text-secondary-d1 ml-3">
+        <div class="page-header text-blue-d2 justify-content-end">
+            {{-- <h5 class="text-secondary-d1 ml-3">
                 Transaction No: <strong></strong>
-            </h5>
+            </h5> --}}
             <div class="page-tools">
                 <div class="action-buttons">
                     <a class="btn bg-white btn-light mx-1px text-95 print-window" href="#" data-title="Print">
@@ -61,7 +61,7 @@
                 <div class="col-12 col-lg-12">
                     <div class="row ml-3">
                         <div class="col-sm-6">
-                            <div class="text-grey-m2">
+                            <div class="text-dark-m2">
                                 <div class="my-1">
                                     <p style="font-size: 12pt; font-family: Arial, Helvetica, sans-serif;">
                                         {{ Str::upper($order->customer->full_name) }} <br>
@@ -81,7 +81,7 @@
                         {{-- order details --}}
                         <div class="text-95 col-sm-6 align-self-start d-sm-flex justify-content-end">
                             <hr class="d-sm-none" />
-                            <div class="text-grey-m2">
+                            <div class="text-dark-m2">
                                 <div class="mt-1 mb-2 text-secondary-m1 text-600 text-125">
                                     Order Details
                                 </div>
