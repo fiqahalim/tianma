@@ -137,14 +137,14 @@
 @endcan
 
   $.extend(true, $.fn.dataTable.defaults, {
-    columnDefs: [{
-            targets: 0,
-        },
-        {
-            targets: 1,
-            visible: false
-        }
-    ],
+    // columnDefs: [{
+    //         targets: 0,
+    //     },
+    //     {
+    //         targets: 1,
+    //         visible: false
+    //     }
+    // ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 10,

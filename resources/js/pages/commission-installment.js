@@ -1,13 +1,13 @@
-const commissionForm = document.querySelector('#commissionInstallment-form');
-commissionForm.addEventListener('submit', (e) => {
+const commissionInstallment = document.querySelector('#commissionInstallment-form');
+commissionInstallment.addEventListener('submit', (e) => {
     e.preventDefault();
 
     //Computing the results
-    const pv = document.getElementById('pv').value;
-    const percentage = document.getElementById('percentage').value;
+    const point_value = document.getElementById('point_value').value;
+    const installment_year = document.getElementById('installment_year').value;
 
     //Calculate
-    const principal = parseFloat(pv);
+    const principal = parseFloat(point_value);
     const calculatedPercentage = parseFloat(percentage);
 
     console.log(principal);
