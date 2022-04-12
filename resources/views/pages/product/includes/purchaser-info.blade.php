@@ -1,4 +1,4 @@
-<h5 class="my-3">PURCHASER INFORMATION</h5>
+<h5 class="my-3 mt-4">PURCHASER INFORMATION</h5>
 <div class="form-row">
     <div class="form-group col-md-3">
         <label for="full_name">{{ trans('cruds.customer.fields.full_name') }} as in NRIC/Passport</label>

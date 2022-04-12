@@ -44,7 +44,7 @@ class OrdersController extends Controller
     {
         abort_if(Gate::denies('order_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $order->load('customer', 'team', 'createdBy', 'commissions');
+        $order->load('customer', 'team', 'createdBy', 'commissions', 'products');
 
         return view('admin.orders.edit', compact('order'));
     }

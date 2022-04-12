@@ -1,4 +1,4 @@
-<h5 class="my-3">PRODUCT PRICE INFORMATION</h5>
+<h5 class="my-3 mt-4">PRODUCT PRICE INFORMATION</h5>
 <div class="form-row">
     <div class="form-group col-md-6">
         <label for="product_name">{{ trans('cruds.product.fields.product_name') }}</label>

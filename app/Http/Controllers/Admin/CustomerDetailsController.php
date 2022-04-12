@@ -82,16 +82,14 @@ class CustomerDetailsController extends Controller
             $customer->save();
 
             // save intended user
-            $contactPerson = null;
-            $contactPerson = new ContactPerson();
-            $contactPerson->cid_type = $request->cid_type;
-            $contactPerson->cid_number = $request->cid_number;
-            $contactPerson->cemail = $request->cemail;
-            $contactPerson->cperson_name = $request->cperson_name;
-            $contactPerson->cperson_no = $request->cperson_no;
-            $contactPerson->relationships = $request->relationships;
-            $contactPerson->customer_id = $customer->id;
-            $contactPerson->save();
+            foreach ($request->addMoreInputFields as $key => $value) {
+                ContactPerson::create([
+                    'customer_id' => $customer->id,
+                    'cperson_name' => $value['cperson_name'],
+                    'cid_number' => $value['cid_number'],
+                    'relationships' => $value['relationships']
+                ]);
+            }
 
             // save correspondence address
             $curAddr = null;

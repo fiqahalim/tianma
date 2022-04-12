@@ -18,6 +18,7 @@
             @method('PUT')
             @csrf
 
+            <h5>Order Details</h5>
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label class="required" for="ref_no">{{ trans('cruds.order.fields.ref_no') }}</label>
@@ -93,6 +94,59 @@
                 <div class="form-group col-md-3">
                     <label>{{ trans('cruds.order.fields.order_date') }}</label>
                     <input class="form-control" type="text" value="{{ Carbon\Carbon::parse($order->created_at)->format('d/M/Y H:i:s') }}" readonly>
+                </div>
+            </div>
+            <hr>
+
+            {{-- Product Details --}}
+            <h5>Product Details</h5>
+            <div class="form-row mt-3 mb-3">
+                <div class="form-group col-md-4">
+                    <label for="product_name">{{ trans('cruds.product.fields.product_name') }}</label>
+                    <input class="form-control" type="text" value="{{ $order->products ? $order->products->product_name : '' }}" readonly>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="product_id_number">{{ trans('cruds.product.fields.product_id_number') }}</label>
+                    <input class="form-control" type="text" value="{{ $order->products ? $order->products->product_id_number : '' }}" readonly>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="product_code">{{ trans('cruds.product.fields.product_code') }}</label>
+                    <input class="form-control" type="text" value="{{ $order->products ? $order->products->product_code : '' }}" readonly>
+                </div>
+            </div>
+            <div class="form-row mt-3 mb-3">
+                <div class="form-group col-md-4">
+                    <label for="price">{{ trans('cruds.product.fields.price') }}</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>RM</i>
+                            </span>
+                        </div>
+                        <input class="form-control" type="text" value="{{ $order->products ? $order->products->price : '' }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="maintenance_price">{{ trans('cruds.product.fields.maintenance_price') }}</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>RM</i>
+                            </span>
+                        </div>
+                        <input class="form-control" type="text" value="{{ $order->products ? $order->products->maintenance_price : '' }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="promotion_price">{{ trans('cruds.product.fields.promotion_price') }}</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>RM</i>
+                            </span>
+                        </div>
+                        <input class="form-control" type="text" value="{{ $order->products ? $order->products->promotion_price : '' }}" readonly>
+                    </div>
                 </div>
             </div>
 

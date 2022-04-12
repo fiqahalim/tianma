@@ -12,8 +12,8 @@
     </nav>
 
     <div class="container-fluid">
-        <form method="POST" action="{{ route("admin.customer-details.store", [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}" enctype="multipart/form-data">
-                @csrf
+        <form method="POST" action="{{ route("admin.customer-details.store", [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}" enctype="multipart/form-data" onsubmit="return validateForm()" name="myForm" id="myForm" novalidate>
+            @csrf
 
             <div class="accordion" id="accordionExample">
                 {{-- Purchaser Details --}}
@@ -130,17 +130,27 @@
             contact_person_no = "";
         }
     }
+
+    function validateForm(){
+        const isValid = myForm.checkValidity();
+        if(!isValid) {
+            alert("Please fill all fields");
+        }
+        return isValid;
+    }
 </script>
 <script>
     var i = 0;
     $("#dynamic-ar").click(function () {
         ++i;
-        $("#dynamicAddRemove").append('<div class="form-row"><div class="form-group col-md-4"><input type="text" name="moreFields[' + i +
-            '][cperson_name]" placeholder="Intended Name" class="form-control" /></div><div><button type="button" class="btn btn-outline-danger remove-input-field">Remove</button></div></div>'
+        $("#dynamicAddRemove").append('<tr><td><input type="text" name="addMoreInputFields[' + i +
+            '][cperson_name]" class="form-control" /></td><td><input type="text" name="addMoreInputFields[' + i +
+            '][cid_number]" class="form-control" /></td><td><input type="text" name="addMoreInputFields[' + i +
+            '][relationships]" class="form-control" /></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
             );
     });
     $(document).on('click', '.remove-input-field', function () {
-        $(this).parents('div').remove();
+        $(this).parents('tr').remove();
     });
 </script>
 @endsection
