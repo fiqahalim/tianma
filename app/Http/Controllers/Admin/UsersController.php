@@ -93,6 +93,12 @@ class UsersController extends Controller
             $user->notify(new UserApprovedNotification());
         }
 
+        $profileImage = time() . '.' . $user->avatar->extension();
+        $user->avatar->move(public_path('images/profile'), $profileImage);
+
+        $user->avatar = $profileImage;
+        $user->save();
+
         alert()->success(__('global.update_success'))->toToast();
         return redirect()->route('admin.users.index');
     }

@@ -86,6 +86,7 @@ class ProductBookingController extends Controller
     public function reviewOrder(Request $request, $category, $childCategory, $childCategory2, Product $product)
     {
         $customer = session('customer');
+        $locations = session('bookLocation');
 
         $perAddr = array(
                 $customer->address_1,
@@ -123,7 +124,7 @@ class ProductBookingController extends Controller
         session(['products' => $product]);
 
         return view('pages.product.booking-detail', compact(
-            'product', 'customer', 'cust_details', 'corAddr'
+            'product', 'customer', 'cust_details', 'corAddr', 'locations'
         ));
     }
 

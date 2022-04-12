@@ -77,7 +77,7 @@
                                     Order Reference Number: #{{ $order->ref_no }}
                                 </h6>
                                 <span class="d-block mb-0">
-                                    Customer Name: {{ $customer->full_name }}
+                                    Customer Name: {{ Str::upper($customer->full_name) }}
                                 </span>
                                 <small>
                                     {{ trans('global.order.order_status') }}: {{ $order->order_status }}
@@ -91,7 +91,7 @@
                                     <small>
                                         <i class="fa fa-check text-muted">
                                         </i>
-                                        Payment Method: {{ $customer->mode }}
+                                        Payment Method: {{ Str::upper($customer->mode) }}
                                     </small>
                                 </div>
                             </div>
@@ -130,7 +130,7 @@
                                         Order Reference Number: #{{ $order->ref_no }}
                                     </h6>
                                     <span class="d-block mb-0">
-                                        Customer Name: {{ $customer->full_name }}
+                                        Customer Name: {{ Str::upper($customer->full_name) }}
                                     </span>
                                     <small>
                                         {{ trans('global.order.order_status') }}: {{ $order->order_status }}
@@ -144,7 +144,7 @@
                                         <small>
                                             <i class="fa fa-check text-muted">
                                             </i>
-                                            Payment Method: {{ $customer->mode }}
+                                            Payment Method: {{ Str::upper($customer->mode) }}
                                         </small>
                                     </div>
                                 </div>

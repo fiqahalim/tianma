@@ -3,14 +3,14 @@ var __webpack_exports__ = {};
 /*!******************************************************!*\
   !*** ./resources/js/pages/commission-installment.js ***!
   \******************************************************/
-var commissionForm = document.querySelector('#commissionInstallment-form');
-commissionForm.addEventListener('submit', function (e) {
+var commissionInstallment = document.querySelector('#commissionInstallment-form');
+commissionInstallment.addEventListener('submit', function (e) {
   e.preventDefault(); //Computing the results
 
-  var pv = document.getElementById('pv').value;
-  var percentage = document.getElementById('percentage').value; //Calculate
+  var point_value = document.getElementById('point_value').value;
+  var installment_year = document.getElementById('installment_year').value; //Calculate
 
-  var principal = parseFloat(pv);
+  var principal = parseFloat(point_value);
   var calculatedPercentage = parseFloat(percentage);
   console.log(principal);
   console.log(calculatedPercentage);
