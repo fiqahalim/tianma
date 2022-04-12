@@ -1,4 +1,4 @@
-<h5 class="my-3">RESERVATION INFORMATION</h5>
+<h5 class="my-3 mt-4">RESERVATION INFORMATION</h5>
 <div class="form-row">
     <div class="form-group col-md-3">
         <label for="product_name">Location</label>
