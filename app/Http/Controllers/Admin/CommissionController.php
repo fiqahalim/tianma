@@ -22,7 +22,7 @@ class CommissionController extends Controller
     {
         abort_if(Gate::denies('commission_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $orders = Order::with(['customer', 'team', 'createdBy', 'commissions'])->get();
+        $orders = Order::with(['customer', 'team', 'createdBy', 'commissions', 'bookLocations'])->get();
 
         return view('admin.commissions.index', compact('orders'));
     }
@@ -31,7 +31,7 @@ class CommissionController extends Controller
     {
         abort_if(Gate::denies('commission_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $order->load('customer', 'team', 'createdBy', 'commissions', 'installments');
+        $order->load('customer', 'team', 'createdBy', 'commissions', 'installments', 'bookLocations');
         session(['orders' => $order]);
 
         return view('admin.commissions.edit', compact('order'));
@@ -129,7 +129,7 @@ class CommissionController extends Controller
     {
         abort_if(Gate::denies('commission_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $order->load('customer', 'team', 'createdBy', 'commissions', 'installments');
+        $order->load('customer', 'team', 'createdBy', 'commissions', 'installments', 'products');
 
         $allCommissions = Order::join('commissions', 'commissions.order_id', '=', 'orders.id')
             ->where('commissions.order_id', $order->id)
@@ -161,7 +161,7 @@ class CommissionController extends Controller
 
     public function commissionCalculator(Order $order)
     {
-        $order->load('customer', 'team', 'createdBy', 'commissions', 'installments');
+        $order->load('customer', 'team', 'createdBy', 'commissions', 'installments', 'bookLocations');
         session(['orders' => $order]);
 
         return view('admin.commissions.calculator', compact('order'));
@@ -349,7 +349,6 @@ class CommissionController extends Controller
                 $commissions->mo_overriding_comm = $totalCommission;
                 $commissions->created_at = $current = Carbon::now();
                 $commissions->user_id = $pss->parent_id;
-                // $commissions->order_id = $orders->id;
                 $commissions->save();
 
                 return $commissions;

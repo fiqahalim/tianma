@@ -30,6 +30,7 @@
                 @csrf
                 <input type="hidden" id="monthly_installment" name="monthly_installment" value="{{ old('monthly_installment', '') }}" />
                 <input type="hidden" id="outstanding_balance" name="outstanding_balance" value="{{ old('outstanding_balance', '') }}" />
+                <input type="hidden" id="last_month_payment" name="last_month_payment" value="{{ old('last_month_payment', '') }}" />
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
@@ -91,7 +92,7 @@
                 </div>
 
                 <div class="row justify-content-around">
-                    <div class="col-sm-6 col-md-5 col-lg-6 mt-2 mb-2">
+                    <div class="col-sm-4 col-md-5 col-lg-4 mt-2 mb-2">
                         <div class="card-1">
                             <p id="monthly_installment" name="monthly_installment" style="font-size:180%;">
                                 RM {{ isset($installments) ?? $installments->monthly_installment }}
@@ -99,7 +100,15 @@
                             <h>Monthly Installments</p>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-5 col-lg-6 mt-2">
+                    <div class="col-sm-4 col-md-5 col-lg-4 mt-2 mb-2">
+                        <div class="card-1">
+                            <p id="last_month_payment" name="last_month_payment" style="font-size:180%;">
+                                RM {{ isset($installments) ?? $installments->last_month_payment }}
+                            </p>
+                            <h>Last Month Installments</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-md-5 col-lg-4 mt-2">
                         <div class="card-3">
                             <p id="outstanding_balance" name="outstanding_balance" style="font-size:180%;">
                                 RM {{ isset($installments) ?? $installments->outstanding_balance }}

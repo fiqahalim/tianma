@@ -24,8 +24,11 @@ installmentForm.addEventListener('submit', (e) => {
     // const monthly = (principal * x * calculatedInterest) / (x - 1);
     // const monthlyPayment = monthly.toFixed(2);
 
+    const installmentBalance = (calculatedPayments - 1);
     const monthly = (calculatedOutstanding) / (calculatedPayments);
+    const lastMonthBalance = calculatedOutstanding - (monthly * installmentBalance);
     const monthlyPayment = monthly.toFixed();
+    const lastMonthPayment = lastMonthBalance.toFixed();
 
     console.log(monthly);
     console.log(monthlyPayment);
@@ -39,7 +42,9 @@ installmentForm.addEventListener('submit', (e) => {
     //Display elements using DOM manipulation
     document.getElementById("monthly_installment").innerHTML = "RM " + monthlyPayment;
     document.getElementById("outstanding_balance").innerHTML = "RM " + calculatedOutstanding;
+    document.getElementById("last_month_payment").innerHTML = "RM " + lastMonthPayment;
 
     document.getElementById("monthly_installment").value = monthlyPayment;
     document.getElementById("outstanding_balance").value = calculatedOutstanding;
+    document.getElementById("last_month_payment").value = lastMonthPayment;
 });
