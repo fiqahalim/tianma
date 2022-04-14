@@ -62,6 +62,7 @@ class InstallmentController extends Controller
             $installments->amount = $requestData['amount'];
             $installments->outstanding_balance = $request['outstanding_balance'];
             $installments->monthly_installment = $request['monthly_installment'];
+            $installments->last_month_payment = $request['last_month_payment'];
             $installments->installment_year = $request['installment_year'];
             $installments->created_at = Carbon::now();
             $installments->customer_id = $customer->id;
@@ -72,7 +73,7 @@ class InstallmentController extends Controller
             $trans = new Transaction();
             $trans->transaction_date = Carbon::now();
             // $trans->trans_no = $this->transactionNo();
-            $trans->amount = 0;
+            $trans->amount = '';
             $trans->balance = $installments->outstanding_balance;
             $trans->installment_balance = $installments->installment_year;
             $trans->status = 'Paid';

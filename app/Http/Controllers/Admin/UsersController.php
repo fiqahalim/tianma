@@ -85,6 +85,7 @@ class UsersController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         $approved = $user->approved;
+        $folder = 'avatars';
 
         $user->update($request->all());
         $user->roles()->sync($request->input('roles', []));
@@ -93,7 +94,11 @@ class UsersController extends Controller
             $user->notify(new UserApprovedNotification());
         }
 
-        $profileImage = time() . '.' . $user->avatar->extension();
+        $request->validate([
+            'avatar' => 'required|mimes:jpg,png,jpeg|max:5048'
+        ]);
+
+        $profileImage = time().'.'.$user->avatar->extension();
         $user->avatar->move(public_path('images/profile'), $profileImage);
 
         $user->avatar = $profileImage;

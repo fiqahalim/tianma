@@ -22,8 +22,9 @@
                         <th>
                             {{ trans('global.createdDate') }}
                         </th>
+                        <th>Unit ID</th>
                         <th>
-                            {{ trans('cruds.commission.fields.comm_per_order') }}
+                            Total {{ trans('cruds.commission.fields.comm_per_order') }}
                         </th>
                         <th>
                             {{ trans('cruds.commission.fields.increased_commission') }}
@@ -48,6 +49,13 @@
                 <tbody>
                     @foreach($orders as $key => $order)
                     {{-- @if(!empty($order->commissions->mo_overriding_comm) && $order->commissions->mo_overriding_comm > 0) --}}
+                        @php
+                            $getUnitNo = isset($order->bookLocations) ? $order->bookLocations : '';
+                            foreach($getUnitNo as $unit) {
+                                $bookLots = $unit->lotBookings->seats;
+                                $unitNo = implode(", ", $bookLots);
+                            }
+                        @endphp
                         <tr data-entry-id="{{ $order->id }}">
                             <td></td>
                             <td>{{ $order->id }}</td>
@@ -55,7 +63,10 @@
                                 {{ Carbon\Carbon::parse($order->created_at)->format('d/M/Y H:i:s') }}
                             </td>
                             <td>
-                                {{ $order->commissions->mo_overriding_comm ?? '' }}
+                                {{ $unitNo }}
+                            </td>
+                            <td>
+                                {{ $order->commissions()->sum('mo_overriding_comm') ?? '' }}
                             </td>
                             <td>
                                 {{ $order->commissions->mo_spin_off ?? 'Not eligible yet' }}
@@ -141,13 +152,14 @@
 @endcan
 
   $.extend(true, $.fn.dataTable.defaults, {
-    // columnDefs: [{
-    //         targets: 0,
-    //     },
-    //     {
-    //         targets: 1
-    //     }
-    // ],
+    columnDefs: [{
+            targets: 0,
+        },
+        {
+            targets: 1,
+            visible: false,
+        }
+    ],
     orderCellsTop: true,
     order: [[1, 'desc']],
     pageLength: 10,

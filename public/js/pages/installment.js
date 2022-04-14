@@ -24,8 +24,11 @@ installmentForm.addEventListener('submit', function (e) {
   // const monthly = (principal * x * calculatedInterest) / (x - 1);
   // const monthlyPayment = monthly.toFixed(2);
 
+  var installmentBalance = calculatedPayments - 1;
   var monthly = calculatedOutstanding / calculatedPayments;
+  var lastMonthBalance = calculatedOutstanding - monthly * installmentBalance;
   var monthlyPayment = monthly.toFixed();
+  var lastMonthPayment = lastMonthBalance.toFixed();
   console.log(monthly);
   console.log(monthlyPayment); //calculating the total interest
   // const totalInterest = (monthly * calculatedPayments - principal).toFixed(2);
@@ -35,8 +38,10 @@ installmentForm.addEventListener('submit', function (e) {
 
   document.getElementById("monthly_installment").innerHTML = "RM " + monthlyPayment;
   document.getElementById("outstanding_balance").innerHTML = "RM " + calculatedOutstanding;
+  document.getElementById("last_month_payment").innerHTML = "RM " + lastMonthPayment;
   document.getElementById("monthly_installment").value = monthlyPayment;
   document.getElementById("outstanding_balance").value = calculatedOutstanding;
+  document.getElementById("last_month_payment").value = lastMonthPayment;
 });
 /******/ })()
 ;

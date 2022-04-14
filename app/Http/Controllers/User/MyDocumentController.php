@@ -12,6 +12,7 @@ use App\Models\MyDocument;
 use App\Models\User;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
+use Auth;
 
 class MyDocumentController extends Controller
 {
@@ -19,7 +20,9 @@ class MyDocumentController extends Controller
 
     public function index()
     {
-        $myDocuments = MyDocument::with(['agents', 'media'])->get();
+        $myDocuments = MyDocument::where('agents_id', '=', Auth::user()->id)
+            ->with(['agents', 'media'])
+            ->get();
 
         return view('pages.document.index', compact('myDocuments'));
     }

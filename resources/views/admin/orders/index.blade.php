@@ -118,7 +118,7 @@
                             <td>
                                 @if($order->customer->mode == 'Installment')
                                     <a class="btn btn-dark" href="{{ route('admin.transaction.index', $order->id) }}">
-                                        Settings
+                                        <small>Update<br>Installment</small>
                                     </a>
                                 @endif
                             </td>
