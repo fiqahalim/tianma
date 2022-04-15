@@ -32,20 +32,30 @@
                             <div class="card h-80">
                                 <!-- Product image-->
                                 <a href="{{ route('admin.product', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
-                                    <img class="card-img-top" src="{{ $product->photo->url ?? '/images/home-urns.png' }}" style="height: 200px; width: 18rem;">
+                                    <img class="card-img-top" src="{{ $product->photo->url ?? '/images/home-urns.png' }}" style="height: 200px; width: 18rem; display: block; margin-left: auto;margin-right: auto;">
                                 </a>
                                 <!-- Product details-->
                                 <div class="card-body p-4">
                                     <div class="text-center">
-                                        <h5 class="fw-bolder">
-                                            <a href="{{ route('admin.product', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
-                                                {{ $product->product_name }}
-                                            </a>
+                                        <h5 class="fw-bolder" style="color:blue;">
+                                            {{ $product->product_name }}
                                         </h5>
                                         <!-- Product price-->
                                         <span><strong>Product Price</strong></span><br>
-                                        RM{{ $product->price }}
-                                        <p class="card-text mt-3">{{ $product->product_code }}</p>
+                                        RM{{ $product->price }}<br><br>
+
+                                        {{-- Maintenance Price --}}
+                                        <span><strong>Maintenance Price</strong></span><br>
+                                        RM{{ $product->maintenance_price }}<br><br>
+
+                                        {{-- Promotion Price --}}
+                                        @if($product->promotion_price > 0)
+                                            <span><strong>Promotion Price</strong></span><br>
+                                            RM{{ $product->promotion_price }}<br><br>
+                                        @endif
+
+                                        {{-- Product Code --}}
+                                        <p class="card-text">{{ $product->product_code }}</p>
                                     </div>
                                 </div>
                                 <!-- Product actions-->
@@ -54,7 +64,7 @@
                                         <form action="#" method="POST">
                                             @csrf
                                             <input type="hidden" name="id" value="{{ $product->id }}">
-                                            <a class="btn btn-outline-primary mt-2" href="{{ route('admin.product-booking.index', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
+                                            <a class="btn btn-outline-primary" href="{{ route('admin.product-booking.index', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
                                                 {{ trans('global.products.product_select') }}
                                             </a>
                                         </form>

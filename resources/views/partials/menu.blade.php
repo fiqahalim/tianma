@@ -14,12 +14,25 @@
                 </a>
             </li>
 
+            {{-- Customer Management --}}
             @can('customer_access')
-                <li class="c-sidebar-nav-item">
-                    <a href="{{ route("admin.customers.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/customers") || request()->is("admin/customers/*") ? "c-active" : "" }}">
+                <li class="c-sidebar-nav-dropdown">
+                    <a class="c-sidebar-nav-dropdown-toggle" href="#">
                         <i class="fa-fw fas fa-user-friends c-sidebar-nav-icon"></i>
-                        {{ trans('cruds.customer.title') }}
+                        {{ trans('cruds.customer.title') }} Management
                     </a>
+                    <ul class="c-sidebar-nav-dropdown-items">
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.customers.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/customers") || request()->is("admin/customers/*") ? "c-active" : "" }}">
+                                All {{ trans('cruds.customer.title') }}s
+                            </a>
+                        </li>
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.intended-users.index") }}" class="c-sidebar-nav-link">
+                                All Intended Users
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             @endcan
 

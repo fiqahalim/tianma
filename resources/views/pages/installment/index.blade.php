@@ -101,7 +101,7 @@
                         </div>
                     </div>
                     <div class="col-sm-4 col-md-5 col-lg-4 mt-2 mb-2">
-                        <div class="card-1">
+                        <div class="card-2">
                             <p id="last_month_payment" name="last_month_payment" style="font-size:180%;">
                                 RM {{ isset($installments) ?? $installments->last_month_payment }}
                             </p>

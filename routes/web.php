@@ -184,9 +184,17 @@ Route::group(['middleware' => 'auth'], function() {
             Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/addons', [\App\Http\Controllers\Admin\ProductOrderController::class, 'addOns'])->name('addons');
         });
 
-        // Customer
-        Route::delete('customers/destroy', [\App\Http\Controllers\Admin\CustomerController::class,'massDestroy'])->name('customers.massDestroy');
-        Route::resource('customers', '\App\Http\Controllers\Admin\CustomerController');
+        /** CUSTOMER MANAGEMENT **/
+        Route::group(['prefix' => 'customer-management'], function() {
+            // All Customers
+            Route::delete('customers/destroy', [\App\Http\Controllers\Admin\CustomerController::class,'massDestroy'])->name('customers.massDestroy');
+            Route::resource('customers', '\App\Http\Controllers\Admin\CustomerController');
+
+            // All Intended Users
+            Route::delete('intended-users/destroy', [\App\Http\Controllers\Admin\IntendedUserController::class,'massDestroy'])->name('intended-users.massDestroy');
+            Route::resource('intended-users', '\App\Http\Controllers\Admin\IntendedUserController');
+        });
+
 
         // Commission
         Route::delete('commissions/destroy', [\App\Http\Controllers\Admin\CommissionController::class, 'massDestroy'])->name('commissions.massDestroy');

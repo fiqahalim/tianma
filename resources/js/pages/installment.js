@@ -13,31 +13,21 @@ installmentForm.addEventListener('submit', (e) => {
     // const calculatedInterest = parseFloat(interest) / 100 / 12;
     const calculatedInterest = 0;
     const calculatedPayments = installment_year;
+    const installmentBalance = (installment_year - 1);
     const calculatedOutstanding = principal - parseFloat(downpayment);
 
     console.log(principal);
     console.log(calculatedPayments);
     console.log(calculatedOutstanding);
 
-    //Calculating the monthly payment
-    // const x = Math.pow(1 + calculatedInterest, calculatedPayments);
-    // const monthly = (principal * x * calculatedInterest) / (x - 1);
-    // const monthlyPayment = monthly.toFixed(2);
-
-    const installmentBalance = (calculatedPayments - 1);
     const monthly = (calculatedOutstanding) / (calculatedPayments);
-    const lastMonthBalance = calculatedOutstanding - (monthly * installmentBalance);
     const monthlyPayment = monthly.toFixed();
+    const balanceMonthlyInstallment = monthlyPayment * installmentBalance;
+    const lastMonthBalance = parseFloat(calculatedOutstanding - balanceMonthlyInstallment);
     const lastMonthPayment = lastMonthBalance.toFixed();
 
-    console.log(monthly);
     console.log(monthlyPayment);
-
-    //calculating the total interest
-    // const totalInterest = (monthly * calculatedPayments - principal).toFixed(2);
-
-    //calculating the total payment
-    // const totalPayment = (monthly * calculatedPayments).toFixed(2);
+    console.log(lastMonthPayment);
 
     //Display elements using DOM manipulation
     document.getElementById("monthly_installment").innerHTML = "RM " + monthlyPayment;

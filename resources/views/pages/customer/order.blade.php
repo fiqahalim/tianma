@@ -58,6 +58,7 @@
                             $customer = session('customer');
                             $order = session('order');
                             $paymentInfo = session('paymentInfo');
+                            $products = session('products');
                         @endphp
                         @if ($customer->mode == 'Full Payment')
                             <div class="p-3 border-bottom">
@@ -97,21 +98,69 @@
                             </div>
                             </div>
                             <div class="row g-0">
-                                    <div class="col-md-6">
-                                        <div class="p-3 d-flex justify-content-center align-items-center">
-                                            <span class="font-weight-bold">
-                                                Total
-                                            </span>
-                                        </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span class="font-weight-bold">
+                                            Product Price
+                                        </span>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="p-3 d-flex justify-content-center align-items-center">
-                                            <span class="font-weight-bold">
-                                                RM {{ $order->amount }}
-                                            </span>
-                                        </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span class="font-weight-bold">
+                                            RM {{ $products->price }}
+                                        </span>
                                     </div>
-                                </div>   
+                                </div>
+                            </div>
+                            <div class="row g-0">
+                                <div class="col-md-6">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span class="font-weight-bold">
+                                            Maintenance Fees
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span class="font-weight-bold">
+                                            RM {{ $products->maintenance_price }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row g-0">
+                                <div class="col-md-6">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span class="font-weight-bold">
+                                            Promotion Price
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span class="font-weight-bold">
+                                            RM {{ $products->promotion_price }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row g-0">
+                                <div class="col-md-6">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span class="font-weight-bold">
+                                            Total
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span class="font-weight-bold">
+                                            RM {{ $order->amount }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                         @else
                             <div class="p-3 border-bottom">
                             <div class="d-flex justify-content-between align-items-center">
@@ -210,6 +259,22 @@
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span>
                                             RM {{ $paymentInfo->monthly_installment }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row g-0 border-bottom">
+                                <div class="col-md-6 border-right">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span>
+                                            Last Month Installment
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span>
+                                            RM {{ $paymentInfo->last_month_payment }}
                                         </span>
                                     </div>
                                 </div>
