@@ -93,8 +93,8 @@
                                     <i class="fas fa-eye"></i>
                                 </a>
 
-                                <a class="btn btn-xs btn-info" href="{{ route('admin.commissions.edit', $order->id) }}">
-                                    <i class="fas fa-pencil-alt"></i>
+                                <a class="btn btn-xs btn-warning text-white" href="{{ route('admin.commissions.edit', $order->id) }}">
+                                    <i class="fas fa-money"></i>
                                 </a>
                             </td>
                             @if(empty($order->commissions->mo_overriding_comm))

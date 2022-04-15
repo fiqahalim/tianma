@@ -76,7 +76,7 @@
                                     <th>Description 2</th>
                                     <th>Payment Mode</th>
                                     <th>Payment Ref Number</th>
-                                    <th>Amount</th>
+                                    <th>Amount <br><i>(includes maintenance fees, etc)</i></th>
                                 </tr>
                             </thead>
                             @php
@@ -102,7 +102,7 @@
                                         Ref No
                                     </td>
                                     <td>
-                                        {{ $order->installments->amount ?? '' }}
+                                        {{ $order->products->total_cost ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>

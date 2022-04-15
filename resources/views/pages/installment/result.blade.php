@@ -26,10 +26,11 @@
         </div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route('admin.installment.store', [$products->categories->first()->parentCategory->name, $products->categories->first()->parentCategory->name, $products->categories->first()->name, $products]) }}" enctype="multipart/form-data" id="installment-form">
+            <form method="POST" action="#" enctype="multipart/form-data" id="installment-form">
                 @csrf
                 <input type="hidden" id="monthly_installment" name="monthly_installment" value="{{ old('monthly_installment', '') }}" />
                 <input type="hidden" id="outstanding_balance" name="outstanding_balance" value="{{ old('outstanding_balance', '') }}" />
+                <input type="hidden" id="last_month_payment" name="last_month_payment" value="{{ old('last_month_payment', '') }}" />
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
@@ -87,11 +88,11 @@
                 </div>
 
                 <div class="form-group mb-3">
-                    <button type="submit" id="calculateBtn" class="btn btn-danger btn-lg" style="width: 100%;">Calculate</button>
+                    <button type="button" id="calculateBtn" class="btn btn-danger btn-lg" style="width: 100%;">Calculate</button>
                 </div>
 
                 <div class="row justify-content-around">
-                    <div class="col-sm-6 col-md-5 col-lg-6 mt-2 mb-2">
+                    <div class="col-sm-4 col-md-5 col-lg-4 mt-2 mb-2">
                         <div class="card-1">
                             <p id="monthly_installment" name="monthly_installment" style="font-size:180%;">
                                 RM {{ $installments->monthly_installment }}
@@ -99,7 +100,15 @@
                             <h>Monthly Installments</p>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-5 col-lg-6 mt-2">
+                    <div class="col-sm-4 col-md-5 col-lg-4 mt-2 mb-2">
+                        <div class="card-2">
+                            <p id="last_month_payment" name="last_month_payment" style="font-size:180%;">
+                                RM {{ $installments->last_month_payment }}
+                            </p>
+                            <h>Last Month Installments</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-md-5 col-lg-4 mt-2">
                         <div class="card-3">
                             <p id="outstanding_balance" name="outstanding_balance" style="font-size:180%;">
                                 RM {{ $installments->outstanding_balance }}
