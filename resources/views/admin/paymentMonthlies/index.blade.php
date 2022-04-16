@@ -93,9 +93,22 @@
                         </div>
                     </div>
 
+                    <div class="row input-daterange">
+                        <div class="col-md-4">
+                            <input type="text" name="from_date" id="from_date" class="form-control" placeholder="From Date" readonly />
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" name="to_date" id="to_date" class="form-control" placeholder="To Date" readonly />
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" name="filter" id="filter" class="btn btn-primary">Filter</button>
+                            <button type="button" name="refresh" id="refresh" class="btn btn-default">Refresh</button>
+                        </div>
+                    </div>
+
                     <div class="mt-4">
                         <div class="table-responsive">
-                            <table class="table table-bordered datatable datatable-PaymentMonthly">
+                            <table class="table table-bordered datatable datatable-PaymentMonthly" id="transaction_table">
                                 <thead class="bg-none bgc-default-tp1">
                                     <tr class="table-dark">
                                         <th>Transaction Date</th>
@@ -158,6 +171,8 @@
 
 @section('scripts')
 @parent
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script>
     $(function () {
         let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
@@ -175,12 +190,73 @@
         $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
             $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
         });
-    })
+    });
 </script>
 
 <script>
     $('.print-window').click(function() {
     window.print();
+    });
+</script>
+
+<script>
+$(document).ready(function(){
+    $('.input-daterange').datepicker({
+        todayBtn:'linked',
+        format:'yyyy-mm-dd',
+        autoclose:true
+    });
+
+    load_data();
+
+    function load_data(from_date = '', to_date = '') {
+        $('#transaction_table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url:'{{ route("admin.transaction.index", $order->id) }}',
+                data:{from_date:from_date, to_date:to_date}
+            },
+            columns: [{
+                data:'transaction_id',
+                name:'id'
+            },
+            {
+                data:'order_customer_name',
+                name:'order_customer_name'
+            },
+            {
+                data:'order_item',
+                name:'order_item'
+            },
+            {
+                data:'order_value',
+                name:'order_value'
+            },
+            {
+                data:'order_date',
+                name:'order_date'
+            }]
+        });
+    }
+
+    $('#filter').click(function(){
+        var from_date = $('#from_date').val();
+        var to_date = $('#to_date').val();
+        if(from_date != '' &&  to_date != '') {
+            $('#transaction_table').DataTable().destroy();
+            load_data(from_date, to_date);
+        } else {
+            alert('Both Date is required');
+        }
+    });
+
+    $('#refresh').click(function(){
+        $('#from_date').val('');
+        $('#to_date').val('');
+        $('#transaction_table').DataTable().destroy();
+        load_data();
+        });
     });
 </script>
 @endsection

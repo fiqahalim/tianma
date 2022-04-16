@@ -23,6 +23,16 @@ class TransactionController extends Controller
             ->where('transactions.order_id', '=', $order->id)
             ->get(['transactions.*']);
 
+        if(request()->ajax()) {
+            if(!empty($request->from_date)) {
+                $data = Transaction::whereBetween('transaction_date', array($request->from_date, $request->to_date))
+                    ->get();
+            } else {
+                $data = DB::statement('transactions')->get();
+            }
+            return datatables()->of($data)->make(true);
+        }
+
         return view('admin.paymentMonthlies.index', compact('order', 'transactions'));
     }
 

@@ -7,12 +7,14 @@ use App\Http\Requests\MassDestroyOrderRequest;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
+use App\Models\Transaction;
 use Gate;
 use Alert;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use NumberToWords\NumberToWords;
+use Illuminate\Support\Facades\DB;
 
 class OrdersController extends Controller
 {
@@ -89,16 +91,5 @@ class OrdersController extends Controller
         Order::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
-    }
-
-    public function transactionDetails(Order $order)
-    {
-        $order->load('customer', 'team', 'createdBy', 'commissions', 'installments', 'transactions');
-
-        $transactions = Order::join('transactions', 'transactions.order_id', '=', 'orders.id')
-            ->where('transactions.order_id', '=', $order->id)
-            ->get(['transactions.*']);
-
-        return view('admin.paymentMonthlies.index', compact('order', 'transactions'));
     }
 }

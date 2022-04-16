@@ -28,7 +28,7 @@
                             </a>
                         </li>
                         <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.intended-users.index") }}" class="c-sidebar-nav-link">
+                            <a href="{{ route("admin.contact-people.index") }}" class="c-sidebar-nav-link">
                                 All Intended Users
                             </a>
                         </li>

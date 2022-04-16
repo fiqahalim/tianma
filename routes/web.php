@@ -189,10 +189,11 @@ Route::group(['middleware' => 'auth'], function() {
             // All Customers
             Route::delete('customers/destroy', [\App\Http\Controllers\Admin\CustomerController::class,'massDestroy'])->name('customers.massDestroy');
             Route::resource('customers', '\App\Http\Controllers\Admin\CustomerController');
+            Route::match(['get', 'post'], 'customers/showInvoice/{order}', [\App\Http\Controllers\Admin\CustomerController::class, 'showInvoice'])->name('customers.showInvoice');
 
             // All Intended Users
-            Route::delete('intended-users/destroy', [\App\Http\Controllers\Admin\IntendedUserController::class,'massDestroy'])->name('intended-users.massDestroy');
-            Route::resource('intended-users', '\App\Http\Controllers\Admin\IntendedUserController');
+            Route::delete('contact-people/destroy', [\App\Http\Controllers\Admin\IntendedUserController::class,'massDestroy'])->name('contact-people.massDestroy');
+            Route::resource('contact-people', '\App\Http\Controllers\Admin\IntendedUserController');
         });
 
 
