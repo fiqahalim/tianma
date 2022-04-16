@@ -178,13 +178,13 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label class="required">{{ trans('cruds.user.fields.ref_name') }}</label>
-                    <select class="form-control form-select {{ $errors->has('parent') ? 'is-invalid' : '' }}" name="parent_id" id="parent_id">
+                    <select class="form-control select2 {{ $errors->has('parent') ? 'is-invalid' : '' }}" name="parent_id" id="parent_id">
                         @include('components.parent-child')
                     </select>
                 </div>
                 <div class="form-group col-md-4">
                     <label class="required">{{ trans('cruds.ranking.title') }}</label>
-                    <select class="form-control form-select {{ $errors->has('rankings') ? 'is-invalid' : '' }}" name="ranking_id" id="ranking_id">
+                    <select class="form-control select2 {{ $errors->has('rankings') ? 'is-invalid' : '' }}" name="ranking_id" id="ranking_id">
                         @foreach($rankings as $id => $data)
                             <option value="{{ $id }}" {{ old('ranking_id') == $id ? 'selected' : '' }}>{{ $data }}</option>
                         @endforeach

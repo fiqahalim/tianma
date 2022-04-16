@@ -65,7 +65,7 @@
                             {{ Str::upper($order->order_status ?? '') }}
                         </td>
                         <td>
-                            <a class="btn btn-xs btn-primary" href="{{ route('admin.orders.show', $order->id) }}">
+                            <a class="btn btn-xs btn-primary" href="{{ route('admin.customers.showInvoice', $order->id) }}">
                                 <i class="fas fa-eye"></i>
                             </a>
                         </td>

@@ -7,10 +7,13 @@ use App\Http\Requests\MassDestroyCustomerRequest;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
 use App\Models\Customer;
+use App\Models\Order;
+
 use Gate;
 use Alert;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use NumberToWords\NumberToWords;
 
 class CustomerController extends Controller
 {
@@ -18,7 +21,6 @@ class CustomerController extends Controller
     {
         abort_if(Gate::denies('customer_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // $customers = Customer::all();
         $customers = Customer::with(['createdBy'])->get();
 
         return view('admin.customers.index', compact('customers'));
@@ -76,5 +78,17 @@ class CustomerController extends Controller
         Customer::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function showInvoice(Order $order)
+    {
+        $order->load('customer', 'createdBy', 'installments', 'bookLocations', 'products');
+
+        $amount = $order->products->total_cost;
+        $numberToWords = new NumberToWords();
+        $numberTransformer = $numberToWords->getNumberTransformer('en');
+        $amountFormat = $numberTransformer->toWords($amount);
+
+        return view('admin.customers.invoices', compact('order', 'amountFormat'));
     }
 }
