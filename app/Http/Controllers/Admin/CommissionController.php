@@ -37,6 +37,7 @@ class CommissionController extends Controller
         return view('admin.commissions.edit', compact('order'));
     }
 
+    // monthly installment
     public function store(Request $request, Order $order)
     {
         $orders = session('orders');
