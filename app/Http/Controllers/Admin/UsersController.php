@@ -114,11 +114,11 @@ class UsersController extends Controller
 
         $user->load('roles', 'team', 'parent', 'userUserAlerts', 'childUsers', 'commissions', 'rankings');
 
-        $totalComms = Commission::join('orders', 'orders.id', '=', 'commissions.order_id')
-            ->where('commissions.user_id', $user->id)
-            ->whereMonth('commissions.created_at', Carbon::now()->month)
-            ->whereYear('commissions.created_at', Carbon::now()->year)
-            ->sum('commissions.mo_overriding_comm');
+        $totalComms = Order::join('products', 'products.id', '=', 'orders.product_id')
+            ->where('orders.created_by', $user->id)
+            ->whereMonth('orders.created_at', Carbon::now()->month)
+            ->whereYear('orders.created_at', Carbon::now()->year)
+            ->sum('orders.amount');
 
         return view('admin.users.show', compact('user', 'totalComms'));
     }

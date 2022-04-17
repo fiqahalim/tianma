@@ -24,7 +24,7 @@
 }
 
 .seat {
-    background-color: #444451;
+    background-color: #1ac728;
     height: 40px;
     width: 48px;
     margin: 8px;
@@ -47,11 +47,11 @@
 }
 
 .seat.selected {
-    background-color: #6feaf6;
+    background-color: #4f95ff;
 }
 
 .seat.occupied {
-    background-color: darkred;
+    background-color: #fa1b1b;
 }
 
 .row-seat {
@@ -142,12 +142,33 @@ input[type=checkbox]:before {
     vertical-align:middle;
     text-align: center;
     box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
-    background-color: #444451;
+    background-color: #1ac728;
 }
 
 input[type=checkbox]:checked:before {
-    background-color: #6feaf6;
+    background-color: #4f95ff;
     font-size: 15px;
+}
+
+table
+{
+  text-align:center;
+}
+
+
+.Displaytable
+{
+  text-align:center;
+}
+.Displaytable td, .Displaytable th {
+    border: 1px solid;
+    text-align: left;
+}
+
+textarea
+{
+  border:none;
+  background:transparent;
 }
 
 /*MEDIA QUERYS*/

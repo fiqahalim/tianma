@@ -19,9 +19,9 @@
 
                     {{-- Sub Level 1 of Childs --}}
                     @if(count($childUser->childUsers))
-                        <ol>
+                        <ol class="child-menu1">
                             @foreach($childUser->childUsers as $childUser)
-                                <li class="child-menu1">
+                                <li>
                                     <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totalComms }}, Ranking: {{ $childUser->rankings->category }}">
                                         <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="60" height="60">
                                     </span>

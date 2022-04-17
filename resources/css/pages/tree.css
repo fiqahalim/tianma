@@ -42,7 +42,6 @@
         .tree li:last-child:before {right: 50%;}
 
         .tree code, .tree span {
-            border: solid .1em #666;
             border-radius: .2em;
             display: inline-block;
             margin: 0 .2em .5em;
@@ -89,5 +88,5 @@
 }
 
 .menu-item {
-    display:inline-block;
+    display: inline-block;
 }
