@@ -41,6 +41,7 @@ class UpdateUserRequest extends FormRequest
             'agent_code' => [
                 'string',
                 'nullable',
+                'unique:users,agent_code,' . request()->route('user')->id,
             ],
             'agency_code' => [
                 'string',

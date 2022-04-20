@@ -44,6 +44,7 @@ class StoreUserRequest extends FormRequest
             'agent_code' => [
                 'string',
                 'nullable',
+                'unique:users',
             ],
             'agency_code' => [
                 'string',

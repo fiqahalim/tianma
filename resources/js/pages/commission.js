@@ -59,7 +59,7 @@ commissionForm.addEventListener('submit', (e) => {
 
     } else {
         console.log("equal to 100");
-        const calcPV = principal * (100 / 100) * calculateMonth;
+        const calcPV = principal * (100 / 100);
         const balancePV = calcPV.toFixed();
 
         console.log(balancePV);

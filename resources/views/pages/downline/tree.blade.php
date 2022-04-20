@@ -12,42 +12,54 @@
 
 <div class="container-fluid">
     <div class="text-center">
-        <div class="tree">
-            <ol class="organizational-chart">
+        <div>
+            <ol class="tree">
                 <li>
-                    <div>
-                        <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ Auth::user()->name }}, Agency Code: {{ Auth::user()->agency_code ? Auth::user()->agency_code : 'Not Available Yet' }}">
-                            <img class="rounded-circle mt-2" src="{{ asset('/images/profile/'.Auth::user()->avatar ?? 'avatar.png') }}" width="80" data-toggle="modal" data-target="#userDetailsModal">
+                    <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ Auth::user()->name }}, Agency Code: {{ Auth::user()->agency_code ? Auth::user()->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totalComms }}, Ranking: {{ Auth::user()->rankings->category }}">
+                        <img class="rounded-circle mt-2" src="{{ asset('/images/profile/'.Auth::user()->avatar ?? 'avatar.png') }}" width="80" data-toggle="modal" data-target="#userDetailsModal">
+                    </span>
+                    <div class="mt-2">
+                        <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ Auth::user()->name }}, Agency Code: {{ Auth::user()->agency_code ? Auth::user()->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totalComms }}, Ranking: {{ Auth::user()->rankings->category }}">
+                            <strong>{{ Auth::user()->agent_code ?? 'Not Available' }}</strong>
                         </span>
-                        <div class="mt-2">
-                            <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ Auth::user()->name }}, Agency Code: {{ Auth::user()->agency_code ? Auth::user()->agency_code : 'Not Available Yet' }}">
-                                <strong>{{ Auth::user()->agent_code ?? 'Not Available' }}</strong>
-                            </span>
-                        </div>
-                        <i id="menu-item" class="fas fa-plus-circle" onclick="myFunction()"></i>
                     </div>
+                    <i id="menu-item" class="fas fa-plus-circle" onclick="myFunction()"></i>
+
+                    {{-- Level 1 --}}
                     @if(count($user))
                         <ol>
                             @foreach($user as $key => $childUser)
+                                @php
+                                    $totalSales = $childUser->orders()->sum('amount');
+                                @endphp
                                 <li class="sub-menu">
-                                    <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}">
+                                    <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totalSales }}, Ranking: {{ $childUser->rankings->category }}">
                                         <img class="rounded-circle mt-2" src="{{ asset('/images/profile/'.$childUser->avatar ?? 'avatar.png') }}" width="80">
                                     </span>
                                     <div class="mt-2">
-                                        <span>{{ $childUser->agent_code ?? 'Not Available' }}</span>
+                                        <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totalSales }}, Ranking: {{ $childUser->rankings->category }}">
+                                            {{ strtoupper($childUser->agent_code ?? 'Not Available') }}
+                                        </span>
                                     </div>
-                                    {{-- @if(count($childUser->childUsers))
+                                    <i id="child-item1" class="fas fa-plus-circle"></i>
+
+                                    {{-- Level 2 --}}
+                                    @if(count($childUser->childUsers))
                                     <ol>
                                         @foreach($childUser->childUsers as $childs)
                                             <li class="sub-menu">
-                                                <img class="rounded-circle mt-2" src="https://bootdey.com/img/Content/avatar/avatar7.png" width="80">
+                                                <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totalSales }}, Ranking: {{ $childUser->rankings->category }}">
+                                                    <img class="rounded-circle mt-2" src="{{ asset('/images/profile/'.$childUser->avatar ?? 'avatar.png') }}" width="80">
+                                                </span>
                                                 <div class="mt-2">
-                                                    <span>{{ $childs->agent_code }}</span>
+                                                    <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totalSales }}, Ranking: {{ $childUser->rankings->category }}">
+                                                        {{ strtoupper($childUser->agent_code ?? 'Not Available') }}
+                                                    </span>
                                                 </div>
                                             </li>
                                         @endforeach
                                     </ol>
-                                    @endif --}}
+                                    @endif
                                 </li>
                             @endforeach
                         </ol>

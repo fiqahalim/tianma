@@ -17,10 +17,10 @@
                         <tbody>
                             <tr>
                                 <th>
-                                    {{ trans('cruds.ranking.myRanking') }}
+                                    Parent Ranking
                                 </th>
                                 <td>
-                                    {{ Auth::user()->ranking_id ?? 'Not Available' }}
+                                    {{ $parent[0]->rankings->category ?? 'Not Available' }}
                                 </td>
                             </tr>
                             <tr>

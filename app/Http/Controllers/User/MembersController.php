@@ -74,9 +74,13 @@ class MembersController extends Controller
 
         $parent = Auth::user()->parent()->get();
 
+        $totalComms = Order::where('orders.created_by', Auth::user()->id)
+            ->sum('orders.amount');
+
         return view('pages.downline.tree')->with([
             'user' => $user,
             'parent' => $parent,
+            'totalComms' => $totalComms,
         ]);
     }
 
