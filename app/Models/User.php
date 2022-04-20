@@ -123,7 +123,7 @@ class User extends Authenticatable
 
     public function orders()
     {
-        return $this->hasMany(Order::class, 'id', 'created_by');
+        return $this->belongsTo(Order::class, 'id', 'created_by');
     }
 
     public function customer()

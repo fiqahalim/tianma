@@ -94,15 +94,17 @@ class UsersController extends Controller
             $user->notify(new UserApprovedNotification());
         }
 
-        $request->validate([
-            'avatar' => 'required|mimes:jpg,png,jpeg|max:5048'
-        ]);
+        if($user->avatar == null) {
+            $request->validate([
+                'avatar' => 'required|mimes:jpg,png,jpeg|max:5048'
+            ]);
 
-        $profileImage = time().'.'.$user->avatar->extension();
-        $user->avatar->move(public_path('images/profile'), $profileImage);
+            $profileImage = time().'.'.$user->avatar->extension();
+            $user->avatar->move(public_path('images/profile'), $profileImage);
 
-        $user->avatar = $profileImage;
-        $user->save();
+            $user->avatar = $profileImage;
+            $user->save();
+        }
 
         alert()->success(__('global.update_success'))->toToast();
         return redirect()->route('admin.users.index');
@@ -114,13 +116,15 @@ class UsersController extends Controller
 
         $user->load('roles', 'team', 'parent', 'userUserAlerts', 'childUsers', 'commissions', 'rankings');
 
-        $totalComms = Order::join('products', 'products.id', '=', 'orders.product_id')
-            ->where('orders.created_by', $user->id)
-            ->whereMonth('orders.created_at', Carbon::now()->month)
-            ->whereYear('orders.created_at', Carbon::now()->year)
+        $totalComms = Order::where('orders.created_by', $user->id)
             ->sum('orders.amount');
 
-        return view('admin.users.show', compact('user', 'totalComms'));
+        foreach($user->childUsers as $childUser) {
+            $totas = Order::where('orders.created_by', $childUser->id)
+                ->sum('orders.amount');
+        }
+
+        return view('admin.users.show', compact('user', 'totalComms', 'totas'));
     }
 
     public function destroy(User $user)

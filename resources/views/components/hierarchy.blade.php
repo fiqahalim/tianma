@@ -2,16 +2,13 @@
     <ol>
         {{-- Childs --}}
         @foreach($user->childUsers as $childUser)
-            @php
-                $totalComms = $childUser->commissions()->sum('mo_overriding_comm');
-            @endphp
             @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
                 <li class="sub-menu">
-                    <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totalComms }}, Ranking: {{ $childUser->rankings->category }}">
+                    <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totas }}, Ranking: {{ $childUser->rankings->category }}">
                         <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="60" height="60">
                     </span>
                     <div>
-                        <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totalComms }}, Ranking: {{ $childUser->rankings->category }}">
+                        <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totas }}, Ranking: {{ $childUser->rankings->category }}">
                             {{ $childUser->agent_code }}
                         </span>
                     </div>
@@ -22,11 +19,11 @@
                         <ol class="child-menu1">
                             @foreach($childUser->childUsers as $childUser)
                                 <li>
-                                    <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totalComms }}, Ranking: {{ $childUser->rankings->category }}">
+                                    <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totas }}, Ranking: {{ $childUser->rankings->category }}">
                                         <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="60" height="60">
                                     </span>
                                     <div>
-                                        <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totalComms }}, Ranking: {{ $childUser->rankings->category }}">
+                                        <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totas }}, Ranking: {{ $childUser->rankings->category }}">
                                             {{ $childUser->agent_code }}
                                         </span>
                                     </div>
@@ -38,11 +35,11 @@
                                             @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
                                                 <li class="child-menu2">
                                                     <div>
-                                                        <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totalComms }}, Ranking: {{ $childUser->rankings->category }}">
+                                                        <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totas }}, Ranking: {{ $childUser->rankings->category }}">
                                                             <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="60" height="60">
                                                         </span>
                                                         <div class="mt-2">
-                                                            <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totalComms }}, Ranking: {{ $childUser->rankings->category }}">
+                                                            <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totas }}, Ranking: {{ $childUser->rankings->category }}">
                                                                 {{ $childUser->agent_code }}
                                                             </span>
                                                         </div>
@@ -55,11 +52,11 @@
                                                             @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
                                                                 <li class="child-menu3">
                                                                     <div>
-                                                                        <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totalComms }}, Ranking: {{ $childUser->rankings->category }}">
+                                                                        <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totas }}, Ranking: {{ $childUser->rankings->category }}">
                                                                             <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="60" height="60">
                                                                         </span>
                                                                         <div class="mt-2">
-                                                                            <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totalComms }}, Ranking: {{ $childUser->rankings->category }}">
+                                                                            <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totas }}, Ranking: {{ $childUser->rankings->category }}">
                                                                                 {{ $childUser->agent_code }}
                                                                             </span>
                                                                         </div>
@@ -72,11 +69,11 @@
                                                                             @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
                                                                                 <li class="child-menu4">
                                                                                     <div>
-                                                                                        <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totalComms }}, Ranking: {{ $childUser->rankings->category }}">
+                                                                                        <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totas }}, Ranking: {{ $childUser->rankings->category }}">
                                                                                             <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="60" height="60">
                                                                                         </span>
                                                                                         <div class="mt-2">
-                                                                                            <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totalComms }}, Ranking: {{ $childUser->rankings->category }}">
+                                                                                            <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totas }}, Ranking: {{ $childUser->rankings->category }}">
                                                                                                 {{ $childUser->agent_code }}
                                                                                             </span>
                                                                                         </div>
