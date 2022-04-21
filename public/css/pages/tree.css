@@ -91,3 +91,9 @@
     display: inline-block;
 }
 
+div.scroll {
+    overflow: auto;
+    white-space: nowrap;
+    width: 100%;
+}
+
