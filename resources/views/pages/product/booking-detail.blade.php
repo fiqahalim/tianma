@@ -62,7 +62,7 @@
                         </div>
 
                         @if($customer->mode == 'Installment')
-                            <a class="btn btn-primary float-right mb-3 mr-3" id="installment" href="{{ route('admin.installment.index', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
+                            <a class="btn btn-primary float-right mb-3 mr-3 text-white" id="installment" data-toggle="modal" data-target="#paymentOptionModal">
                                 {{ trans('global.confirmBooking') }}
                             </a>
                         @else
@@ -75,6 +75,9 @@
             </div>
         </div>
     </div>
+
+    {{-- include modal for payment option --}}
+    @include('pages.includes.payment-option')
 @endsection
 
 @section('styles')

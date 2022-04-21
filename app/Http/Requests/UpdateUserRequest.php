@@ -33,6 +33,7 @@ class UpdateUserRequest extends FormRequest
             'username' => [
                 'string',
                 'required',
+                'unique:users,username,' . request()->route('user')->id,
             ],
             'contact_no' => [
                 'string',

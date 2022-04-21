@@ -11,7 +11,7 @@
 
     <div class="container-fluid">
         <div class="text-center">
-            <div>
+            <div class="scroll">
                 <ol class="tree">
                     <li>
                         <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $user->name }}, Agency Code: {{ $user->agency_code ? $user->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totalComms }}, Ranking: {{ $user->rankings->category }}">
