@@ -76,7 +76,7 @@
                                     <th>Description 2</th>
                                     <th>Payment Mode</th>
                                     <th>Payment Ref Number</th>
-                                    <th>Amount <br><i>(includes maintenance fees, etc)</i></th>
+                                    <th>Amount</th>
                                 </tr>
                             </thead>
                             @php

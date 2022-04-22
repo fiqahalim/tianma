@@ -2,6 +2,8 @@
     float: left;
     padding: 1em;
     width: 100%;
+    display:flex;
+    flex-wrap:wrap;
 }
 
 /* It's supposed to look like a tree diagram */

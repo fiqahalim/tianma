@@ -23,7 +23,7 @@
                                 <strong>{{ $user->agent_code }}</strong>
                             </span>
                         </div>
-                        <i id="menu-item" class="fas fa-plus-circle" onclick="myFunction()"></i>
+                        <i id="menu-item" class="fas fa-plus-circle"></i>
                         @include('components.hierarchy')
                     </li>
                 </ol>

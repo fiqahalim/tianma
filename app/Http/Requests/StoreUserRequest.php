@@ -96,6 +96,10 @@ class StoreUserRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'avatar' => [
+                'nullable',
+                'mimes:jpg,png,jpeg|max:5048',
+            ],
         ];
     }
 }

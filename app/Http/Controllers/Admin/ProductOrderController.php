@@ -42,22 +42,22 @@ class ProductOrderController extends Controller
             $ids = collect($subCategory->id);
             $selectedCategories = [$category->id, $childCategory->id, $subCategory->id];
         } elseif ($childCategory) {
-            $ids = $childCategory->childCategories->pluck('id');
-            $selectedCategories = [$category->id, $childCategory->id];
+            $ids = $childCategory->pluck('id');
+            $selectedCategories = [$category->id];
         } elseif ($category) {
-            $category->load('childCategories.childCategories');
+            $category->load('childCategories');
             $ids = collect();
             $selectedCategories[] = $category->id;
 
             foreach ($category->childCategories as $subCategory) {
-                $ids = $ids->merge($subCategory->childCategories->pluck('id'));
+                $ids = $ids->merge($subCategory->pluck('id'));
             }
         }
 
         $products = Product::whereHas('categories', function ($query) use ($ids) {
                 $query->whereIn('id', $ids);
             })
-            ->with('categories.parentCategory')
+            ->with('categories.parentCategory.parentCategory')
             ->paginate(9);
 
         return view('pages.product.index', compact('products', 'selectedCategories'));

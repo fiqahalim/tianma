@@ -18,21 +18,21 @@
     
     <div class="container-fluid mt-5 mb-5">
         <div class="row g-2">
-            {{-- <div class="col-md-3">
+            <div class="col-md-3">
                 <div class="list-group">
                     Display all product list menu item
                     @include('pages.product.list')
                 </div>
             </div>
- --}}            {{-- product list --}}
-            <div class="col-md-12">
+            {{-- product list --}}
+            <div class="col-lg 4 col-md-6">
                 <div class="row g-2">
                     @forelse($products as $product)
                         <div class="col-md-4 mb-4">
                             <div class="card h-80">
                                 <!-- Product image-->
                                 <a href="{{ route('admin.product', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
-                                    <img class="card-img-top" src="{{ $product->photo->url ?? '/images/home-urns.png' }}" style="height: 200px; width: 18rem; display: block; margin-left: auto;margin-right: auto;">
+                                    <img class="card-img-top" src="{{ $product->photo->url ?? '/images/home-urns.png' }}" style="height: 200px; width: inherit; display: block; margin-left: auto;margin-right: auto;">
                                 </a>
                                 <!-- Product details-->
                                 <div class="card-body p-4">
@@ -77,12 +77,15 @@
                     @endforelse
                 </div>
             </div>
-            @if(get_class($products) == 'Illuminate\Pagination\LengthAwarePaginator')
-                <div class="row">
+        </div>
+        @if(get_class($products) == 'Illuminate\Pagination\LengthAwarePaginator')
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-lg 4 col-md-6">
                     {{ $products->links() ?? '' }}
                 </div>
-            @endif
-        </div>
+            </div>
+        @endif
     </div>
 @endsection
 

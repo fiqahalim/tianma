@@ -76,7 +76,7 @@
                                     <th>Description 2</th>
                                     <th>Payment Mode</th>
                                     <th>Payment Ref Number</th>
-                                    <th>Amount <br><i>(includes maintenance fees, etc)</i></th>
+                                    <th>Amount</th>
                                 </tr>
                             </thead>
                             @php
@@ -102,7 +102,11 @@
                                         Ref No
                                     </td>
                                     <td>
-                                        {{ $order->products->total_cost ?? '' }}
+                                        @if($order->payment_option == 'PAY LATER' && $order->amount == 0)
+                                            NEED TO PAY FIRST
+                                        @else
+                                            {{ $order->installments->downpayment ?? '' }}
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr>

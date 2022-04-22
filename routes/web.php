@@ -150,6 +150,10 @@ Route::group(['middleware' => 'auth'], function() {
             Route::delete('orders/destroy', [\App\Http\Controllers\Admin\OrdersController::class,'massDestroy'])->name('orders.massDestroy');
             Route::resource('orders', '\App\Http\Controllers\Admin\OrdersController');
 
+            // Calculate Pay Later
+            Route::match(['get', 'post'], 'orders/showCalculator/{order}', [\App\Http\Controllers\Admin\OrdersController::class,'showCalculator'])->name('orders.showCalculator');
+            Route::match(['get', 'post'], 'orders/calculatePayLater/{order}', [\App\Http\Controllers\Admin\OrdersController::class,'calculatePayLater'])->name('orders.calculatePayLater');
+
             // Transactions
             Route::match(['get', 'post'], 'transactions/store/{order}', [\App\Http\Controllers\Admin\TransactionController::class, 'store'])->name('transaction.store');
             Route::match(['get', 'post'], 'transactions/index/{order}', [\App\Http\Controllers\Admin\TransactionController::class, 'index'])->name('transaction.index');
@@ -182,6 +186,10 @@ Route::group(['middleware' => 'auth'], function() {
 
             // addons page
             Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/addons', [\App\Http\Controllers\Admin\ProductOrderController::class, 'addOns'])->name('addons');
+
+            // Pay Later
+            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/order-details', [\App\Http\Controllers\Admin\InstallmentController::class, 'payLater'])->name('order.payLater');
+
         });
 
         /** CUSTOMER MANAGEMENT **/

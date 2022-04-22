@@ -16,7 +16,7 @@
                     <a href="{{ route('admin.installment.index', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}" class="btn btn-outline-primary btn-lg btn-block">Pay Now</a>
                 </div>
                 <div class="col-md-12 mt-3 mb-3">
-                    <a href="" class="btn btn-outline-warning btn-lg btn-block">Pay Later</a>
+                    <a href="{{ route('admin.order.payLater', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}" class="btn btn-outline-warning btn-lg btn-block">Pay Later</a>
                 </div>
             </div>
         </div>

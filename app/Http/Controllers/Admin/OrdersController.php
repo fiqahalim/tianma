@@ -8,6 +8,7 @@ use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
 use App\Models\Transaction;
+use App\Models\Installment;
 use Gate;
 use Alert;
 use Carbon\Carbon;
@@ -63,15 +64,25 @@ class OrdersController extends Controller
     {
         abort_if(Gate::denies('order_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $order->load('customer', 'team', 'createdBy', 'commissions', 'products', 'bookLocations');
+        $order->load('customer', 'createdBy', 'products', 'bookLocations', 'installments', 'fullPayments');
 
-        $amount = $order->amount;
-        $numberToWords = new NumberToWords();
-        $numberTransformer = $numberToWords->getNumberTransformer('en');
-        $amountFormat = $numberTransformer->toWords($amount);
+        if($order->customer->mode == 'Installment') {
+            $amount = $order->installments->downpayment;
+            $numberToWords = new NumberToWords();
+            $numberTransformer = $numberToWords->getNumberTransformer('en');
+            $amountFormat = $numberTransformer->toWords($amount);
 
-        $today = Carbon::today();
-        $date = $today->addMonth(1);
+            $today = Carbon::today();
+            $date = $today->addMonth(1);
+        } else {
+            $amount = $order->fullPayments->amount;
+            $numberToWords = new NumberToWords();
+            $numberTransformer = $numberToWords->getNumberTransformer('en');
+            $amountFormat = $numberTransformer->toWords($amount);
+
+            $today = Carbon::today();
+            $date = $today->addMonth(1);
+        }
 
         return view('admin.orders.show', compact('order', 'date', 'amountFormat'));
     }
@@ -91,5 +102,44 @@ class OrdersController extends Controller
         Order::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function showCalculator(Order $order)
+    {
+        return view('admin.orders.pay-later-calculator', compact('order'));
+    }
+
+    public function calculatePayLater(Request $request, Order $order)
+    {
+        $requestData = $request->all();
+
+        $installments = new Installment;
+        $installments->downpayment = $requestData['downpayment'];
+        $installments->amount = $requestData['amount'];
+        $installments->outstanding_balance = $request['outstanding_balance'];
+        $installments->monthly_installment = $request['monthly_installment'];
+        $installments->last_month_payment = $request['last_month_payment'];
+        $installments->installment_year = $request['installment_year'];
+        $installments->created_at = Carbon::now();
+        $installments->customer_id = $order->customer->id;
+        $installments->created_by = $order->customer->created_by;
+        $installments->order_id = $order->id;
+        $installments->save();
+
+        $trans = new Transaction();
+        $trans->transaction_date = Carbon::now();
+        $trans->amount = '';
+        $trans->balance = $installments->outstanding_balance;
+        $trans->installment_balance = $installments->installment_year;
+        $trans->status = 'Paid';
+        $trans->installment_id = $installments->id;
+        $trans->order_id = $order->id;
+        $trans->customer_id = $order->customer->id;
+        $trans->save();
+
+        $order->update($request->all());
+
+        alert()->success(__('global.update_success'))->toToast();
+        return redirect()->route('admin.orders.index');
     }
 }

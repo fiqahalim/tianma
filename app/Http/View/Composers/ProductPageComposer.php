@@ -13,7 +13,7 @@ class ProductPageComposer
     {
         $this->frontCategories = cache()->remember('frontCategories', 3600, function () {
             return ProductCategory::whereNull('category_id')
-                ->with(['childCategories.childCategories' => function ($query) {
+                ->with(['childCategories' => function ($query) {
                     $query->withCount('products');
                 }, 'childCategories.products'])
                 ->get();
@@ -21,7 +21,7 @@ class ProductPageComposer
 
         foreach ($this->frontCategories as $parentCategory) {
             foreach($parentCategory->childCategories as $category) {
-                $category->products_count = $category->childCategories->sum('products_count');
+                $category->products_count = $category->products->count();
             }
             $parentCategory->products_count = $parentCategory->childCategories->sum('products_count');
         }
