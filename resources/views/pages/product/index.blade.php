@@ -20,7 +20,6 @@
         <div class="row g-2">
             <div class="col-md-3">
                 <div class="list-group">
-                    Display all product list menu item
                     @include('pages.product.list')
                 </div>
             </div>
@@ -34,12 +33,15 @@
                                 <a href="{{ route('admin.product', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}">
                                     <img class="card-img-top" src="{{ $product->photo->url ?? '/images/home-urns.png' }}" style="height: 200px; width: inherit; display: block; margin-left: auto;margin-right: auto;">
                                 </a>
+                                {{-- {{ dd($product->categories[0]->parentCategory->name) }} --}}
                                 <!-- Product details-->
                                 <div class="card-body p-4">
                                     <div class="text-center">
-                                        <h5 class="fw-bolder" style="color:blue;">
-                                            {{ $product->product_name }}
-                                        </h5>
+                                        @foreach($product->categories as $category)
+                                            <h5 class="fw-bolder" style="color:blue;">
+                                                {{ strtoupper($category->parentCategory->name) }}
+                                            </h5>
+                                        @endforeach
                                         <!-- Product price-->
                                         <span><strong>Product Price</strong></span><br>
                                         RM{{ $product->price }}<br><br>
