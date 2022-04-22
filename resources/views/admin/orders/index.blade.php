@@ -29,10 +29,13 @@
                             {{ trans('cruds.order.fields.ref_no') }}
                         </th>
                         <th>
-                            {{ trans('cruds.order.fields.amount') }}
+                            Product {{ trans('cruds.order.fields.amount') }}
                         </th>
                         <th>
                             {{ trans('cruds.order.fields.order_status') }}
+                        </th>
+                        <th>
+                            Payment Option
                         </th>
                         <th>
                             {{ trans('cruds.order.fields.approved') }}
@@ -70,6 +73,9 @@
                             </td>
                             <td>
                                 {{ $order->order_status ?? '' }}
+                            </td>
+                            <td>
+                                {{ strtoupper($order->payment_option ?? '') }}
                             </td>
                             <td>
                                 <span style="display:none">{{ $order->approved ?? '' }}</span>
@@ -117,9 +123,15 @@
                             </td>
                             <td>
                                 @if($order->customer->mode == 'Installment')
-                                    <a class="btn btn-dark" href="{{ route('admin.transaction.index', $order->id) }}">
-                                        <small>Update<br>Installment</small>
-                                    </a>
+                                    @if($order->payment_option == 'PAY LATER' && $order->amount == 0)
+                                        <a class="btn btn-warning text-white" href="{{ route('admin.orders.showCalculator', $order->id) }}">
+                                            <small>PAY NOW</small>
+                                        </a>
+                                    @else
+                                        <a class="btn btn-dark" href="{{ route('admin.transaction.index', $order->id) }}">
+                                            <small>Update<br>Installment</small>
+                                        </a>
+                                    @endif
                                 @endif
                             </td>
                         </tr>

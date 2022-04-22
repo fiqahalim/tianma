@@ -17,7 +17,7 @@
                         </a>
                     </li>
 
-                    @if($category->childCategories->count())
+                    {{-- @if($category->childCategories->count())
                         <div class="list-third-level" data-id="{{ $category->id }}" style="display:none;">
                             @foreach($category->childCategories as $childCategory)
                                 <a class="list-group-item{{ $loop->last ? ' mb-1' : '' }}" data-id="{{ $childCategory->id }}" href="{{ route('admin.category', [$parentCategory, $category, $childCategory->name]) }}">
@@ -25,7 +25,7 @@
                                 </a>
                             @endforeach
                         </div>
-                    @endif
+                    @endif --}}
                 @endforeach
             </div>
         @endif

@@ -45,6 +45,7 @@ class InstallmentController extends Controller
         $order = new Order;
         $order->ref_no = $this->getOrderNumber();
         $order->order_status = 'NEW';
+        $order->payment_option = 'PAY NOW';
         $order->amount = $requestData['amount'];
         $order->order_date = $current = Carbon::now();
         $order->customer_id = $customer->id;
@@ -91,6 +92,34 @@ class InstallmentController extends Controller
 
     public function update(Request $request, $category, $childCategory, $childCategory2, Product $product, Installment $installment)
     {
+        $products = session('products');
+        $customer = session('customer');
+        $locations = session('bookLocation');
+        $installments = session('installments');
 
+        $installment->update($request->all());
+    }
+
+    public function payLater(Request $request, $category, $childCategory, $childCategory2, Product $product, Installment $installment)
+    {
+        $products = session('products');
+        $customer = session('customer');
+        $locations = session('bookLocation');
+
+        $order = new Order;
+        $order->ref_no = $this->getOrderNumber();
+        $order->order_status = 'NEW';
+        $order->payment_option = 'PAY LATER';
+        $order->amount = '';
+        $order->order_date = $current = Carbon::now();
+        $order->customer_id = $customer->id;
+        $order->created_by = $customer->created_by;
+        $order->product_id = $products->id;
+        $order->book_locations_id = $locations->id;
+        $order->save();
+
+        session(['order' => $order]);
+
+        return view('pages.includes.pay-later-order', compact('order', 'customer'));
     }
 }
