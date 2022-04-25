@@ -41,8 +41,8 @@ class CustomerDetailsController extends Controller
 
         $validated = $request->validate([
             'full_name' => 'required',
-            'id_number' => 'required|unique:customers',
-            'email' => 'required|unique:customers',
+            'id_number' => 'required',
+            'email' => 'required',
             'mobile' => 'required|numeric',
             'gender' => 'required',
             'postcode' => 'required',
@@ -57,9 +57,9 @@ class CustomerDetailsController extends Controller
             'payment_name' => 'required',
         ]);
 
-        $customer = Customer::where('id_number', '=', $request->input('id_number'))->first();
+        // $customer = Customer::where('id_number', '=', $request->input('id_number'))->first();
 
-        if ($customer === null) {
+        // if ($customer === null) {
             $customer = new Customer();
             $customer->full_name = $request->full_name;
             $customer->id_type = $request->id_type;
@@ -110,28 +110,7 @@ class CustomerDetailsController extends Controller
             $payments->payment_name = $request->payment_name;
             $payments->customer_id = $customer->id;
             $payments->save();
-        } else {
-            $customer->update(
-                ['full_name' => request('full_name')],
-                ['id_type' => request('id_type')],
-                ['id_number' => request('id_number')],
-                ['email' => request('email')],
-                ['mobile' => request('mobile')],
-                ['gender' => request('gender')],
-                ['contact_person_name' => request('contact_person_name')],
-                ['contact_person_no' => request('contact_person_no')],
-                ['cperson_id_number' => request('cperson_id_number')],
-                ['postcode' => request('postcode')],
-                ['state' => request('state')],
-                ['city' => request('city')],
-                ['address_1' => request('address_1')],
-                ['address_2' => request('address_2')],
-                ['nationality' => request('nationality')],
-                ['country' => request('country')],
-                ['mode' => request('mode')],
-                ['created_by' => request('created_by')]
-            );
-        }
+        // }
 
         session(['customer' => $customer]);
 

@@ -2,12 +2,12 @@
     float: left;
     padding: 1em;
     width: 100%;
-    display:flex;
-    flex-wrap:wrap;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 /* It's supposed to look like a tree diagram */
-.tree, .tree ul, .tree li {
+.tree, .tree ul, .tree ol, .tree li {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -23,7 +23,7 @@
     justify-content: center;
     align-items: center;
 }
-.tree ul {
+.tree ul, .tree ol {
   width: 100%;
 }
     .tree li {
@@ -96,5 +96,62 @@
 div.scroll {
     overflow: auto;
     white-space: nowrap;
-    width: 100%;
+    width: auto;
+}
+
+/*@media screen and (max-width: 1200px) {
+    .tree {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .tree {
+        width: 30%;
+    }
+}
+*/
+
+@media only screen and (max-width: 600px) {
+    .tree, .tree ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .tree, .tree ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .tree, .tree ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .tree, .tree ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .tree, .tree ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }

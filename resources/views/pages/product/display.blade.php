@@ -15,7 +15,7 @@
           </ol>
         </nav>
     @endcan
-    
+
     <div class="container-fluid mt-5 mb-5">
         <div class="row g-2">
             <div class="col-md-3">
@@ -23,6 +23,7 @@
                     @include('pages.product.list')
                 </div>
             </div>
+
             {{-- product list --}}
             <div class="col-lg 4 col-md-6">
                 <div class="row g-2">
@@ -36,11 +37,9 @@
                                 <!-- Product details-->
                                 <div class="card-body p-4">
                                     <div class="text-center">
-                                        @foreach($product->categories as $category)
-                                            <h5 class="fw-bolder" style="color:blue;">
-                                                {{ strtoupper($category->parentCategory->name) }}
-                                            </h5>
-                                        @endforeach
+                                        <h5 class="fw-bolder" style="color:blue;">
+                                            {{ $product->product_name }}
+                                        </h5>
                                         <!-- Product price-->
                                         <span><strong>Product Price</strong></span><br>
                                         RM{{ $product->price }}<br><br>

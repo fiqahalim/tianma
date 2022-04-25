@@ -60,8 +60,8 @@
                             $paymentInfo = session('paymentInfo');
                             $products = session('products');
                         @endphp
-                        @if ($customer->mode == 'Full Payment')
-                            <div class="p-3 border-bottom">
+
+                        <div class="p-3 border-bottom">
                             <div class="d-flex justify-content-between align-items-center">
                                 <span>
                                     <i class="fas fa-calendar-check"></i>
@@ -87,81 +87,83 @@
                                     <small>
                                         <i class="fa fa-check text-muted">
                                         </i>
-                                        Payment Option: {{ strtoupper($order->payment_option) }}
+                                        Payment Option:
+                                        <span class="badge bg-warning text-white" style="font-size:8pt;">
+                                            {{ strtoupper($order->payment_option) }}
+                                        </span>
                                     </small>
-                                    <small>
+                                    <small class="mt-2">
                                         <i class="fa fa-check text-muted">
                                         </i>
-                                        Payment Method: {{ Str::upper($customer->mode) }}
+                                        Payment Method: <b>{{ Str::upper($customer->mode) }}</b>
                                     </small>
                                 </div>
                             </div>
-                            </div>
-                            <div class="row g-0">
-                                <div class="col-md-6">
-                                    <div class="p-3 d-flex justify-content-center align-items-center">
-                                        <span class="font-weight-bold">
-                                            Product Price
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="p-3 d-flex justify-content-center align-items-center">
-                                        <span class="font-weight-bold">
-                                            RM {{ $products->price }}
-                                        </span>
-                                    </div>
+                        </div>
+                        <div class="row g-0">
+                            <div class="col-md-6">
+                                <div class="p-3 d-flex justify-content-center align-items-center">
+                                    <span class="font-weight-bold">
+                                        Product Price
+                                    </span>
                                 </div>
                             </div>
-                            <div class="row g-0">
-                                <div class="col-md-6">
+                            <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
-                                        <span class="font-weight-bold">
-                                            Maintenance Fees
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="p-3 d-flex justify-content-center align-items-center">
-                                        <span class="font-weight-bold">
-                                            RM {{ $products->maintenance_price }}
-                                        </span>
-                                    </div>
+                                    <span>
+                                        RM {{ $products->price }}
+                                    </span>
                                 </div>
                             </div>
-                            <div class="row g-0">
-                                <div class="col-md-6">
-                                    <div class="p-3 d-flex justify-content-center align-items-center">
-                                        <span class="font-weight-bold">
-                                            Promotion Price
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="p-3 d-flex justify-content-center align-items-center">
-                                        <span class="font-weight-bold">
-                                            RM {{ $products->promotion_price }}
-                                        </span>
-                                    </div>
+                        </div>
+                        <div class="row g-0">
+                            <div class="col-md-6">
+                                <div class="p-3 d-flex justify-content-center align-items-center">
+                                    <span class="font-weight-bold">
+                                        Maintenance Fees
+                                    </span>
                                 </div>
                             </div>
-                            <div class="row g-0">
-                                <div class="col-md-6">
+                            <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
-                                        <span class="font-weight-bold">
-                                            Total
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="p-3 d-flex justify-content-center align-items-center">
-                                        <span class="font-weight-bold">
-                                            RM {{ $order->amount }}
-                                        </span>
-                                    </div>
+                                    <span>
+                                        RM {{ $products->maintenance_price }}
+                                    </span>
                                 </div>
                             </div>
-                        @endif
+                        </div>
+                        <div class="row g-0">
+                            <div class="col-md-6">
+                                <div class="p-3 d-flex justify-content-center align-items-center">
+                                    <span class="font-weight-bold">
+                                        Promotion Price
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 d-flex justify-content-center align-items-center">
+                                    <span>
+                                        RM {{ $products->promotion_price }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-0">
+                            <div class="col-md-6">
+                                <div class="p-3 d-flex justify-content-center align-items-center">
+                                    <span class="font-weight-bold">
+                                        Total
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 d-flex justify-content-center align-items-center">
+                                    <span class="font-weight-bold">
+                                        RM {{ $products->total_cost }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

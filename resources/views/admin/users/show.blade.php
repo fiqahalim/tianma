@@ -9,9 +9,9 @@
         </ol>
     </nav>
 
-    <div class="container-fluid">
+    <div class="container-fluid scroll">
         <div class="text-center">
-            <div class="scroll">
+            <div class="">
                 <ol class="tree">
                     <li>
                         <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $user->name }}, Agency Code: {{ $user->agency_code ? $user->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totalComms }}, Ranking: {{ $user->rankings->category }}">
@@ -23,7 +23,7 @@
                                 <strong>{{ $user->agent_code }}</strong>
                             </span>
                         </div>
-                        <i id="menu-item" class="fas fa-plus-circle"></i>
+                        {{-- <i id="menu-item" class="fas fa-plus-circle"></i> --}}
                         @include('components.hierarchy')
                     </li>
                 </ol>

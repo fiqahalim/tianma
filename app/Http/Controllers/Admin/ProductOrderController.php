@@ -60,23 +60,23 @@ class ProductOrderController extends Controller
             ->with('categories.parentCategory.parentCategory')
             ->paginate(9);
 
-        return view('pages.product.index', compact('products', 'selectedCategories'));
+        return view('pages.product.display', compact('products', 'selectedCategories'));
     }
 
     public function productCategory($category, $childCategory, $childCategory2, Product $product)
     {
         $product->load('categories.parentCategory.parentCategory');
-        $childCategory2 = $product->categories->where('name', $childCategory2)->first();
+        $childCategory = $product->categories->where('name', $childCategory)->first();
         $selectedCategories = [];
 
-        if ($childCategory2 &&
-            $childCategory2->parentCategory &&
-            $childCategory2->parentCategory->parentCategory
+        if ($childCategory &&
+            $childCategory->parentCategory &&
+            $childCategory->parentCategory->parentCategory
         ) {
             $selectedCategories = [
-                $childCategory2->parentCategory->parentCategory->id ?? null,
-                $childCategory2->parentCategory->id ?? null,
-                $childCategory2->id
+                $childCategory->parentCategory->parentCategory->id ?? null,
+                $childCategory->parentCategory->id ?? null,
+                $childCategory->id
             ];
         }
 

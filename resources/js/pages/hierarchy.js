@@ -49,3 +49,16 @@ $("#child-item11").click(function(){
 $("#child-item12").click(function(){
     $(".child-menu12").toggle();
 });
+
+const btn = document.getElementById('child-item1');
+
+btn.addEventListener('click', function handleClick() {
+  const initialText = 'Hide All';
+
+  if (btn.textContent.toLowerCase().includes(initialText.toLowerCase())) {
+    btn.innerHTML =
+      btn.textContent = 'Show All';
+  } else {
+    btn.textContent = initialText;
+  }
+});
