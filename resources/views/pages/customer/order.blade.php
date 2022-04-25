@@ -185,15 +185,17 @@
                                         {{ trans('global.order.order_status') }}: {{ $order->order_status }}
                                     </small>
                                     <div class="d-flex flex-column mt-3">
-                                        {{-- <small>
-                                            <i class="fa fa-check text-muted">
-                                            </i>
-                                            Agent Code: {{ Auth::user()->agent_code }}
-                                        </small> --}}
+                                        <small>
+                                            <i class="fa fa-check text-muted"></i>
+                                            Payment Option:
+                                            <span class="badge bg-primary text-white" style="font-size:8pt;">
+                                                {{ strtoupper($order->payment_option) }}
+                                            </span>
+                                        </small>
                                         <small>
                                             <i class="fa fa-check text-muted">
                                             </i>
-                                            Payment Method: {{ Str::upper($customer->mode) }}
+                                            Payment Method: <b>{{ Str::upper($customer->mode) }}</b>
                                         </small>
                                     </div>
                                 </div>

@@ -11,7 +11,7 @@
                     {{ $childUser->agent_code }}
                 </span>
             </div>
-            <i id="child-item6" class="fas fa-plus-circle"></i>
+            {{-- <i id="child-item6" class="fas fa-plus-circle"></i> --}}
         </div>
 
         {{-- Sub level 6 of child --}}
@@ -28,7 +28,7 @@
                             {{ $childUser->agent_code }}
                         </span>
                     </div>
-                    <i id="child-item7" class="fas fa-plus-circle"></i>
+                    {{-- <i id="child-item7" class="fas fa-plus-circle"></i> --}}
                 </div>
 
                 {{-- Sub level 7 --}}
@@ -45,7 +45,7 @@
                                     {{ $childUser->agent_code }}
                                 </span>
                             </div>
-                            <i id="child-item8" class="fas fa-plus-circle"></i>
+                            {{-- <i id="child-item8" class="fas fa-plus-circle"></i> --}}
                         </div>
 
                         {{-- Sub level 8 --}}
@@ -62,7 +62,7 @@
                                             {{ $childUser->agent_code }}
                                         </span>
                                     </div>
-                                    <i id="child-item9" class="fas fa-plus-circle"></i>
+                                    {{-- <i id="child-item9" class="fas fa-plus-circle"></i> --}}
                                 </div>
 
                                 {{-- Sub level 9 --}}
@@ -79,7 +79,7 @@
                                                     {{ $childUser->agent_code }}
                                                 </span>
                                             </div>
-                                            <i id="child-item10" class="fas fa-plus-circle"></i>
+                                            {{-- <i id="child-item10" class="fas fa-plus-circle"></i> --}}
                                         </div>
 
                                         {{-- Sub level 10 --}}
@@ -96,7 +96,7 @@
                                                             {{ $childUser->agent_code }}
                                                         </span>
                                                     </div>
-                                                    <i id="child-item11" class="fas fa-plus-circle"></i>
+                                                    {{-- <i id="child-item11" class="fas fa-plus-circle"></i> --}}
                                                 </div>
 
                                                 {{-- Sub level 11 --}}
@@ -113,7 +113,7 @@
                                                                     {{ $childUser->agent_code }}
                                                                 </span>
                                                             </div>
-                                                            <i id="child-item12" class="fas fa-plus-circle"></i>
+                                                            {{-- <i id="child-item12" class="fas fa-plus-circle"></i> --}}
                                                         </div>
 
                                                         {{-- Sub level 12 --}}

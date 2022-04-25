@@ -1,3 +1,4 @@
+<button type="button" id="child-item1" class="btn btn-outline-info btn-sm mb-3">Show All</button>
 @if(count($user->childUsers))
     <ol>
         {{-- Childs --}}
@@ -12,7 +13,6 @@
                             {{ $childUser->agent_code }}
                         </span>
                     </div>
-                    <i id="child-item1" class="fas fa-plus-circle"></i>
 
                     {{-- Sub Level 1 of Childs --}}
                     @if(count($childUser->childUsers))
@@ -27,7 +27,7 @@
                                             {{ $childUser->agent_code }}
                                         </span>
                                     </div>
-                                    <i id="child-item2" class="fas fa-plus-circle"></i>
+                                    {{-- <i id="child-item2" class="fas fa-plus-circle"></i> --}}
 
                                     {{-- Sub Level 2 of Childs --}}
                                     <ol>
@@ -43,7 +43,7 @@
                                                                 {{ $childUser->agent_code }}
                                                             </span>
                                                         </div>
-                                                        <i id="child-item3" class="fas fa-plus-circle"></i>
+                                                        {{-- <i id="child-item3" class="fas fa-plus-circle"></i> --}}
                                                     </div>
 
                                                     {{-- Sub Level 3 of Childs --}}
@@ -60,7 +60,7 @@
                                                                                 {{ $childUser->agent_code }}
                                                                             </span>
                                                                         </div>
-                                                                        <i id="child-item4" class="fas fa-plus-circle"></i>
+                                                                       {{--  <i id="child-item4" class="fas fa-plus-circle"></i> --}}
                                                                     </div>
 
                                                                     {{-- Sub Level 4 of Childs --}}
@@ -77,7 +77,7 @@
                                                                                                 {{ $childUser->agent_code }}
                                                                                             </span>
                                                                                         </div>
-                                                                                        <i id="child-item5" class="fas fa-plus-circle"></i>
+                                                                                        {{-- <i id="child-item5" class="fas fa-plus-circle"></i> --}}
                                                                                     </div>
 
                                                                                     {{-- Sub Level 5 onwards --}}
