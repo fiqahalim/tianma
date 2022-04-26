@@ -21,7 +21,7 @@ class TransactionController extends Controller
 {
     public function index(Order $order)
     {
-        $order->load('customer', 'team', 'createdBy', 'commissions', 'installments', 'transactions');
+        $order->load('customer', 'createdBy', 'commissions', 'installments', 'transactions');
         session(['orders' => $order]);
 
         $transactions = Order::join('transactions', 'transactions.order_id', '=', 'orders.id')
