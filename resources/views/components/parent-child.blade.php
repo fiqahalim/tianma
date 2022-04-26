@@ -19,155 +19,48 @@
                         <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
                         </option>
                     @endif
-                @endforeach
-            @endif
 
-            {{-- Level 4 --}}
-            @if($childUser->childUsers->count())
-                @foreach($childUser->childUsers as $childUser)
-                    @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                        <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
-                        </option>
-                    @endif
-                @endforeach
-            @endif
+                    {{-- Level 4 --}}
+                    @if($childUser->childUsers->count())
+                        @foreach($childUser->childUsers as $childUser)
+                            @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
+                                <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
+                                </option>
+                            @endif
 
-            {{-- Level 5 --}}
-            @if($childUser->childUsers->count())
-                @foreach($childUser->childUsers as $childUser)
-                    @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                        <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
-                        </option>
-                    @endif
-                @endforeach
-            @endif
+                            {{-- Level 5 --}}
+                            @if($childUser->childUsers->count())
+                                @foreach($childUser->childUsers as $childUser)
+                                    @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
+                                        <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
+                                        </option>
+                                    @endif
 
-            {{-- Level 6 --}}
-            @if($childUser->childUsers->count())
-                @foreach($childUser->childUsers as $childUser)
-                    @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                        <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
-                        </option>
-                    @endif
-                @endforeach
-            @endif
+                                    {{-- Level 6 --}}
+                                    @if($childUser->childUsers->count())
+                                        @foreach($childUser->childUsers as $childUser)
+                                            @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
+                                                <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
+                                                </option>
+                                            @endif
 
-            {{-- Level 7 --}}
-            @if($childUser->childUsers->count())
-                @foreach($childUser->childUsers as $childUser)
-                    @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                        <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
-                        </option>
-                    @endif
-                @endforeach
-            @endif
+                                            {{-- Level 7 --}}
+                                            @if($childUser->childUsers->count())
+                                                @foreach($childUser->childUsers as $childUser)
+                                                    @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
+                                                        <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
+                                                        </option>
+                                                    @endif
 
-            {{-- Level 8 --}}
-            @if($childUser->childUsers->count())
-                @foreach($childUser->childUsers as $childUser)
-                    @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                        <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
-                        </option>
-                    @endif
-                @endforeach
-            @endif
-
-            {{-- Level 9 --}}
-            @if($childUser->childUsers->count())
-                @foreach($childUser->childUsers as $childUser)
-                    @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                        <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
-                        </option>
-                    @endif
-                @endforeach
-            @endif
-
-            {{-- Level 10 --}}
-            @if($childUser->childUsers->count())
-                @foreach($childUser->childUsers as $childUser)
-                    @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                        <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
-                        </option>
-                    @endif
-                @endforeach
-            @endif
-
-            {{-- Level 11 --}}
-            @if($childUser->childUsers->count())
-                @foreach($childUser->childUsers as $childUser)
-                    @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                        <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
-                        </option>
-                    @endif
-                @endforeach
-            @endif
-
-            {{-- Level 12 --}}
-            @if($childUser->childUsers->count())
-                @foreach($childUser->childUsers as $childUser)
-                    @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                        <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
-                        </option>
-                    @endif
-                @endforeach
-            @endif
-
-            {{-- Level 13 --}}
-            @if($childUser->childUsers->count())
-                @foreach($childUser->childUsers as $childUser)
-                    @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                        <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
-                        </option>
-                    @endif
-                @endforeach
-            @endif
-
-            {{-- Level 14 --}}
-            @if($childUser->childUsers->count())
-                @foreach($childUser->childUsers as $childUser)
-                    @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                        <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
-                        </option>
-                    @endif
-                @endforeach
-            @endif
-
-            {{-- Level 15 --}}
-            @if($childUser->childUsers->count())
-                @foreach($childUser->childUsers as $childUser)
-                    @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                        <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
-                        </option>
-                    @endif
-                @endforeach
-            @endif
-
-            {{-- Level 17 --}}
-            @if($childUser->childUsers->count())
-                @foreach($childUser->childUsers as $childUser)
-                    @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                        <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
-                        </option>
-                    @endif
-                @endforeach
-            @endif
-
-            {{-- Level 18 --}}
-            @if($childUser->childUsers->count())
-                @foreach($childUser->childUsers as $childUser)
-                    @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                        <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
-                        </option>
-                    @endif
-                @endforeach
-            @endif
-
-            {{-- Level 19 --}}
-            @if($childUser->childUsers->count())
-                @foreach($childUser->childUsers as $childUser)
-                    @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
-                        <option value="{{ $childUser->id }}" {{ old('parent_id') == $childUser->id ? 'selected' : '' }}>{{ $childUser->agent_code }}
-                        </option>
+                                                    {{-- Level 8 and ups --}}
+                                                    @include('components.child-child')
+                                                @endforeach
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                @endforeach
+                            @endif
+                        @endforeach
                     @endif
                 @endforeach
             @endif
