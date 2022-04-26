@@ -111,7 +111,11 @@
                                 </tr>
                                 <tr>
                                     <td colspan="6">
-                                        RINGGIT MALAYSIA {{ Str::upper($amountFormat) }} ONLY
+                                        @if($order->payment_option == 'PAY LATER' && $order->amount == 0)
+                                            RINGGIT MALAYSIA ONLY
+                                        @else
+                                            RINGGIT MALAYSIA {{ Str::upper($amountFormat) }} ONLY
+                                        @endif
                                     </td>
                                 </tr>
                             </tbody>
