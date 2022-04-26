@@ -10,11 +10,14 @@
     </nav>
 
     <div class="container mb-3">
-        <div class="row mt-3 justify-content-end">
-            <a class="btn btn-info" href="{{ route('admin.transaction.index', [$order->id]) }}" data-toggle="modal" data-target="#invoiceDetailsModal">
-                Update Payment
-            </a>
-        </div>
+        @if(isset($order->commissions) && !empty($order->commissions))
+            <div class="row mt-3 justify-content-end">
+                <a class="btn btn-info" href="{{ route('admin.transaction.index', [$order->id]) }}" data-toggle="modal" data-target="#invoiceDetailsModal">
+                    Update Payment
+                </a>
+            </div>
+        @else
+        @endif
     </div>
 
     <div class="page-content container" style="background: white;">
@@ -114,7 +117,11 @@
                                                 {{ Carbon\Carbon::parse($transaction->transaction_date)->format('d/M/Y') }}
                                             </td>
                                             <td>
-                                                RM{{ $transaction->amount ?? '' }}
+                                                @if($transaction->amount == 0)
+
+                                                @else
+                                                    RM{{ $transaction->amount ?? '' }}
+                                                @endif
                                             </td>
                                             <td>
                                                 {{ $transaction->status ?? '' }}
@@ -164,7 +171,7 @@
     $(function () {
         let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
         $.extend(true, $.fn.dataTable.defaults, {
-            orderCellsTop: true,
+            // orderCellsTop: true,
             order: [[ 1, 'asc' ]],
             pageLength: 10,
         });

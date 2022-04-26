@@ -13,6 +13,10 @@
             </div>
 
             <div class="modal-body">
+              <h5 class="mb-4 pb-2 text-center">
+                <i>Please confirm that you would like to update this payment.<br></i>
+                <i>Once the payment has been updated it <span style="color: red;">cannot be edited.</span></i>
+              <h5>
                 <form method="POST" action="{{ route('admin.transaction.store', [$order->id]) }}" enctype="multipart/form-data">
                     @csrf
 
@@ -97,7 +101,7 @@
                                 @lang('global.close')
                             </button>
                             <button type="submit" class="btn btn-primary">
-                                @lang('global.save')
+                                Update
                             </button>
                         </div>
                     </div>
