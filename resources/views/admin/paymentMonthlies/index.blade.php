@@ -118,7 +118,7 @@
                                             </td>
                                             <td>
                                                 @if($transaction->amount == 0)
-
+                                                    <i>Deposit RM{{ $order->installments->downpayment }}</i>
                                                 @else
                                                     RM{{ $transaction->amount ?? '' }}
                                                 @endif
@@ -130,7 +130,7 @@
                                                 {{ $transaction->installment_balance ?? '' }}
                                             </td>
                                             <td>
-                                                RM {{ $transaction->balance ?? '' }}
+                                                RM{{ $transaction->balance ?? '' }}
                                             </td>
                                         </tr>
                                     @endforeach
