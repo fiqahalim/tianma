@@ -18,22 +18,22 @@
     margin: 0 0 1em;
     text-align: center;
 }
-.tree, .tree ul {
+.tree, .tree ul, {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .tree ul, .tree ol {
-  width: 100%;
+  width: auto;
 }
     .tree li {
-        display: table-cell;
-        padding: .5em 0;
+        display: inline-grid;
+        padding: .2em 0;
         vertical-align: top;
     }
         /* _________ */
         .tree li:before {
-            outline: solid 1px #666;
+            outline: solid 1px #7C219E;
             content: "";
             left: 0;
             position: absolute;
@@ -58,7 +58,7 @@
             .tree ul:before,
             .tree code:before,
             .tree span:before {
-                outline: solid 1px #666;
+                outline: solid 1px #7C219E;
                 content: "";
                 height: .5em;
                 left: 50%;
@@ -126,6 +126,11 @@ div.scroll {
         display: flex;
         justify-content: center;
         align-items: center;
+    },
+    div.scroll {
+        overflow: auto;
+        white-space: nowrap;
+        width: auto;
     }
 }
 
@@ -135,6 +140,11 @@ div.scroll {
         display: flex;
         justify-content: center;
         align-items: center;
+    },
+    div.scroll {
+        overflow: auto;
+        white-space: nowrap;
+        width: auto;
     }
 }
 
@@ -144,6 +154,11 @@ div.scroll {
         display: flex;
         justify-content: center;
         align-items: center;
+    },
+    div.scroll {
+        overflow: auto;
+        white-space: nowrap;
+        width: auto;
     }
 }
 
@@ -153,6 +168,11 @@ div.scroll {
         display: flex;
         justify-content: center;
         align-items: center;
+    },
+    div.scroll {
+        overflow: auto;
+        white-space: nowrap;
+        width: auto;
     }
 }
 

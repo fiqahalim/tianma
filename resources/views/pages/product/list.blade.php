@@ -2,9 +2,9 @@
     @foreach($frontCategories as $parentCategory)
         <li class="list-group-item" data-id="{{ $parentCategory->id }}">
             <i class="fa fa-arrow-right"></i>
-            <a href="{{ route('admin.category', [$parentCategory]) }}" class="font-weight-bolder">
+            <span class="font-weight-bolder">
                 {{ $parentCategory->name }} ({{ $parentCategory->products_count }})
-            </a>
+            </span>
         </li>
 
         @if($parentCategory->childCategories->count())

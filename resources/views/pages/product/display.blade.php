@@ -37,9 +37,11 @@
                                 <!-- Product details-->
                                 <div class="card-body p-4">
                                     <div class="text-center">
-                                        <h5 class="fw-bolder" style="color:blue;">
-                                            {{ $product->product_name }}
-                                        </h5>
+                                        @foreach($product->categories as $category)
+                                            <h5 class="fw-bolder" style="color:blue;">
+                                                {{ strtoupper($category->parentCategory->name) }}
+                                            </h5>
+                                        @endforeach
                                         <!-- Product price-->
                                         <span><strong>Product Price</strong></span><br>
                                         RM{{ $product->price }}<br><br>
