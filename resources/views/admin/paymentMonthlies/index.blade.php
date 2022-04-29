@@ -16,9 +16,20 @@
                     Update Payment
                 </a>
             </div>
-        @else
         @endif
+        <div class="row input-daterange">
+            <div class="col-md-4">
+                <input type="text" name="from_date" id="from_date" class="form-control date" placeholder="From Date"/>
+            </div>
+            <div class="col-md-4">
+                <input type="text" name="to_date" id="to_date" class="form-control date" placeholder="To Date"/>
+            </div>
+            <div class="col-md-4">
+                <button type="button" name="filter" id="filter" class="btn btn-success">Submit</button>
+            </div>
+        </div>
     </div>
+
 
     <div class="page-content container" style="background: white;">
         <div class="row">
@@ -98,10 +109,9 @@
 
                     <div class="mt-4">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover datatable datatable-PaymentMonthly">
+                            <table class="table table-bordered table-striped table-hover" id="transactionDatatable">
                                 <thead class="bg-none bgc-default-tp1">
                                     <tr class="table-dark">
-                                        <th></th>
                                         <th>Transaction Date</th>
                                         <th>Paid Amount (RM)</th>
                                         <th>Status</th>
@@ -111,8 +121,7 @@
                                 </thead>
                                 <tbody class="text-95 text-secondary-d3">
                                     @foreach($transactions as $transaction)
-                                        <tr data-entry-id="{{ $transaction->id }}" id="query">
-                                            <td></td>
+                                        <tr data-entry-id="{{ $transaction->id }}">
                                             <td>
                                                 {{ Carbon\Carbon::parse($transaction->transaction_date)->format('d/M/Y') }}
                                             </td>
@@ -168,17 +177,54 @@
 @section('scripts')
 @parent
 <script>
-    $(function () {
-        let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-        $.extend(true, $.fn.dataTable.defaults, {
-            // orderCellsTop: true,
-            order: [[ 1, 'asc' ]],
-            pageLength: 10,
-        });
+    $(document).ready(function() {
+        load_data();
 
-        let table = $('.datatable-PaymentMonthly:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-        $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
-            $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
+        function load_data(from_date = '', to_date = '') {
+            $('#transactionDatatable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url:'{{ route("admin.transaction.index", $order->id) }}',
+                    data:{from_date:from_date, to_date:to_date}
+                },
+                columns: [{
+                    data: 'id',
+                    name: 'id'
+                },
+                {
+                    data:'transaction_date',
+                    name:'transaction_date'
+                },
+                {
+                    data:'amount',
+                    name:'amount'
+                },
+                {
+                    data:'status',
+                    name:'status'
+                },
+                {
+                    data:'installment_balance',
+                    name:'installment_balance'
+                },
+                {
+                    data:'balance',
+                    name:'balance'
+                }]
+            });
+        }
+
+        $('#filter').click(function(){
+            var from_date = $('#from_date').val();
+            var to_date = $('#to_date').val();
+
+            if(from_date != '' &&  to_date != '') {
+                $('#transactionDatatable').DataTable().destroy();
+                load_data(from_date, to_date);
+            } else {
+                alert('Both Date is required');
+            }
         });
     });
 </script>

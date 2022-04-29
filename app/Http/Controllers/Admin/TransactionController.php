@@ -19,7 +19,7 @@ use DB;
 
 class TransactionController extends Controller
 {
-    public function index(Order $order)
+    public function index(Request $request, Order $order)
     {
         $order->load('customer', 'createdBy', 'commissions', 'installments', 'transactions');
         session(['orders' => $order]);
@@ -27,6 +27,17 @@ class TransactionController extends Controller
         $transactions = Order::join('transactions', 'transactions.order_id', '=', 'orders.id')
             ->where('transactions.order_id', '=', $order->id)
             ->get(['transactions.*']);
+
+        if(request()->ajax()) {
+            dd('hello');
+            if(!empty($request->from_date)) {
+                $data = Transaction::whereBetween('transaction_date', array($request->from_date, $request->to_date))
+                    ->get();
+            } else {
+
+            }
+            return datatables()->of($data)->make(true);
+        }
 
         return view('admin.paymentMonthlies.index', compact('order', 'transactions'));
     }
