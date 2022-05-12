@@ -204,6 +204,11 @@ Route::group(['middleware' => 'auth'], function() {
             Route::resource('contact-people', '\App\Http\Controllers\Admin\IntendedUserController');
         });
 
+        /** REPORT MANAGEMENT **/
+        Route::group(['prefix' => 'report-management'], function() {
+            Route::resource('invoices', '\App\Http\Controllers\Admin\InvoiceController');
+            Route::resource('payments', '\App\Http\Controllers\Admin\PaymentController');
+        });
 
         // Commission
         Route::delete('commissions/destroy', [\App\Http\Controllers\Admin\CommissionController::class, 'massDestroy'])->name('commissions.massDestroy');
