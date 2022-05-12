@@ -130,6 +130,26 @@
                 </li>
             @endcan
 
+            {{-- Report Management --}}
+            <li class="c-sidebar-nav-dropdown">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                    <i class="fa-fw fas fa-line-chart c-sidebar-nav-icon"></i>
+                    Report Management
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route("admin.invoices.index") }}" class="c-sidebar-nav-link">
+                            AR Invoices
+                        </a>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route("admin.payments.index") }}" class="c-sidebar-nav-link">
+                            AR Payments
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
             {{-- User Management --}}
             @can('user_management_access')
                 <li class="c-sidebar-nav-dropdown {{ request()->is("admin/permissions*") ? "c-show" : "" }} {{ request()->is("admin/roles*") ? "c-show" : "" }} {{ request()->is("admin/users*") ? "c-show" : "" }} {{ request()->is("admin/audit-logs*") ? "c-show" : "" }} {{ request()->is("admin/teams*") ? "c-show" : "" }}">
