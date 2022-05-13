@@ -24,19 +24,19 @@ class TransactionController extends Controller
         $order->load('customer', 'createdBy', 'commissions', 'installments', 'transactions');
         session(['orders' => $order]);
 
-        $transactions = Order::join('transactions', 'transactions.order_id', '=', 'orders.id')
-            ->where('transactions.order_id', '=', $order->id)
-            ->get(['transactions.*']);
+        if ($request->start_date || $request->end_date) {
+            $end_date = [];
+            $start_date = Carbon::parse($request->start_date)->toDateString();
+            $end_date = Carbon::createFromFormat('d/m/Y', $request->end_date)->toDateString();
 
-        if(request()->ajax()) {
-            dd('hello');
-            if(!empty($request->from_date)) {
-                $data = Transaction::whereBetween('transaction_date', array($request->from_date, $request->to_date))
-                    ->get();
-            } else {
-
-            }
-            return datatables()->of($data)->make(true);
+            $transactions = Order::join('transactions', 'transactions.order_id', '=', 'orders.id')
+                ->where('transactions.order_id', '=', $order->id)
+                ->whereBetween('transaction_date', [$start_date, $end_date])
+                ->get(['transactions.*']);
+        } else {
+            $transactions = Order::join('transactions', 'transactions.order_id', '=', 'orders.id')
+                ->where('transactions.order_id', '=', $order->id)
+                ->get(['transactions.*']);
         }
 
         return view('admin.paymentMonthlies.index', compact('order', 'transactions'));
