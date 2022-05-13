@@ -11,16 +11,15 @@ use Carbon\Carbon;
 
 class InvoiceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        if (request()->start_date || request()->end_date) {
-            $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
-            $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
-            $invoices = Payment::whereBetween('doc_date',[$start_date,$end_date])->get();
+        if ($request->start_date || $request->end_date) {
+            $start_date = Carbon::parse($request->start_date)->toDateString();
+            $end_date = Carbon::createFromFormat('d/m/Y', $request->end_date)->toDateString();
+            $invoices = Invoice::whereBetween('doc_date',[$start_date,$end_date])->get();
         } else {
             $invoices = Invoice::all();
         }
-
         return view('admin.invoices.index', compact('invoices'));
     }
 }

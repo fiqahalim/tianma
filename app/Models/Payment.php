@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use \DateTimeInterface;
+
 class Payment extends Model
 {
     use HasFactory;
@@ -40,4 +42,9 @@ class Payment extends Model
         'knock_off_doc_no',
         'knock_off_amount',
     ];
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
 }

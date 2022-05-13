@@ -2,17 +2,19 @@
 namespace App\Lib;
 
 use App\Models\BookingSection;
+use App\Models\Product;
 
 class LotLayout
 {
-    private $books, $section, $totalRow, $levelNumber, $lotNumber;
+    private $trip, $section, $totalRow, $levelNumber, $lotNumber;
     public $lotLayouts;
 
-    public function __construct(BookingSection $book)
+    public function __construct(Product $trip)
     {
-        $this->books = $book;
-        $this->section = $book->bookingLots;
-        $this->lotLayouts = $this->lotLayouts();
+        $this->trip = $trip;
+        // dd($trip);
+        // $this->section = $trip->bookingLots;
+        // $this->lotLayouts = $this->lotLayouts();
     }
 
     public function lotLayouts()

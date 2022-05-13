@@ -206,7 +206,10 @@ Route::group(['middleware' => 'auth'], function() {
 
         /** REPORT MANAGEMENT **/
         Route::group(['prefix' => 'report-management'], function() {
+            // AR Invoices
             Route::resource('invoices', '\App\Http\Controllers\Admin\InvoiceController');
+
+            // AR Payments
             Route::resource('payments', '\App\Http\Controllers\Admin\PaymentController');
         });
 

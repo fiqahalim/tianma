@@ -11,26 +11,17 @@ use Carbon\Carbon;
 
 class PaymentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        if (request()->start_date || request()->end_date) {
-            $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
-            $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
-            $payments = Payment::whereBetween('doc_date',[$start_date,$end_date])->get();
+        if ($request->start_date || $request->end_date) {
+            $end_date = [];
+            $start_date = Carbon::parse($request->start_date)->toDateString();
+            $end_date = Carbon::createFromFormat('d/m/Y', $request->end_date)->toDateString();
+
+            $payments = Payment::whereBetween('doc_date', [$start_date, $end_date])->get();
         } else {
             $payments = Payment::all();
         }
-
         return view('admin.payments.index', compact('payments'));
-    }
-
-    public function store()
-    {
-
-    }
-
-    public function edit()
-    {
-
     }
 }

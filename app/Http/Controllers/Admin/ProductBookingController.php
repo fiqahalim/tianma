@@ -30,7 +30,13 @@ class ProductBookingController extends Controller
 
         session(['products' => $product]);
 
-        return view('pages.product.booking-lot', compact('product', 'rooms', 'sections', 'locations'));
+        $trip = Product::with(['bookingSection', 'productBooked'])
+            ->where('id', $product->id)
+            ->firstOrFail();
+
+        $lotLayout = new LotLayout($trip);
+
+        return view('pages.product.booking-lot', compact('product', 'rooms', 'sections', 'locations', 'trip', 'lotLayout'));
     }
 
     public function store(Request $request, $category, $childCategory, $childCategory2, Product $product)
@@ -74,13 +80,13 @@ class ProductBookingController extends Controller
     // show seat
     public function showSeat($id)
     {
-        $product = Product::with(['bookingSection', 'productBooked'])
+        $trip = Product::with(['bookingSection', 'productBooked'])
             ->where('id', $id)
             ->firstOrFail();
 
-        $lotLayout = new LotLayout($product);
+        $lotLayout = new LotLayout($trip);
 
-        return view('pages.product.booking-lot');
+        return view('pages.product.booking-lot', compact('trip', 'lotLayout'));
     }
 
     public function reviewOrder(Request $request, $category, $childCategory, $childCategory2, Product $product)
