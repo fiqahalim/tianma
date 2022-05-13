@@ -77,7 +77,7 @@
     </div>
 
     {{-- include modal for payment option --}}
-    @include('pages.includes.payment-option')
+    {{-- @include('pages.includes.payment-option') --}}
 @endsection
 
 @section('styles')

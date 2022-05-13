@@ -56,7 +56,7 @@
                                         @endif
 
                                         {{-- Product Code --}}
-                                        <p class="card-text">{{ $product->product_code }}</p>
+                                        {{-- <p class="card-text">{{ $product->product_code }}</p> --}}
                                     </div>
                                 </div>
                                 <!-- Product actions-->

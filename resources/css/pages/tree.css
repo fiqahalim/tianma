@@ -46,8 +46,6 @@
         .tree code, .tree span {
             border-radius: .2em;
             display: inline-block;
-            margin: 0 .2em .5em;
-            padding: .2em .5em;
             position: relative;
         }
         /* If the tree represents DOM structure */
@@ -98,19 +96,6 @@ div.scroll {
     white-space: nowrap;
     width: auto;
 }
-
-/*@media screen and (max-width: 1200px) {
-    .tree {
-        width: 100%;
-    }
-}
-
-@media screen and (min-width: 1200px) {
-    .tree {
-        width: 30%;
-    }
-}
-*/
 
 @media only screen and (max-width: 600px) {
     .tree, .tree ul {

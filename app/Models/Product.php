@@ -106,6 +106,11 @@ class Product extends Model implements HasMedia
         return $this->hasMany(ProductBooking::class)->whereIn('status', [1,2]);
     }
 
+    public function bookingLots()
+    {
+        return $this->belongsToMany(BookingLot::class, 'booking_lots_id');
+    }
+
     public function scopeActive()
     {
         return $this->where('status', 1);

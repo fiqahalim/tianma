@@ -4,7 +4,9 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">Report Management</li>
-        <li class="breadcrumb-item active" aria-current="page">Invoices Lists</li>
+        <li class="breadcrumb-item active" aria-current="page">
+            <a href="{{ route('admin.invoices.index') }}">Invoices Lists</a>
+        </li>
     </ol>
 </nav>
 
@@ -14,17 +16,28 @@
     </div>
 
     <div class="card-body">
-        <div class="my-2 mb-3">
+        <div class="mb-5">
             <form action="{{ route('admin.invoices.index') }}" method="GET">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control date" name="start_date" placeholder="From Date">
-                    <input type="text" class="form-control date" name="end_date" placeholder="To Date">
-                    <button class="btn btn-primary" type="submit">GET</button>
+                <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-info text-white" id="basic-addon1">
+                            <i class="fas fa-calendar-alt"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control date" name="start_date" id="start_date" placeholder="From Date">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-info text-white" id="basic-addon1">
+                            <i class="fas fa-calendar-alt"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control date" name="end_date" id="end_date" placeholder="To Date">
+
+                    <button class="btn btn-primary" type="submit">FILTER</button>
                 </div>
             </form>
         </div>
         <div class="table-responsive">
-            <table class="table table-bordered table-striped table-hover datatable datatable-Order">
+            <table class="table table-bordered table-striped table-hover datatable-Invoice">
                 <thead>
                     <tr>
                         <th width="10"></th>
@@ -56,7 +69,7 @@
                             <td>{{ $invoice->id }}</td>
                             <td>{{ $invoice->doc_no ?? '' }}</td>
                             <td>
-                                {{ Carbon\Carbon::parse($invoice->doc_date)->format('d/M/Y H:i:s') }}
+                                {{ Carbon\Carbon::parse($invoice->doc_date)->format('d/M/Y') }}
                             </td>
                             <td>{{ $invoice->debtor_code ?? ''}}</td>
                             <td>{{ $invoice->journal_type ?? ''}}</td>
@@ -87,56 +100,26 @@
 @parent
 <script>
     $(function () {
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('order_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
-  let deleteButton = {
-    text: deleteButtonTrans,
-    url: "{{ route('admin.orders.massDestroy') }}",
-    className: 'btn-danger',
-    action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-          return $(entry).data('entry-id')
-      });
+        let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
-
-        return
-      }
-
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
-    }
-  }
-  dtButtons.push(deleteButton)
-@endcan
-
-  $.extend(true, $.fn.dataTable.defaults, {
+        $.extend(true, $.fn.dataTable.defaults, {
     columnDefs: [{
             targets: 0,
         },
         {
             targets: 1,
-            visible: false
+            visible: true
         }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 10,
   });
-  let table = $('.datatable-Order:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  let table = $('.datatable-Invoice:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
 })
 
 </script>

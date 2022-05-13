@@ -2,7 +2,7 @@
     <div class="card-header" id="headingTwo" data-target="#collapseTwo" data-toggle="collapse">
         <h2 class="mb-0">
             <button aria-controls="collapseTwo" aria-expanded="false" class="btn collapsed" data-target="#collapseTwo" data-toggle="collapse" type="button">
-                <strong>PARTICULARS OF INTENDED USER</strong>
+                <strong>PARTICULARS OF EMERGENCY CONTACT</strong>
             </button>
             <i class="fas fa-chevron-down fa-xs float-right mt-2"></i>
         </h2>
