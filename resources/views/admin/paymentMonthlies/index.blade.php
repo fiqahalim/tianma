@@ -5,7 +5,9 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item">{{ trans('cruds.order.title') }}</li>
             <li class="breadcrumb-item">{{ trans('cruds.order.fields.orderList') }}</li>
-            <li class="breadcrumb-item active" aria-current="page">Transaction List</li>
+            <li class="breadcrumb-item active" aria-current="page">
+                <a href="{{ route('admin.transaction.index', [$order->id]) }}">Transaction List</a>
+            </li>
         </ol>
     </nav>
 
@@ -17,16 +19,25 @@
                 </a>
             </div>
         @endif
-        <div class="row input-daterange">
-            <div class="col-md-4">
-                <input type="text" name="from_date" id="from_date" class="form-control date" placeholder="From Date"/>
-            </div>
-            <div class="col-md-4">
-                <input type="text" name="to_date" id="to_date" class="form-control date" placeholder="To Date"/>
-            </div>
-            <div class="col-md-4">
-                <button type="button" name="filter" id="filter" class="btn btn-success">Submit</button>
-            </div>
+        <div class="my-5">
+            <form action="{{ route('admin.transaction.index', [$order->id]) }}" method="GET">
+                <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-info text-white" id="basic-addon1">
+                            <i class="fas fa-calendar-alt"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control date" name="start_date" id="start_date" placeholder="From Date">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-info text-white" id="basic-addon1">
+                            <i class="fas fa-calendar-alt"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control date" name="end_date" id="end_date" placeholder="To Date">
+
+                    <button class="btn btn-primary" type="submit">FILTER</button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -51,7 +62,7 @@
         <div class="row">
             <div class="col"></div>
             <div class="col-6 text-center">
-                <h5><strong><u>TRANSACTION DETAILS</u></strong></h5>
+                <h5><strong><u>INSTALLMENT TRANSACTION DETAILS</u></strong></h5>
             </div>
             <div class="col"></div>
         </div>
@@ -109,7 +120,7 @@
 
                     <div class="mt-4">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover" id="transactionDatatable">
+                            <table class="table table-bordered table-striped table-hover">
                                 <thead class="bg-none bgc-default-tp1">
                                     <tr class="table-dark">
                                         <th>Transaction Date</th>
@@ -176,59 +187,6 @@
 
 @section('scripts')
 @parent
-<script>
-    $(document).ready(function() {
-        load_data();
-
-        function load_data(from_date = '', to_date = '') {
-            $('#transactionDatatable').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: {
-                    url:'{{ route("admin.transaction.index", $order->id) }}',
-                    data:{from_date:from_date, to_date:to_date}
-                },
-                columns: [{
-                    data: 'id',
-                    name: 'id'
-                },
-                {
-                    data:'transaction_date',
-                    name:'transaction_date'
-                },
-                {
-                    data:'amount',
-                    name:'amount'
-                },
-                {
-                    data:'status',
-                    name:'status'
-                },
-                {
-                    data:'installment_balance',
-                    name:'installment_balance'
-                },
-                {
-                    data:'balance',
-                    name:'balance'
-                }]
-            });
-        }
-
-        $('#filter').click(function(){
-            var from_date = $('#from_date').val();
-            var to_date = $('#to_date').val();
-
-            if(from_date != '' &&  to_date != '') {
-                $('#transactionDatatable').DataTable().destroy();
-                load_data(from_date, to_date);
-            } else {
-                alert('Both Date is required');
-            }
-        });
-    });
-</script>
-
 <script>
     $('.print-window').click(function() {
     window.print();
