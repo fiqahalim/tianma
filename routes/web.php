@@ -157,6 +157,8 @@ Route::group(['middleware' => 'auth'], function() {
             // Transactions
             Route::match(['get', 'post'], 'transactions/store/{order}', [\App\Http\Controllers\Admin\TransactionController::class, 'store'])->name('transaction.store');
             Route::match(['get', 'post'], 'transactions/index/{order}', [\App\Http\Controllers\Admin\TransactionController::class, 'index'])->name('transaction.index');
+            Route::match(['get', 'post'], 'transactions/show/{transaction}', [\App\Http\Controllers\Admin\TransactionController::class, 'show'])->name('transaction.show');
+            Route::match(['get', 'post'], 'transactions/update/{order}', [\App\Http\Controllers\Admin\TransactionController::class, 'update'])->name('transaction.update');
 
             // New Order
             Route::resource('new-order', '\App\Http\Controllers\Admin\ProductOrderController');
@@ -207,7 +209,7 @@ Route::group(['middleware' => 'auth'], function() {
         /** REPORT MANAGEMENT **/
         Route::group(['prefix' => 'report-management'], function() {
             // AR Invoices
-            Route::resource('invoices', '\App\Http\Controllers\Admin\InvoiceController');
+            Route::match(['get', 'post'], 'invoices/index', [\App\Http\Controllers\Admin\InvoiceController::class,'index'])->name('invoices.index');
 
             // AR Payments
             Route::resource('payments', '\App\Http\Controllers\Admin\PaymentController');

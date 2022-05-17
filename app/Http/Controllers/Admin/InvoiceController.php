@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use App\Models\Invoice;
+use App\Models\Order;
 use Carbon\Carbon;
 
 class InvoiceController extends Controller
@@ -18,7 +19,7 @@ class InvoiceController extends Controller
             $end_date = Carbon::createFromFormat('d/m/Y', $request->end_date)->toDateString();
             $invoices = Invoice::whereBetween('doc_date',[$start_date,$end_date])->get();
         } else {
-            $invoices = Invoice::all();
+            $invoices = Invoice::with(['createdBy', 'transactions', 'installments', 'fullPayments', 'customers', 'orders'])->get();
         }
         return view('admin.invoices.index', compact('invoices'));
     }
