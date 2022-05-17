@@ -74,8 +74,8 @@
                             <td>{{ $invoice->debtor_code ?? ''}}</td>
                             <td>{{ $invoice->journal_type ?? ''}}</td>
                             <td>{{ $invoice->display_term ?? ''}}</td>
-                            <td>{{ $invoice->sales_agent ?? '' }}</td>
-                            <td>{{ $invoice->description ?? ''}}</td>
+                            <td>{{ $invoice->orders->createdBy->name ?? '' }}</td>
+                            <td>{{ $invoice->orders->products->description ?? ''}}</td>
                             <td>{{ $invoice->currency_code ?? ''}}</td>
                             <td>{{ $invoice->currency_rate ?? ''}}</td>
                             <td>{{ $invoice->inclusive_tax ?? ''}}</td>
@@ -86,7 +86,7 @@
                             <td>{{ $invoice->tax_type ?? ''}}</td>
                             <td>{{ $invoice->taxable_amount ?? ''}}</td>
                             <td>{{ $invoice->tax_adjustment ?? ''}}</td>
-                            <td>{{ $invoice->amount ?? '' }}</td>
+                            <td>{{ $invoice->orders->amount ?? '' }}</td>
                         </tr>
                     @endforeach
                 </tbody>

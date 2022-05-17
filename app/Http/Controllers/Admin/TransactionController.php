@@ -42,6 +42,20 @@ class TransactionController extends Controller
         return view('admin.paymentMonthlies.index', compact('order', 'transactions'));
     }
 
+    public function show(Transaction $transaction)
+    {
+        $transactions = Transaction::all();
+
+        return view('admin.paymentMonthlies.show', compact('transactions'));
+    }
+
+    public function update(Request $request, Order $order)
+    {
+        $order->load('customer', 'createdBy', 'commissions', 'installments', 'transactions');
+
+        return view('admin.paymentMonthlies.edit', compact('order'));
+    }
+
     public function store(Request $request, Order $order)
     {
         $orders = session('orders');
@@ -178,25 +192,6 @@ class TransactionController extends Controller
         } while (Transaction::where("trans_no", "=", $trans_no)->first());
 
         return $trans_no;
-    }
-
-    public function filter(Request $request, Order $order)
-    {
-        $order->load('customer', 'team', 'createdBy', 'commissions', 'installments', 'transactions');
-
-        $transactions = Order::join('transactions', 'transactions.order_id', '=', 'orders.id')
-            ->where('transactions.order_id', '=', $order->id)
-            ->get(['transactions.*']);
-
-        $fromDate = $request->input('from_date');
-        $toDate = $request->input('to_date');
-
-        $query = DB::table('transactions')->select()
-            ->where('transaction_date', '>=', $fromDate)
-            ->where('transaction_date', '<=', $toDate)
-            ->get();
-
-        return view('admin.paymentMonthlies.index', compact('order', 'transactions', 'query'));
     }
 
     // calling the getparent function

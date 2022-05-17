@@ -67,7 +67,7 @@ class OrdersController extends Controller
         $order->load('customer', 'createdBy', 'products', 'bookLocations', 'installments', 'fullPayments');
 
         if($order->customer->mode == 'Installment') {
-            $amount = isset($order->installments->downpayment);
+            $amount = isset($order->installments->downpayment) ? $order->installments->downpayment : '';
             $numberToWords = new NumberToWords();
             $numberTransformer = $numberToWords->getNumberTransformer('en');
             $amountFormat = $numberTransformer->toWords($amount);

@@ -47,4 +47,34 @@ class Payment extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
+
+    public function installments()
+    {
+        return $this->belongsTo(Installment::class, 'id', 'order_id');
+    }
+
+    public function transactions()
+    {
+        return $this->belongsTo(Transaction::class, 'id', 'order_id');
+    }
+
+    public function fullPayments()
+    {
+        return $this->belongsTo(Transaction::class, 'id', 'order_id');
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function commissions()
+    {
+        return $this->belongsTo(Commission::class, 'id', 'order_id');
+    }
+
+    public function products()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
 }

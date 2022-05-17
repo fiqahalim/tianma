@@ -48,6 +48,7 @@ class Product extends Model implements HasMedia
         'deleted_at',
         'created_by',
         'section_id',
+        'booking_sections_id',
     ];
 
     public function registerMediaConversions(Media $media = null): void
@@ -98,7 +99,7 @@ class Product extends Model implements HasMedia
 
     public function bookingSection()
     {
-        return $this->belongsTo(BookingSection::class);
+        return $this->belongsTo(BookingSection::class, 'booking_sections_id');
     }
 
     public function productBooked()

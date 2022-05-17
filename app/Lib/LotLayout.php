@@ -9,17 +9,17 @@ class LotLayout
     private $trip, $section, $totalRow, $levelNumber, $lotNumber;
     public $lotLayouts;
 
-    public function __construct(Product $trip)
+    public function __construct($trip)
     {
         $this->trip = $trip;
-        // dd($trip);
-        // $this->section = $trip->bookingLots;
-        // $this->lotLayouts = $this->lotLayouts();
+        $this->section = $trip->bookingSection;
+        $this->lotLayouts = $this->lotLayouts();
+        // dd($trip, $this->section);
     }
 
     public function lotLayouts()
     {
-        $lotLayout = explode('x', str_replace(' ','', $this->section->layout));
+        $lotLayout = explode('x', str_replace(' ','', $this->section->seat_layout));
         $layout['left'] = $lotLayout[0];
         $layout['right'] = $lotLayout[1];
         return (object)$layout;

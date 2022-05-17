@@ -38,5 +38,46 @@ class Invoice extends Model
         'taxable_amount',
         'tax_adjustment',
         'amount',
+        'order_id'
     ];
+
+    public function installments()
+    {
+        return $this->belongsTo(Installment::class, 'id', 'order_id');
+    }
+
+    public function transactions()
+    {
+        return $this->belongsTo(Transaction::class, 'id', 'order_id');
+    }
+
+    public function fullPayments()
+    {
+        return $this->belongsTo(Transaction::class, 'id', 'order_id');
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function commissions()
+    {
+        return $this->belongsTo(Commission::class, 'id', 'order_id');
+    }
+
+    public function products()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
+
+    public function customers()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+    public function orders()
+    {
+        return $this->belongsTo(Order::class, 'order_id');
+    }
 }

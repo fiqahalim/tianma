@@ -110,39 +110,38 @@
 
                 <div class="col-lg-4 col-md-6">
                     <h6 class="title">@lang('Click on Lot to select or deselect')</h6>
-                    {{-- {{ dd($trip->bookingSection) }} --}}
-                   {{--  @foreach ($trip->bookingSection->deck_seats as $seat) --}}
+                    @foreach ($trip->bookingSection as $seat)
                         <div class="seat-plan-inner">
                             <div class="single">
-                                {{-- @php
+                                @php
                                     echo $lotLayout->getDeckHeader($loop->index);
-                                @endphp --}}
+                                @endphp
 
-                                {{-- @php
+                                @php
                                     $totalRow = $lotLayout->getTotalRow($seat);
                                     $lastRowSeat = $lotLayout->getLastRowSit($seat);
                                     $chr = 'A';
                                     $deckIndex = $loop->index + 1;
                                     $seatlayout = $lotLayout->sitLayouts();
                                     $rowItem = $seatlayout->left + $seatlayout->right;
-                                @endphp --}}
+                                @endphp
 
-                                {{-- @for($i = 1; $i <= $totalRow; $i++)
+                                @for($i = 1; $i <= $totalRow; $i++)
                                     @php
                                         if($lastRowSeat==1 && $i==$totalRow -1)
                                         break;
                                         $seatNumber = $chr;
                                         $chr++;
-                                        $seats = $busLayout->getSeats($deckIndex,$seatNumber);
-                                    @endphp --}}
+                                        $seats = $lotLayout->getSeats($deckIndex,$seatNumber);
+                                    @endphp
 
                                     <div class="seat-wrapper">
-                                        {{-- @php echo $seats->left; @endphp
-                                        @php echo $seats->right; @endphp --}}
+                                        @php echo $seats->left; @endphp
+                                        @php echo $seats->right; @endphp
                                     </div>
-                                {{-- @endfor --}}
+                                @endfor
 
-                                {{-- @if($lastRowSeat == 1)
+                                @if($lastRowSeat == 1)
                                     @php $seatNumber++ @endphp
                                     <div class="seat-wrapper justify-content-center">
                                         @for ($lsr=1; $lsr <= $rowItem+1; $lsr++) @php echo $busLayout->generateSeats($lsr,$deckIndex,$seatNumber); @endphp
@@ -156,128 +155,12 @@
                                         @for($l = 1; $l <= $lastRowSeat; $l++) @php echo $busLayout->generateSeats($l,$deckIndex,$seatNumber); @endphp
                                             @endfor
                                     </div>
-                                @endif --}}
+                                @endif
                             </div>
                         </div>
-                    {{-- @endforeach --}}
+                    @endforeach
                 </div>
             </div>
-
-            {{-- @if(isset($locations->product_type) && !empty($locations->product_type == 'Niche'))
-                @if($locations->build_type == 'Tower North')
-                    @if($room == 'A')
-                        <div class="container">
-                            <div id="container-seats">
-                                <div class="DA GFG">
-                                    @include('pages.product.components.room_a.da')
-                                </div>
-                                <div class="DB GFG">
-                                    @include('pages.product.components.room_a.db')
-                                </div>
-                                <div class="DC GFG">
-                                    @include('pages.product.components.room_a.dc')
-                                </div>
-                                <div class="DD GFG">
-                                    @include('pages.product.components.room_a.dd')
-                                </div>
-                            </div>
-
-                              <div class="text-center">
-                                <input type="text" name="seat" hidden>
-                                <button type="submit" class="btn btn-outline-dark mt-2 book-bus-btn">{{ trans('global.products.product_select') }}</button>
-                            </div>
-                        </div>
-                    @else
-                        <div class="container">
-                            <div id="container-seats">
-                                <div class="DA GFG">
-                                    @include('pages.product.components.room_b.da')
-                                </div>
-                                <div class="DB GFG">
-                                    @include('pages.product.components.room_b.db')
-                                </div>
-                                <div class="DC GFG">
-                                    @include('pages.product.components.room_b.dc')
-                                </div>
-                                <div class="DD GFG">
-                                    @include('pages.product.components.room_b.dd')
-                                </div>
-                            </div>
-
-                              <div class="text-center">
-                                <input type="text" name="seat" hidden>
-                                <button type="submit" class="btn btn-outline-dark mt-2 book-bus-btn">{{ trans('global.products.product_select') }}</button>
-                            </div>
-                        </div>
-                    @endif
-                @elseif($locations->build_type == 'Tower North')
-                    @if($room == 'A')
-                        <div class="container">
-                            <div id="container-seats">
-                                <div class="DA GFG">
-                                    @include('pages.product.components.tower_2.room_a.da')
-                                </div>
-                                <div class="DB GFG">
-                                    @include('pages.product.components.tower_2.room_a.db')
-                                </div>
-                                <div class="DC GFG">
-                                    @include('pages.product.components.tower_2.room_a.dc')
-                                </div>
-                                <div class="DD GFG">
-                                    @include('pages.product.components.tower_2.room_a.dd')
-                                </div>
-                            </div>
-
-                              <div class="text-center">
-                                <input type="text" name="seat" hidden>
-                                <button type="submit" class="btn btn-outline-dark mt-2 book-bus-btn">{{ trans('global.products.product_select') }}</button>
-                            </div>
-                        </div>
-                    @else
-                        <div class="container">
-                            <div id="container-seats">
-                                <div class="DA GFG">
-                                    @include('pages.product.components.tower_2.room_b.da')
-                                </div>
-                                <div class="DB GFG">
-                                    @include('pages.product.components.tower_2.room_b.db')
-                                </div>
-                                <div class="DC GFG">
-                                    @include('pages.product.components.tower_2.room_b.dc')
-                                </div>
-                                <div class="DD GFG">
-                                    @include('pages.product.components.tower_2.room_b.dd')
-                                </div>
-                            </div>
-
-                            <div class="text-center">
-                                <input type="text" name="seat" hidden>
-                                <button type="submit" class="btn btn-outline-dark mt-2 book-bus-btn" onclick="updateTextArea()">
-                                    {{ trans('global.products.product_select') }}
-                                </button>
-                            </div>
-                        </div>
-                    @endif
-                @endif
-            @endif --}}
-
-            <table class="Displaytable">
-                <tr>
-                    <th>Name</th>
-                    <th>Reservation Lots</th>
-                </tr>
-                <tr>
-                    <td>
-                        <textarea id="nameDisplay">
-                            {{ strtoupper($locations->build_type) }}, {{ strtoupper($locations->level) }},
-                            {{ strtoupper($product->categories[0]->parentCategory->name) }}
-                        </textarea>
-                    </td>
-                    <td>
-                        <textarea id="seatsDisplay"></textarea>
-                    </td>
-                </tr>
-            </table>
         </form>
     </div>
 
@@ -325,6 +208,56 @@
             }).change();
         });
 
+        //reset all lots
+        function reset() {
+            $('.seat-wrapper .seat').removeClass('selected');
+            $('.selected-seat-details').html('');
+        }
+
+        //click on lot
+        $('.seat-wrapper .seat').on('click', function() {
+            var rooms = $('select[name="rooms"]').val();
+            var sections = $('select[name="sections"]').val();
+
+            if (rooms && sections) {
+                selectLot();
+            } else {
+                $(this).removeClass('selected');
+                notify('error', "@lang('Please select room and section before select any seat')")
+            }
+        });
+
+        //select and booked seat
+        function selectLot() {
+            let selectedSeats = $('.seat.selected');
+            let seatDetails = ``;
+            let price = $('input[name=price]').val();
+            let subtotal = 0;
+            let currency = '{{ __($general->cur_text) }}';
+            let seats = '';
+            if (selectedSeats.length > 0) {
+                $('.booked-seat-details').removeClass('d-none');
+                $.each(selectedSeats, function(i, value) {
+                    seats += $(value).data('seat') + ',';
+                    seatDetails += `<span class="list-group-item d-flex justify-content-between">${$(value).data('seat')} <span>${price} ${currency}</span></span>`;
+                    subtotal = subtotal + parseFloat(price);
+                });
+
+                $('input[name=seats]').val(seats);
+                $('.selected-seat-details').html(seatDetails);
+                $('.selected-seat-details').append(`<span class="list-group-item d-flex justify-content-between">@lang('Sub total')<span>${subtotal} ${currency}</span></span>`);
+            } else {
+                $('.selected-seat-details').html('');
+                $('.booked-seat-details').addClass('d-none');
+            }
+        }
+
+        //on change rooms and sections show available lots
+        $(document).on('change', 'select[name="rooms"], select[name="sections"]', function(e) {
+            showBookedSeat();
+        });
+
+        //booking form submit
         $('#bookingForm').on('submit', function(e) {
             e.preventDefault();
             let selectedSeats = $('.seat.selected');
@@ -342,15 +275,5 @@
             modal.modal('hide');
             document.getElementById("bookingForm").submit();
         });
-
-        function updateTextArea() {
-            var allSeatsVals = [];
-
-            $('#seatsBlock :checked').each(function() {
-                allSeatsVals.push($(this).val());
-            });
-
-            $('#seatsDisplay').val(allSeatsVals);
-        }
     </script>
 @endsection

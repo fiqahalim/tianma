@@ -14,7 +14,7 @@
     <div class="container mb-3">
         @if(isset($order->commissions) && !empty($order->commissions))
             <div class="row mt-3 justify-content-end">
-                <a class="btn btn-info" href="{{ route('admin.transaction.index', [$order->id]) }}" data-toggle="modal" data-target="#invoiceDetailsModal">
+                <a class="btn btn-info" href="{{ route('admin.transaction.update', [$order->id]) }}">
                     Update Payment
                 </a>
             </div>
@@ -128,6 +128,7 @@
                                         <th>Status</th>
                                         <th>Remaining Installment (months)</th>
                                         <th>Outstanding Balance</th>
+                                        <th>&nbsp;</th>
                                     </tr>
                                 </thead>
                                 <tbody class="text-95 text-secondary-d3">
@@ -152,6 +153,11 @@
                                             <td>
                                                 RM{{ $transaction->balance ?? '' }}
                                             </td>
+                                            <td>
+                                                <a class="btn btn-xs btn-primary" href="{{ route('admin.transaction.show', $transaction->id) }}">
+                                                    View
+                                                </a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -174,10 +180,6 @@
             </a>
         </div>
     </div>
-
-    {{-- modal --}}
-    @include('admin.paymentMonthlies.components.invoice-modal')
-
 @endsection
 
 @section('styles')

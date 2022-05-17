@@ -47,6 +47,7 @@
             border-radius: .2em;
             display: inline-block;
             position: relative;
+            font-size: 10px;
         }
         /* If the tree represents DOM structure */
         .tree code {
