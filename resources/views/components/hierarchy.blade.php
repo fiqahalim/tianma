@@ -6,7 +6,7 @@
             @if($childUser->approved == 1 && (!is_null($childUser->agent_code)))
                 <li class="sub-menu">
                     <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totas }}, Ranking: {{ $childUser->rankings->category }}">
-                        <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="32" height="32">
+                        <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="25" height="25">
                     </span>
                     <div>
                         <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totas }}, Ranking: {{ $childUser->rankings->category }}">
@@ -20,7 +20,7 @@
                             @foreach($childUser->childUsers as $childUser)
                                 <li>
                                     <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totas }}, Ranking: {{ $childUser->rankings->category }}">
-                                        <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="32" height="32">
+                                        <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="25" height="25">
                                     </span>
                                     <div>
                                         <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totas }}, Ranking: {{ $childUser->rankings->category }}">
@@ -36,7 +36,7 @@
                                                 <li class="child-menu2">
                                                     <div>
                                                         <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totas }}, Ranking: {{ $childUser->rankings->category }}">
-                                                            <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="32" height="32">
+                                                            <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="25" height="25">
                                                         </span>
                                                         <div class="mt-2">
                                                             <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totas }}, Ranking: {{ $childUser->rankings->category }}">
@@ -53,7 +53,7 @@
                                                                 <li class="child-menu3">
                                                                     <div>
                                                                         <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totas }}, Ranking: {{ $childUser->rankings->category }}">
-                                                                            <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="32" height="32">
+                                                                            <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="25" height="25">
                                                                         </span>
                                                                         <div class="mt-2">
                                                                             <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totas }}, Ranking: {{ $childUser->rankings->category }}">
@@ -70,7 +70,7 @@
                                                                                 <li class="child-menu4">
                                                                                     <div>
                                                                                         <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totas }}, Ranking: {{ $childUser->rankings->category }}">
-                                                                                            <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="32" height="32">
+                                                                                            <img class="rounded-circle mt-2" src="{{ asset('/images/profile/' .$childUser->avatar) ?? '/images/avatar.png' }}" width="25" height="25">
                                                                                         </span>
                                                                                         <div class="mt-2">
                                                                                             <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ $childUser->name }}, Agency Code: {{ $childUser->agency_code ? $childUser->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totas }}, Ranking: {{ $childUser->rankings->category }}">
