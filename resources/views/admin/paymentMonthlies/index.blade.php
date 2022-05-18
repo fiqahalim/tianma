@@ -62,7 +62,7 @@
         <div class="row">
             <div class="col"></div>
             <div class="col-6 text-center">
-                <h5><strong><u>INSTALLMENT TRANSACTION DETAILS</u></strong></h5>
+                <h5><strong><u>TRANSACTION DETAILS</u></strong></h5>
             </div>
             <div class="col"></div>
         </div>

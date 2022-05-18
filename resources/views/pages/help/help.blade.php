@@ -79,15 +79,10 @@
                 <div aria-labelledby="headingTwo" class="collapse" data-parent="#accordionExample" id="collapseTwo">
                     <div class="card-body">
                         <p class="mt-2">
-                            This example to show how to view agent's hierarchy. Go to <b><em>User Management > Users</em></b>. You should able to view the users table by now. If you scroll the table, there are a few selection types you might see <em>(e.g.: View, Edit, or Delete)</em>.
-                            Click the <b><em>"View"</em></b>, you should see the hierarchy now.
+                            This example to show how to view agent's hierarchy. Go to <b><em>User Management > Hierarchy</em></b>.
                         </p>
                         <p class="mb-3 mt-3">
-                            <img src="/images/help/users_help.png" class="img-fluid img-thumbnail mx-auto d-block">
                             <img src="/images/help/user_hierarchy.png" class="img-fluid img-thumbnail mx-auto d-block mt-3">
-                        </p>
-                        <p class="mt-2">
-                            To see the agent's details, you can click on the profile picture. If you like to view downline agents, you can click the <i class="fas fa-plus-circle"></i> button.
                         </p>
                     </div>
                 </div>
@@ -96,7 +91,7 @@
                 <div class="card-header" id="headingThree" data-target="#collapseThree" data-toggle="collapse">
                     <h2 class="mb-0">
                         <button aria-controls="collapseThree" aria-expanded="false" class="btn collapsed" data-target="#collapseThree" data-toggle="collapse" type="button">
-                            <strong>Collapsible Group Item #3</strong>
+                            <strong>How To Update Installment Payment?</strong>
                             <i class="fas fa-angle-down rotate-icon"></i>
                         </button>
                     </h2>
