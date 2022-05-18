@@ -16,6 +16,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Alert;
 use DB;
+use NumberToWords\NumberToWords;
 
 class TransactionController extends Controller
 {
@@ -44,9 +45,21 @@ class TransactionController extends Controller
 
     public function show(Transaction $transaction)
     {
-        $transactions = Transaction::all();
+        $transaction->load('customer', 'installments', 'orders');
 
-        return view('admin.paymentMonthlies.show', compact('transactions'));
+        if($transaction->amount > 0) {
+            $amount = isset($transaction->amount) ? $transaction->amount : '';
+            $numberToWords = new NumberToWords();
+            $numberTransformer = $numberToWords->getNumberTransformer('en');
+            $amountFormat = $numberTransformer->toWords($amount);
+        } else {
+            $amount = isset($transaction->installments->downpayment) ? $transaction->installments->downpayment : '';
+            $numberToWords = new NumberToWords();
+            $numberTransformer = $numberToWords->getNumberTransformer('en');
+            $amountFormat = $numberTransformer->toWords($amount);
+        }
+
+        return view('admin.paymentMonthlies.show', compact('transaction', 'amountFormat'));
     }
 
     public function update(Request $request, Order $order)
@@ -170,6 +183,7 @@ class TransactionController extends Controller
         $transaction->installment_balance = $installmentBalance;
         $transaction->order_id = $order->id;
         $transaction->installment_id = $order->installments->id;
+        $transaction->customer_id = $order->customer->id;
         $transaction->save();
 
         // save to commission tables

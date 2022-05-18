@@ -14,7 +14,6 @@ class LotLayout
         $this->trip = $trip;
         $this->section = $trip->bookingSection;
         $this->lotLayouts = $this->lotLayouts();
-        // dd($trip, $this->section);
     }
 
     public function lotLayouts()
@@ -41,10 +40,10 @@ class LotLayout
         return $html;
     }
 
-    public function getLots()
+    public function getLots($levelNumber, $lotNumber)
     {
-        $this->levelNumber = 9;
-        $this->lotNumber = 15;
+        $this->levelNumber = $levelNumber;
+        $this->lotNumber = $lotNumber;
         $lots = [
             'left'=>$this->leftLots(),
             'right'=>$this->rightLots(),
