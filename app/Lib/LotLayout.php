@@ -45,8 +45,8 @@ class LotLayout
         $this->levelNumber = $levelNumber;
         $this->lotNumber = $lotNumber;
         $lots = [
-            'left'=>$this->leftLots(),
-            'right'=>$this->rightLots(),
+            'left' => $this->leftLots(),
+            'right' => $this->rightLots(),
         ];
         return (object)$lots;
     }
@@ -95,16 +95,16 @@ class LotLayout
 
     public function getTotalRow()
     {
-        $rowItem    = $this->lotLayouts->left + $this->lotLayouts->right;
-        $totalRow   = floor (20 / $rowItem);
+        $rowItem = $this->lotLayouts->left + $this->lotLayouts->right;
+        $totalRow = floor (90 / $rowItem);
         $this->totalRow = $totalRow;
         return $this->totalRow;
     }
 
-    public function getLastRowSit()
+    public function getLastRowSit($seat)
     {
         $rowItem = $this->lotLayouts->left + $this->lotLayouts->right;
-        $lastRowSeat = (40) - $this->getTotalRow() * $rowItem;
+        $lastRowSeat = ($seat) - $this->getTotalRow() * $rowItem;
         return $lastRowSeat;
     }
 }

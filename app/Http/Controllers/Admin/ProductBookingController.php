@@ -39,6 +39,7 @@ class ProductBookingController extends Controller
         return view('pages.product.booking-lot', compact('product', 'rooms', 'sections', 'locations', 'trip', 'lotLayout'));
     }
 
+    // save selected location
     public function store(Request $request, $category, $childCategory, $childCategory2, Product $product)
     {
         $products = session('products');
@@ -54,7 +55,7 @@ class ProductBookingController extends Controller
         return redirect()->route('admin.customer-details.index', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]);
     }
 
-    // save booking
+    // save booking lot
     public function productBooked(Request $request, $id)
     {
         $request->validate([
@@ -75,18 +76,6 @@ class ProductBookingController extends Controller
         $bookedTicket->status = 0;
         $bookedTicket->save();
         session()->put('pnr_number',$pnr_number);
-    }
-
-    // show seat
-    public function showSeat($id)
-    {
-        $trip = Product::with(['bookingSection', 'productBooked'])
-            ->where('id', $id)
-            ->firstOrFail();
-
-        $lotLayout = new LotLayout($trip);
-
-        return view('pages.product.booking-lot', compact('trip', 'lotLayout'));
     }
 
     public function reviewOrder(Request $request, $category, $childCategory, $childCategory2, Product $product)

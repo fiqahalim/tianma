@@ -72,11 +72,6 @@
                                 <span class="help-block">{{ trans('cruds.order.fields.order_status_helper') }}</span>
                             </div>
                         </div>
-                        <div class="d-grid gap-2 col-6 mx-auto">
-                            <button type="submit" class="btn btn-outline-dark mt-2 book-bus-btn btn-block">
-                                {{ trans('global.products.product_select') }}
-                            </button>
-                        </div>
                     </div>
                 </div>
                 <div class="col-lg-8 col-md-6">
@@ -86,25 +81,32 @@
                             <div class="list-group seat-details-animate">
                                 <span class="list-group-item d-flex bg--base text-white justify-content-between">
                                     Lots Details
+                                    <span>@lang('Price')</span>
                                 </span>
-                                <div class="selected-seat-details"></div>
+                                <span class="list-group-item d-flex justify-content-between">
+                                    {{ $product->description }}
+                                    <span>{{ $product->price }}</span>
+                                </span>
+                                <div class="selected-seat-details">
+                                </div>
                             </div>
                         </div>
-                        <input type="text" name="seats" hidden="">
+                        <input type="text" name="seats" hidden>
+                        <div class="d-grid gap-2 col-6 mx-auto">
+                            <button type="submit" class="btn btn-outline-dark mt-2 book-bus-btn btn-block">
+                                {{ trans('global.products.product_select') }}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row mt-5">
-                <div class="col-lg-4 col-md-6">
+            <div class="row mt-5 justify-content-center">
+                <div class="col-lg-12 col-md-6">
                     <h6 class="title">@lang('Click on Lot to select or deselect')</h6>
-                    @foreach ($trip->bookingSection as $seat)
+                    @foreach ($trip->bookingSection->deck_seats as $seat)
                         <div class="seat-plan-inner">
                             <div class="single">
-                                @php
-                                    echo $lotLayout->getDeckHeader($loop->index);
-                                @endphp
-
                                 @php
                                     $totalRow = $lotLayout->getTotalRow($seat);
                                     $lastRowSeat = $lotLayout->getLastRowSit($seat);
@@ -180,5 +182,94 @@
 
 @section('scripts')
     @parent
-    <script type="text/javascript" src="{{ mix('/js/pages/booking.js') }}"></script>
+    <script>
+        (function($) {
+            //reset all lots
+            function reset() {
+                $('.seat-wrapper .seat').removeClass('selected');
+                $('.seat-wrapper .seat').parent().removeClass('seat-condition disabled');
+                $('.selected-seat-details').html('');
+            }
+
+            //click on lot
+            $('.seat-wrapper .seat').on('click', function() {
+                var rooms = $('select[name="rooms"]').val();
+                var sections = $('select[name="sections"]').val();
+
+                if (rooms && sections) {
+                    selectLot();
+                } else {
+                    $(this).removeClass('selected');
+                    notify('error', "@lang('Please select room and section before select any lot')")
+                }
+            });
+
+            //select and booked seat
+            function selectLot() {
+                let selectedSeats = $('.seat.selected');
+                let seatDetails = ``;
+                let currency = 'RM';
+                let subtotal = 0;
+
+                let seats = '';
+                if (selectedSeats.length > 0) {
+                    $('.booked-seat-details').removeClass('d-none');
+                    $.each(selectedSeats, function(i, value) {
+                        seats += $(value).data('seat') + ',';
+                        seatDetails += `<span class="list-group-item d-flex justify-content-between">${$(value).data('seat')}<span>${price} ${currency}</span></span>`;
+                        subtotal = subtotal + parseFloat(price);
+                    });
+
+                    $('input[name=seats]').val(seats);
+                    $('.selected-seat-details').html(seatDetails);
+                    $('.selected-seat-details').append(`<span class="list-group-item d-flex justify-content-between">@lang('Sub total')<span>${subtotal} ${currency}</span></span>`);
+                } else {
+                    $('.selected-seat-details').html('');
+                    $('.booked-seat-details').addClass('d-none');
+                }
+            }
+
+            //on change rooms and sections show available lots
+            $(document).on('change', 'select[name="rooms"], select[name="sections"]', function(e) {
+                showBookedSeat();
+            });
+
+            //booked seat
+            function showBookedSeat() {
+                reset();
+                var roomId = $('select[name="rooms"]').find("option:selected").val();
+                var sectionId = $('select[name="sections"]').find("option:selected").val();
+            }
+
+        })(jQuery);
+    </script>
+
+    <script>
+        //booking form submit
+        $('#bookingForm').on('submit', function(e) {
+            e.preventDefault();
+            let selectedSeats = $('.seat.selected');
+            if (selectedSeats.length > 0) {
+                var modal = $('#bookConfirm');
+                modal.modal('show');
+            } else {
+                notify('error', 'Select at least one lot.');
+            }
+        });
+
+        //confirmation modal
+        $(document).on('click', '#btnBookConfirm', function(e) {
+            let selectedSeats = $('.seat.selected');
+
+            if (selectedSeats.length > 0) {
+                var modal = $('#bookConfirm');
+                modal.modal('hide');
+                document.getElementById("bookingForm").submit();
+            } else {
+                notify('error', 'Select at least one lot.');
+            }
+        });
+
+        $(`.seat-wrapper .seat[data-seat="${val}"]`).parent().addClass('seat-condition selected disabled');
+    </script>
 @endsection

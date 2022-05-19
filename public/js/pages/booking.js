@@ -10926,71 +10926,55 @@ var __webpack_exports__ = {};
 /*!***************************************!*\
   !*** ./resources/js/pages/booking.js ***!
   \***************************************/
-/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-//reset all lots
-function reset() {
-  $('.seat-wrapper .seat').removeClass('selected');
-  $('.selected-seat-details').html('');
-} //click on lot
-
-
-$('.seat-wrapper .seat').on('click', function () {
-  var rooms = $('select[name="rooms"]').val();
-  var sections = $('select[name="sections"]').val();
-
-  if (rooms && sections) {
-    selectLot();
-  } else {
-    $(this).removeClass('selected');
-    notify('error', "@lang('Please select room and section before select any lot')");
-  }
-}); //select and booked seat
-
-function selectLot() {
-  var selectedSeats = $('.seat.selected');
-  var seatDetails = "";
-  var price = $('input[name=price]').val();
-  var subtotal = 0;
-  var seats = '';
-
-  if (selectedSeats.length > 0) {
-    $('.booked-seat-details').removeClass('d-none');
-    $.each(selectedSeats, function (i, value) {
-      seats += $(value).data('seat') + ',';
-      seatDetails += "<span class=\"list-group-item d-flex justify-content-between\">".concat($(value).data('seat'), " <span>").concat(price, " ").concat(currency, "</span></span>");
-      subtotal = subtotal + parseFloat(price);
-    });
-    $('input[name=seats]').val(seats);
-    $('.selected-seat-details').html(seatDetails);
-    $('.selected-seat-details').append("<span class=\"list-group-item d-flex justify-content-between\">@lang('Sub total')<span>".concat(subtotal, " ").concat(currency, "</span></span>"));
-  } else {
+/* provided dependency */ var jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+(function ($) {
+  //reset all lots
+  function reset() {
+    $('.seat-wrapper .seat').removeClass('selected');
     $('.selected-seat-details').html('');
-    $('.booked-seat-details').addClass('d-none');
-  }
-} //on change rooms and sections show available lots
+  } //click on lot
 
 
-$(document).on('change', 'select[name="rooms"], select[name="sections"]', function (e) {
-  showBookedSeat();
-}); //booking form submit
+  $('.seat-wrapper .seat').on('click', function () {
+    var rooms = $('select[name="rooms"]').val();
+    var sections = $('select[name="sections"]').val();
 
-$('#bookingForm').on('submit', function (e) {
-  e.preventDefault();
-  var selectedSeats = $('.seat.selected');
+    if (rooms && sections) {
+      selectLot();
+    } else {
+      $(this).removeClass('selected');
+      notify('error', "@lang('Please select room and section before select any lot')");
+    }
+  }); //select and booked seat
 
-  if (selectedSeats.length > 0) {
-    var modal = $('#bookConfirm');
-    modal.modal('show');
-  } else {
-    notify('error', 'Select at least one lot.');
-  }
-}); //confirmation modal
+  function selectLot() {
+    var selectedSeats = $('.seat.selected');
+    var seatDetails = "";
+    var price = $('input[name=price]').val();
+    var subtotal = 0;
+    var seats = '';
 
-$(document).on('click', '#btnBookConfirm', function (e) {
-  var modal = $('#bookConfirm');
-  modal.modal('hide');
-  document.getElementById("bookingForm").submit();
-});
+    if (selectedSeats.length > 0) {
+      $('.booked-seat-details').removeClass('d-none');
+      $.each(selectedSeats, function (i, value) {
+        seats += $(value).data('seat') + ',';
+        seatDetails += "<span class=\"list-group-item d-flex justify-content-between\">".concat($(value).data('seat'), " <span>").concat(price, " ").concat(currency, "</span></span>");
+        subtotal = subtotal + parseFloat(price);
+      });
+      $('input[name=seats]').val(seats);
+      $('.selected-seat-details').html(seatDetails);
+      $('.selected-seat-details').append("<span class=\"list-group-item d-flex justify-content-between\">@lang('Sub total')<span>".concat(subtotal, " ").concat(currency, "</span></span>"));
+    } else {
+      $('.selected-seat-details').html('');
+      $('.booked-seat-details').addClass('d-none');
+    }
+  } //on change rooms and sections show available lots
+
+
+  $(document).on('change', 'select[name="rooms"], select[name="sections"]', function (e) {
+    showBookedSeat();
+  });
+})(jQuery);
 })();
 
 /******/ })()
