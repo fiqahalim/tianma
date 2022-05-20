@@ -55,6 +55,7 @@ class CustomerDetailsController extends Controller
             'mode' => 'required',
             'created_by' => 'required',
             'payment_name' => 'required',
+            'curpostcode' => 'required|numeric',
         ]);
 
         // $customer = Customer::where('id_number', '=', $request->input('id_number'))->first();

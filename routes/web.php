@@ -173,7 +173,7 @@ Route::group(['middleware' => 'auth'], function() {
             Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/review-order', [\App\Http\Controllers\Admin\ProductBookingController::class, 'reviewOrder'])->name('reviewOrder');
 
             // Order Summary
-            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/order-details', [\App\Http\Controllers\Admin\OrderConfirmationController::class, 'orderPage'])->name('order');
+            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/order-details/index', [\App\Http\Controllers\Admin\OrderConfirmationController::class, 'orderPage'])->name('order.details.index');
             Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/order-details/store', [\App\Http\Controllers\Admin\OrderConfirmationController::class, 'store'])->name('order.details.store');
 
             // Installment Calculator
