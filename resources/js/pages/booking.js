@@ -1,50 +1,49 @@
-(function($) {
-    //reset all lots
-    function reset() {
-        $('.seat-wrapper .seat').removeClass('selected');
-        $('.selected-seat-details').html('');
-    }
+let selectedSeats = [];
+let selectedSeatsIndexs = [];
+let allSeats = document.querySelectorAll('#container-seats .seat');
 
-    //click on lot
-    $('.seat-wrapper .seat').on('click', function() {
-        var rooms = $('select[name="rooms"]').val();
-        var sections = $('select[name="sections"]').val();
+////////INITIALIZE DATA///////////
+readState();
+updateState();
 
-        if (rooms && sections) {
-            selectLot();
+let containerSeats = document.querySelector('#container-seats');
+containerSeats.addEventListener("click", (e) => {
+    let element = e.target;
+    if (element.classList.contains('seat') && !element.classList.contains('occupied')) {
+        if (element.classList.contains('selected')) {
+            selectedSeatsNumber--;
+            element.classList.remove('selected');
         } else {
-            $(this).removeClass('selected');
-            notify('error', "@lang('Please select room and section before select any lot')")
-        }
-    });
-
-    //select and booked seat
-    function selectLot() {
-        let selectedSeats = $('.seat.selected');
-        let seatDetails = ``;
-        let price = $('input[name=price]').val();
-        let subtotal = 0;
-
-        let seats = '';
-        if (selectedSeats.length > 0) {
-            $('.booked-seat-details').removeClass('d-none');
-            $.each(selectedSeats, function(i, value) {
-                seats += $(value).data('seat') + ',';
-                seatDetails += `<span class="list-group-item d-flex justify-content-between">${$(value).data('seat')} <span>${price} ${currency}</span></span>`;
-                subtotal = subtotal + parseFloat(price);
-            });
-
-            $('input[name=seats]').val(seats);
-            $('.selected-seat-details').html(seatDetails);
-            $('.selected-seat-details').append(`<span class="list-group-item d-flex justify-content-between">@lang('Sub total')<span>${subtotal} ${currency}</span></span>`);
-        } else {
-            $('.selected-seat-details').html('');
-            $('.booked-seat-details').addClass('d-none');
+            selectedSeatsNumber++;
+            element.classList.add('selected');
         }
     }
+    updateState();
+})
 
-    //on change rooms and sections show available lots
-    $(document).on('change', 'select[name="rooms"], select[name="sections"]', function(e) {
-        showBookedSeat();
+function updateState() {
+    console.log("allSeats", allSeats);
+    selectedSeats = document.querySelectorAll('.row-seat .seat.selected');
+    selectedSeatsIndexs = [...selectedSeats].map((x) => [...allSeats].indexOf(x));
+    document.querySelector('#count').innerText = selectedSeatsNumber;
+    localStorage.setItem('selectedSeatsNumber', selectedSeatsNumber)
+    localStorage.setItem('selectedSeatsIndexs', JSON.stringify(selectedSeatsIndexs));
+}
+
+function readState() {
+    selectedSeatsNumber = +localStorage.getItem('selectedSeatsNumber') || 0;
+    selectedSeatsIndexs = JSON.parse(localStorage.getItem('selectedSeatsIndexs')) || [];
+    [...allSeats].map((seat, index) => {
+        if (selectedSeatsIndexs.includes(index)) {
+            seat.classList.add('selected');
+        }
+    })
+}
+
+function updateTextArea()
+{
+    // var allSeatsVals = [];
+    $('#seatsBlock :checked').each(function() {
+       selectedSeats.push($(this).val());
     });
-})(jQuery);
+}

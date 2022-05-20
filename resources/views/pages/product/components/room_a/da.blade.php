@@ -10,7 +10,7 @@
         <td><input type="checkbox" class="seat" name="seats[]" value="DA-09-88"></td>
         <td><input type="checkbox" class="seat" name="seats[]" value="DA-09-98"></td>
         <td><input type="checkbox" class="seat" name="seats[]" value="DA-09-108"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DA-09-118"></td>
+        <td><input type="" class="seat occupied" name="seats[]" value="DA-09-118"></td>
       </tr>
 
       <tr>

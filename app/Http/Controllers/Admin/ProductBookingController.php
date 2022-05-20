@@ -30,13 +30,13 @@ class ProductBookingController extends Controller
 
         session(['products' => $product]);
 
-        $trip = Product::with(['bookingSection', 'productBooked'])
-            ->where('id', $product->id)
-            ->firstOrFail();
+        // $trip = Product::with(['bookingSection', 'productBooked'])
+        //     ->where('id', $product->id)
+        //     ->firstOrFail();
 
-        $lotLayout = new LotLayout($trip);
+        // $lotLayout = new LotLayout($trip);
 
-        return view('pages.product.booking-lot', compact('product', 'rooms', 'sections', 'locations', 'trip', 'lotLayout'));
+        return view('pages.product.booking-lot', compact('product', 'rooms', 'sections', 'locations'));
     }
 
     // save selected location

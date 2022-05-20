@@ -119,9 +119,7 @@
                 </div>
                 <div class="text-center">
                     <div class="form-group float-right">
-                        <a class="btn btn-primary btn-sm mt-4 mb-2 mr-3" href="{{ route('admin.order', [$products->categories->first()->parentCategory->name, $products->categories->first()->parentCategory->name, $products->categories->first()->name, $products]) }}">
-                            {{ trans('global.proceed') }}
-                        </a>
+
                     </div>
                 </div>
             </form>
