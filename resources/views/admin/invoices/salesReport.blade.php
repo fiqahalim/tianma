@@ -67,7 +67,11 @@
                                     {{ $sale->amount ?? '' }}
                                 </td>
                                 <td>
-                                    {{ $sale->installments->monthly_installment ?? '' }}
+                                    @if($sale->customer->mode == 'Installment')
+                                        {{ $sale->installments->monthly_installment ?? '' }}
+                                    @else
+                                        <i>Full Payment</i>
+                                    @endif
                                 </td>
                                 <td>
                                     {{ $sale->customer->orders()->sum('amount') ?? '' }}
