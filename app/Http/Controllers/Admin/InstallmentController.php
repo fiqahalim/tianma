@@ -74,7 +74,7 @@ class InstallmentController extends Controller
             $trans = new Transaction();
             $trans->transaction_date = Carbon::now();
             // $trans->trans_no = $this->transactionNo();
-            $trans->amount = '';
+            $trans->amount = '0.0';
             $trans->balance = $installments->outstanding_balance;
             $trans->installment_balance = $installments->installment_year;
             $trans->status = 'Paid';
@@ -110,7 +110,7 @@ class InstallmentController extends Controller
         $order->ref_no = $this->getOrderNumber();
         $order->order_status = 'NEW';
         $order->payment_option = 'PAY LATER';
-        $order->amount = '';
+        $order->amount = '0.0';
         $order->order_date = $current = Carbon::now();
         $order->customer_id = $customer->id;
         $order->created_by = $customer->created_by;
