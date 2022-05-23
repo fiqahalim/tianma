@@ -1,4 +1,4 @@
-<h5 class="my-3 mt-4">INTENDED USER INFORMATION</h5>
+<h5 class="my-3 mt-4">EMERGENCY CONTACT INFORMATION</h5>
 <div class="form-row">
     @if(isset($corAddr))
     @forelse($corAddr as $v => $contactPerson)

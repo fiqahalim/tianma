@@ -48,6 +48,7 @@ class MyDocumentController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $myDocument->id]);
         }
 
+        alert()->success(__('global.create_success'))->toToast();
         return redirect()->route('admin.my-documents.index');
     }
 
@@ -80,6 +81,7 @@ class MyDocumentController extends Controller
             }
         }
 
+        alert()->success(__('global.update_success'))->toToast();
         return redirect()->route('admin.my-documents.index');
     }
 
@@ -98,6 +100,7 @@ class MyDocumentController extends Controller
 
         $myDocument->delete();
 
+        alert()->success(__('global.delete_success'))->toToast();
         return back();
     }
 

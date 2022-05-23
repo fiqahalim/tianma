@@ -147,6 +147,21 @@
                             AR Payments
                         </a>
                     </li>
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route("admin.commissionReport.index") }}" class="c-sidebar-nav-link">
+                            Commissions Report
+                        </a>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route("admin.agentsReport.index") }}" class="c-sidebar-nav-link">
+                            Registered Agents Report
+                        </a>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route("admin.sales-report.index") }}" class="c-sidebar-nav-link">
+                            Sales Report
+                        </a>
+                    </li>
                 </ul>
             </li>
 

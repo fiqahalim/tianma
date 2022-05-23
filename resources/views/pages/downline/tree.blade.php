@@ -16,7 +16,7 @@
             <ol class="tree">
                 <li>
                     <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ Auth::user()->name }}, Agency Code: {{ Auth::user()->agency_code ? Auth::user()->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totalComms }}, Ranking: {{ Auth::user()->rankings->category }}">
-                        <img class="rounded-circle mt-2" src="{{ asset('/images/profile/'.Auth::user()->avatar ?? 'avatar.png') }}" width="80" data-toggle="modal" data-target="#userDetailsModal">
+                        <img class="rounded-circle mt-2" src="{{ asset('/images/profile/'.Auth::user()->avatar ?? 'avatar.png') }}" width="25" height="25" data-toggle="modal" data-target="#userDetailsModal">
                     </span>
                     <div class="mt-2">
                         <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Agent Name: {{ Auth::user()->name }}, Agency Code: {{ Auth::user()->agency_code ? Auth::user()->agency_code : 'Not Available Yet' }}, Total Sales: RM{{ $totalComms }}, Ranking: {{ Auth::user()->rankings->category }}">

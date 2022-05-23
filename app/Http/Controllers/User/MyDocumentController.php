@@ -46,6 +46,7 @@ class MyDocumentController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $myDocument->id]);
         }
 
+        alert()->success(__('global.create_success'))->toToast();
         return redirect()->route('user.my-documents.index');
     }
 

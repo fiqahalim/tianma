@@ -11,7 +11,7 @@
 @can('my_document_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('user.my-documents.create') }}">
+            <a class="btn btn-success" href="{{ route('admin.my-documents.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.myDocument.title_singular') }}
             </a>
         </div>

@@ -23,6 +23,7 @@ class ChangePasswordController extends Controller
     {
         auth()->user()->update($request->validated());
 
+        alert()->success(__('global.change_password_success'))->toToast();
         return redirect()->route('profile.password.edit')->with('message', __('global.change_password_success'));
     }
 
