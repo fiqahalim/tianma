@@ -37,58 +37,44 @@
             </form>
         </div>
         <div class="table-responsive">
-            <table class="table table-bordered table-striped table-hover datatable-Invoice">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-SalesReport">
                 <thead>
                     <tr>
                         <th width="10"></th>
-                        <th>{{ trans('cruds.order.fields.id') }}</th>
-                        <th>Doc No</th>
-                        <th>Doc Date</th>
-                        <th>Debtor Code</th>
-                        <th>Journal Type</th>
-                        <th>Display Term</th>
-                        <th>Sales Agent</th>
-                        <th>Description</th>
-                        <th>Currency Code</th>
-                        <th>Currency Rate</th>
-                        <th>Inclusive Tax</th>
-                        <th>Account No</th>
-                        <th>To Account Rate</th>
-                        <th>Proj No</th>
-                        <th>Dept No</th>
-                        <th>Tax type</th>
-                        <th>Taxable Amount</th>
-                        <th>Tax Adjustment</th>
-                        <th>Amount</th>
+                        <th>
+                            Customer Name
+                        </th>
+                        <th>
+                            Product Amount (RM)
+                        </th>
+                        <th>
+                            Monthly Installments (RM)
+                        </th>
+                        <th>
+                            Total Sales
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- @foreach($invoices as $key => $invoice)
-                        <tr data-entry-id="{{ $invoice->id }}">
-                            <td></td>
-                            <td>{{ $invoice->id }}</td>
-                            <td>{{ $invoice->doc_no ?? '' }}</td>
-                            <td>
-                                {{ Carbon\Carbon::parse($invoice->doc_date)->format('d/M/Y') }}
-                            </td>
-                            <td>{{ $invoice->debtor_code ?? ''}}</td>
-                            <td>{{ $invoice->journal_type ?? ''}}</td>
-                            <td>{{ $invoice->display_term ?? ''}}</td>
-                            <td>{{ $invoice->orders->createdBy->name ?? '' }}</td>
-                            <td>{{ $invoice->orders->products->description ?? ''}}</td>
-                            <td>{{ $invoice->currency_code ?? ''}}</td>
-                            <td>{{ $invoice->currency_rate ?? ''}}</td>
-                            <td>{{ $invoice->inclusive_tax ?? ''}}</td>
-                            <td>{{ $invoice->account_no ?? ''}}</td>
-                            <td>{{ $invoice->to_account_rate ?? ''}}</td>
-                            <td>{{ $invoice->proj_no ?? ''}}</td>
-                            <td>{{ $invoice->dept_no ?? ''}}</td>
-                            <td>{{ $invoice->tax_type ?? ''}}</td>
-                            <td>{{ $invoice->taxable_amount ?? ''}}</td>
-                            <td>{{ $invoice->tax_adjustment ?? ''}}</td>
-                            <td>{{ $invoice->orders->amount ?? '' }}</td>
-                        </tr>
-                    @endforeach --}}
+                    @foreach($sales as $key => $sale)
+                        @if($sale->amount > 0)
+                            <tr data-entry-id="{{ $sale->id }}">
+                                <td></td>
+                                <td>
+                                    {{ $sale->customer->full_name }}
+                                </td>
+                                <td>
+                                    {{ $sale->amount ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $sale->installments->monthly_installment ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $sale->customer->orders()->sum('amount') ?? '' }}
+                                </td>
+                            </tr>
+                        @endif
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -103,20 +89,20 @@
         let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 
         $.extend(true, $.fn.dataTable.defaults, {
-    columnDefs: [{
-            targets: 0,
-        },
-        {
-            targets: 1,
-            visible: true
-        }
-    ],
-    orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
-    pageLength: 10,
-  });
-  let table = $('.datatable-Invoice:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
+            columnDefs: [{
+                    targets: 0,
+                },
+                {
+                    targets: 1,
+                    visible: true
+                }
+            ],
+        orderCellsTop: true,
+        order: [[ 1, 'desc' ]],
+        pageLength: 10,
+    });
+    let table = $('.datatable-SalesReport:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+    $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
