@@ -102,7 +102,7 @@
                                         Ref No
                                     </td>
                                     <td>
-                                        {{ $order->products->total_cost ?? '' }}
+                                        {{ $order->amount ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>

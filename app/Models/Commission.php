@@ -58,4 +58,9 @@ class Commission extends Model
     {
         return $this->belongsTo(Installment::class);
     }
+
+    public function fullPayments()
+    {
+        return $this->belongsTo(Transaction::class, 'id', 'order_id');
+    }
 }

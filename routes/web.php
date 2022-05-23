@@ -213,6 +213,15 @@ Route::group(['middleware' => 'auth'], function() {
 
             // AR Payments
             Route::resource('payments', '\App\Http\Controllers\Admin\PaymentController');
+
+            // Sales Report
+            Route::match(['get', 'post'], 'sales-report', [\App\Http\Controllers\Admin\InvoiceController::class,'salesReport'])->name('sales-report.index');
+
+            // Commissions Report
+            Route::match(['get', 'post'], 'commissionReport/index', [\App\Http\Controllers\Admin\InvoiceController::class,'commissionReport'])->name('commissionReport.index');
+
+            // Agents Report
+            Route::match(['get', 'post'], 'agentsReport/index', [\App\Http\Controllers\Admin\InvoiceController::class,'agentsReport'])->name('agentsReport.index');
         });
 
         // Commission
