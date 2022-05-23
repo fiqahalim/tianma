@@ -103,20 +103,20 @@
         let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 
         $.extend(true, $.fn.dataTable.defaults, {
-    columnDefs: [{
-            targets: 0,
-        },
-        {
-            targets: 1,
-            visible: true
-        }
-    ],
-    orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
-    pageLength: 10,
-  });
-  let table = $('.datatable-Invoice:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
+            columnDefs: [{
+                    targets: 0,
+                },
+                {
+                    targets: 1,
+                    visible: true
+                }
+            ],
+        orderCellsTop: true,
+        order: [[ 1, 'desc' ]],
+        pageLength: 10,
+    });
+    let table = $('.datatable-Invoice:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+    $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
