@@ -87,7 +87,7 @@ class CustomerDetailsController extends Controller
                 ContactPerson::create([
                     'customer_id' => $customer->id,
                     'cperson_name' => $value['cperson_name'],
-                    'cid_number' => $value['cid_number'],
+                    'cperson_no' => $value['cid_number'],
                     'relationships' => $value['relationships']
                 ]);
             }

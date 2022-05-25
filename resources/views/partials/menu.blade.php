@@ -32,6 +32,11 @@
                                 All Intended Users
                             </a>
                         </li>
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.decease-people.index") }}" class="c-sidebar-nav-link">
+                                All Deceased Person
+                            </a>
+                        </li>
                     </ul>
                 </li>
             @endcan

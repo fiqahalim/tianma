@@ -23,8 +23,8 @@
                             <strong>{{ Auth::user()->agent_code ?? 'Not Available' }}</strong>
                         </span>
                     </div>
-                    <i id="menu-item" class="fas fa-plus-circle" onclick="myFunction()"></i>
-
+                    {{-- <i id="menu-item" class="fas fa-plus-circle" onclick="myFunction()"></i> --}}
+                    <button type="button" id="child-item1" class="btn btn-outline-info btn-sm mb-3">Show All</button>
                     {{-- Level 1 --}}
                     @if(count($user))
                         <ol>
