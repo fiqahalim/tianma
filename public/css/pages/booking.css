@@ -35,6 +35,8 @@
 
 .seat.occupied {
     background-color: #fa1b1b;
+    width: 45px;
+    height: 45px;
 }
 
 .seat {
@@ -196,6 +198,16 @@
 
 .bg--base {
     background: #9e13a8 !important;
+}
+
+.seatGap
+{
+  width:40px;
+}
+
+.seatVGap
+{
+  height:40px;
 }
 
 input[type=checkbox] {

@@ -58,7 +58,7 @@
                                     <b>RECEIPT NO</b><br>
                                     <b>ORDER ID</b> #{{ $order->ref_no ?? '' }} <br>
                                     <b>INVOICE NO</b> <br>
-                                    <b>UNIT NUMBER</b> <br>
+                                    <b>UNIT NUMBER</b> {{ $unitNo }}<br>
                                     <b>DATE</b> {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y') }}
                                 </p>
                             </div>
@@ -74,7 +74,7 @@
                                     <th>Item</th>
                                     <th>Description 1</th>
                                     <th>Description 2</th>
-                                    <th>Payment Mode</th>
+                                    {{-- <th>Payment Mode</th> --}}
                                     <th>Payment Ref Number</th>
                                     <th>Amount</th>
                                 </tr>
@@ -95,11 +95,11 @@
                                     <td>
                                         {{ Str::upper($order->customer->mode) }}
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         {{ Str::upper($payment_name ?? '') }}
-                                    </td>
+                                    </td> --}}
                                     <td>
-                                        Ref No
+                                        {{ $unitNo }}
                                     </td>
                                     <td>
                                         {{ $order->amount ?? '' }}

@@ -74,7 +74,7 @@
                                     <th>Item</th>
                                     <th>Description 1</th>
                                     <th>Description 2</th>
-                                    <th>Payment Mode</th>
+                                    {{-- <th>Payment Mode</th> --}}
                                     <th>Payment Ref Number</th>
                                     <th>Amount</th>
                                 </tr>
@@ -95,11 +95,11 @@
                                     <td>
                                         {{ Str::upper($order->customer->mode) }}
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         {{ Str::upper($payment_name ?? '') }}
-                                    </td>
+                                    </td> --}}
                                     <td>
-                                        Ref No
+                                        {{ $unitNo }}
                                     </td>
                                     <td>
                                         @if($order->payment_option == 'PAY LATER' && $order->amount == 0)
