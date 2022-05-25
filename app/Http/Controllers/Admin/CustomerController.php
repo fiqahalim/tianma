@@ -69,7 +69,7 @@ class CustomerController extends Controller
 
         $customer->delete();
 
-        alert()->success(__('global.update_success'))->toToast();
+        alert()->success(__('global.delete_success'))->toToast();
         return back();
     }
 

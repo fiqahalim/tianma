@@ -204,6 +204,9 @@ Route::group(['middleware' => 'auth'], function() {
             // All Intended Users
             Route::delete('contact-people/destroy', [\App\Http\Controllers\Admin\IntendedUserController::class,'massDestroy'])->name('contact-people.massDestroy');
             Route::resource('contact-people', '\App\Http\Controllers\Admin\IntendedUserController');
+
+            // Deceased Information
+            Route::resource('decease-people', '\App\Http\Controllers\Admin\DeceaseController');
         });
 
         /** REPORT MANAGEMENT **/

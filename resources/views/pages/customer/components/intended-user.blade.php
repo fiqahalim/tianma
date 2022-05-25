@@ -13,7 +13,7 @@
                 <table class="table table-bordered" id="dynamicAddRemove">
                     <tr>
                         <th>Name</th>
-                        <th>{{ trans('cruds.customer.fields.id_number') }}</th>
+                        <th>Contact Number</th>
                         <th>Relationships</th>
                     </tr>
                     <tr>

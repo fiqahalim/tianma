@@ -53,7 +53,7 @@
                             $getUnitNo = isset($order->bookLocations) ? $order->bookLocations : '';
                             foreach($getUnitNo as $unit) {
                                 $bookLots = $unit->lotBookings->seats;
-                                $unitNo = implode(", ", $bookLots);
+                                // $unitNo = implode(", ", $bookLots);
                             }
                         @endphp
                         <tr data-entry-id="{{ $order->id }}">
@@ -63,7 +63,7 @@
                                 {{ Carbon\Carbon::parse($order->created_at)->format('d/M/Y H:i:s') }}
                             </td>
                             <td>
-                                {{ $unitNo }}
+                                {{ $unitNo ?? '' }}
                             </td>
                             <td>
                                 {{ $order->commissions()->sum('mo_overriding_comm') ?? '' }}

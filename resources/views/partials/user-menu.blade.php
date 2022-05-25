@@ -12,11 +12,23 @@
         </li>
 
         {{-- My Customers --}}
-        <li class="c-sidebar-nav-item">
-            <a href="{{ route("user.myCustomers") }}" class="c-sidebar-nav-link">
+        <li class="c-sidebar-nav-dropdown">
+            <a class="c-sidebar-nav-dropdown-toggle" href="#">
                 <i class="fas fa-user c-sidebar-nav-icon"></i>
-                {{ trans('global.order.myCust') }}
+                Customers
             </a>
+            <ul class="c-sidebar-nav-dropdown-items">
+                 <li class="c-sidebar-nav-item">
+                    <a href="{{ route("user.myCustomers") }}" class="c-sidebar-nav-link">
+                        My {{ trans('global.order.myCust') }}
+                    </a>
+                </li>
+                <li class="c-sidebar-nav-item">
+                    <a href="{{ route("admin.decease-people.index") }}" class="c-sidebar-nav-link">
+                        Deceased Person
+                    </a>
+                </li>
+            </ul>
         </li>
 
         {{-- Commissions --}}
