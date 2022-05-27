@@ -28,16 +28,14 @@
                 <table class=" table table-bordered table-striped table-hover datatable datatable-BookingSection">
                     <thead>
                         <tr>
-                            <th width="10">
-
-                            </th>
+                            <th width="10"></th>
                             <th>
                                 {{ trans('cruds.bookingSection.fields.id') }}
                             </th>
                             <th>
                                 {{ trans('cruds.bookingSection.fields.section') }}
                             </th>
-                            <th>
+                            {{-- <th>
                                 {{ trans('cruds.bookingSection.fields.lot_layout') }}
                             </th>
                             <th>
@@ -45,7 +43,7 @@
                             </th>
                             <th>
                                 {{ trans('cruds.bookingSection.fields.total_lot') }}
-                            </th>
+                            </th> --}}
                             <th>
                                 &nbsp;
                             </th>
@@ -63,19 +61,19 @@
                                 <td>
                                     {{ $bookingSection->section ?? '' }}
                                 </td>
-                                <td>
+                                {{-- <td>
                                     {{ $bookingSection->bookingLots->layout ?? '' }}
                                 </td>
                                 <td>
                                     {{ $bookingSection->deck ?? '' }}
-                                </td>
-                                <td>
+                                </td> --}}
+                                {{-- <td>
                                     {{ $bookingSection->deck_seats ?? '' }}
-                                </td>
+                                </td> --}}
                                 <td>
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.sections.show', $bookingSection->id) }}">
+                                    {{-- <a class="btn btn-xs btn-primary" href="{{ route('admin.sections.show', $bookingSection->id) }}">
                                         <i class="fas fa-eye"></i>
-                                    </a>
+                                    </a> --}}
 
                                     <a class="btn btn-xs btn-info" href="{{ route('admin.sections.edit', $bookingSection->id) }}">
                                         <i class="fas fa-pencil-alt"></i>

@@ -110,11 +110,13 @@ class UsersController extends Controller
         return redirect()->route('admin.users.index');
     }
 
-    public function show(User $user)
+    public function show(Request $request, User $user)
     {
         abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $user->load('roles', 'team', 'parent', 'userUserAlerts', 'childUsers', 'commissions', 'rankings');
+
+        $keyword = $request->search;
 
         $totalComms = Order::where('orders.created_by', $user->id)
             ->sum('orders.amount');
@@ -124,7 +126,14 @@ class UsersController extends Controller
                 ->sum('orders.amount');
         }
 
-        return view('admin.users.show', compact('user', 'totalComms', 'totas'));
+        $getUsers = User::where('agent_code', 'like', '%' . $request->search . '%')
+            ->get()
+            ->map(function ($row) use ($keyword) {
+                $row->agent_code = preg_replace('/(' . $keyword . ')/i', "<b>$1</b>", $row->agent_code);
+                return $row;
+            });
+
+        return view('admin.users.show', compact('user', 'totalComms', 'totas', 'getUsers'));
     }
 
     public function destroy(User $user)
