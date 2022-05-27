@@ -35,6 +35,7 @@
                             </div>
                         </div>
 
+                        {{-- Product Type --}}
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label for="property_name" class="form-label">
@@ -54,6 +55,7 @@
                             </div>
                         </div>
 
+                        {{-- Building and Level --}}
                         <div class="form-row" id="building_name">
                             <div class="form-group col-md-12">
                                 <label for="building_name" class="form-label">
@@ -82,6 +84,23 @@
                                         <option>No levels founds</option>
                                     @endforelse
                                 </select>
+                            </div>
+                            {{-- Categories --}}
+                            <div class="form-group col-md-12">
+                                <label for="category" class="form-label">
+                                    <strong>Please select category:</strong>
+                                </label>
+                                @if(isset($category))
+                                    <select class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" id="name" name="name" required>
+                                        @forelse($category as $keys => $cate)
+                                            <option value="{{ $cate }}" {{ old('name', '') === (string) $cate ? 'selected' : '' }}>
+                                                {{ $cate }}
+                                            </option>
+                                        @empty
+                                            <option>No category founds</option>
+                                        @endforelse
+                                    </select>
+                                @endif
                             </div>
                         </div>
                     </div>

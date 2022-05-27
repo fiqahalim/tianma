@@ -10,6 +10,16 @@
     </nav>
 
     <div class="container-fluid scroll">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col justify-content-end">
+                <form class="example" action="{{ route('admin.users.show', [$user->id]) }}" method="GET" style="margin:auto; max-width:300px">
+                    <input type="text" placeholder="Search..." name="search" id="search">
+                    <button type="submit"><i class="fa fa-search"></i></button>
+                </form>
+            </div>
+        </div>
+
         <div class="text-center">
             <div class="">
                 <ol class="tree">
@@ -27,6 +37,7 @@
                         @include('components.hierarchy')
                     </li>
                 </ol>
+                {{-- {!! $getUsers !!} --}}
             </div>
         </div>
     </div>
@@ -34,6 +45,38 @@
 
 @section('styles')
     <link href="{{ mix('/css/pages/tree.css') }}" media="screen,projection" rel="stylesheet" type="text/css"/>
+    <style type="text/css">
+        form.example input[type=text] {
+          padding: 5px;
+          font-size: 14px;
+          border: 1px solid grey;
+          float: left;
+          width: 80%;
+          background: #f1f1f1;
+        }
+
+        form.example button {
+          float: left;
+          width: 20%;
+          padding: 5px;
+          background: #2196F3;
+          color: white;
+          font-size: 14px;
+          border: 1px solid grey;
+          border-left: none;
+          cursor: pointer;
+        }
+
+        form.example button:hover {
+          background: #0b7dda;
+        }
+
+        form.example::after {
+          content: "";
+          clear: both;
+          display: table;
+        }
+    </style>
 @endsection
 
 @section('scripts')

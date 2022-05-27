@@ -36,6 +36,7 @@ class UpdateSectionRequest extends FormRequest
             ],
             'deck' => [
                 'numeric',
+                'nullable',
             ],
             'rooms.*' => [
                 'integer',

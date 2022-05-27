@@ -91,8 +91,9 @@ class ProductOrderController extends Controller
         $properties = ProductType::pluck('property_name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $buildings = BuildingType::pluck('building_name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $levels = Level::pluck('level_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $category = ProductCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('pages.product.location', compact('locations', 'properties', 'buildings', 'levels'));
+        return view('pages.product.location', compact('locations', 'properties', 'buildings', 'levels', 'category'));
     }
 
     public function store(Request $request)

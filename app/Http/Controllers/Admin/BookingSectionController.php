@@ -38,18 +38,18 @@ class BookingSectionController extends Controller
         return redirect()->route('admin.sections.index');
     }
 
-    public function edit(BookingSection $bookingSection)
+    public function edit(BookingSection $section)
     {
         $lot_layouts = BookingLot::pluck('layout', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $bookingSection->load('bookingLots');
+        $section->load('bookingLots');
 
-        return view('admin.bookingSections.edit', compact('bookingSection', 'lot_layouts'));
+        return view('admin.bookingSections.edit', compact('section', 'lot_layouts'));
     }
 
-    public function update(UpdateSectionRequest $request, BookingSection $bookingSection)
+    public function update(UpdateSectionRequest $request, BookingSection $section)
     {
-        $bookingSection->update($request->all());
+        $section->update($request->all());
 
         alert()->success(__('global.update_success'))->toToast();
         return redirect()->route('admin.sections.index');
