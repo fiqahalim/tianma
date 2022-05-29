@@ -118,6 +118,8 @@ class UsersController extends Controller
 
         $keyword = $request->search;
 
+        $totas = '';
+
         $totalComms = Order::where('orders.created_by', $user->id)
             ->sum('orders.amount');
 

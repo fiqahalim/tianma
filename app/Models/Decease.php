@@ -18,11 +18,24 @@ class Decease extends Model
         'Male'      => 'Male',
     ];
 
+    public const MARITAL_SELECT = [
+        'Single'    => 'Single',
+        'Married'   => 'Married',
+        'Widowed'   => 'Widowed',
+        'Divorced'  => 'Divorced',
+        'Separated' => 'Separated',
+        'Registered Partnership' => 'Registered Partnership',
+    ];
+
+    public const MAILING_FLAG = [
+        'Yes' => 'Yes',
+        'No'  => 'No',
+    ];
+
     protected $dates = [
         'birth_date',
         'chinese_birth_date',
         'death_date',
-        'grain_date',
         'bury_date',
         'created_at',
         'updated_at',
@@ -51,5 +64,55 @@ class Decease extends Model
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
+    }
+
+    public function setDeathDateAttribute($value)
+    {
+        $this->attributes['death_date'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+    }
+
+    public function getDeathDateAttribute($value)
+    {
+        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+    }
+
+    public function setBuryDateAttribute($value)
+    {
+        $this->attributes['bury_date'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+    }
+
+    public function getBuryDateAttribute($value)
+    {
+        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+    }
+
+    public function setGrainDateAttribute($value)
+    {
+        $this->attributes['grain_date'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+    }
+
+    public function getGrainDateAttribute($value)
+    {
+        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+    }
+
+    public function setChineseBirthDateAttribute($value)
+    {
+        $this->attributes['chinese_birth_date'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+    }
+
+    public function getChineseDateAttribute($value)
+    {
+        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+    }
+
+    public function getBirthDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+    }
+
+    public function setBirthDateAttribute($value)
+    {
+        $this->attributes['birth_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 }

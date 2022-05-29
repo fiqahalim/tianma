@@ -11,28 +11,37 @@ use App\Http\Requests\StoreDeceasedRequest;
 use App\Http\Requests\UpdateDeceasedRequest;
 
 use App\Models\Decease;
+use App\Models\ProductBooking;
 use Alert;
+use Carbon\Carbon;
 
 class DeceaseController extends Controller
 {
     public function index()
     {
-        return view('admin.customers.deceased.index');
+        $deceases = Decease::with(['lotID'])->get();
+        return view('admin.customers.deceased.index', compact('deceases'));
     }
 
     public function create()
     {
-        return view('admin.customers.deceased.create');
+        $lotIDs = ProductBooking::pluck('seats', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.customers.deceased.create', compact('lotIDs'));
     }
 
-    public function edit(Decease $decease)
+    public function edit(Decease $decease_person)
     {
-        return view('admin.customers.deceased.edit', compact('decease'));
+        $lotIDs = ProductBooking::pluck('seats', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.customers.deceased.edit', compact('decease_person', 'lotIDs'));
     }
 
-    public function show(Decease $decease)
+    public function show(Decease $decease_person)
     {
-        return view('admin.customers.deceased.show');
+        $decease_person->load('lotID');
+
+        return view('admin.customers.deceased.show', compact('decease_person'));
     }
 
     public function store(StoreDeceasedRequest $request)
