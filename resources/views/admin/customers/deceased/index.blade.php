@@ -57,58 +57,50 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @foreach($deceases as $key => $data)
-                            <tr data-entry-id="{{ $customer->id }}">
+                        @foreach($deceases as $key => $data)
+                            <tr data-entry-id="{{ $data->id }}">
+                                <td></td>
+                                <td>{{ $data->id }}</td>
                                 <td>
+                                    {{ $data->decease_name }}
+                                </td>
+                                <td>
+                                    {{ $data->decease_id_number }}
+                                </td>
+                                <td>
+                                    {{ $data->birth_date }}
+                                </td>
+                                <td>
+                                    {{ $data->bury_cert }}
+                                </td>
+                                <td>
+                                    {{ $data->death_date }}
+                                </td>
+                                <td>
+                                    {{ $data->bury_date ?? '' }}
+                                </td>
+                                <td>
+                                    {{ json_encode($data->lotID->seats) ?? '' }}
+                                </td>
+                                <td>
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.decease-people.show', $data->id) }}">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
 
-                                </td>
-                                <td>{{ $customer->id }}</td>
-                                <td>
-                                    {{ Carbon\Carbon::parse($customer->created_at)->format('d/M/Y H:i:s') }}
-                                </td>
-                                <td>
-                                    {{ $customer->full_name ?? '' }}
-                                </td>
-                                <td>
-                                    {{ App\Models\Customer::ID_TYPE_SELECT[$customer->id_type] ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $customer->id_number ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $customer->email ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $customer->contact_person_name ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $customer->contact_person_no ?? '' }}
-                                </td>
-                                <td>
-                                    @can('customer_show')
-                                        <a class="btn btn-xs btn-primary" href="{{ route('admin.customers.show', $customer->id) }}">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                    @endcan
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.decease-people.edit', $data->id) }}">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
 
-                                    @can('customer_edit')
-                                        <a class="btn btn-xs btn-info" href="{{ route('admin.customers.edit', $customer->id) }}">
-                                            <i class="fas fa-pencil-alt"></i>
-                                        </a>
-                                    @endcan
-
-                                    @can('customer_delete')
-                                        <form action="{{ route('admin.customers.destroy', $customer->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                            <button type="submit" class="btn btn-xs btn-danger">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </form>
-                                    @endcan
+                                    <form action="{{ route('admin.decease-people.destroy', $data->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <button type="submit" class="btn btn-xs btn-danger">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
-                        @endforeach --}}
+                        @endforeach
                     </tbody>
                 </table>
             </div>

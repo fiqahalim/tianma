@@ -97,7 +97,7 @@ class UpdateDeceasedRequest extends FormRequest
                 'nullable',
             ],
             'chinese_birth_date' => [
-                'date_format:' . config('panel.date_format'),
+                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
                 'nullable',
             ],
             'birth_date' => [
@@ -105,15 +105,15 @@ class UpdateDeceasedRequest extends FormRequest
                 'nullable',
             ],
             'death_date' => [
-                'date_format:' . config('panel.date_format'),
+                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
                 'nullable',
             ],
             'bury_date' => [
-                'date_format:' . config('panel.date_format'),
+                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
                 'nullable',
             ],
             'grain_date' => [
-                'date_format:' . config('panel.date_format'),
+                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
                 'nullable',
             ],
             'issue_postcode' => [
@@ -173,11 +173,11 @@ class UpdateDeceasedRequest extends FormRequest
                 'nullable',
             ],
             'remark' => [
-                'text',
+                'string',
                 'nullable',
             ],
             'item_elements' => [
-                'text',
+                'string',
                 'nullable',
             ],
         ];
