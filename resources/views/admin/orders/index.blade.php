@@ -31,12 +31,12 @@
                         <th>
                             Product {{ trans('cruds.order.fields.amount') }}
                         </th>
-                        <th>
+                        {{-- <th>
                             {{ trans('cruds.order.fields.order_status') }}
-                        </th>
-                        <th>
+                        </th> --}}
+                        {{-- <th>
                             Payment Option
-                        </th>
+                        </th> --}}
                         <th>
                             {{ trans('cruds.order.fields.approved') }}
                         </th>
@@ -48,6 +48,9 @@
                         </th>
                         <th>
                             Payment Mode
+                        </th>
+                        <th>
+                            Time Left to Pay
                         </th>
                         <th>
                             &nbsp;
@@ -71,12 +74,12 @@
                             <td>
                                 {{ $order->amount ?? '' }}
                             </td>
-                            <td>
+                            {{-- <td>
                                 {{ $order->order_status ?? '' }}
-                            </td>
-                            <td>
+                            </td> --}}
+                            {{-- <td>
                                 {{ strtoupper($order->payment_option ?? '') }}
-                            </td>
+                            </td> --}}
                             <td>
                                 <span style="display:none">{{ $order->approved ?? '' }}</span>
                                 <input type="checkbox" disabled="disabled" {{ $order->approved ? 'checked' : '' }}>
@@ -96,6 +99,16 @@
                                     <span class="badge bg-primary text-white">
                                         {{ $order->customer->mode ?? '' }}
                                     </span>
+                                @endif
+                            </td>
+                            <td>
+                                @if($order->customer->mode == 'Installment')
+                                    @if($order->payment_option == 'PAY LATER' && $order->amount == 0)
+                                    <span id="counter" style="color:blue;font-weight:bold">
+
+                                    </span>
+                                    {{ Carbon\Carbon::parse($order->expiry_date)->format('d/M/Y H:i:s') }}
+                                    @endif
                                 @endif
                             </td>
                             <td>
@@ -202,4 +215,30 @@
 })
 
 </script>
+<script>
+        <?php
+           $dateTime = strtotime($order->expiry_date);
+           $getDateTime = date("F d, Y H:i:s", $dateTime);
+        ?>
+        var countDownDate = new Date("<?php echo "$getDateTime"; ?>").getTime();
+        // Update the count down every 1 second
+        var x = setInterval(function() {
+            var now = new Date().getTime();
+            // Find the distance between now an the count down date
+            var distance = countDownDate - now;
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            // Output the result in an element with id="counter"11
+            document.getElementById("counter").innerHTML = days + "Day : " + hours + "h " +
+            minutes + "m " + seconds + "s ";
+            // If the count down is over, write some text
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("counter").innerHTML = "EXPIRED";
+            }
+        }, 1000);
+    </script>
 @endsection
