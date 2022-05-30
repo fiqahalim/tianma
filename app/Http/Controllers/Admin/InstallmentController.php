@@ -115,6 +115,7 @@ class InstallmentController extends Controller
         $order->customer_id = $customer->id;
         $order->created_by = $customer->created_by;
         // $order->product_id = $products->id;
+        $order->expiry_date = $current = Carbon::now()->addDays(4)->hour(10)->minute(00)->second(0)->toDateTimeString();
         $order->book_locations_id = $locations->id;
         $order->save();
 
