@@ -39,11 +39,3 @@ function readState() {
         }
     })
 }
-
-function updateTextArea() {
-    var allSeatsVals = [];
-    $('#seatsBlock :checked').each(function() {
-        allSeatsVals.push($(this).val());
-    });
-    $('#seatsDisplay').val(allSeatsVals);
-}

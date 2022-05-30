@@ -108,7 +108,7 @@
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span class="font-weight-bold">
-                                            RM {{ $products->price }}
+                                            RM
                                         </span>
                                     </div>
                                 </div>
@@ -124,7 +124,7 @@
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span class="font-weight-bold">
-                                            RM {{ $products->maintenance_price }}
+                                            RM
                                         </span>
                                     </div>
                                 </div>
@@ -140,7 +140,7 @@
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span class="font-weight-bold">
-                                            RM {{ $products->promotion_price }}
+                                            RM
                                         </span>
                                     </div>
                                 </div>
@@ -156,7 +156,7 @@
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span class="font-weight-bold">
-                                            RM {{ $order->amount }}
+                                            RM
                                         </span>
                                     </div>
                                 </div>

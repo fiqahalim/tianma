@@ -43,24 +43,24 @@ class OrderConfirmationController extends Controller
 
     public function store(Order $order)
     {
-        $products = session('products');
+        // $products = session('products');
         $customer = session('customer');
         $locations = session('bookLocation');
 
-        $pv = session('products')['point_value'];
+        // $pv = session('products')['point_value'];
 
         $totalProductAmount = 0;
         $sst = 6;
-        $totalProductAmount = ($products->total_cost) + ($products->total_cost * ($sst/100));
+        // $totalProductAmount = ($products->total_cost) + ($products->total_cost * ($sst/100));
 
         $orders = new Order;
         $order->ref_no = $this->getOrderNumber();
         $order->order_status = 'NEW';
-        $order->amount = $totalProductAmount;
+        // $order->amount = $totalProductAmount;
         $order->order_date = $current = Carbon::now();
         $order->customer_id = $customer->id;
         $order->created_by = $customer->created_by;
-        $order->product_id = $products->id;
+        // $order->product_id = $products->id;
         $order->book_locations_id = $locations->id;
         $order->save();
 
@@ -99,7 +99,7 @@ class OrderConfirmationController extends Controller
     */
     private function commissions()
     {
-        $pv = session('products')['point_value'];
+        // $pv = session('products')['point_value'];
         $cust = session('customer');
         $existCust = session('searchCust');
 
@@ -114,27 +114,27 @@ class OrderConfirmationController extends Controller
 
         switch ($rankings->ranking_id) {
             case 1:
-                $totalCommission += round(($pv * 0.16), 2);
+                $totalCommission += round((8000 * 0.16), 2);
                 $parentCommission = $this->getParent();
                 $pp = $this->getPP();
                 break;
             case 2:
-                $totalCommission += round(($pv * 0.04), 2);
+                $totalCommission += round((8000 * 0.04), 2);
                 $parentCommission = $this->getParent();
                 $pp = $this->getPP();
                 break;
             case 3:
-                $totalCommission += round(($pv * 0.02), 2);
+                $totalCommission += round((8000 * 0.02), 2);
                 $parentCommission = $this->getParent();
                 $pp = $this->getPP();
                 break;
             case 4:
-                $totalCommission += round(($pv * 0.04),2);
+                $totalCommission += round((8000 * 0.04),2);
                 $parentCommission = $this->getParent();
                 $pp = $this->getPP();
                 break;
             case 5:
-                $totalCommission += round(($pv * 0.05), 2);
+                $totalCommission += round((8000 * 0.05), 2);
                 $parentCommission = $this->getParent();
                 $pp = $this->getPP();
                 break;

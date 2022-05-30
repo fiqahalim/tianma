@@ -11,9 +11,6 @@
             <li class="breadcrumb-item">
                 {{ trans('global.products_view') }}
             </li>
-            <li class="breadcrumb-item">
-                {{ $products->product_name }}
-            </li>
             <li aria-current="page" class="breadcrumb-item active">
                 Installment Calculator
             </li>
@@ -119,7 +116,7 @@
                 </div>
                 <div class="text-center">
                     <div class="form-group float-right">
-                        <a class="btn btn-primary btn-sm mt-4 mb-2 mr-3" href="{{ route('admin.order.details.index', [$products->categories->first()->parentCategory->name, $products->categories->first()->parentCategory->name, $products->categories->first()->name, $products]) }}">
+                        <a class="btn btn-primary btn-sm mt-4 mb-2 mr-3" href="{{ route('admin.order.details.index') }}">
                             {{ trans('global.proceed') }}
                         </a>
                     </div>

@@ -100,9 +100,11 @@
                             </td>
                             <td>
                                 @can('order_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.orders.show', $order->id) }}">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
+                                    @if($order->amount > 0)
+                                        <a class="btn btn-xs btn-primary" href="{{ route('admin.orders.show', $order->id) }}">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    @endif
                                 @endcan
 
                                 @can('order_edit')

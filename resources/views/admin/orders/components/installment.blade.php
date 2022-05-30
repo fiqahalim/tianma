@@ -90,7 +90,7 @@
                                 <tr data-entry-id="{{ $order->id }}">
                                     <td>1</td>
                                     <td>
-                                        {{ Str::upper($order->products->product_name) }}
+                                        {{ strtoupper($order->bookLocations[0]->product_type) }}, {{ strtoupper($order->bookLocations[0]->category) }}
                                     </td>
                                     <td>
                                         {{ Str::upper($order->customer->mode) }}

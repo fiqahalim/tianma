@@ -34,9 +34,9 @@ class InstallmentController extends Controller
         return $ref_no;
     }
 
-    public function store(Request $request, $category, $childCategory, $childCategory2, Product $product)
+    public function store(Request $request)
     {
-        $products = session('products');
+        // $products = session('products');
         $customer = session('customer');
         $locations = session('bookLocation');
 
@@ -50,7 +50,7 @@ class InstallmentController extends Controller
         $order->order_date = $current = Carbon::now();
         $order->customer_id = $customer->id;
         $order->created_by = $customer->created_by;
-        $order->product_id = $products->id;
+        // $order->product_id = $products->id;
         $order->book_locations_id = $locations->id;
         $order->save();
 
@@ -87,7 +87,7 @@ class InstallmentController extends Controller
 
         session(['paymentInfo' => $installments]);
 
-        return view('pages.installment.result', compact('customer', 'products', 'order', 'installments'));
+        return view('pages.installment.result', compact('customer', 'order', 'installments'));
     }
 
     public function update(Request $request, $category, $childCategory, $childCategory2, Product $product, Installment $installment)
@@ -100,9 +100,9 @@ class InstallmentController extends Controller
         $installment->update($request->all());
     }
 
-    public function payLater(Request $request, $category, $childCategory, $childCategory2, Product $product, Installment $installment)
+    public function payLater(Request $request)
     {
-        $products = session('products');
+        // $products = session('products');
         $customer = session('customer');
         $locations = session('bookLocation');
 
@@ -114,7 +114,7 @@ class InstallmentController extends Controller
         $order->order_date = $current = Carbon::now();
         $order->customer_id = $customer->id;
         $order->created_by = $customer->created_by;
-        $order->product_id = $products->id;
+        // $order->product_id = $products->id;
         $order->book_locations_id = $locations->id;
         $order->save();
 
