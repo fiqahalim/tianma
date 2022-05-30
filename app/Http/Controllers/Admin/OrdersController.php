@@ -67,7 +67,7 @@ class OrdersController extends Controller
         $order->load('customer', 'createdBy', 'products', 'bookLocations', 'installments', 'fullPayments');
 
         if($order->customer->mode == 'Installment') {
-            $amount = isset($order->installments->downpayment) ? $order->installments->downpayment : '';
+            $amount = isset($order->installments->downpayment) ? $order->installments->downpayment : null;
             $numberToWords = new NumberToWords();
             $numberTransformer = $numberToWords->getNumberTransformer('en');
             $amountFormat = $numberTransformer->toWords($amount);
@@ -75,7 +75,7 @@ class OrdersController extends Controller
             $today = Carbon::today();
             $date = $today->addMonth(1);
         } else {
-            $amount = $order->fullPayments->amount;
+            $amount = $order->fullPayments->amount ? $order->installments->downpayment : null;
             $numberToWords = new NumberToWords();
             $numberTransformer = $numberToWords->getNumberTransformer('en');
             $amountFormat = $numberTransformer->toWords($amount);

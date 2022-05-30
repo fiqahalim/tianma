@@ -5,19 +5,18 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('admin.new-order.index') }}">{{ trans('global.products.title') }}</a></li>
             <li class="breadcrumb-item">{{ trans('global.products.bookingView') }}</li>
-            <li class="breadcrumb-item">{{ $product->product_name }}</li>
             <li class="breadcrumb-item active" aria-current="page">{{ trans('global.products.bookingLot') }}</li>
         </ol>
     </nav>
 
     <div class="container-fluid">
-        <form method="POST" action="{{ route('admin.product-booking.store', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}" enctype="multipart/form-data" id="bookingForm">
+        <form method="POST" action="{{ route('admin.product-booking.store') }}" enctype="multipart/form-data" id="bookingForm">
             @csrf
             <input type="text" name="price" hidden="">
 
             <img src="{{ $product->photo->url ?? '/images/product/luxury_1.png' }}" class="rounded mx-auto d-block" style="height: 300px; width: 485px;">
             <div class="movie-container">
-                <h5><strong>Category Selected:</strong> {{ $product->product_name }}
+                <h5><strong>Category Selected: {{ $locations->category ?? ''}}</strong>
                 </h5>
             </div>
             <ul class="showcase">
@@ -35,13 +34,13 @@
                 </li>
             </ul>
 
-            <div class="row">
+            <div class="row mt-5 mb-5">
                 <div class="col-lg-4 col-md-6">
                     <div class="seat-overview-wrapper">
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="rooms" class="form-label font-weight-bold">Room</label>
-                                <select class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }} mb-3" name="rooms" required id="rooms">
+                                <select class="form-control {{ $errors->has('rooms') ? 'is-invalid' : '' }} mb-3" name="rooms" required id="rooms">
                                     @forelse($rooms as $r => $room)
                                         <option value="{{ $room }}" {{ old('name', '') === (string) $room ? 'selected' : '' }}>
                                             {{ $room }}
@@ -55,14 +54,12 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="section" class="form-label font-weight-bold">Section</label>
-                                <select class="form-control {{ $errors->has('sections') ? 'is-invalid' : '' }}" name="sections" id="sections" required>
-                                    @forelse($sections as $sc => $section)
-                                        <option value="{{ $sc }}" {{ old('section', '') === (string) $sc ? 'selected' : '' }}>
-                                                {{ $section }}
-                                        </option>
-                                    @empty
-                                        <option>No section founds</option>
-                                    @endforelse
+                                <select class="form-control {{ $errors->has('section') ? 'is-invalid' : '' }}" name="section" id="wings" required>
+                                    <option selected>{{ trans('global.pleaseSelect') }} section</option>
+                                    <option value="DE">DE</option>
+                                    <option value="DN">DN</option>
+                                    <option value="DS">DS</option>
+                                    <option value="DW">DW</option>
                                 </select>
                                 @if($errors->has('sections'))
                                     <div class="invalid-feedback">
@@ -75,82 +72,352 @@
                     </div>
                 </div>
                 <div class="col-lg-8 col-md-6">
-                    <div class="seat-overview-wrapper">
-                        <div class="booked-seat-details d-none">
-                            <label class="form-label font-weight-bold">Selected Lots</label>
-                            <div class="list-group seat-details-animate">
-                                <span class="list-group-item d-flex bg--base text-white justify-content-between">
-                                    Lots Details
-                                    <span>@lang('Price')</span>
-                                </span>
-                                <span class="list-group-item d-flex justify-content-between">
-                                    {{ $product->description }}
-                                    <span>{{ $product->price }}</span>
-                                </span>
-                                <div class="selected-seat-details">
-                                </div>
-                            </div>
-                        </div>
-                        <input type="text" name="seats" hidden>
-                        <div class="d-grid gap-2 col-6 mx-auto">
-                            <button type="submit" class="btn btn-outline-dark mt-2 book-bus-btn btn-block">
-                                {{ trans('global.products.product_select') }}
-                            </button>
-                        </div>
+                    <div class="">
+                        <table class="table table-bordered">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Reservation Lots</th>
+                                    <th>Lot ID Number</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <p>
+                                            {{ strtoupper($locations->build_type) }}, {{ strtoupper($locations->level) }}, {{ strtoupper($locations->category) }}
+                                        </p>
+                                    </td>
+                                    <td id="results">
+                                    </td>
+                                    <td id="prices"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        {{-- <input type="text" name="seats" hidden> --}}
                     </div>
                 </div>
             </div>
 
-            <div class="row mt-5 justify-content-center">
-                <div class="col-lg-12 col-md-6">
-                    <h6 class="title">@lang('Click on Lot to select or deselect')</h6>
-                    @foreach ($trip->bookingSection->deck_seats as $seat)
-                        <div class="seat-plan-inner">
-                            <div class="single">
-                                @php
-                                    $totalRow = $lotLayout->getTotalRow($seat);
-                                    $lastRowSeat = $lotLayout->getLastRowSit($seat);
-                                    $chr = 'A';
-                                    $deckIndex = $loop->index + 1;
-                                    $seatlayout = $lotLayout->lotLayouts();
-                                    $rowItem = $seatlayout->left + $seatlayout->right;
-                                @endphp
-
-                                @for($i = 1; $i <= $totalRow; $i++)
-                                    @php
-                                        if($lastRowSeat==1 && $i==$totalRow -1)
-                                        break;
-                                        $seatNumber = $chr;
-                                        $chr++;
-                                        $seats = $lotLayout->getLots($deckIndex,$seatNumber);
-                                    @endphp
-
-                                    <div class="seat-wrapper">
-                                        @php echo $seats->left; @endphp
-                                        @php echo $seats->right; @endphp
+            @if(isset($locations->product_type) && !empty($locations->product_type == 'Niche'))
+                @if($locations->build_type == 'Tower East')
+                    @if($locations->category == 'Luxury')
+                        @if($room == 'Room A')
+                            <div class="container">
+                                <div id="container-seats">
+                                    <div class="DE GFG">
+                                        @include('pages.product.components.tower_east.luxury_a.de')
                                     </div>
-                                @endfor
-
-                                @if($lastRowSeat == 1)
-                                    @php $seatNumber++ @endphp
-                                    <div class="seat-wrapper justify-content-center">
-                                        @for ($lsr=1; $lsr <= $rowItem+1; $lsr++) @php echo $lotLayout->generateLots($lsr,$deckIndex,$seatNumber); @endphp
-                                            @endfor
+                                    <div class="DN GFG">
+                                        @include('pages.product.components.tower_east.luxury_a.dn')
                                     </div>
-                                @endif
-
-                                @if($lastRowSeat > 1)
-                                    @php $seatNumber++ @endphp
-                                    <div class="seat-wrapper justify-content-center">
-                                        @for($l = 1; $l <= $lastRowSeat; $l++) @php echo $lotLayout->generateLots($l,$deckIndex,$seatNumber); @endphp
-                                        @endfor
+                                    <div class="DS GFG">
+                                        @include('pages.product.components.tower_east.luxury_a.ds')
                                     </div>
-                                @endif
+                                    <div class="DW GFG">
+                                        @include('pages.product.components.tower_east.luxury_a.dw')
+                                    </div>
+                                </div>
+                                  <div class="text-center">
+                                    <input type="text" name="seat" hidden>
+                                    <button type="submit" class="btn btn-outline-dark mt-2 book-bus-btn">{{ trans('global.products.product_select') }}</button>
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
+                        @elseif($room == 'Room B')
+                        @else
+                        @endif
+                    @elseif($locations->category == 'Premium')
+                        @if($room == 'Room A')
+                            <div class="container">
+                                <div id="container-seats">
+                                    <div class="DE GFG">
+                                        @include('pages.product.components.tower_east.premium_a.de')
+                                    </div>
+                                    <div class="DN GFG">
+                                        @include('pages.product.components.tower_east.premium_a.dn')
+                                    </div>
+                                    <div class="DS GFG">
+                                        @include('pages.product.components.tower_east.premium_a.ds')
+                                    </div>
+                                    <div class="DW GFG">
+                                        @include('pages.product.components.tower_east.premium_a.dw')
+                                    </div>
+                                </div>
+                                  <div class="text-center">
+                                    <input type="text" name="seat" hidden>
+                                    <button type="submit" class="btn btn-outline-dark mt-2 book-bus-btn">{{ trans('global.products.product_select') }}</button>
+                                </div>
+                            </div>
+                        @elseif($room == 'Room B')
+                        @else
+                        @endif
+                    @else
+                        @if($room == 'Room A')
+                            <div class="container">
+                                <div id="container-seats">
+                                    <div class="DE GFG">
+                                        @include('pages.product.components.tower_east.superior_a.de')
+                                    </div>
+                                    <div class="DN GFG">
+                                        @include('pages.product.components.tower_east.superior_a.dn')
+                                    </div>
+                                    <div class="DS GFG">
+                                        @include('pages.product.components.tower_east.superior_a.ds')
+                                    </div>
+                                    <div class="DW GFG">
+                                        @include('pages.product.components.tower_east.superior_a.dw')
+                                    </div>
+                                </div>
+                                  <div class="text-center">
+                                    <input type="text" name="seat" hidden>
+                                    <button type="submit" class="btn btn-outline-dark mt-2 book-bus-btn">{{ trans('global.products.product_select') }}</button>
+                                </div>
+                            </div>
+                        @elseif($room == 'Room B')
+                        @else
+                        @endif
+                    @endif
+                @elseif($locations->build_type == 'Tower North')
+                    @if($locations->category == 'Luxury')
+                        @if($room == 'Room A')
+                            <div class="container">
+                                <div id="container-seats">
+                                    <div class="DE GFG">
+                                        @include('pages.product.components.tower_north.luxury_a.de')
+                                    </div>
+                                    <div class="DN GFG">
+                                        @include('pages.product.components.tower_north.luxury_a.dn')
+                                    </div>
+                                    <div class="DS GFG">
+                                        @include('pages.product.components.tower_north.luxury_a.ds')
+                                    </div>
+                                    <div class="DW GFG">
+                                        @include('pages.product.components.tower_north.luxury_a.dw')
+                                    </div>
+                                </div>
+                                  <div class="text-center">
+                                    <input type="text" name="seat" hidden>
+                                    <button type="submit" class="btn btn-outline-dark mt-2 book-bus-btn">{{ trans('global.products.product_select') }}</button>
+                                </div>
+                            </div>
+                        @elseif($room == 'Room B')
+                        @else
+                        @endif
+                    @elseif($locations->category == 'Premium')
+                        @if($room == 'Room A')
+                            <div class="container">
+                                <div id="container-seats">
+                                    <div class="DE GFG">
+                                        @include('pages.product.components.tower_north.premium_a.de')
+                                    </div>
+                                    <div class="DN GFG">
+                                        @include('pages.product.components.tower_north.premium_a.dn')
+                                    </div>
+                                    <div class="DS GFG">
+                                        @include('pages.product.components.tower_north.premium_a.ds')
+                                    </div>
+                                    <div class="DW GFG">
+                                        @include('pages.product.components.tower_north.premium_a.dw')
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <input type="text" name="seat" hidden>
+                                    <button type="submit" class="btn btn-outline-dark mt-2 book-bus-btn">
+                                        {{ trans('global.products.product_select') }}
+                                    </button>
+                                </div>
+                            </div>
+                        @elseif($room == 'Room B')
+                        @else
+                        @endif
+                    @else
+                        @if($room == 'Room A')
+                            <div class="container">
+                                <div id="container-seats">
+                                    <div class="DE GFG">
+                                        @include('pages.product.components.tower_north.superior_a.de')
+                                    </div>
+                                    <div class="DN GFG">
+                                        @include('pages.product.components.tower_north.superior_a.dn')
+                                    </div>
+                                    <div class="DS GFG">
+                                        @include('pages.product.components.tower_north.superior_a.ds')
+                                    </div>
+                                    <div class="DW GFG">
+                                        @include('pages.product.components.tower_north.superior_a.dw')
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <input type="text" name="seat" hidden>
+                                    <button type="submit" class="btn btn-outline-dark mt-2 book-bus-btn">
+                                        {{ trans('global.products.product_select') }}
+                                    </button>
+                                </div>
+                            </div>
+                        @elseif($room == 'Room B')
+                        @else
+                        @endif
+                    @endif
+                @elseif($locations->build_type == 'Tower West')
+                    @if($locations->category == 'Luxury')
+                        @if($room == 'Room A')
+                            <div class="container">
+                                <div id="container-seats">
+                                    <div class="DE GFG">
+                                        @include('pages.product.components.tower_west.luxury_a.de')
+                                    </div>
+                                    <div class="DN GFG">
+                                        @include('pages.product.components.tower_west.luxury_a.dn')
+                                    </div>
+                                    <div class="DS GFG">
+                                        @include('pages.product.components.tower_west.luxury_a.ds')
+                                    </div>
+                                    <div class="DW GFG">
+                                        @include('pages.product.components.tower_west.luxury_a.dw')
+                                    </div>
+                                </div>
+                                  <div class="text-center">
+                                    <input type="text" name="seat" hidden>
+                                    <button type="submit" class="btn btn-outline-dark mt-2 book-bus-btn">{{ trans('global.products.product_select') }}</button>
+                                </div>
+                            </div>
+                        @elseif($room == 'Room B')
+                        @else
+                        @endif
+                    @elseif($locations->category == 'Premium')
+                        @if($room == 'Room A')
+                            <div class="container">
+                                <div class="DE GFG">
+                                    @include('pages.product.components.tower_west.premium_a.de')
+                                </div>
+                                <div class="DN GFG">
+                                    @include('pages.product.components.tower_west.premium_a.dn')
+                                </div>
+                                <div class="DS GFG">
+                                    @include('pages.product.components.tower_west.premium_a.ds')
+                                </div>
+                                <div class="DW GFG">
+                                    @include('pages.product.components.tower_west.premium_a.dw')
+                                </div>
+                                <div class="text-center">
+                                    <input type="text" name="seat" hidden>
+                                    <button type="submit" class="btn btn-outline-dark mt-2 book-bus-btn">
+                                        {{ trans('global.products.product_select') }}
+                                    </button>
+                                </div>
+                            </div>
+                        @elseif($room == 'Room B')
+                        @else
+                        @endif
+                    @else
+                        @if($room == 'Room A')
+                            <div class="container">
+                                <div class="DE GFG">
+                                    @include('pages.product.components.tower_west.superior_a.de')
+                                </div>
+                                <div class="DN GFG">
+                                    @include('pages.product.components.tower_west.superior_a.dn')
+                                </div>
+                                <div class="DS GFG">
+                                    @include('pages.product.components.tower_west.superior_a.ds')
+                                </div>
+                                <div class="DW GFG">
+                                    @include('pages.product.components.tower_west.superior_a.dw')
+                                </div>
+                                <div class="text-center">
+                                    <input type="text" name="seat" hidden>
+                                    <button type="submit" class="btn btn-outline-dark mt-2 book-bus-btn">
+                                        {{ trans('global.products.product_select') }}
+                                    </button>
+                                </div>
+                            </div>
+                        @elseif($room == 'Room B')
+                        @else
+                        @endif
+                    @endif
+                @else
+                    @if($locations->category == 'Luxury')
+                        @if($room == 'Room A')
+                            <div class="container">
+                                <div id="container-seats">
+                                    <div class="DE GFG">
+                                        @include('pages.product.components.tower_south.luxury_a.de')
+                                    </div>
+                                    <div class="DN GFG">
+                                        @include('pages.product.components.tower_south.luxury_a.dn')
+                                    </div>
+                                    <div class="DS GFG">
+                                        @include('pages.product.components.tower_south.luxury_a.ds')
+                                    </div>
+                                    <div class="DW GFG">
+                                        @include('pages.product.components.tower_south.luxury_a.dw')
+                                    </div>
+                                </div>
+                                  <div class="text-center">
+                                    <input type="text" name="seat" hidden>
+                                    <button type="submit" class="btn btn-outline-dark mt-2 book-bus-btn">{{ trans('global.products.product_select') }}</button>
+                                </div>
+                            </div>
+                        @elseif($room == 'Room B')
+                        @else
+                        @endif
+                    @elseif($locations->category == 'Premium')
+                        @if($room == 'Room A')
+                            <div class="container">
+                                <div id="container-seats">
+                                    <div class="DE GFG">
+                                        @include('pages.product.components.tower_south.premium_a.de')
+                                    </div>
+                                    <div class="DN GFG">
+                                        @include('pages.product.components.tower_south.premium_a.dn')
+                                    </div>
+                                    <div class="DS GFG">
+                                        @include('pages.product.components.tower_south.premium_a.ds')
+                                    </div>
+                                    <div class="DW GFG">
+                                        @include('pages.product.components.tower_south.premium_a.dw')
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <input type="text" name="seat" hidden>
+                                    <button type="submit" class="btn btn-outline-dark mt-2 book-bus-btn">
+                                        {{ trans('global.products.product_select') }}
+                                    </button>
+                                </div>
+                            </div>
+                        @elseif($room == 'Room B')
+                        @else
+                        @endif
+                    @else
+                        @if($room == 'Room A')
+                            <div class="container">
+                                <div id="container-seats">
+                                    <div class="DE GFG">
+                                        @include('pages.product.components.tower_south.superior_a.de')
+                                    </div>
+                                    <div class="DN GFG">
+                                        @include('pages.product.components.tower_south.superior_a.dn')
+                                    </div>
+                                    <div class="DS GFG">
+                                        @include('pages.product.components.tower_south.superior_a.ds')
+                                    </div>
+                                    <div class="DW GFG">
+                                        @include('pages.product.components.tower_south.superior_a.dw')
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <input type="text" name="seat" hidden>
+                                    <button type="submit" class="btn btn-outline-dark mt-2 book-bus-btn">
+                                        {{ trans('global.products.product_select') }}
+                                    </button>
+                                </div>
+                            </div>
+                        @elseif($room == 'Room B')
+                        @else
+                        @endif
+                    @endif
+                @endif
+            @endif
         </form>
     </div>
 
@@ -182,68 +449,8 @@
 
 @section('scripts')
     @parent
-    <script>
-        (function($) {
-            //reset all lots
-            function reset() {
-                $('.seat-wrapper .seat').removeClass('selected');
-                $('.seat-wrapper .seat').parent().removeClass('seat-condition disabled');
-                $('.selected-seat-details').html('');
-            }
-
-            //click on lot
-            $('.seat-wrapper .seat').on('click', function() {
-                var rooms = $('select[name="rooms"]').val();
-                var sections = $('select[name="sections"]').val();
-
-                if (rooms && sections) {
-                    selectLot();
-                } else {
-                    $(this).removeClass('selected');
-                    notify('error', "@lang('Please select room and section before select any lot')")
-                }
-            });
-
-            //select and booked seat
-            function selectLot() {
-                let selectedSeats = $('.seat.selected');
-                let seatDetails = ``;
-                let currency = 'RM';
-                let subtotal = 0;
-
-                let seats = '';
-                if (selectedSeats.length > 0) {
-                    $('.booked-seat-details').removeClass('d-none');
-                    $.each(selectedSeats, function(i, value) {
-                        seats += $(value).data('seat') + ',';
-                        seatDetails += `<span class="list-group-item d-flex justify-content-between">${$(value).data('seat')}<span>${price} ${currency}</span></span>`;
-                        subtotal = subtotal + parseFloat(price);
-                    });
-
-                    $('input[name=seats]').val(seats);
-                    $('.selected-seat-details').html(seatDetails);
-                    $('.selected-seat-details').append(`<span class="list-group-item d-flex justify-content-between">@lang('Sub total')<span>${subtotal} ${currency}</span></span>`);
-                } else {
-                    $('.selected-seat-details').html('');
-                    $('.booked-seat-details').addClass('d-none');
-                }
-            }
-
-            //on change rooms and sections show available lots
-            $(document).on('change', 'select[name="rooms"], select[name="sections"]', function(e) {
-                showBookedSeat();
-            });
-
-            //booked seat
-            function showBookedSeat() {
-                reset();
-                var roomId = $('select[name="rooms"]').find("option:selected").val();
-                var sectionId = $('select[name="sections"]').find("option:selected").val();
-            }
-
-        })(jQuery);
-    </script>
-
+{{--     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> --}}
+    <script type="text/javascript" src="{{ mix('/js/pages/booking.js') }}"></script>
     <script>
         //booking form submit
         $('#bookingForm').on('submit', function(e) {
@@ -270,6 +477,53 @@
             }
         });
 
-        $(`.seat-wrapper .seat[data-seat="${val}"]`).parent().addClass('seat-condition selected disabled');
+        $(document).ready(function() {
+            $("select").on('change', function() {
+                $(this).find("option:selected").each(function() {
+                    var geeks = $(this).attr("value");
+                    if (geeks) {
+                        $(".GFG").not("." + geeks).hide();
+                        $("." + geeks).show();
+                    } else {
+                        $(".GFG").hide();
+                    }
+                });
+            }).change();
+        });
+
+        // update text area
+        $(document).ready(displayCheckbox);
+        function displayCheckbox() {
+            var checkboxes = $("input[type=checkbox]");
+            var results = $("#results");
+            var prices = $("#prices");
+
+            $.each(checkboxes, function() {
+                $(this).change(printChecked);
+                $(this).change(printPrice);
+            })
+
+            function printChecked() {
+                var checkedValues = [];
+                checkboxes.each(function() {
+                    if($(this).is(':checked')) {
+                        checkedValues.push($(this).attr('value'));
+                    }
+                });
+                console.log(results);
+                results.text(checkedValues);
+            }
+
+            function printPrice() {
+                var checkedIds = [];
+                checkboxes.each(function() {
+                    if($(this).is(':checked')) {
+                        checkedIds.push($(this).attr('id'));
+                    }
+                });
+                console.log(results);
+                prices.text(checkedIds);
+            }
+        }
     </script>
 @endsection

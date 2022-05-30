@@ -104,11 +104,13 @@ class ProductOrderController extends Controller
         $bookLocation->product_type = $request->property_name;
         $bookLocation->build_type = $request->building_name;
         $bookLocation->level = $request->level_name;
+        $bookLocation->category = $request->name;
         $bookLocation->save();
 
         session(['bookLocation' => $bookLocation]);
 
-        return redirect()->route('admin.new-order.index');
+        return redirect()->route('admin.product-booking.index');
+        // return view('pages.product.booking-lot', compact('bookLocation'));
     }
 
     public function addOns(Request $request)

@@ -20,27 +20,26 @@ use Alert;
 
 class ProductBookingController extends Controller
 {
-    public function index(Request $request, $category, $childCategory, $childCategory2, Product $product)
+    public function index(Request $request)
     {
         $locations = session('bookLocation');
-
-        $product->load('categories.parentCategory');
+        // $product->load('categories.parentCategory');
         $rooms = Room::pluck('name', 'id')->prepend(trans('Please select room'), '');
         $sections = BookingSection::pluck('section', 'id')->prepend(trans('Please select section'), '');
 
-        session(['products' => $product]);
+        // session(['products' => $product]);
 
-        $trip = Product::with(['bookingSection', 'productBooked'])
-            ->where('id', $product->id)
-            ->firstOrFail();
+        // $trip = Product::with(['bookingSection', 'productBooked'])
+        //     ->where('id', $product->id)
+        //     ->firstOrFail();
 
-        $lotLayout = new LotLayout($trip);
+        // $lotLayout = new LotLayout($trip);
 
-        return view('pages.product.booking-lot', compact('product', 'rooms', 'sections', 'locations', 'trip', 'lotLayout'));
+        return view('pages.product.booking-lot', compact('rooms', 'sections', 'locations'));
     }
 
-    // save selected location
-    public function store(Request $request, $category, $childCategory, $childCategory2, Product $product)
+    // save booking
+    public function store(Request $request)
     {
         $products = session('products');
         $locations = session('bookLocation');
@@ -48,11 +47,11 @@ class ProductBookingController extends Controller
         $booking = null;
         $booking = new ProductBooking;
         $booking->seats = $request->seats;
-        $booking->product_id = $products->id;
+        // $booking->product_id = $products->id;
         $booking->book_locations_id = $locations->id;
         $booking->save();
 
-        return redirect()->route('admin.customer-details.index', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]);
+        return redirect()->route('admin.customer-details.index');
     }
 
     // save booking lot
@@ -78,7 +77,7 @@ class ProductBookingController extends Controller
         session()->put('pnr_number',$pnr_number);
     }
 
-    public function reviewOrder(Request $request, $category, $childCategory, $childCategory2, Product $product)
+    public function reviewOrder(Request $request)
     {
         $customer = session('customer');
         $locations = session('bookLocation');
@@ -115,11 +114,10 @@ class ProductBookingController extends Controller
                 $cust_details['cor_address'] = $concat_corAddr;
             }
 
-        $product->load('categories.parentCategory');
-        session(['products' => $product]);
+        // $product->load('categories.parentCategory');
+        // session(['products' => $product]);
 
-        return view('pages.product.booking-detail', compact(
-            'product', 'customer', 'cust_details', 'corAddr', 'locations'
+        return view('pages.product.booking-detail', compact('customer', 'cust_details', 'corAddr', 'locations'
         ));
     }
 

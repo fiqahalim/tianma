@@ -12,7 +12,7 @@
     </nav>
 
     <div class="container-fluid">
-        <form method="POST" action="{{ route("admin.customer-details.store", [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}" enctype="multipart/form-data" onsubmit="return validateForm()" name="myForm" id="myForm" novalidate>
+        <form method="POST" action="{{ route("admin.customer-details.store") }}" enctype="multipart/form-data" onsubmit="return validateForm()" name="myForm" id="myForm" novalidate>
             @csrf
 
             <div class="accordion" id="accordionExample">

@@ -162,22 +162,22 @@ Route::group(['middleware' => 'auth'], function() {
 
             // New Order
             Route::resource('new-order', '\App\Http\Controllers\Admin\ProductOrderController');
-            Route::get('/{category:name}/{childCategory:name?}/{childCategory2?}', [\App\Http\Controllers\Admin\ProductOrderController::class, 'category'])->name('category');
-            Route::get('/{category}/{childCategory}/{childCategory2}/{product}', [\App\Http\Controllers\Admin\ProductOrderController::class, 'productCategory'])->name('product');
+            Route::get('/new-order/category', [\App\Http\Controllers\Admin\ProductOrderController::class, 'category'])->name('category');
+            Route::get('/new-order/product', [\App\Http\Controllers\Admin\ProductOrderController::class, 'productCategory'])->name('product');
 
             // Customer Details
-            Route::resource('/{category}/{childCategory}/{childCategory2}/{product}/customer-details', '\App\Http\Controllers\Admin\CustomerDetailsController');
+            Route::resource('/customer-details', '\App\Http\Controllers\Admin\CustomerDetailsController');
 
             // Booking
-            Route::resource('/{category}/{childCategory}/{childCategory2}/{product}/product-booking', '\App\Http\Controllers\Admin\ProductBookingController');
-            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/review-order', [\App\Http\Controllers\Admin\ProductBookingController::class, 'reviewOrder'])->name('reviewOrder');
+            Route::resource('/product-booking', '\App\Http\Controllers\Admin\ProductBookingController');
+            Route::match(['get', 'post'], '/review-order', [\App\Http\Controllers\Admin\ProductBookingController::class, 'reviewOrder'])->name('reviewOrder');
 
             // Order Summary
-            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/order-details/index', [\App\Http\Controllers\Admin\OrderConfirmationController::class, 'orderPage'])->name('order.details.index');
-            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/order-details/store', [\App\Http\Controllers\Admin\OrderConfirmationController::class, 'store'])->name('order.details.store');
+            Route::match(['get', 'post'], '/order-details/index', [\App\Http\Controllers\Admin\OrderConfirmationController::class, 'orderPage'])->name('order.details.index');
+            Route::match(['get', 'post'], '/order-details/store', [\App\Http\Controllers\Admin\OrderConfirmationController::class, 'store'])->name('order.details.store');
 
             // Installment Calculator
-            Route::resource('/{category}/{childCategory}/{childCategory2}/{product}/installment', '\App\Http\Controllers\Admin\InstallmentController');
+            Route::resource('/installment', '\App\Http\Controllers\Admin\InstallmentController');
 
             // Carts
             Route::get('cart', [\App\Http\Controllers\Admin\CartController::class, 'cartList'])->name('cart.list');
@@ -187,10 +187,10 @@ Route::group(['middleware' => 'auth'], function() {
             Route::post('clear', [\App\Http\Controllers\Admin\CartController::class, 'clearAllCart'])->name('cart.clear');
 
             // addons page
-            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/addons', [\App\Http\Controllers\Admin\ProductOrderController::class, 'addOns'])->name('addons');
+            Route::match(['get', 'post'], '/addons', [\App\Http\Controllers\Admin\ProductOrderController::class, 'addOns'])->name('addons');
 
             // Pay Later
-            Route::match(['get', 'post'], '/{category}/{childCategory}/{childCategory2}/{product}/order-details', [\App\Http\Controllers\Admin\InstallmentController::class, 'payLater'])->name('order.payLater');
+            Route::match(['get', 'post'], '/order-details/pay-later', [\App\Http\Controllers\Admin\InstallmentController::class, 'payLater'])->name('order.payLater');
 
         });
 

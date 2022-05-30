@@ -18,26 +18,26 @@ use Alert;
 
 class CustomerDetailsController extends Controller
 {
-    public function index($category, $childCategory, $childCategory2, Product $product)
+    public function index()
     {
         $users = User::where('parent_id')
             ->with('childUsers')
             ->get();
 
-        $product->load('categories.parentCategory');
-        session(['products' => $product]);
+        // $product->load('categories.parentCategory');
+        // session(['products' => $product]);
 
-        return view('pages.customer.customer-detail', compact('product', 'users'));
+        return view('pages.customer.customer-detail', compact('users'));
     }
 
-    public function store(Request $request, $category, $childCategory, $childCategory2, Product $product)
+    public function store(Request $request)
     {
         $users = User::where('parent_id')
             ->with('childUsers')
             ->get();
 
-        $product->load('categories.parentCategory');
-        session(['products' => $product]);
+        // $product->load('categories.parentCategory');
+        // session(['products' => $product]);
 
         $validated = $request->validate([
             'full_name' => 'required',
@@ -115,7 +115,7 @@ class CustomerDetailsController extends Controller
 
         session(['customer' => $customer]);
 
-        return redirect()->route('admin.reviewOrder', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]);
+        return redirect()->route('admin.reviewOrder');
     }
 
     public function searchCustomer(Request $request, $category, $childCategory, $childCategory2, Product $product)

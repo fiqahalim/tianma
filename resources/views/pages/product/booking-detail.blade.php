@@ -11,9 +11,6 @@
             <li class="breadcrumb-item">
                 {{ trans('global.products_view') }}
             </li>
-            <li class="breadcrumb-item">
-                {{ $product->product_name }}
-            </li>
             <li aria-current="page" class="breadcrumb-item active">
                 {{ trans('global.bookingDetails') }}
             </li>
@@ -39,9 +36,9 @@
                 <div class="card">
                     <h4 class="mt-5 text-center">Review Order</h4>
                     @if($customer->mode == 'Installment')
-                    <form method="POST" action="{{ route('admin.installment.store', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}" enctype="multipart/form-data" id="review-order">
+                    <form method="POST" action="{{ route('admin.installment.store') }}" enctype="multipart/form-data" id="review-order">
                     @else
-                    <form method="POST" action="{{ route('admin.order.details.store', [$product->categories->first()->parentCategory->name, $product->categories->first()->parentCategory->name, $product->categories->first()->name, $product]) }}" enctype="multipart/form-data" id="review-order">
+                    <form method="POST" action="{{ route('admin.order.details.store') }}" enctype="multipart/form-data" id="review-order">
                     @endif
                     @csrf
                         <div class="card-body">
@@ -52,7 +49,7 @@
                             @include('pages.product.includes.intended-info')
 
                             {{-- Product Info --}}
-                            @include('pages.product.includes.product-info')
+                            {{-- @include('pages.product.includes.product-info') --}}
 
                             {{-- Reservation Information --}}
                             @include('pages.product.includes.reservation-info')

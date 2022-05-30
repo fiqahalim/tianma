@@ -39,7 +39,6 @@ class ProductsController extends Controller
         abort_if(Gate::denies('product_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $categories = ProductCategory::with('parentCategory')
-            ->whereHas('parentCategory')
             ->get();
 
         $tags = ProductTag::all()->pluck('name', 'id');
