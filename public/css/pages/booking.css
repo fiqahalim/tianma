@@ -232,6 +232,14 @@ input[type=checkbox]:checked:before {
     font-size: 15px;
 }
 
+input[type=checkbox]:checked:disabled:before{
+  background: #fa1b1b;
+}
+input[type=checkbox]:checked:disabled:hover::before{
+  background: #fa1b1b;
+  border: 1px solid #fa1b1b;
+}
+
 table
 {
   text-align:center;
