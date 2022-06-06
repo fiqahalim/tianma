@@ -408,15 +408,7 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label class="required">Lot ID Number</label>
-                        <select class="form-control select2 {{ $errors->has('lotIDs') ? 'is-invalid' : '' }}" name="lot_id" id="lot_id">
-                            @foreach($lotIDs as $id => $data)
-                            @php
-                                $lot = json_encode($data, true);
-                                $items = str_replace('"','', $lot);
-                            @endphp
-                                <option value="{{ $id }}" {{ old('lot_id') == $id ? 'selected' : '' }}>{{ $items }}</option>
-                            @endforeach
-                        </select>
+                        <input class="form-control" type="text" name="" value="{{ json_encode($decease_person->lotID->seats ?? '') }}" disabled>
                     </div>
                 </div>
 

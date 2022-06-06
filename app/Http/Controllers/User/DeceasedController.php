@@ -37,9 +37,9 @@ class DeceasedController extends Controller
 
     public function edit(Decease $decease_person)
     {
-        $lotIDs = ProductBooking::pluck('seats', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $decease_person->load('lotID');
 
-        return view('pages.customer.deceased.edit', compact('decease_person', 'lotIDs'));
+        return view('pages.customer.deceased.edit', compact('decease_person'));
     }
 
     public function show(Decease $decease_person)
