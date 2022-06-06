@@ -526,4 +526,21 @@
             }
         }
     </script>
+    <script>
+        // checkbox color changed
+        $(function() {
+            // var reserved = {!! json_encode($reserveLots->toArray()) !!};
+            var reserved = ["DS-09-008", "SE-09-298", "DE-09-098", "SE-09-178"];
+            console.log(reserved);
+            var seats = document.getElementsByClassName('seat');
+            for (var i = 0; i < seats.length; i++) {
+                reserved.map(function(v) {
+                    if (seats[i].value === v) {
+                        seats[i].setAttribute("disabled", "true");
+                        seats[i].setAttribute("checked", "true");
+                    }
+                });
+            }
+        });
+    </script>
 @endsection
