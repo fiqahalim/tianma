@@ -24,7 +24,7 @@
                     </a>
                 </li>
                 <li class="c-sidebar-nav-item">
-                    <a href="{{ route("admin.decease-people.index") }}" class="c-sidebar-nav-link">
+                    <a href="{{ route("user.decease-people.index") }}" class="c-sidebar-nav-link">
                         Deceased Person
                     </a>
                 </li>

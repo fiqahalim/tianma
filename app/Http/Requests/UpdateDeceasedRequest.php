@@ -9,21 +9,11 @@ use Illuminate\Http\Response;
 
 class UpdateDeceasedRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
+    // public function authorize()
+    // {
+    //     return true;
+    // }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
         return [
@@ -34,7 +24,7 @@ class UpdateDeceasedRequest extends FormRequest
             'decease_id_number' => [
                 'string',
                 'required',
-                'unique:deceased_infos',
+                // 'unique:deceased_infos,decease_id_number,' . request()->route('decease')->id,
             ],
             'decease_chinese_name' => [
                 'string',
@@ -179,6 +169,9 @@ class UpdateDeceasedRequest extends FormRequest
             'item_elements' => [
                 'string',
                 'nullable',
+            ],
+            'document_file' => [
+                'array',
             ],
         ];
     }

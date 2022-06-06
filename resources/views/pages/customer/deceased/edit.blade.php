@@ -15,7 +15,7 @@
         </div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route("admin.decease-people.update", [$decease_person->id]) }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route("user.decease-people.update", [$decease_person->id]) }}" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
 
@@ -421,7 +421,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="required" for="document_file">{{ trans('cruds.myDocument.fields.document_file') }}</label>
+                    <label for="document_file">{{ trans('cruds.myDocument.fields.document_file') }}</label>
                     <div class="needsclick dropzone {{ $errors->has('document_file') ? 'is-invalid' : '' }}" id="document_file-dropzone">
                     </div>
                     @if($errors->has('document_file'))
@@ -434,7 +434,7 @@
 
                 {{-- save --}}
                 <div class="form-group">
-                    <a class="btn btn-default" href="{{ route('admin.decease-people.index') }}">
+                    <a class="btn btn-default" href="{{ route('user.decease-people.index') }}">
                         {{ trans('global.back_to_list') }}
                     </a>
                     <button class="btn btn-danger" type="submit">
@@ -449,58 +449,56 @@
 @section('scripts')
 <script>
     var uploadedDocumentFileMap = {}
-Dropzone.options.documentFileDropzone = {
-    url: '{{ route('admin.decease-people.storeMedia') }}',
-    maxFilesize: 15, // MB
-    addRemoveLinks: true,
-    headers: {
-      'X-CSRF-TOKEN': "{{ csrf_token() }}"
-    },
-    params: {
-      size: 15
-    },
-    success: function (file, response) {
-      $('form').append('<input type="hidden" name="document_file[]" value="' + response.name + '">')
-      uploadedDocumentFileMap[file.name] = response.name
-    },
-    removedfile: function (file) {
-      file.previewElement.remove()
-      var name = ''
-      if (typeof file.file_name !== 'undefined') {
-        name = file.file_name
-      } else {
-        name = uploadedDocumentFileMap[file.name]
-      }
-      $('form').find('input[name="document_file[]"][value="' + name + '"]').remove()
-    },
-    init: function () {
-@if(isset($decease) && $decease->document_file)
-          var files =
-            {!! json_encode($decease->document_file) !!}
-              for (var i in files) {
-              var file = files[i]
-              this.options.addedfile.call(this, file)
-              file.previewElement.classList.add('dz-complete')
-              $('form').append('<input type="hidden" name="document_file[]" value="' + file.file_name + '">')
+    Dropzone.options.documentFileDropzone = {
+        url: '{{ route('user.decease-people.storeMedia') }}',
+        maxFilesize: 15, // MB
+        addRemoveLinks: true,
+        headers: {
+            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+        },
+        params: {
+            size: 15
+        },
+        success: function (file, response) {
+          $('form').append('<input type="hidden" name="document_file[]" value="' + response.name + '">')
+          uploadedDocumentFileMap[file.name] = response.name
+        },
+        removedfile: function (file) {
+            file.previewElement.remove()
+            var name = ''
+            if (typeof file.file_name !== 'undefined') {
+                name = file.file_name
+            } else {
+                name = uploadedDocumentFileMap[file.name]
             }
-@endif
-    },
-     error: function (file, response) {
-         if ($.type(response) === 'string') {
-             var message = response //dropzone sends it's own error messages in string
-         } else {
-             var message = response.errors.file
-         }
-         file.previewElement.classList.add('dz-error')
-         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-         _results = []
-         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-             node = _ref[_i]
-             _results.push(node.textContent = message)
-         }
-
-         return _results
-     }
-}
+            $('form').find('input[name="document_file[]"][value="' + name + '"]').remove()
+        },
+        init: function () {
+            @if(isset($decease) && $decease->document_file)
+            var files = {!! json_encode($decease->document_file) !!}
+            for (var i in files) {
+                var file = files[i]
+                this.options.addedfile.call(this, file)
+                file.previewElement.classList.add('dz-complete')
+                $('form').append('<input type="hidden" name="document_file[]" value="' + file.file_name + '">')
+            }
+            @endif
+        },
+        error: function (file, response) {
+            if ($.type(response) === 'string') {
+                var message = response //dropzone sends it's own error messages in string
+            } else {
+                var message = response.errors.file
+            }
+            file.previewElement.classList.add('dz-error')
+            _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+            _results = []
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                node = _ref[_i]
+                _results.push(node.textContent = message)
+            }
+            return _results
+        }
+    }
 </script>
 @endsection
