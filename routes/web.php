@@ -207,6 +207,9 @@ Route::group(['middleware' => 'auth'], function() {
 
             // Deceased Information
             Route::resource('decease-people', '\App\Http\Controllers\Admin\DeceaseController');
+            Route::delete('decease-people/destroy', '\App\Http\Controllers\Admin\DeceaseController@massDestroy')->name('decease-people.massDestroy');
+            Route::post('decease-people/media', [\App\Http\Controllers\Admin\DeceaseController::class, 'storeMedia'])->name('decease-people.storeMedia');
+            Route::post('decease-people/ckmedia', [\App\Http\Controllers\Admin\DeceaseController::class, 'storeCKEditorImages'])->name('decease-people.storeCKEditorImages');
         });
 
         /** REPORT MANAGEMENT **/
@@ -271,6 +274,10 @@ Route::group(['middleware' => 'auth'], function() {
         // My Customers
         Route::get('/my-customers', [\App\Http\Controllers\User\MembersController::class, 'myCustomers'])->name('myCustomers');
 
+        // Deceased Information
+        Route::resource('decease-people', '\App\Http\Controllers\User\DeceasedController');
+        Route::post('decease-people/media', [\App\Http\Controllers\User\DeceasedController::class, 'storeMedia'])->name('decease-people.storeMedia');
+        Route::post('decease-people/ckmedia', [\App\Http\Controllers\User\DeceasedController::class, 'storeCKEditorImages'])->name('decease-people.storeCKEditorImages');
 
         // My Orders
         Route::resource('/my-orders', '\App\Http\Controllers\User\OrderDetailsController');

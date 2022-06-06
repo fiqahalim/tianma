@@ -3,7 +3,7 @@
 @section('content')
 <div class="content">
     <div class="row">
-        <div class="col-xl-4 col-md-6 mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        <div class="col-xl-4 col-md-6 mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
@@ -49,7 +49,7 @@
             </div>
         </div>
 
-        <div class="col-xl-4 col-md-6 mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-info shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
@@ -65,6 +65,31 @@
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300">
+                            </i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <a href="{{ route('user.my-orders.index') }}">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                    Pay Later's Order
+                                </div>
+                                @foreach($allOrders as $key => $payLater)
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                        <span id="counter" style="color:blue;font-weight:bold"></span>
+                                    </div>
+                                @endforeach
+                            </a>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clock fa-2x text-gray-300">
                             </i>
                         </div>
                     </div>
@@ -143,7 +168,6 @@
                                 @endforeach
                             </tbody>
                         </table>
-
                     </div>
                 </div>
             </div>
@@ -153,32 +177,55 @@
 @endsection
 
 @section('scripts')
-@parent
+    @parent
+    <script>
+        $(function () {
+            let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 
-<script>
-    $(function () {
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+            $.extend(true, $.fn.dataTable.defaults, {
+                columnDefs: [{
+                    targets: 0,
+                },
+                {
+                    targets: 1,
+                    visible: false,
+                }
+                ],
+                orderCellsTop: true,
+                order: [[ 1, 'desc' ]],
+                pageLength: 10,
+            });
 
-  $.extend(true, $.fn.dataTable.defaults, {
-    columnDefs: [{
-            targets: 0,
-        },
-        {
-            targets: 1,
-            visible: false,
-        }
-    ],
-    orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
-    pageLength: 10,
-  });
-  let table = $('.datatable-Order:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
-      $($.fn.dataTable.tables(true)).DataTable()
-          .columns.adjust();
-  });
-
-})
-
-</script>
+            let table = $('.datatable-Order:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+            $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
+                $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
+            });
+        })
+    </script>
+    <script>
+        <?php
+           $dateTime = strtotime($payLater->expiry_date);
+           $getDateTime = date("F d, Y H:i:s", $dateTime);
+        ?>
+        var countDownDate = new Date("<?php echo "$getDateTime"; ?>").getTime();
+        // Update the count down every 1 second
+        var x = setInterval(function() {
+            var now = new Date().getTime();
+            // Find the distance between now an the count down date
+            var distance = countDownDate - now;
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            // Output the result in an element with id="counter"11
+            document.getElementById("counter").innerHTML = days + "Day : " + hours + "h " +
+            minutes + "m " + seconds + "s ";
+            // If the count down is over, write some text
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("counter").innerHTML = "EXPIRED";
+            }
+        }, 1000);
+    </script>
 @endsection

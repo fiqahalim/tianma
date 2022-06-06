@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -18,35 +18,35 @@ use App\Models\ProductBooking;
 use Alert;
 use Carbon\Carbon;
 
-class DeceaseController extends Controller
+class DeceasedController extends Controller
 {
     use MediaUploadingTrait;
 
     public function index()
     {
         $deceases = Decease::with(['lotID'])->get();
-        return view('admin.customers.deceased.index', compact('deceases'));
+        return view('pages.customer.deceased.index', compact('deceases'));
     }
 
     public function create()
     {
         $lotIDs = ProductBooking::pluck('seats', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.customers.deceased.create', compact('lotIDs'));
+        return view('pages.customer.deceased.create', compact('lotIDs'));
     }
 
     public function edit(Decease $decease_person)
     {
         $lotIDs = ProductBooking::pluck('seats', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.customers.deceased.edit', compact('decease_person', 'lotIDs'));
+        return view('pages.customer.deceased.edit', compact('decease_person', 'lotIDs'));
     }
 
     public function show(Decease $decease_person)
     {
         $decease_person->load('lotID');
 
-        return view('admin.customers.deceased.show', compact('decease_person'));
+        return view('pages.customer.deceased.show', compact('decease_person'));
     }
 
     public function store(StoreDeceasedRequest $request)
@@ -62,7 +62,7 @@ class DeceaseController extends Controller
         }
 
         alert()->success(__('global.create_success'))->toToast();
-        return redirect()->route('admin.decease-people.index');
+        return redirect()->route('user.decease-people.index');
     }
 
     public function update(UpdateDeceasedRequest $request, Decease $decease_person)
@@ -84,7 +84,7 @@ class DeceaseController extends Controller
         }
 
         alert()->success(__('global.update_success'))->toToast();
-        return redirect()->route('admin.decease-people.index');
+        return redirect()->route('user.decease-people.index');
     }
 
     public function destroy(Decease $decease_person)

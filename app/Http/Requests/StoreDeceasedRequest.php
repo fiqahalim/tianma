@@ -180,6 +180,9 @@ class StoreDeceasedRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'document_file' => [
+                'array',
+            ],
         ];
     }
 }

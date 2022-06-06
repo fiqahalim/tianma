@@ -3,15 +3,26 @@
 namespace App\Models;
 
 use \DateTimeInterface;
+use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Decease extends Model
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+
+class Decease extends Model implements HasMedia
 {
     use HasFactory;
+    use InteractsWithMedia;
+    use MultiTenantModelTrait;
 
     public $table = 'deceased_infos';
+
+    protected $appends = [
+        'document_file',
+    ];
 
     public const GENDER_SELECT = [
         'Female'    => 'Female',
@@ -114,5 +125,16 @@ class Decease extends Model
     public function setBirthDateAttribute($value)
     {
         $this->attributes['birth_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+    }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')->fit('crop', 50, 50);
+        $this->addMediaConversion('preview')->fit('crop', 120, 120);
+    }
+
+    public function getDocumentFileAttribute()
+    {
+        return $this->getMedia('document_file');
     }
 }
