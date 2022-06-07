@@ -54,6 +54,8 @@ class ProductBookingController extends Controller
         $booking->book_locations_id = $locations->id;
         $booking->save();
 
+        session(['reservedLot' => $booking]);
+
         return redirect()->route('admin.customer-details.index');
     }
 

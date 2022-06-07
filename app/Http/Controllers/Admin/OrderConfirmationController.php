@@ -60,7 +60,7 @@ class OrderConfirmationController extends Controller
         $order->order_date = $current = Carbon::now();
         $order->customer_id = $customer->id;
         $order->created_by = $customer->created_by;
-        // $order->product_id = $products->id;
+        $order->product_bookings_id = $reservedLot->id;
         $order->book_locations_id = $locations->id;
         $order->save();
 
