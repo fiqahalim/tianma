@@ -131,7 +131,7 @@ class UsersController extends Controller
         $getUsers = User::where('agent_code', 'like', '%' . $request->search . '%')
             ->get()
             ->map(function ($row) use ($keyword) {
-                $row->agent_code = preg_replace('/(' . $keyword . ')/i', "<b>$1</b>", $row->agent_code);
+                $row->agent_code = preg_replace('/(' . $keyword . ')/i', "<span class='highlight'>$1</span>", $row->agent_code);
                 return $row;
             });
 

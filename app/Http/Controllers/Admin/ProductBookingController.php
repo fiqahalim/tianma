@@ -27,7 +27,8 @@ class ProductBookingController extends Controller
         $rooms = Room::pluck('name', 'id')->prepend(trans('Please select room'), '');
         $sections = BookingSection::pluck('section', 'id')->prepend(trans('Please select section'), '');
 
-        $reserveLots = ProductBooking::all(['seats']);
+        $reserveLots = ProductBooking::all('seats');
+        $deceased = ProductBooking::whereNotNull('deceased_id')->with(['deceased'])->get();
 
         // session(['products' => $product]);
 
@@ -37,7 +38,7 @@ class ProductBookingController extends Controller
 
         // $lotLayout = new LotLayout($trip);
 
-        return view('pages.product.booking-lot', compact('rooms', 'sections', 'locations', 'reserveLots'));
+        return view('pages.product.booking-lot', compact('rooms', 'sections', 'locations', 'reserveLots', 'deceased'));
     }
 
     // save booking

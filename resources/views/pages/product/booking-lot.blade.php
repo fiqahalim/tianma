@@ -103,6 +103,7 @@
                 @if($locations->build_type == 'Tower East')
                     @if($locations->category == 'Luxury')
                         @if($room == 'Room A')
+                        @foreach($deceased as $key => $data)
                             <div class="container">
                                 <div id="container-seats">
                                     <div class="DE GFG">
@@ -123,6 +124,7 @@
                                     <button type="submit" class="btn btn-outline-dark mt-2 book-bus-btn">{{ trans('global.products.product_select') }}</button>
                                 </div>
                             </div>
+                        @endforeach
                         @elseif($room == 'Room B')
                         @else
                         @endif
@@ -510,7 +512,6 @@
                         checkedValues.push($(this).attr('value'));
                     }
                 });
-                console.log(results);
                 results.text(checkedValues);
             }
 
@@ -521,7 +522,6 @@
                         checkedIds.push($(this).attr('id'));
                     }
                 });
-                console.log(results);
                 prices.text(checkedIds);
             }
         }
@@ -529,7 +529,16 @@
     <script>
         // checkbox color changed
         $(function() {
-            // var reserved = {!! json_encode($reserveLots->toArray()) !!};
+            var reserveds = {!! $reserveLots !!}
+            for(let i = 0; i < reserveds.length; i++) {
+                console.log(reserveds[i]);
+            }
+
+            // var response = {data: [{users: ["hello","jiji","mimi"]}, {users: [4,5,6]}]}
+            // var users = response.data.map(o => o.users)
+            // const usersCollection = [].concat(...users)
+            // console.log(usersCollection)
+
             var reserved = ["DS-09-008", "SE-09-298", "DE-09-098", "SE-09-178"];
             console.log(reserved);
             var seats = document.getElementsByClassName('seat');
@@ -537,7 +546,7 @@
                 reserved.map(function(v) {
                     if (seats[i].value === v) {
                         seats[i].setAttribute("disabled", "true");
-                        seats[i].setAttribute("checked", "true");
+                        // seats[i].setAttribute("checked", "false");
                     }
                 });
             }
