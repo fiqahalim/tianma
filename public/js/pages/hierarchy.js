@@ -10976,6 +10976,17 @@ btn.addEventListener('click', function handleClick() {
     btn.textContent = initialText;
   }
 });
+
+function search() {
+  var textToSearch = document.getElementById("search").value;
+  var tree = document.getElementById("tree");
+  console.log(textToSearch);
+  textToSearch = textToSearch.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  var pattern = new RegExp("".concat(textToSearch), "gi");
+  tree.innerHTML = tree.textContent.replace(pattern, function (match) {
+    return "<mark>".concat(match, "</mark>");
+  });
+}
 })();
 
 /******/ })()

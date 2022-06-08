@@ -98,6 +98,10 @@ div.scroll {
     width: auto;
 }
 
+.highlight {
+    background-color: yellow;
+}
+
 @media only screen and (max-width: 600px) {
     .tree, .tree ul {
         display: flex;

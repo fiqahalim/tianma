@@ -240,10 +240,10 @@ input[type=checkbox]:checked:before {
     font-size: 15px;
 }
 
-input[type=checkbox]:checked:disabled:before{
+input[type=checkbox]:disabled:before{
   background: #fa1b1b;
 }
-input[type=checkbox]:checked:disabled:hover::before{
+input[type=checkbox]:disabled:hover::before{
   background: #fa1b1b;
   border: 1px solid #fa1b1b;
 }

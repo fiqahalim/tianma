@@ -28,7 +28,11 @@ class ProductBookingController extends Controller
         $sections = BookingSection::pluck('section', 'id')->prepend(trans('Please select section'), '');
 
         $reserveLots = ProductBooking::all('seats');
-        $deceased = ProductBooking::whereNotNull('deceased_id')->with(['deceased'])->get();
+
+        $deceased = ProductBooking::join('orders', 'orders.product_bookings_id', '=', 'product_bookings.id')
+            ->whereMonth('orders.expiry_date', '<=', Carbon::now()->month)
+            ->whereYear('orders.expiry_date', '<=', Carbon::now()->year)
+            ->get(['orders.expiry_date']);
 
         // session(['products' => $product]);
 

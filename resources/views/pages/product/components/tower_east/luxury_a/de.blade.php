@@ -1,7 +1,7 @@
 <table id="seatsBlock" class="row-seat">
     <tr>
         <td>Level 9</td>
-        <td><span title="{{ $data->deceased->decease_name }}"><input type="checkbox" class="seat" name="seats[]" value="SE-09-178" id="Total Cost: RM15800, Promotion Price: RM13800, Maintenance Price: RM2000"></span></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SE-09-178" id="Total Cost: RM15800, Promotion Price: RM13800, Maintenance Price: RM2000"></td>
         <td><input type="checkbox" class="seat" name="seats[]" value="SE-09-168" id="Total Cost: RM15800, Promotion Price: RM13800, Maintenance Price: RM2000"></td>
         <td><input type="checkbox" class="seat" name="seats[]" value="SE-09-138" id="Total Cost: RM15800, Promotion Price: RM13800, Maintenance Price: RM2000"></td>
         <td><input type="checkbox" class="seat" name="seats[]" value="SE-09-128" id="Total Cost: RM15800, Promotion Price: RM13800, Maintenance Price: RM2000"></td>
