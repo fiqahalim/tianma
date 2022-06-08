@@ -62,3 +62,14 @@ btn.addEventListener('click', function handleClick() {
     btn.textContent = initialText;
   }
 });
+
+function search() {
+    let textToSearch = document.getElementById("search").value;
+    let tree = document.getElementById("tree");
+
+    console.log(textToSearch);
+    textToSearch = textToSearch.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+    let pattern = new RegExp(`${textToSearch}`,"gi");
+
+    tree.innerHTML = tree.textContent.replace(pattern, match => `<mark>${match}</mark>`);
+}

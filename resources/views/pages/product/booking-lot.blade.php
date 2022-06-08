@@ -103,7 +103,6 @@
                 @if($locations->build_type == 'Tower East')
                     @if($locations->category == 'Luxury')
                         @if($room == 'Room A')
-                        @foreach($deceased as $key => $data)
                             <div class="container">
                                 <div id="container-seats">
                                     <div class="DE GFG">
@@ -119,12 +118,11 @@
                                         @include('pages.product.components.tower_east.luxury_a.dw')
                                     </div>
                                 </div>
-                                  <div class="text-center">
+                                <div class="text-center">
                                     <input type="text" name="seat" hidden>
                                     <button type="submit" class="btn btn-outline-dark mt-2 book-bus-btn">{{ trans('global.products.product_select') }}</button>
                                 </div>
                             </div>
-                        @endforeach
                         @elseif($room == 'Room B')
                         @else
                         @endif
@@ -526,27 +524,82 @@
             }
         }
     </script>
+
     <script>
         // checkbox color changed
         $(function() {
-            var reserveds = {!! $reserveLots !!}
-            for(let i = 0; i < reserveds.length; i++) {
-                console.log(reserveds[i]);
+
+            // current date time
+            function padTo2Digits(num) {
+                return num.toString().padStart(2, '0');
             }
 
-            // var response = {data: [{users: ["hello","jiji","mimi"]}, {users: [4,5,6]}]}
-            // var users = response.data.map(o => o.users)
-            // const usersCollection = [].concat(...users)
-            // console.log(usersCollection)
+            function formatDate(date) {
+                return ([
+                    date.getFullYear(),
+                    padTo2Digits(date.getMonth() + 1),
+                    padTo2Digits(date.getDate()),
+                    ].join('-') + ' ' +
+                    [
+                    padTo2Digits(date.getHours()),
+                    padTo2Digits(date.getMinutes()),
+                    padTo2Digits(date.getSeconds()),
+                    ].join(':'));
+            }
+            var currentDate = formatDate(new Date());
 
-            var reserved = ["DS-09-008", "SE-09-298", "DE-09-098", "SE-09-178"];
-            console.log(reserved);
+            let items = [];
+
+            // program to extract value as an array from an array of objects
+            function extractValue(arr, prop) {
+                // extract value from property
+                let extractedValue = arr.map(item => item[prop]);
+                return extractedValue;
+            }
+
+            function extractDate(arr, prop) {
+                let extractedDateValue = arr.map(item => item[prop]);
+                return extractedDateValue;
+            }
+
+            const objArray = {!! $reserveLots !!}
+            const expiryDate = {!! $deceased !!}
+
+            // passing an array of objects and property 'a' to extract
+            const result = extractValue(objArray, 'seats');
+            const dateResult = extractDate(expiryDate, 'expiry_date');
+
+            var flatArray = Array.prototype.concat.apply([], result);
+            var dateArray = Array.prototype.concat.apply([], dateResult);
+
+            console.log(result);
+            console.log(flatArray);
+            console.log(expiryDate);
+            console.log(dateResult);
+
+            if(dateArray < currentDate){
+                console.log("ada", dateArray,currentDate);
+            } else {
+                console.log("takde", dateArray,currentDate);
+            }
+
+            // console.log(reserveds);
+            // console.log(expiryDate);
+            // console.log(currentDate);
+
+            // var reserved = ["DS-09-008", "SE-09-298", "DE-09-098", "SE-09-178"];
+            // let results =  Array.isArray(reserved);
+            // console.log(results);
+            // console.log(reserved);
             var seats = document.getElementsByClassName('seat');
-            for (var i = 0; i < seats.length; i++) {
-                reserved.map(function(v) {
-                    if (seats[i].value === v) {
-                        seats[i].setAttribute("disabled", "true");
-                        // seats[i].setAttribute("checked", "false");
+
+            for (var j = 0; j < seats.length; j++) {
+                flatArray.map(function(v) {
+                    // console.log(v);
+                    if (seats[j].value === v) {
+                        console.log("okay", v)
+                        seats[j].setAttribute("disabled", "true");
+                        // seats[j].setAttribute("checked", "false");
                     }
                 });
             }
