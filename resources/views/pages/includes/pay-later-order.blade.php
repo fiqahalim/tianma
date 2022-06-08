@@ -100,6 +100,22 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row g-0 border-bottom">
+                            <div class="col-md-6 border-right">
+                                <div class="p-3 d-flex justify-content-center align-items-center">
+                                    <span>
+                                        Please make your payment before
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 d-flex justify-content-center align-items-center">
+                                    {{ Carbon\Carbon::parse($order->expiry_date)->format('d/M/Y g:i A') }}
+                                    <span id="counter" style="color:blue;font-weight:bold"></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -113,4 +129,33 @@
 
 @section('styles')
     <link type="text/css" rel="stylesheet" href="{{ mix('/css/pages/order.css') }}"  media="screen,projection"/>
+@endsection
+
+@section('scripts')
+    <script>
+        <?php
+           $dateTime = strtotime($order->expiry_date);
+           $getDateTime = date("F d, Y H:i:s", $dateTime);
+        ?>
+        var countDownDate = new Date("<?php echo "$getDateTime"; ?>").getTime();
+        // Update the count down every 1 second
+        var x = setInterval(function() {
+            var now = new Date().getTime();
+            // Find the distance between now an the count down date
+            var distance = countDownDate - now;
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            // Output the result in an element with id="counter"11
+            document.getElementById("counter").innerHTML = days + "Day : " + hours + "h " +
+            minutes + "m " + seconds + "s ";
+            // If the count down is over, write some text
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("counter").innerHTML = "EXPIRED";
+            }
+        }, 1000);
+    </script>
 @endsection

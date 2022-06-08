@@ -528,7 +528,6 @@
     <script>
         // checkbox color changed
         $(function() {
-
             // current date time
             function padTo2Digits(num) {
                 return num.toString().padStart(2, '0');
@@ -577,15 +576,8 @@
             console.log(expiryDate);
             console.log(dateResult);
 
-            if(dateArray < currentDate){
-                console.log("ada", dateArray,currentDate);
-            } else {
-                console.log("takde", dateArray,currentDate);
-            }
-
-            // console.log(reserveds);
-            // console.log(expiryDate);
-            // console.log(currentDate);
+            console.log(dateArray);
+            console.log(currentDate);
 
             // var reserved = ["DS-09-008", "SE-09-298", "DE-09-098", "SE-09-178"];
             // let results =  Array.isArray(reserved);
@@ -593,9 +585,16 @@
             // console.log(reserved);
             var seats = document.getElementsByClassName('seat');
 
+            // for (let p = 1; p < dateArray.length; p++) {
+            //     if (dateArray[p] <= currentDate) {
+            //         console.log("ada", dateArray[p]);
+            //     } else {
+            //         console.log("takde");
+            //     }
+            // }
+
             for (var j = 0; j < seats.length; j++) {
                 flatArray.map(function(v) {
-                    // console.log(v);
                     if (seats[j].value === v) {
                         console.log("okay", v)
                         seats[j].setAttribute("disabled", "true");
