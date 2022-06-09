@@ -410,10 +410,11 @@
                     <select class="form-control select2 {{ $errors->has('parent') ? 'is-invalid' : '' }}" name="lot_id" id="lot_id">
                         @foreach($lotIDs as $id => $data)
                         @php
-                            $lot = json_encode($data, true);
+                            $lot = json_encode($data->lotID->seats, true);
                             $items = str_replace('"','', $lot);
+                            $createdBy = $data->createdBy->agent_code;
                         @endphp
-                            <option value="{{ $id }}" {{ old('lot_id') == $id ? 'selected' : '' }}>{{ $items }}</option>
+                            <option value="{{ $id }}" {{ old('lot_id') == $id ? 'selected' : '' }}>{{ $items }} - {{ $createdBy }}</option>
                         @endforeach
                     </select>
                 </div>
