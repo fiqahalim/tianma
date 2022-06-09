@@ -14,7 +14,7 @@ class ChangeAndAllowAvatarsToNullable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('avatar')->nullable()->after('nationality');
+            $table->string('avatar')->default('avatar.png')->after('nationality');
         });
     }
 

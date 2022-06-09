@@ -258,11 +258,11 @@
                 <span class="help-block">{{ trans('cruds.user.fields.roles_helper') }}</span>
             </div>
 
-            @if(empty($user->avatar))
+            {{-- @if(empty($user->avatar)) --}}
                 <div class="form-group">
                     <input type="file" name="avatar" id="avatar">
                 </div>
-            @endif
+            {{-- @endif --}}
 
             <div class="form-group pl-2">
                 <div class="form-check {{ $errors->has('approved') ? 'is-invalid' : '' }}">

@@ -42,6 +42,8 @@ class Order extends Model
         'created_by',
         'product_id',
         'book_locations_id',
+        'payment_option',
+        'product_bookings_id'
     ];
 
     public function customer()
@@ -92,5 +94,10 @@ class Order extends Model
     public function bookLocations()
     {
         return $this->hasMany(BookLocation::class, 'id', 'book_locations_id');
+    }
+
+    public function lotID()
+    {
+        return $this->belongsTo(ProductBooking::class, 'product_bookings_id');
     }
 }

@@ -32,6 +32,8 @@ class CustomerDetailsController extends Controller
 
     public function store(Request $request)
     {
+        $reservedLot = session('reservedLot');
+
         $users = User::where('parent_id')
             ->with('childUsers')
             ->get();
@@ -91,6 +93,10 @@ class CustomerDetailsController extends Controller
                     'relationships' => $value['relationships']
                 ]);
             }
+
+            $reservedLot->update([
+                'created_by' => request('created_by'),
+            ]);
 
             // save correspondence address
             $curAddr = null;
