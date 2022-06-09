@@ -14,7 +14,7 @@ class AddAvatarNewColumnsNoDefault extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('avatar')->default(NULL)->after('nationality');
+            $table->string('avatar')->default('avatar.png')->after('nationality');
         });
     }
 

@@ -27,6 +27,7 @@ class ProductBooking extends Model
         'ticket_count',
         'product_id',
         'customer_id',
+        'created_by',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -52,6 +53,11 @@ class ProductBooking extends Model
     public function orders()
     {
         return $this->belongsTo(Order::class, 'id', 'product_bookings_id');
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 
     public function scopePending()

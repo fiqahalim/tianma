@@ -137,9 +137,14 @@ class OrdersController extends Controller
         $trans->customer_id = $order->customer->id;
         $trans->save();
 
-        $order->update($request->all());
+        // $order->update($request->all());
+        $order->update([
+            'amount' => request('amount'),
+            'payment_option' => 'PAID'
+        ]);
 
         alert()->success(__('global.update_success'))->toToast();
-        return redirect()->route('admin.orders.index');
+        // return redirect()->route('admin.orders.index');
+        return view('admin.orders.result', compact('installments', 'order'));
     }
 }

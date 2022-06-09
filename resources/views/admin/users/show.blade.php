@@ -36,8 +36,8 @@
                         {{-- <i id="menu-item" class="fas fa-plus-circle"></i> --}}
                         @include('components.hierarchy')
                     </li>
+                    {{-- {!! $getUsers !!} --}}
                 </ol>
-                {{-- {!! $getUsers !!} --}}
             </div>
         </div>
     </div>

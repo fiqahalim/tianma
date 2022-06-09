@@ -21,6 +21,7 @@ class InstallmentController extends Controller
     {
         $products = session('products');
         $customer = session('customer');
+        $reservedLot = session('reservedLot');
 
         return view('pages.installment.index', compact('customer', 'products'));
     }
@@ -39,6 +40,7 @@ class InstallmentController extends Controller
         // $products = session('products');
         $customer = session('customer');
         $locations = session('bookLocation');
+        $reservedLot = session('reservedLot');
 
         $requestData = $request->all();
 
@@ -50,7 +52,7 @@ class InstallmentController extends Controller
         $order->order_date = $current = Carbon::now();
         $order->customer_id = $customer->id;
         $order->created_by = $customer->created_by;
-        // $order->product_id = $products->id;
+        $order->product_bookings_id = $reservedLot->id;
         $order->book_locations_id = $locations->id;
         $order->save();
 
@@ -105,6 +107,7 @@ class InstallmentController extends Controller
         // $products = session('products');
         $customer = session('customer');
         $locations = session('bookLocation');
+        $reservedLot = session('reservedLot');
 
         $order = new Order;
         $order->ref_no = $this->getOrderNumber();
@@ -114,7 +117,7 @@ class InstallmentController extends Controller
         $order->order_date = $current = Carbon::now();
         $order->customer_id = $customer->id;
         $order->created_by = $customer->created_by;
-        // $order->product_id = $products->id;
+        $order->product_bookings_id = $reservedLot->id;
         $order->expiry_date = $current = Carbon::now()->addDays(4)->hour(10)->minute(00)->second(0)->toDateTimeString();
         $order->book_locations_id = $locations->id;
         $order->save();

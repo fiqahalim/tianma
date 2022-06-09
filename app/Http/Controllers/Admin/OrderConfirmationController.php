@@ -46,6 +46,7 @@ class OrderConfirmationController extends Controller
         // $products = session('products');
         $customer = session('customer');
         $locations = session('bookLocation');
+        $reservedLot = session('reservedLot');
 
         // $pv = session('products')['point_value'];
 

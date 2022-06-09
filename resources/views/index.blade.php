@@ -81,10 +81,10 @@
                                 <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
                                     Pay Later's Order
                                 </div>
-                                @foreach($allOrders as $key => $payLater)
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                        <span id="counter" style="color:blue;font-weight:bold"></span>
-                                    </div>
+                                @foreach($payLaters as $key => $payLater)
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            <span id="counter" style="color:blue;font-weight:bold"></span>
+                                        </div>
                                 @endforeach
                             </a>
                         </div>
@@ -204,7 +204,7 @@
     </script>
     <script>
         <?php
-           $dateTime = strtotime($payLater->expiry_date);
+           $dateTime = isset($payLater->expiry_date) ? strtotime($payLater->expiry_date) : null;
            $getDateTime = date("F d, Y H:i:s", $dateTime);
         ?>
         var countDownDate = new Date("<?php echo "$getDateTime"; ?>").getTime();

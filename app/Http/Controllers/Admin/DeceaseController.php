@@ -15,6 +15,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 
 use App\Models\Decease;
 use App\Models\ProductBooking;
+use App\Models\Order;
 use Alert;
 use Carbon\Carbon;
 
@@ -30,7 +31,9 @@ class DeceaseController extends Controller
 
     public function create()
     {
-        $lotIDs = ProductBooking::pluck('seats', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $lotIDs = Order::whereNotNull('product_bookings_id')
+            ->with(['lotID', 'createdBy'])
+            ->get();
 
         return view('admin.customers.deceased.create', compact('lotIDs'));
     }

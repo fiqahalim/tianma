@@ -64,10 +64,16 @@ class HomeController extends Controller
             ->whereYear('created_at', Carbon::now()->year)
             ->count();
 
+        $payLaters = Order::where([
+                ['created_by', auth()->user()->id]
+            ])
+            ->where('payment_option', '=', 'PAY LATER')
+            ->get();
+
         return view('home', compact(
             'customers', 'agents',
             'orders', 'allOrders',
-            'agentComms', 'myEarnings', 'myOrders'
+            'agentComms', 'myEarnings', 'myOrders', 'payLaters'
         ));
     }
 
