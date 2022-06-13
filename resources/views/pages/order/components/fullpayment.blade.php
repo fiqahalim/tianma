@@ -21,7 +21,7 @@
                         <div>
                             <span class="text-sm text-grey-m2 align-middle">Customer Name:</span>
                             <span class="text-600 text-110 text-blue align-middle">
-                                {{ $order->customer->full_name }}
+                                {{ isset($order->customer) ? $order->customer->full_name : '' }}
                             </span>
                         </div>
                         <div class="text-grey-m2">
@@ -30,7 +30,7 @@
                                     {{ trans('cruds.customer.fields.id_number') }}:
                                 </span>
                                 <span class="text-500 text-90 align-middle">
-                                    {{ $order->customer->id_number }}
+                                    {{ isset($order->customer) ? $order->customer->id_number : '' }}
                                 </span>
                             </div>
                             <div class="my-1">
@@ -38,11 +38,11 @@
                                     {{ trans('cruds.customer.fields.contact_person_name') }}:
                                 </span>
                                 <span class="text-500 text-90 align-middle">
-                                    {{ $order->customer->contact_person_name}}
+                                    {{ isset($order->customer) ? $order->customer->contact_person_name : '' }}
                                 </span>
                             </div>
                             <div class="my-1">
-                                <i class="fa fa-phone fa-flip-horizontal text-secondary"></i> <b class="text-600">{{ $order->customer->contact_person_no }}</b>
+                                <i class="fa fa-phone fa-flip-horizontal text-secondary"></i> <b class="text-600">{{ isset($order->customer) ? $order->customer->contact_person_no : '' }}</b>
                             </div>
                             <div class="my-1">
                                 <span class="text-sm text-grey-m2 align-middle">
@@ -64,27 +64,29 @@
 
                             <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Ref No:</span> #{{ $order->ref_no ?? '' }}</div>
 
-                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">{{ trans('cruds.order.fields.order_date') }}:</span> {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y') }}</div>
+                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">{{ trans('cruds.order.fields.order_date') }}:</span> {{ Carbon\Carbon::parse($order->created_at ?? '')->format('d/m/Y') }}</div>
 
-                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">{{ trans('cruds.order.fields.order_status') }}:</span>
-                                @if($order->order_status == 'In Progress' && $order->order_status == 'Pending')
-                                    <span class="badge badge-warning badge-pill px-25">
-                                        {{ $order->order_status ?? '' }}
-                                    </span>
-                                @elseif($order->order_status == 'Completed')
-                                    <span class="badge badge-success badge-pill px-25">
-                                        {{ $order->order_status ?? '' }}
-                                    </span>
-                                @elseif($order->order_status == 'Rejected')
-                                    <span class="badge badge-danger badge-pill px-25">
-                                        {{ $order->order_status ?? '' }}
-                                    </span>
-                                @else
-                                    <span class="badge badge-primary badge-pill px-25">
-                                        {{ $order->order_status ?? '' }}
-                                    </span>
-                                @endif
-                            </div>
+                            @if(isset($order->order_status))
+                                <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">{{ trans('cruds.order.fields.order_status') }}:</span>
+                                    @if($order->order_status == 'In Progress' && $order->order_status == 'Pending')
+                                        <span class="badge badge-warning badge-pill px-25">
+                                            {{ $order->order_status ?? '' }}
+                                        </span>
+                                    @elseif($order->order_status == 'Completed')
+                                        <span class="badge badge-success badge-pill px-25">
+                                            {{ $order->order_status ?? '' }}
+                                        </span>
+                                    @elseif($order->order_status == 'Rejected')
+                                        <span class="badge badge-danger badge-pill px-25">
+                                            {{ $order->order_status ?? '' }}
+                                        </span>
+                                    @else
+                                        <span class="badge badge-primary badge-pill px-25">
+                                            {{ $order->order_status ?? '' }}
+                                        </span>
+                                    @endif
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

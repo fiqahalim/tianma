@@ -28,6 +28,7 @@ class ProductBookingController extends Controller
         $sections = BookingSection::pluck('section', 'id')->prepend(trans('Please select section'), '');
 
         $reserveLots = ProductBooking::all('seats');
+        $available = ProductBooking::all('available');
 
         $deceased = ProductBooking::join('orders', 'orders.product_bookings_id', '=', 'product_bookings.id')
             ->whereMonth('orders.expiry_date', '<=', Carbon::now()->month)
@@ -42,7 +43,7 @@ class ProductBookingController extends Controller
 
         // $lotLayout = new LotLayout($trip);
 
-        return view('pages.product.booking-lot', compact('rooms', 'sections', 'locations', 'reserveLots', 'deceased'));
+        return view('pages.product.booking-lot', compact('rooms', 'sections', 'locations', 'reserveLots', 'deceased', 'available'));
     }
 
     // save booking
@@ -54,7 +55,12 @@ class ProductBookingController extends Controller
         $booking = null;
         $booking = new ProductBooking;
         $booking->seats = $request->seats;
-        // $booking->product_id = $products->id;
+        $booking->price = $request->prices;
+        $booking->promo = $request->promos;
+        $booking->maintenance = $request->maintenances;
+        $booking->point_value = $request->point_value;
+        $booking->selling = $request->selling;
+        $booking->available = '0';
         $booking->book_locations_id = $locations->id;
         $booking->save();
 
@@ -90,6 +96,7 @@ class ProductBookingController extends Controller
     {
         $customer = session('customer');
         $locations = session('bookLocation');
+        $reservedLot = session('reservedLot');
 
         $perAddr = array(
                 $customer->address_1,
@@ -126,7 +133,7 @@ class ProductBookingController extends Controller
         // $product->load('categories.parentCategory');
         // session(['products' => $product]);
 
-        return view('pages.product.booking-detail', compact('customer', 'cust_details', 'corAddr', 'locations'
+        return view('pages.product.booking-detail', compact('customer', 'cust_details', 'corAddr', 'locations', 'reservedLot'
         ));
     }
 

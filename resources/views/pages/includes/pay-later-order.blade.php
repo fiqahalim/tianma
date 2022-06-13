@@ -116,6 +116,71 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row g-0">
+                                <div class="col-md-6">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span class="font-weight-bold">
+                                            Product Selling Price
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span>
+                                            RM {{ $reservedLot->selling ?? '' }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row g-0">
+                                <div class="col-md-6">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span class="font-weight-bold">
+                                            Maintenance Fees
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span>
+                                            RM {{ $reservedLot->maintenance ?? '' }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row g-0">
+                                <div class="col-md-6">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span class="font-weight-bold">
+                                            Promotion Price
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span>
+                                            RM {{ $reservedLot->promo ?? '' }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row g-0">
+                                <div class="col-md-6">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span class="font-weight-bold">
+                                            Total
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 d-flex justify-content-center align-items-center">
+                                        <span class="font-weight-bold">
+                                            RM {{ $reservedLot->price ?? '' }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -124,6 +189,7 @@
 </div>
 {{session()->forget('customer')}}
 {{session()->forget('products')}}
+{{session()->forget('reservedLot')}}
 {{session()->forget('order')}}
 @endsection
 

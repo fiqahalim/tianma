@@ -27,7 +27,6 @@
     <div class="card">
         <div class="card-body">
             <div class="form-group">
-                {{-- {{ dd($transactions) }} --}}
                 <div class="page-content container" style="background: white;">
                     <div class="row">
                         <div class="col-4 text-center">
@@ -104,13 +103,16 @@
                                                     <th>Item</th>
                                                     <th>Description 1</th>
                                                     <th>Description 2</th>
-                                                    <th>Payment Mode</th>
+                                                    {{-- <th>Payment Mode</th> --}}
                                                     <th>Payment</th>
                                                     <th>Balance</th>
                                                 </tr>
                                             </thead>
                                             @php
                                                 $payments = isset($transaction->orders->customer->payments) ? $transaction->orders->customer->payments : '';
+                                                $getUnitNo = isset($transaction->orders->lotID) ? $transaction->orders->lotID->seats : '';
+                                                $unitNo = implode(" ",$getUnitNo);
+
                                                 foreach($payments as $pay) {
                                                     $payName = $pay->payment_name;
                                                     $payment_name = implode(", ", $payName);
@@ -120,14 +122,14 @@
                                                 <tr >
                                                     <td>1</td>
                                                     <td>
-                                                        {{ Str::upper($transaction->orders->products->product_name) }}
+                                                        {{ Str::upper($unitNo) }}
                                                     </td>
                                                     <td>
                                                         {{ Str::upper($transaction->customer->mode) }}
                                                     </td>
-                                                    <td>
+                                                    {{-- <td>
                                                         {{ Str::upper($payment_name ?? '') }}
-                                                    </td>
+                                                    </td> --}}
                                                     <td>
                                                         @if($transaction->amount == 0)
                                                             {{ $transaction->installments->downpayment }}

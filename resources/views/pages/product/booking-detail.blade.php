@@ -49,7 +49,7 @@
                             @include('pages.product.includes.intended-info')
 
                             {{-- Product Info --}}
-                            {{-- @include('pages.product.includes.product-info') --}}
+                            @include('pages.product.includes.product-info')
 
                             {{-- Reservation Information --}}
                             @include('pages.product.includes.reservation-info')

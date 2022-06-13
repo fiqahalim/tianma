@@ -562,36 +562,29 @@
             }
 
             const objArray = {!! $reserveLots !!}
+            const availableData = {!! $available !!}
             const expiryDate = {!! $deceased !!}
 
             // passing an array of objects and property 'a' to extract
             const result = extractValue(objArray, 'seats');
             const dateResult = extractDate(expiryDate, 'expiry_date');
+            const availResult = extractValue(availableData, 'available');
 
             var flatArray = Array.prototype.concat.apply([], result);
             var dateArray = Array.prototype.concat.apply([], dateResult);
+            // var avaArray = Array.prototype.concat.apply([], $availResult);
 
             console.log(result);
             console.log(flatArray);
             console.log(expiryDate);
             console.log(dateResult);
+            console.log(availResult);
+            // console.log(avaArray);
 
             console.log(dateArray);
             console.log(currentDate);
 
-            // var reserved = ["DS-09-008", "SE-09-298", "DE-09-098", "SE-09-178"];
-            // let results =  Array.isArray(reserved);
-            // console.log(results);
-            // console.log(reserved);
             var seats = document.getElementsByClassName('seat');
-
-            // for (let p = 1; p < dateArray.length; p++) {
-            //     if (dateArray[p] <= currentDate) {
-            //         console.log("ada", dateArray[p]);
-            //     } else {
-            //         console.log("takde");
-            //     }
-            // }
 
             for (var j = 0; j < seats.length; j++) {
                 flatArray.map(function(v) {

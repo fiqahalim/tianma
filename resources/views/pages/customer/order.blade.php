@@ -62,53 +62,53 @@
                         @endphp
                         @if ($customer->mode == 'Full Payment')
                             <div class="p-3 border-bottom">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span>
-                                    <i class="fas fa-calendar-check"></i>
-                                    {{ Carbon\Carbon::parse($order->created_at)->format('d/M/Y') }}
-                                </span>
-                                <span>
-                                    <i class="fa fa-clock-o text-muted">
-                                    </i>
-                                    {{ Carbon\Carbon::parse($order->created_at)->format('H:i:s') }}
-                                </span>
-                            </div>
-                            <div class="mt-3">
-                                <h6 class="mb-0">
-                                    Order Reference Number: #{{ $order->ref_no }}
-                                </h6>
-                                <span class="d-block mb-0">
-                                    Customer Name: {{ Str::upper($customer->full_name) }}
-                                </span>
-                                <small>
-                                    {{ trans('global.order.order_status') }}: {{ $order->order_status }}
-                                </small>
-                                <div class="d-flex flex-column mt-3">
-                                    {{-- <small>
-                                        <i class="fa fa-check text-muted">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span>
+                                        <i class="fas fa-calendar-check"></i>
+                                        {{ Carbon\Carbon::parse($order->created_at)->format('d/M/Y') }}
+                                    </span>
+                                    <span>
+                                        <i class="fa fa-clock-o text-muted">
                                         </i>
-                                        Agent Code: {{ Auth::user()->agent_code }}
-                                    </small> --}}
-                                    <small>
-                                        <i class="fa fa-check text-muted">
-                                        </i>
-                                        Payment Method: {{ Str::upper($customer->mode) }}
-                                    </small>
+                                        {{ Carbon\Carbon::parse($order->created_at)->format('H:i:s') }}
+                                    </span>
                                 </div>
-                            </div>
+                                <div class="mt-3">
+                                    <h6 class="mb-0">
+                                        Order Reference Number: #{{ $order->ref_no }}
+                                    </h6>
+                                    <span class="d-block mb-0">
+                                        Customer Name: {{ Str::upper($customer->full_name) }}
+                                    </span>
+                                    <small>
+                                        {{ trans('global.order.order_status') }}: {{ $order->order_status }}
+                                    </small>
+                                    <div class="d-flex flex-column mt-3">
+                                        {{-- <small>
+                                            <i class="fa fa-check text-muted">
+                                            </i>
+                                            Agent Code: {{ Auth::user()->agent_code }}
+                                        </small> --}}
+                                        <small>
+                                            <i class="fa fa-check text-muted">
+                                            </i>
+                                            Payment Method: {{ Str::upper($customer->mode) }}
+                                        </small>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row g-0">
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span class="font-weight-bold">
-                                            Product Price
+                                            Product Selling Price
                                         </span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
-                                        <span class="font-weight-bold">
-                                            RM
+                                        <span>
+                                            RM {{ $reservedLot->selling ?? '' }}
                                         </span>
                                     </div>
                                 </div>
@@ -123,8 +123,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
-                                        <span class="font-weight-bold">
-                                            RM
+                                        <span>
+                                            RM {{ $reservedLot->maintenance ?? '' }}
                                         </span>
                                     </div>
                                 </div>
@@ -139,8 +139,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
-                                        <span class="font-weight-bold">
-                                            RM
+                                        <span>
+                                            RM {{ $reservedLot->promo ?? '' }}
                                         </span>
                                     </div>
                                 </div>
@@ -156,7 +156,7 @@
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span class="font-weight-bold">
-                                            RM
+                                            RM {{ $reservedLot->price ?? '' }}
                                         </span>
                                     </div>
                                 </div>
@@ -307,6 +307,7 @@
 {{session()->forget('customer')}}
 {{session()->forget('products')}}
 {{session()->forget('paymentInfo')}}
+{{session()->forget('reservedLot')}}
 {{session()->forget('order')}}
 @endsection
 

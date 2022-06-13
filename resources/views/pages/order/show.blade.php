@@ -11,7 +11,7 @@
 <div class="card">
     <div class="card-body">
         <div class="form-group">
-            @if($order->customer->mode == 'Installment')
+            @if(isset($order->customer) ?? $order->customer->mode == 'Installment')
                 @include('pages.order.components.installment')
             @else
                 @include('pages.order.components.fullpayment')

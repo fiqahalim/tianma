@@ -1,40 +1,29 @@
 <h5 class="my-3 mt-4">PRODUCT PRICE INFORMATION</h5>
 <div class="form-row">
-    <div class="form-group col-md-6">
-        <label for="product_name">{{ trans('cruds.product.fields.product_name') }}</label>
-        <input class="form-control" id="product_name" type="text" value="{{ $product->product_name }}" readonly>
-    </div>
-    <div class="form-group col-md-6">
+    @php
+        $getUnitNo = isset($reservedLot) ? $reservedLot->seats : '';
+        $unitNo = implode(" ",$getUnitNo);
+    @endphp
+    <div class="form-group col-md-2">
         <label for="product_code">{{ trans('cruds.product.fields.product_code') }}</label>
-        <input class="form-control" id="product_code" type="text" value="{{ $product->product_code }}" readonly>
+        <input class="form-control" id="product_code" type="text" value="{{ $unitNo }}" readonly>
     </div>
-</div>
-<div class="form-row">
     <div class="form-group col-md-3">
-        <label for="price">{{ trans('cruds.product.fields.price') }}</label>
+        <label for="price">Product {{ trans('cruds.product.fields.price') }}</label>
         <div class="input-group">
             <div class="input-group-text">
                 RM
             </div>
-            <input class="form-control" id="price" type="text" value="{{ $product->price }}" readonly>
+            <input class="form-control" id="price" type="text" value="{{ $reservedLot->price }}" readonly>
         </div>
     </div>
-    <div class="form-group col-md-2">
+    <div class="form-group col-md-3">
         <label for="maintenance_price">{{ trans('cruds.product.fields.maintenance_price') }}</label>
         <div class="input-group">
             <div class="input-group-text">
                 RM
             </div>
-            <input class="form-control" id="maintenance_price" type="text" value="{{ $product->maintenance_price }}" readonly>
-        </div>
-    </div>
-    <div class="form-group col-md-2">
-        <label for="point_value">{{ trans('cruds.product.fields.point_value') }}</label>
-        <div class="input-group">
-            <div class="input-group-text">
-                <i class="fas fa-calculator"></i>
-            </div>
-            <input class="form-control" id="point_value" type="text" value="{{ $product->point_value }}" readonly>
+            <input class="form-control" id="maintenance_price" type="text" value="{{ $reservedLot->maintenance }}" readonly>
         </div>
     </div>
     <div class="form-group col-md-2">
@@ -43,17 +32,16 @@
             <div class="input-group-text">
                 RM
             </div>
-            <input class="form-control" id="promotion_price" type="text" value="{{ $product->promotion_price }}" readonly>
+            <input class="form-control" id="promotion_price" type="text" value="{{ $reservedLot->promo }}" readonly>
         </div>
     </div>
-    <div class="form-group col-md-3">
-        <label for="total_cost">{{ trans('cruds.product.fields.total_cost') }}</label>
-        <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="includes maintenance fees, etc"></i>
+    <div class="form-group col-md-2">
+        <label for="point_value">{{ trans('cruds.product.fields.point_value') }}</label>
         <div class="input-group">
             <div class="input-group-text">
-                RM
+                <i class="fas fa-calculator"></i>
             </div>
-            <input class="form-control" id="total_cost" type="text" value="{{ $product->total_cost }}" readonly>
+            <input class="form-control" id="point_value" type="text" value="{{ $reservedLot->point_value }}" readonly>
         </div>
     </div>
 </div>

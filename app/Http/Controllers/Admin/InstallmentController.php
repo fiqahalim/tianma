@@ -124,6 +124,6 @@ class InstallmentController extends Controller
 
         session(['order' => $order]);
 
-        return view('pages.includes.pay-later-order', compact('order', 'customer'));
+        return view('pages.includes.pay-later-order', compact('order', 'customer', 'reservedLot'));
     }
 }

@@ -57,7 +57,7 @@ class OrderConfirmationController extends Controller
         $orders = new Order;
         $order->ref_no = $this->getOrderNumber();
         $order->order_status = 'NEW';
-        // $order->amount = $totalProductAmount;
+        $order->amount = $reservedLot->price;
         $order->order_date = $current = Carbon::now();
         $order->customer_id = $customer->id;
         $order->created_by = $customer->created_by;
@@ -72,7 +72,7 @@ class OrderConfirmationController extends Controller
             $paymentInfo = $this->fullpaymentCalculate();
         }
 
-        return view('pages.customer.order', compact('order', 'customer', 'paymentInfo'));
+        return view('pages.customer.order', compact('order', 'customer', 'paymentInfo', 'reservedLot'));
     }
 
     private function fullpaymentCalculate()
