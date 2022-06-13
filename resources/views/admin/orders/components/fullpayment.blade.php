@@ -75,7 +75,7 @@
                                     <th>Description 1</th>
                                     <th>Description 2</th>
                                     {{-- <th>Payment Mode</th> --}}
-                                    <th>Payment Ref Number</th>
+                                    <th>Lot ID Number</th>
                                     <th>Amount</th>
                                 </tr>
                             </thead>
@@ -90,7 +90,7 @@
                                 <tr data-entry-id="{{ $order->id }}">
                                     <td>1</td>
                                     <td>
-                                        {{ Str::upper($order->products->product_name) }}
+                                        {{ strtoupper($order->bookLocations[0]->location) }}, {{ strtoupper($order->bookLocations[0]->product_type) }}, {{ strtoupper($order->bookLocations[0]->build_type) }} {{ strtoupper($order->bookLocations[0]->level) }} {{ strtoupper($order->bookLocations[0]->category) }}
                                     </td>
                                     <td>
                                         {{ Str::upper($order->customer->mode) }}

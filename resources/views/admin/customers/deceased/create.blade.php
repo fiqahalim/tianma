@@ -414,7 +414,9 @@
                             $items = str_replace('"','', $lot);
                             $createdBy = $data->createdBy->agent_code;
                         @endphp
-                            <option value="{{ $id }}" {{ old('lot_id') == $id ? 'selected' : '' }}>{{ $items }} - {{ $createdBy }}</option>
+                            @if($data->order_status != 'Rejected')
+                                <option value="{{ $id }}" {{ old('lot_id') == $id ? 'selected' : '' }}>{{ $items }} - {{ $createdBy }}</option>
+                            @endif
                         @endforeach
                     </select>
                 </div>

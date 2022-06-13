@@ -71,34 +71,36 @@
             </div>
 
             {{-- Installment Payment --}}
-            @if(isset($order->customer) ?? $order->customer->mode == 'Installment')
-                <div class="form-group mt-5">
-                    <h5>Installment Payment (<i>{{ $order->installments->installment_year }} months</i>)</h5>
-                    <table class="table table-light table-bordered datatable datatable-installments">
-                        <thead>
-                            @if(isset($order->commissions) && $order->commissions->mo_overriding_comm != "0")
-                                <tr class="table-info">
-                                    <th></th>
-                                    <th>ID</th>
-                                    <th scope="col">Commissions (Per Month)</th>
-                                    <th scope="col">Last Point Value (PV)</th>
-                                </tr>
-                            @endif
-                        </thead>
-                        <tbody>
-                            @foreach($allCommissions as $key => $allCommission)
-                                @if($allCommission->mo_overriding_comm != "0")
-                                    <tr data-entry-id="{{ $allCommission->id }}">
-                                        <td></td>
-                                        <td>{{ $allCommission->id }}</td>
-                                        <td>{{ $allCommission->mo_overriding_comm }}</td>
-                                        <td>{{ $allCommission->point_value }}</td>
+            @if(isset($order->customer))
+                @if($order->customer->mode == 'Installment')
+                    <div class="form-group mt-5">
+                        <h5>Installment Payment (<i>{{ $order->installments->installment_year }} months</i>)</h5>
+                        <table class="table table-light table-bordered datatable datatable-installments">
+                            <thead>
+                                @if(isset($order->commissions) && $order->commissions->mo_overriding_comm != "0")
+                                    <tr class="table-info">
+                                        <th></th>
+                                        <th>ID</th>
+                                        <th scope="col">Commissions (Per Month)</th>
+                                        <th scope="col">Last Point Value (PV)</th>
                                     </tr>
                                 @endif
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody>
+                                @foreach($allCommissions as $key => $allCommission)
+                                    @if($allCommission->mo_overriding_comm != "0")
+                                        <tr data-entry-id="{{ $allCommission->id }}">
+                                            <td></td>
+                                            <td>{{ $allCommission->id }}</td>
+                                            <td>{{ $allCommission->mo_overriding_comm }}</td>
+                                            <td>{{ $allCommission->point_value }}</td>
+                                        </tr>
+                                    @endif
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endif
             @endif
 
             {{-- Upperline Info --}}

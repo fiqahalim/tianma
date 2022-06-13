@@ -23,7 +23,7 @@ class OrdersController extends Controller
     {
         abort_if(Gate::denies('order_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $orders = Order::with(['customer', 'team', 'createdBy', 'commissions'])->get();
+        $orders = Order::with(['customer', 'createdBy', 'commissions', 'lotID'])->get();
 
         return view('admin.orders.index', compact('orders'));
     }
@@ -47,7 +47,9 @@ class OrdersController extends Controller
     {
         abort_if(Gate::denies('order_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $order->load('customer', 'team', 'createdBy', 'commissions', 'products');
+        $order->load('customer', 'createdBy', 'commissions', 'products', 'lotID');
+
+        $lotAvailable = $order->lotID;
 
         return view('admin.orders.edit', compact('order'));
     }
@@ -55,6 +57,14 @@ class OrdersController extends Controller
     public function update(UpdateOrderRequest $request, Order $order)
     {
         $order->update($request->all());
+
+        $lotAvailable = isset($order->lotID) ? $order->lotID : '';
+
+        if($order->order_status == 'Rejected') {
+            $lotAvailable->update([
+                'available' => '1',
+            ]);
+        }
 
         alert()->success(__('global.update_success'))->toToast();
         return redirect()->route('admin.orders.index');
@@ -75,7 +85,7 @@ class OrdersController extends Controller
             $today = Carbon::today();
             $date = $today->addMonth(1);
         } else {
-            $amount = $order->fullPayments->amount ? $order->installments->downpayment : null;
+            $amount = isset($order->amount) ? $order->amount : null;
             $numberToWords = new NumberToWords();
             $numberTransformer = $numberToWords->getNumberTransformer('en');
             $amountFormat = $numberTransformer->toWords($amount);

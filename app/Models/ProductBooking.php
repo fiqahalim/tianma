@@ -28,6 +28,7 @@ class ProductBooking extends Model
         'product_id',
         'customer_id',
         'created_by',
+        'available', 'point_value', 'selling', 'maintenance', 'promo', 'price', 'book_locations_id'
     ];
 
     protected function serializeDate(DateTimeInterface $date)

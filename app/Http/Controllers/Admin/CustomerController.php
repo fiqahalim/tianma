@@ -82,7 +82,7 @@ class CustomerController extends Controller
 
     public function showInvoice(Order $order)
     {
-        $order->load('customer', 'createdBy', 'installments', 'bookLocations', 'products');
+        $order->load('customer', 'createdBy', 'installments', 'bookLocations', 'lotID');
 
         $customer = $order->customer;
 

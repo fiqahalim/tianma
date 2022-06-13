@@ -109,30 +109,42 @@
                                 </tr>
                             </thead>
 
+                            @php
+                                $getUnitNo = isset($order->lotID) ? $order->lotID->seats : '';
+                                $unitNo = implode(" ",$getUnitNo);
+                                $locations = isset($order->bookLocations) ? $order->bookLocations : '';
+                                foreach ($locations as $details) {
+                                    $place = $details->location;
+                                    $type = $details->product_type;
+                                    $building = $details->building_types;
+                                    $level = $details->level;
+                                    $category = $details->category;
+                                }
+                            @endphp
+
                             <tbody class="text-95 text-secondary-d3">
                                 <tr>
                                     <td>
-                                        {{ trans('cruds.product.fields.product_name') }} -
-                                        <i>{{ $order->products->product_name ?? '' }}</i>
+                                        <i> {{ $place }}, {{ $type }} {{ $building }} {{ $level }} {{ $category }}</i>
                                     </td>
                                     <td>
-                                        {{ $order->products->product_id_number ?? '' }}
+                                        {{ $unitNo ?? '' }}
                                     </td>
                                     <td>
-                                        {{ $order->products->product_code ?? '' }}
+                                        {{ $unitNo ?? '' }}
                                     </td>
                                     <td></td>
                                 </tr>
-                                <tr>
+                                {{-- <tr>
                                     <td>
                                         {{ trans('cruds.product.fields.selling_price') }}
                                     </td>
                                     <td></td>
                                     <td></td>
                                     <td>
-                                        RM {{ $order->products->selling_price ?? '' }}
+                                        RM {{ $order->lotID->selling_price ?? '' }}
                                     </td>
-                                </tr>
+                                </tr> --}}
                                 <tr>
                                     <td>
                                         {{ trans('cruds.product.fields.maintenance_price') }}
@@ -140,7 +152,7 @@
                                     <td></td>
                                     <td></td>
                                     <td>
-                                        RM {{ $order->products->maintenance_price ?? '' }}
+                                        RM {{ $order->lotID->maintenance ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -150,7 +162,7 @@
                                     <td></td>
                                     <td></td>
                                     <td>
-                                        RM {{ $order->products->promotion_price ?? '' }}
+                                        RM {{ $order->lotID->promo ?? '' }}
                                     </td>
                                 </tr>
                                 {{-- Installment Details --}}
@@ -171,7 +183,7 @@
                                     <td></td>
                                     <td></td>
                                     <td>
-                                        RM {{ $order->installments->installment_balance ?? '' }}
+                                        RM {{ $order->installments->last_month_payment ?? '0.00' }}
                                     </td>
                                 </tr>
                             </tbody>
@@ -190,7 +202,7 @@
                                     SubTotal
                                 </div>
                                 <div class="col-5">
-                                    <span class="text-120 text-secondary-d1">RM {{ $order->products->total_cost ?? '' }}</span>
+                                    <span class="text-120 text-secondary-d1">RM {{ $order->lotID->price ?? '' }}</span>
                                 </div>
                             </div>
 

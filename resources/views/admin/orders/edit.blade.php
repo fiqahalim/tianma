@@ -100,22 +100,16 @@
 
             {{-- Product Details --}}
             <h5>Product Details</h5>
+            @php
+                $getUnitNo = isset($order->lotID) ? $order->lotID->seats : '';
+                $unitNo = implode(" ",$getUnitNo);
+            @endphp
             <div class="form-row mt-3 mb-3">
-                <div class="form-group col-md-4">
-                    <label for="product_name">{{ trans('cruds.product.fields.product_name') }}</label>
-                    <input class="form-control" type="text" value="{{ $order->products ? $order->products->product_name : '' }}" readonly>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="product_id_number">{{ trans('cruds.product.fields.product_id_number') }}</label>
-                    <input class="form-control" type="text" value="{{ $order->products ? $order->products->product_id_number : '' }}" readonly>
-                </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <label for="product_code">{{ trans('cruds.product.fields.product_code') }}</label>
-                    <input class="form-control" type="text" value="{{ $order->products ? $order->products->product_code : '' }}" readonly>
+                    <input class="form-control" type="text" value="{{ $unitNo ? $unitNo : '' }}" readonly>
                 </div>
-            </div>
-            <div class="form-row mt-3 mb-3">
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <label for="price">{{ trans('cruds.product.fields.price') }}</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -123,10 +117,10 @@
                                 <i>RM</i>
                             </span>
                         </div>
-                        <input class="form-control" type="text" value="{{ $order->products ? $order->products->price : '' }}" readonly>
+                        <input class="form-control" type="text" value="{{ $order->lotID ? $order->lotID->price : '' }}" readonly>
                     </div>
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <label for="maintenance_price">{{ trans('cruds.product.fields.maintenance_price') }}</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -134,10 +128,10 @@
                                 <i>RM</i>
                             </span>
                         </div>
-                        <input class="form-control" type="text" value="{{ $order->products ? $order->products->maintenance_price : '' }}" readonly>
+                        <input class="form-control" type="text" value="{{ $order->lotID ? $order->lotID->maintenance : '' }}" readonly>
                     </div>
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <label for="promotion_price">{{ trans('cruds.product.fields.promotion_price') }}</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -145,7 +139,7 @@
                                 <i>RM</i>
                             </span>
                         </div>
-                        <input class="form-control" type="text" value="{{ $order->products ? $order->products->promotion_price : '' }}" readonly>
+                        <input class="form-control" type="text" value="{{ $order->lotID ? $order->lotID->promo : '' }}" readonly>
                     </div>
                 </div>
             </div>

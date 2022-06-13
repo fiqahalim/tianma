@@ -113,7 +113,7 @@
                             </td>
                             <td>
                                 @can('order_show')
-                                    @if($order->amount > 0)
+                                    @if($order->amount > 0 || $order->customer->mode == 'Full Payment')
                                         <a class="btn btn-xs btn-primary" href="{{ route('admin.orders.show', $order->id) }}">
                                             <i class="fas fa-eye"></i>
                                         </a>
@@ -215,7 +215,7 @@
 </script>
 <script>
         <?php
-           $dateTime = strtotime($order->expiry_date);
+           $dateTime = strtotime(isset($order->expiry_date)) ? strtotime($order->expiry_date) : null;
            $getDateTime = date("F d, Y H:i:s", $dateTime);
         ?>
         var countDownDate = new Date("<?php echo "$getDateTime"; ?>").getTime();
