@@ -123,36 +123,26 @@
                             @endphp
 
                             <tbody class="text-95 text-secondary-d3">
+                            <tr>
+                                <td>
+                                    <i> {{ $place }}, {{ $type }} {{ $building }} {{ $level }} {{ $category }}</i>
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                    {{ $unitNo ?? '' }}
+                                </td>
+                                <td></td>
+                            </tr>
                                 <tr>
-                                    <td>
-                                        <i> {{ $place }}, {{ $type }} {{ $building }} {{ $level }} {{ $category }}</i>
-                                    </td>
-                                    <td>
-                                        {{ $unitNo ?? '' }}
-                                    </td>
-                                    <td>
-                                        {{ $unitNo ?? '' }}
-                                    </td>
-                                    <td></td>
-                                </tr>
-                                {{-- <tr>
                                     <td>
                                         {{ trans('cruds.product.fields.selling_price') }}
                                     </td>
                                     <td></td>
                                     <td></td>
                                     <td>
-                                        RM {{ $order->lotID->selling_price ?? '' }}
-                                    </td>
-                                </tr> --}}
-                                <tr>
-                                    <td>
-                                        {{ trans('cruds.product.fields.maintenance_price') }}
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        RM {{ $order->lotID->maintenance ?? '' }}
+                                        RM {{ $order->lotID->selling ?? '' }}.00
                                     </td>
                                 </tr>
                                 <tr>
@@ -162,31 +152,75 @@
                                     <td></td>
                                     <td></td>
                                     <td>
-                                        RM {{ $order->lotID->promo ?? '' }}
+                                        RM {{ $order->lotID->promo ?? '' }}.00
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Product Price
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        RM {{ $order->lotID->price ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {{ trans('cruds.product.fields.maintenance_price') }}
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        RM {{ $order->lotID->maintenance ?? '' }}.00
                                     </td>
                                 </tr>
                                 {{-- Installment Details --}}
-                                <tr>
-                                    <td>
-                                        Monthly Installment <i>(11 months)</i>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        RM {{ $order->installments->monthly_installment ?? '' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Installment Balance <i>(last month)</i>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        RM {{ $order->installments->last_month_payment ?? '0.00' }}
-                                    </td>
-                                </tr>
+                                @if($order->payment_option == 'PAY LATER')
+                                    <tr>
+                                        <td>
+                                            Monthly Installment <i>(11 months)</i>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <i>Please make a payment first</i>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Installment Balance <i>(last month)</i>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <i>Please make a payment first</i>
+                                        </td>
+                                    </tr>
+                                @else
+                                    <tr>
+                                        <td>
+                                            Monthly Installment <i>(11 months)</i>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            RM {{ $order->installments->monthly_installment ?? '0.00' }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Installment Balance <i>(last month)</i>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            RM {{ $order->installments->last_month_payment ?? '0.00' }}
+                                        </td>
+                                    </tr>
+                                @endif
                             </tbody>
+                        </table>
                         </table>
                     </div>
 

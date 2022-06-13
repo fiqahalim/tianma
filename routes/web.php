@@ -226,8 +226,17 @@ Route::group(['middleware' => 'auth'], function() {
             // Commissions Report
             Route::match(['get', 'post'], 'commissionReport/index', [\App\Http\Controllers\Admin\InvoiceController::class,'commissionReport'])->name('commissionReport.index');
 
+            // Daily Receipt Listing
+            Route::match(['get', 'post'], 'daily-report/index', [\App\Http\Controllers\Admin\InvoiceController::class,'dailyReport'])->name('daily-report.index');
+
+            // Monthly Installment Reminder
+            Route::match(['get', 'post'], 'installment-report/index', [\App\Http\Controllers\Admin\InvoiceController::class,'installmentReport'])->name('installment-report.index');
+
             // Agents Report
             Route::match(['get', 'post'], 'agentsReport/index', [\App\Http\Controllers\Admin\InvoiceController::class,'agentsReport'])->name('agentsReport.index');
+
+            // Product Status Report
+            Route::match(['get', 'post'], 'product-report/index', [\App\Http\Controllers\Admin\InvoiceController::class,'productsReport'])->name('product-report.index');
         });
 
         // Commission

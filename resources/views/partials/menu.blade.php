@@ -158,6 +158,21 @@
                         </a>
                     </li>
                     <li class="c-sidebar-nav-item">
+                        <a href="{{ route("admin.daily-report.index") }}" class="c-sidebar-nav-link">
+                            Daily Receipt Listing
+                        </a>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route("admin.installment-report.index") }}" class="c-sidebar-nav-link">
+                            Monthly Installment Reminder
+                        </a>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route("admin.product-report.index") }}" class="c-sidebar-nav-link">
+                            Product Status Listing
+                        </a>
+                    </li>
+                    <li class="c-sidebar-nav-item">
                         <a href="{{ route("admin.agentsReport.index") }}" class="c-sidebar-nav-link">
                             Registered Agents Report
                         </a>
