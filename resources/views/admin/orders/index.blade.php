@@ -215,9 +215,11 @@
 </script>
 <script>
         <?php
-           $dateTime = strtotime(isset($order->expiry_date)) ? strtotime($order->expiry_date) : null;
+           $dateTime = strtotime($order->expiry_date);
            $getDateTime = date("F d, Y H:i:s", $dateTime);
         ?>
+        var payLater = {!! $order !!}
+        console.log(payLater);
         var countDownDate = new Date("<?php echo "$getDateTime"; ?>").getTime();
         // Update the count down every 1 second
         var x = setInterval(function() {
@@ -235,7 +237,7 @@
             // If the count down is over, write some text
             if (distance < 0) {
                 clearInterval(x);
-                document.getElementById("counter").innerHTML = "EXPIRED";
+                document.getElementById("counter").innerHTML = "";
             }
         }, 1000);
     </script>

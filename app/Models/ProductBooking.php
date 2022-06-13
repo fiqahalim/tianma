@@ -13,7 +13,12 @@ class ProductBooking extends Model
     public $table = 'product_bookings';
 
     protected $casts = [
-        'seats' => 'array'
+        'seats' => 'array',
+        // 'price' => 'array',
+        // 'promo' => 'array',
+        // 'maintenance' => 'array',
+        // 'selling' => 'array',
+        // 'point_value' => 'array',
     ];
 
     protected $dates = [
@@ -84,5 +89,55 @@ class ProductBooking extends Model
     public function getSeatAttribute($value)
     {
         return $this->attributes['seats'] = json_decode($value);
+    }
+
+    public function setPriceAttribute($value)
+    {
+        $this->attributes['price'] = json_encode($value);
+    }
+
+    public function getPriceAttribute($value)
+    {
+        return $this->attributes['price'] = json_decode($value);
+    }
+
+    public function setPromoAttribute($value)
+    {
+        $this->attributes['promo'] = json_encode($value);
+    }
+
+    public function getPromoAttribute($value)
+    {
+        return $this->attributes['promo'] = json_decode($value);
+    }
+
+    public function setMaintenanceAttribute($value)
+    {
+        $this->attributes['maintenance'] = json_encode($value);
+    }
+
+    public function getMaintenanceAttribute($value)
+    {
+        return $this->attributes['maintenance'] = json_decode($value);
+    }
+
+    public function setSellingAttribute($value)
+    {
+        $this->attributes['selling'] = json_encode($value);
+    }
+
+    public function getSellingAttribute($value)
+    {
+        return $this->attributes['selling'] = json_decode($value);
+    }
+
+    public function setPointValueAttribute($value)
+    {
+        $this->attributes['point_value'] = json_encode($value);
+    }
+
+    public function getPointValueAttribute($value)
+    {
+        return $this->attributes['point_value'] = json_decode($value);
     }
 }

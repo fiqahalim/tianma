@@ -36,6 +36,18 @@
         </div>
     </div>
 
+    <div class="card">
+        <div class="card-body">
+            <div class="form-group">
+                @if($order->customer->mode == 'Installment')
+                    @include('admin.orders.components.all-details')
+                @else
+                    @include('admin.orders.components.fullpayment-details')
+                @endif
+            </div>
+        </div>
+    </div>
+
     <div class="row ml-2">
         <div class="form-group">
             <a class="btn btn-default" href="{{ route('admin.orders.index') }}">

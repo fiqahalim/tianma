@@ -103,51 +103,73 @@
                                 </tr>
                             </thead>
 
+                            @php
+                                $getUnitNo = isset($order->lotID) ? $order->lotID->seats : '';
+                                $unitNo = implode(" ",$getUnitNo);
+                                $locations = isset($order->bookLocations) ? $order->bookLocations : '';
+                                foreach ($locations as $details) {
+                                    $place = $details->location;
+                                    $type = $details->product_type;
+                                    $building = $details->building_types;
+                                    $level = $details->level;
+                                    $category = $details->category;
+                                }
+                            @endphp
+
                             <tbody class="text-95 text-secondary-d3">
-                                <tr>
-                                    <td>
-                                        {{ trans('cruds.product.fields.product_name') }} -
-                                        <i>{{ $order->products->product_name ?? '' }}</i>
-                                    </td>
-                                    <td>
-                                        {{ $order->products->product_id_number ?? '' }}
-                                    </td>
-                                    <td>
-                                        {{ $order->products->product_code ?? '' }}
-                                    </td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        {{ trans('cruds.product.fields.selling_price') }}
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        RM {{ $order->products->selling_price ?? '' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        {{ trans('cruds.product.fields.maintenance_price') }}
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        RM {{ $order->products->maintenance_price ?? '' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        {{ trans('cruds.product.fields.promotion_price') }}
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        RM {{ $order->products->promotion_price ?? '' }}
-                                    </td>
-                                </tr>
-                            </tbody>
+                            <tr>
+                                <td>
+                                    <i> {{ $place }}, {{ $type }} {{ $building }} {{ $level }} {{ $category }}</i>
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                    {{ $unitNo ?? '' }}
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {{ trans('cruds.product.fields.selling_price') }}
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    RM {{ $order->lotID->selling ?? '' }}.00
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {{ trans('cruds.product.fields.promotion_price') }}
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    RM {{ $order->lotID->promo ?? '' }}.00
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Product Price
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    RM {{ $order->lotID->price ?? '' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {{ trans('cruds.product.fields.maintenance_price') }}
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    RM {{ $order->lotID->maintenance ?? '' }}.00
+                                </td>
+                            </tr>
+                        </tbody>
                         </table>
                     </div>
 

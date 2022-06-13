@@ -55,9 +55,9 @@ class ProductBookingController extends Controller
         $booking = null;
         $booking = new ProductBooking;
         $booking->seats = $request->seats;
-        $booking->price = $request->prices;
-        $booking->promo = $request->promos;
-        $booking->maintenance = $request->maintenances;
+        $booking->price = $request->price;
+        $booking->promo = $request->promo;
+        $booking->maintenance = $request->maintenance;
         $booking->point_value = $request->point_value;
         $booking->selling = $request->selling;
         $booking->available = '0';

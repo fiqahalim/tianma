@@ -5,14 +5,14 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item">Report Management</li>
         <li class="breadcrumb-item active" aria-current="page">
-            <a href="{{ route('admin.invoices.index') }}">Invoices Lists</a>
+            <a href="{{ route('admin.invoices.index') }}">AR Invoices</a>
         </li>
     </ol>
 </nav>
 
 <div class="card">
     <div class="card-header font-weight-bold">
-        Invoices {{ trans('global.list') }}
+        AR Invoices {{ trans('global.list') }}
     </div>
 
     <div class="card-body">
