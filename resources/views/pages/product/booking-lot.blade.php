@@ -572,7 +572,6 @@
 
             var flatArray = Array.prototype.concat.apply([], result);
             var dateArray = Array.prototype.concat.apply([], dateResult);
-            // var avaArray = Array.prototype.concat.apply([], $availResult);
 
             console.log(result);
             console.log(flatArray);
