@@ -578,7 +578,6 @@
             console.log(expiryDate);
             console.log(dateResult);
             console.log(availResult);
-            // console.log(avaArray);
 
             console.log(dateArray);
             console.log(currentDate);

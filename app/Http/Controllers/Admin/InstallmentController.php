@@ -19,7 +19,6 @@ class InstallmentController extends Controller
 {
     public function index(Request $request)
     {
-        $products = session('products');
         $customer = session('customer');
         $reservedLot = session('reservedLot');
 
@@ -37,7 +36,6 @@ class InstallmentController extends Controller
 
     public function store(Request $request)
     {
-        // $products = session('products');
         $customer = session('customer');
         $locations = session('bookLocation');
         $reservedLot = session('reservedLot');
@@ -102,9 +100,9 @@ class InstallmentController extends Controller
         $installment->update($request->all());
     }
 
+    // Pay Later Options
     public function payLater(Request $request)
     {
-        // $products = session('products');
         $customer = session('customer');
         $locations = session('bookLocation');
         $reservedLot = session('reservedLot');
