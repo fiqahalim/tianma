@@ -82,7 +82,7 @@
                                     {{ $installment->installments->last_month_payment ?? '' }}
                                 </td>
                                 <td>
-                                    {{ $date }}
+                                    {{ Carbon\Carbon::parse($date)->format('d/M/Y') }}
                                 </td>
                             </tr>
                         @endif

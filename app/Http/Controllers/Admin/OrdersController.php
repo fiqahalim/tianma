@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
 use App\Models\Transaction;
 use App\Models\Installment;
+use App\Models\ProductBooking;
 use Gate;
 use Alert;
 use Carbon\Carbon;
@@ -58,12 +59,12 @@ class OrdersController extends Controller
     {
         $order->update($request->all());
 
-        $lotAvailable = isset($order->lotID) ? $order->lotID : '';
-
-        if($order->order_status == 'Rejected') {
-            $lotAvailable->update([
-                'available' => '1',
-            ]);
+        if($order->order_status == "Rejected") {
+            $available = ProductBooking::where('id', $order->product_bookings_id)
+                ->update(['available' => '1']);
+        } else {
+            $available = ProductBooking::where('id', $order->product_bookings_id)
+                ->update(['available' => 0]);
         }
 
         alert()->success(__('global.update_success'))->toToast();
