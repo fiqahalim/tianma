@@ -57,14 +57,17 @@ class OrdersController extends Controller
 
     public function update(UpdateOrderRequest $request, Order $order)
     {
-        $order->update($request->all());
+        $todayDate = Carbon::now();
 
-        if($order->order_status == "Rejected") {
+        if(request('order_status') == "Rejected") {
             $available = ProductBooking::where('id', $order->product_bookings_id)
-                ->update(['available' => '1']);
+                ->update([
+                    'available' => '1',
+                    'seats' => '["Rejected"]'
+                ]);
+            $order->update($request->all());
         } else {
-            $available = ProductBooking::where('id', $order->product_bookings_id)
-                ->update(['available' => 0]);
+            $order->update($request->all());
         }
 
         alert()->success(__('global.update_success'))->toToast();
@@ -148,10 +151,10 @@ class OrdersController extends Controller
         $trans->customer_id = $order->customer->id;
         $trans->save();
 
-        // $order->update($request->all());
         $order->update([
             'amount' => request('amount'),
-            'payment_option' => 'PAID'
+            'payment_option' => 'PAID',
+            'expiry_date' => ''
         ]);
 
         alert()->success(__('global.update_success'))->toToast();
