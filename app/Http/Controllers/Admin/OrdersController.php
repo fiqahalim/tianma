@@ -63,7 +63,7 @@ class OrdersController extends Controller
             $available = ProductBooking::where('id', $order->product_bookings_id)
                 ->update([
                     'available' => '1',
-                    'seats' => '["Rejected"]'
+                    'seats' => '["Reservation Cancelled"]'
                 ]);
             $order->update($request->all());
         } else {
