@@ -22,7 +22,7 @@ class InstallmentController extends Controller
         $customer = session('customer');
         $reservedLot = session('reservedLot');
 
-        return view('pages.installment.index', compact('customer', 'products'));
+        return view('pages.installment.index', compact('customer'));
     }
 
     private function getOrderNumber()

@@ -20,10 +20,10 @@
                 <thead>
                     <tr class="table-info">
                         <th width="10"></th>
+                        <th>{{ trans('cruds.customer.fields.id') }}</th>
                          <th>
                             {{ trans('global.createdDate') }}
                         </th>
-                        <th>{{ trans('cruds.customer.fields.id') }}</th>
                         <th>
                             {{ trans('cruds.customer.fields.full_name') }}
                         </th>
@@ -36,11 +36,14 @@
                         <th>
                             {{ trans('cruds.customer.fields.email') }}
                         </th>
-                        <th>
+                        {{-- <th>
                             {{ trans('cruds.customer.fields.contact_person_name') }}
-                        </th>
+                        </th> --}}
                         <th>
                             {{ trans('cruds.customer.fields.contact_person_no') }}
+                        </th>
+                        <th>
+                            &nbsp;
                         </th>
                     </tr>
                 </thead>
@@ -64,11 +67,16 @@
                             <td>
                                 {{ $customer->email ?? '' }}
                             </td>
-                            <td>
+                            {{-- <td>
                                 {{ $customer->contact_person_name ?? '' }}
-                            </td>
+                            </td> --}}
                             <td>
                                 {{ $customer->contact_person_no ?? '' }}
+                            </td>
+                            <td>
+                                <a class="btn btn-xs btn-primary" href="{{ route('user.myCustomers.show', $customer->id) }}">
+                                    <i class="fas fa-eye"></i>
+                                </a>
                             </td>
                         </tr>
                     @endforeach

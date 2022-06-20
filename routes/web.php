@@ -178,6 +178,7 @@ Route::group(['middleware' => 'auth'], function() {
 
             // Installment Calculator
             Route::resource('/installment', '\App\Http\Controllers\Admin\InstallmentController');
+            Route::match(['get', 'post'], '/success-page/index/{order}', [\App\Http\Controllers\Admin\OrdersController::class, 'successPage'])->name('success.paylater.index');
 
             // Carts
             Route::get('cart', [\App\Http\Controllers\Admin\CartController::class, 'cartList'])->name('cart.list');
@@ -282,6 +283,7 @@ Route::group(['middleware' => 'auth'], function() {
 
         // My Customers
         Route::get('/my-customers', [\App\Http\Controllers\User\MembersController::class, 'myCustomers'])->name('myCustomers');
+        Route::match(['get', 'post'], '/my-customers/show/{customer}', [\App\Http\Controllers\User\MembersController::class, 'customerShows'])->name('myCustomers.show');
 
         // Deceased Information
         Route::resource('decease-people', '\App\Http\Controllers\User\DeceasedController');
@@ -290,6 +292,10 @@ Route::group(['middleware' => 'auth'], function() {
 
         // My Orders
         Route::resource('/my-orders', '\App\Http\Controllers\User\OrderDetailsController');
+
+        // Installment Receipts
+        Route::match(['get', 'post'], 'transactions/index/{order}', [\App\Http\Controllers\User\TransactionController::class, 'index'])->name('transaction.index');
+        Route::match(['get', 'post'], 'transactions/show/{transaction}', [\App\Http\Controllers\User\TransactionController::class, 'show'])->name('transaction.show');
     });
 
 });

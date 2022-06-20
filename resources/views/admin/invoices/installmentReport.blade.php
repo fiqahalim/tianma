@@ -72,18 +72,33 @@
                                 <td>
                                     #{{ $installment->ref_no ?? '' }}
                                 </td>
-                                <td>
-                                    {{ $installment->installments->downpayment ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $installment->installments->monthly_installment ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $installment->installments->last_month_payment ?? '' }}
-                                </td>
-                                <td>
-                                    {{ Carbon\Carbon::parse($date)->format('d/M/Y') }}
-                                </td>
+                                @if($installment->order_status == 'Rejected')
+                                    <td>
+                                        <i>Reservation Cancelled</i>
+                                    </td>
+                                    <td>
+                                        ---
+                                    </td>
+                                    <td>
+                                        ---
+                                    </td>
+                                    <td>
+                                        ---
+                                    </td>
+                                @else
+                                    <td>
+                                        {{ $installment->installments->downpayment ?? '' }}
+                                    </td>
+                                    <td>
+                                        {{ $installment->installments->monthly_installment ?? '' }}
+                                    </td>
+                                    <td>
+                                        {{ $installment->installments->last_month_payment ?? '' }}
+                                    </td>
+                                    <td>
+                                        {{ Carbon\Carbon::parse($date)->format('d/M/Y') }}
+                                    </td>
+                                @endif
                             </tr>
                         @endif
                     @endforeach

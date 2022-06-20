@@ -23,7 +23,7 @@
                     <table class="table table-bordered" id="dynamicAddRemove">
                         <tr>
                             <th>Name</th>
-                            <th>{{ trans('cruds.customer.fields.id_number') }}</th>
+                            <th>Contact Number</th>
                             <th>Relationships</th>
                         </tr>
                         <tr>
@@ -37,10 +37,10 @@
                                 <span class="help-block">{{ trans('cruds.customer.fields.contact_person_name_helper') }}</span>
                             </td>
                             <td>
-                                <input class="form-control {{ $errors->has('cid_number') ? 'is-invalid' : '' }}" type="text" name="addMoreInputFields[0][cid_number]" id="cid_number" value="{{ old('cid_number', $contactPerson->cid_number) }}">
-                                @if($errors->has('cid_number'))
+                                <input class="form-control {{ $errors->has('cperson_no') ? 'is-invalid' : '' }}" type="text" name="addMoreInputFields[0][cperson_no]" id="cperson_no" value="{{ old('cperson_no', $contactPerson->cperson_no) }}">
+                                @if($errors->has('cperson_no'))
                                     <div class="invalid-feedback">
-                                        {{ $errors->first('cid_number') }}
+                                        {{ $errors->first('cperson_no') }}
                                     </div>
                                 @endif
                             </td>
@@ -52,11 +52,9 @@
                                     </div>
                                 @endif
                             </td>
-                            <td><button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary">Add More</button></td>
                         </tr>
                     </table>
                 </div>
-
                 <div class="form-group">
                     <label for="customer_id">{{ trans('cruds.contactPerson.fields.customer') }}</label>
                     <select class="form-control select2 {{ $errors->has('customer') ? 'is-invalid' : '' }}" name="customer_id" id="customer_id">
@@ -82,4 +80,21 @@
             </form>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+<script>
+    var i = 0;
+    $("#dynamic-ar").click(function () {
+        ++i;
+        $("#dynamicAddRemove").append('<tr><td><input type="text" name="addMoreInputFields[' + i +
+            '][cperson_name]" class="form-control" /></td><td><input type="text" name="addMoreInputFields[' + i +
+            '][cperson_no]" class="form-control" /></td><td><input type="text" name="addMoreInputFields[' + i +
+            '][relationships]" class="form-control" /></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
+            );
+    });
+    $(document).on('click', '.remove-input-field', function () {
+        $(this).parents('tr').remove();
+    });
+</script>
 @endsection

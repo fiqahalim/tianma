@@ -49,17 +49,16 @@ class ProductBookingController extends Controller
     // save booking
     public function store(Request $request)
     {
-        $products = session('products');
         $locations = session('bookLocation');
 
         $booking = null;
         $booking = new ProductBooking;
         $booking->seats = $request->seats;
-        $booking->price = $request->price;
-        $booking->promo = $request->promo;
-        $booking->maintenance = $request->maintenance;
-        $booking->point_value = $request->point_value;
-        $booking->selling = $request->selling;
+        $booking->price = '12300.00';
+        $booking->promo = '10800.00';
+        $booking->maintenance = '1500.00';
+        $booking->point_value = '10800';
+        $booking->selling = '19800.00';
         $booking->available = '0';
         $booking->book_locations_id = $locations->id;
         $booking->save();

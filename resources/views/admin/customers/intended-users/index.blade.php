@@ -37,7 +37,7 @@
                                 {{ trans('cruds.customer.fields.full_name') }}
                             </th>
                             <th>
-                                {{ trans('cruds.customer.fields.id_number') }}
+                                Contact Number
                             </th>
                             <th>
                                 Customer Name
@@ -62,7 +62,7 @@
                                         {{ $intendedUser->cperson_name ?? '' }}
                                     </td>
                                     <td>
-                                        {{ $intendedUser->cid_number ?? '' }}
+                                        {{ $intendedUser->cperson_no ?? '' }}
                                     </td>
                                     <td>
                                         {{ $intendedUser->customers->full_name ?? '' }}

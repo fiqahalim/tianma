@@ -70,7 +70,7 @@
                                     {{ Carbon\Carbon::parse($daily->created_at)->format('d/M/Y H:i:s') }}
                                 </td>
                                 <td>
-                                    {{ $daily->ref_no }}
+                                    #{{ $daily->ref_no }}
                                 </td>
                                 <td>
                                     {{ $daily->amount ?? '' }}

@@ -103,11 +103,14 @@
                             </td>
                             <td>
                                 @if($order->customer->mode == 'Installment')
-                                    @if($order->payment_option == 'PAY LATER' && $order->amount == 0)
-                                    <span id="counter" style="color:blue;font-weight:bold">
-
-                                    </span>
-                                    {{ Carbon\Carbon::parse($order->expiry_date)->format('d/M/Y H:i:s') }}
+                                    @if($order->order_status == 'Rejected')
+                                        <span class="badge bg-warning">
+                                            Rejected Order
+                                        </span>
+                                    @elseif($order->payment_option == 'PAY LATER' && $order->amount == 0)
+                                        <span id="counter" style="color:blue;font-weight:bold"></span><br>
+                                        {{ Carbon\Carbon::parse($order->expiry_date)->format('d/M/Y H:i:s') }}
+                                    @else
                                     @endif
                                 @endif
                             </td>
@@ -138,14 +141,17 @@
                             </td>
                             <td>
                                 @if($order->customer->mode == 'Installment')
-                                    @if($order->payment_option == 'PAY LATER' && $order->amount == 0)
+                                    @if($order->order_status == 'Rejected')
+                                    @elseif($order->payment_option == 'PAY LATER' && $order->amount == 0)
                                         <a class="btn btn-warning text-white" href="{{ route('admin.orders.showCalculator', $order->id) }}">
                                             <small>PAY NOW</small>
                                         </a>
                                     @else
-                                        <a class="btn btn-dark" href="{{ route('admin.transaction.index', $order->id) }}">
-                                            <small>Update<br>Installment</small>
-                                        </a>
+                                        @if($order->order_status != 'Rejected')
+                                            <a class="btn btn-dark" href="{{ route('admin.transaction.index', $order->id) }}">
+                                                <small>Update<br>Installment</small>
+                                            </a>
+                                        @endif
                                     @endif
                                 @endif
                             </td>

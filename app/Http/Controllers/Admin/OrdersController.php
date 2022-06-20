@@ -123,6 +123,7 @@ class OrdersController extends Controller
         return view('admin.orders.pay-later-calculator', compact('order'));
     }
 
+    // Calculate for pay later at orders management
     public function calculatePayLater(Request $request, Order $order)
     {
         $requestData = $request->all();
@@ -140,6 +141,8 @@ class OrdersController extends Controller
         $installments->order_id = $order->id;
         $installments->save();
 
+        session(['installments' => $installments]);
+
         $trans = new Transaction();
         $trans->transaction_date = Carbon::now();
         $trans->amount = '';
@@ -151,14 +154,26 @@ class OrdersController extends Controller
         $trans->customer_id = $order->customer->id;
         $trans->save();
 
+        session(['transactions' => $trans]);
+
         $order->update([
             'amount' => request('amount'),
             'payment_option' => 'PAID',
-            'expiry_date' => ''
+            'expiry_date' => Carbon::now()
         ]);
 
-        alert()->success(__('global.update_success'))->toToast();
         // return redirect()->route('admin.orders.index');
         return view('admin.orders.result', compact('installments', 'order'));
+    }
+
+    // Success page payment of pay later
+    public function successPage(Order $order)
+    {
+        $installments = session('installments');
+        $transactions = session('transactions');
+
+        $order->load('customer', 'installments');
+
+        return view('admin.orders.success', compact('installments', 'transactions', 'order'));
     }
 }
