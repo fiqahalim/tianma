@@ -257,7 +257,7 @@
                                 Decease Item Elements
                             </th>
                             <td>
-                                {{ strtoupper($decease_person->item_elements ?? '') }}
+                                {{ strtoupper($decease_person->item_elements->name ?? '') }}
                             </td>
                         </tr>
                     </tbody>

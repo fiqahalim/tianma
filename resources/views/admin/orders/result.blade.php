@@ -116,8 +116,8 @@
                 </div>
                 <div class="text-center">
                     <div class="form-group float-right">
-                        <a class="btn btn-primary btn-sm mt-4 mb-2 mr-3" href="{{ route('admin.orders.index') }}">
-                            {{ trans('global.back_to_list') }}
+                        <a class="btn btn-primary btn-sm mt-4 mb-2 mr-3" href="{{ route('admin.success.paylater.index', $order->id) }}">
+                            {{ trans('global.proceed') }}
                         </a>
                     </div>
                 </div>

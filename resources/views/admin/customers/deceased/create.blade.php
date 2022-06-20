@@ -385,7 +385,7 @@
             <hr>
 
             <div class="form-row">
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <label for="remark">Remarks</label>
                     <textarea class="form-control {{ $errors->has('remark') ? 'is-invalid' : '' }}" name="remark" id="remark">{{ old('remark') }}</textarea>
                     @if($errors->has('remark'))
@@ -395,9 +395,13 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.customer.fields.address_1_helper') }}</span>
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <label for="item_elements">Item Elements</label>
-                    <textarea class="form-control {{ $errors->has('item_elements') ? 'is-invalid' : '' }}" name="item_elements" id="item_elements">{{ old('item_elements') }}</textarea>
+                    <select class="form-control select2 {{ $errors->has('item_elements') ? 'is-invalid' : '' }}" name="item_elements" id="item_elements">
+                        @foreach($addOns as $id => $data)
+                            <option value="{{ $id }}" {{ old('item_elements') == $id ? 'selected' : '' }}>{{ $data }}</option>
+                        @endforeach
+                    </select>
                     @if($errors->has('item_elements'))
                         <div class="invalid-feedback">
                             {{ $errors->first('item_elements') }}
@@ -405,7 +409,7 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.customer.fields.address_2_helper') }}</span>
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <label class="required">Lot ID Number</label>
                     <select class="form-control select2 {{ $errors->has('parent') ? 'is-invalid' : '' }}" name="lot_id" id="lot_id">
                         @foreach($lotIDs as $id => $data)

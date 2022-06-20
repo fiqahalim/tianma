@@ -36,10 +36,10 @@
                         </tr>
                         <tr>
                             <th>
-                                {{ trans('cruds.contactPerson.fields.id_number') }}
+                                Contact Number
                             </th>
                             <td>
-                                {{ $contactPerson->cid_number }}
+                                {{ $contactPerson->cperson_no }}
                             </td>
                         </tr>
                         <tr>

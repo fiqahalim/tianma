@@ -41,6 +41,8 @@
                 <thead>
                     <tr>
                         <th width="10"></th>
+                        <th>Order Date</th>
+                        <th>Ref No</th>
                         <th>
                             Customer Name
                         </th>
@@ -51,7 +53,7 @@
                             Monthly Installments (RM)
                         </th>
                         <th>
-                            Total Sales
+                            Total Sales (RM)
                         </th>
                     </tr>
                 </thead>
@@ -60,6 +62,10 @@
                         @if($sale->amount > 0)
                             <tr data-entry-id="{{ $sale->id }}">
                                 <td></td>
+                                <td>
+                                    {{ Carbon\Carbon::parse($sale->order_date)->format('d/M/Y H:i:s') }}
+                                </td>
+                                <td>#{{ $sale->ref_no ?? '' }}</td>
                                 <td>
                                     {{ $sale->customer->full_name }}
                                 </td>

@@ -41,6 +41,8 @@
                 <thead>
                     <tr>
                         <th width="10"></th>
+                        <th>Order Date</th>
+                        <th>Ref No</th>
                         <th>
                             Reservation Lot ID
                         </th>
@@ -63,6 +65,10 @@
                         @endphp
                         <tr data-entry-id="{{ $reserve->id }}">
                             <td></td>
+                            <td>
+                                {{ Carbon\Carbon::parse($reserve->orders->created_at)->format('d/M/Y H:i:s') }}
+                            </td>
+                            <td>#{{ $reserve->orders->ref_no ?? '' }}</td>
                             <td>
                                 {{ $unitNo }}
                             </td>

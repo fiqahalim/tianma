@@ -22,7 +22,7 @@
                     <table class="table table-bordered" id="dynamicAddRemove">
                         <tr>
                             <th>Name</th>
-                            <th>{{ trans('cruds.customer.fields.id_number') }}</th>
+                            <th>Contact Number</th>
                             <th>Relationships</th>
                         </tr>
                         <tr>
@@ -36,10 +36,10 @@
                                 <span class="help-block">{{ trans('cruds.customer.fields.contact_person_name_helper') }}</span>
                             </td>
                             <td>
-                                <input class="form-control {{ $errors->has('cid_number') ? 'is-invalid' : '' }}" type="text" name="addMoreInputFields[0][cid_number]" id="cid_number" value="{{ old('cid_number', '') }}">
-                                @if($errors->has('cid_number'))
+                                <input class="form-control {{ $errors->has('cperson_no') ? 'is-invalid' : '' }}" type="text" name="addMoreInputFields[0][cperson_no]" id="cperson_no" value="{{ old('cperson_no', '') }}">
+                                @if($errors->has('cperson_no'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('cid_number') }}
+                                    {{ $errors->first('cperson_no') }}
                                 </div>
                                 @endif
                             </td>
@@ -87,7 +87,7 @@
         ++i;
         $("#dynamicAddRemove").append('<tr><td><input type="text" name="addMoreInputFields[' + i +
             '][cperson_name]" class="form-control" /></td><td><input type="text" name="addMoreInputFields[' + i +
-            '][cid_number]" class="form-control" /></td><td><input type="text" name="addMoreInputFields[' + i +
+            '][cperson_no]" class="form-control" /></td><td><input type="text" name="addMoreInputFields[' + i +
             '][relationships]" class="form-control" /></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
             );
     });

@@ -397,7 +397,11 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label for="item_elements">Item Elements</label>
-                    <textarea class="form-control {{ $errors->has('item_elements') ? 'is-invalid' : '' }}" name="item_elements" id="item_elements">{{ old('item_elements') }}</textarea>
+                    <select class="form-control select2 {{ $errors->has('item_elements') ? 'is-invalid' : '' }}" name="item_elements" id="item_elements">
+                        @foreach($addOns as $id => $data)
+                            <option value="{{ $id }}" {{ old('item_elements') == $id ? 'selected' : '' }}>{{ $data }}</option>
+                        @endforeach
+                    </select>
                     @if($errors->has('item_elements'))
                         <div class="invalid-feedback">
                             {{ $errors->first('item_elements') }}

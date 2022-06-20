@@ -94,8 +94,48 @@ class MembersController extends Controller
 
     public function myCustomers()
     {
-        $customers = Customer::where('id', '=', Auth::user()->id)
+        $customers = Customer::where('created_by', '=', Auth::user()->id)
             ->get();
+
         return view('pages.report.my-customer', compact('customers'));
+    }
+
+    public function customerShows(Customer $customer)
+    {
+        $customer->load('correspondenceAddress', 'createdBy', 'orders');
+
+        $perAddr = array(
+                $customer->address_1,
+                $customer->address_2,
+                $customer->postcode,
+                $customer->state,
+                $customer->city,
+                $customer->country,
+            );
+
+            $corAddr = Customer::with(['correspondenceAddress', 'contactPersons', 'payments'])
+            ->where('id', $customer->id)
+            ->get();
+
+            if (!is_null($corAddr)) {
+                foreach($corAddr as $k => $addr) {
+                    $corrAddr = [
+                        $addr->correspondenceAddress->curaddress_1,
+                        $addr->correspondenceAddress->curaddress_2,
+                        $addr->correspondenceAddress->curpostcode,
+                        $addr->correspondenceAddress->curstate,
+                        $addr->correspondenceAddress->curcity,
+                        $addr->correspondenceAddress->curcountry,
+                    ];
+                }
+
+                $concat_perAddr = implode(" ", $perAddr);
+                $cust_details['per_address'] = $concat_perAddr;
+
+                $concat_corAddr = implode(" ", $corrAddr);
+                $cust_details['cor_address'] = $concat_corAddr;
+            }
+
+        return view('pages.report.my-customer-show', compact('customer', 'cust_details', 'corAddr'));
     }
 }

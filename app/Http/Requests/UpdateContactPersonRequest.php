@@ -26,15 +26,15 @@ class UpdateContactPersonRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => [
+            'cperson_name' => [
                 'string',
                 'nullable',
             ],
-            'id_number' => [
+            'cperson_no' => [
                 'string',
                 'nullable',
             ],
-            'relationship' => [
+            'relationships' => [
                 'string',
                 'nullable',
             ],

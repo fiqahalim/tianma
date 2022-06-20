@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\User;
 use Carbon\Carbon;
+use NumberToWords\NumberToWords;
 
 class OrderDetailsController extends Controller
 {
@@ -24,10 +25,27 @@ class OrderDetailsController extends Controller
     {
         $order = Order::find($id);
 
-        $today = Carbon::now();
-        $date = $today->addMonth(1);
+        $order->load('customer', 'createdBy', 'products', 'bookLocations', 'installments', 'fullPayments');
 
-        return view('pages.order.show', compact('order', 'date'));
+        if($order->customer->mode == 'Installment') {
+            $amount = isset($order->installments->downpayment) ? $order->installments->downpayment : '0.00';
+            $numberToWords = new NumberToWords();
+            $numberTransformer = $numberToWords->getNumberTransformer('en');
+            $amountFormat = $numberTransformer->toWords($amount);
+
+            $today = Carbon::today();
+            $date = $today->addMonth(1);
+        } else {
+            $amount = isset($order->amount) ? $order->amount : null;
+            $numberToWords = new NumberToWords();
+            $numberTransformer = $numberToWords->getNumberTransformer('en');
+            $amountFormat = $numberTransformer->toWords($amount);
+
+            $today = Carbon::today();
+            $date = $today->addMonth(1);
+        }
+
+        return view('pages.order.show', compact('order', 'date', 'amountFormat'));
     }
 
     public function edit()

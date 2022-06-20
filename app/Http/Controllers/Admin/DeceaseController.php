@@ -15,6 +15,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 
 use App\Models\Decease;
 use App\Models\ProductBooking;
+use App\Models\AddOnProduct;
 use App\Models\Order;
 use Alert;
 use Carbon\Carbon;
@@ -35,21 +36,27 @@ class DeceaseController extends Controller
             ->with(['lotID', 'createdBy'])
             ->get();
 
-        return view('admin.customers.deceased.create', compact('lotIDs'));
+        $addOns = AddOnProduct::pluck('name', 'id')->prepend('Please Select');
+
+        return view('admin.customers.deceased.create', compact('lotIDs', 'addOns'));
     }
 
     public function edit(Decease $decease_person)
     {
         $decease_person->load('lotID');
 
-        return view('admin.customers.deceased.edit', compact('decease_person'));
+        $addOns = AddOnProduct::pluck('name', 'id')->prepend('Please Select');
+
+        return view('admin.customers.deceased.edit', compact('decease_person', 'addOns'));
     }
 
     public function show(Decease $decease_person)
     {
         $decease_person->load('lotID');
 
-        return view('admin.customers.deceased.show', compact('decease_person'));
+        $addOns = AddOnProduct::pluck('name', 'id')->prepend('Please Select');
+
+        return view('admin.customers.deceased.show', compact('decease_person', 'addOns'));
     }
 
     public function store(StoreDeceasedRequest $request)

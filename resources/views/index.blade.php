@@ -82,9 +82,13 @@
                                     Pay Later's Order
                                 </div>
                                 @foreach($payLaters as $key => $payLater)
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            <span id="counter" style="color:blue;font-weight:bold"></span>
-                                        </div>
+                                @if($payLater->order_status == 'Rejected')
+                                @elseif($payLater->payment_option == 'PAY LATER' && $payLater->amount == 0)
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                        <span id="counter" style="color:blue;font-weight:bold"></span>
+                                    </div>
+                                @else
+                                @endif
                                 @endforeach
                             </a>
                         </div>
