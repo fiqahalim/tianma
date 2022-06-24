@@ -96,6 +96,10 @@ Route::group(['middleware' => 'auth'], function() {
             Route::post('add-on-products/media', [\App\Http\Controllers\Admin\AddOnProductController::class, 'storeMedia'])->name('add-on-products.storeMedia');
             Route::post('add-on-products/ckmedia', [\App\Http\Controllers\Admin\AddOnProductController::class, 'storeCKEditorImages'])->name('add-on-products.storeCKEditorImages');
             Route::resource('add-on-products', '\App\Http\Controllers\Admin\AddOnProductController');
+
+            // Promotions
+            Route::resource('promotions', '\App\Http\Controllers\Admin\PromotionController');
+            Route::delete('promotions/destroy', [\App\Http\Controllers\Admin\PromotionController::class, 'massDestroy'])->name('promotions.massDestroy');
         });
 
         /** DOCUMENT MANAGEMENT **/

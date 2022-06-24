@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\Customer;
 use App\Models\ContactPerson;
 use App\Models\PaymentMode;
+use App\Models\Promotion;
 use App\Models\CorresspondenceAddress;
 use Carbon\Carbon;
 use Alert;
@@ -24,10 +25,9 @@ class CustomerDetailsController extends Controller
             ->with('childUsers')
             ->get();
 
-        // $product->load('categories.parentCategory');
-        // session(['products' => $product]);
+         $promos = Promotion::pluck('promo_code', 'id');
 
-        return view('pages.customer.customer-detail', compact('users'));
+        return view('pages.customer.customer-detail', compact('users', 'promos'));
     }
 
     public function store(Request $request)
@@ -38,26 +38,23 @@ class CustomerDetailsController extends Controller
             ->with('childUsers')
             ->get();
 
-        // $product->load('categories.parentCategory');
-        // session(['products' => $product]);
-
         $validated = $request->validate([
-            'full_name' => 'required',
-            'id_number' => 'required',
-            'email' => 'required',
-            'mobile' => 'required|numeric',
-            'gender' => 'required',
-            'postcode' => 'required',
-            'contact_person_name' => 'required',
-            'contact_person_no' => 'required|numeric',
-            'cperson_id_number' => 'required',
-            'state' => 'required',
-            'city' => 'required',
-            'address_1' => 'required',
+            // 'full_name' => 'required',
+            // 'id_number' => 'required',
+            // 'email' => 'required',
+            // 'mobile' => 'required|numeric',
+            // 'gender' => 'required',
+            // 'postcode' => 'required',
+            // 'contact_person_name' => 'required',
+            // 'contact_person_no' => 'required|numeric',
+            // 'cperson_id_number' => 'required',
+            // 'state' => 'required',
+            // 'city' => 'required',
+            // 'address_1' => 'required',
             'mode' => 'required',
             'created_by' => 'required',
             'payment_name' => 'required',
-            'curpostcode' => 'required|numeric',
+            // 'curpostcode' => 'required|numeric',
         ]);
 
         // $customer = Customer::where('id_number', '=', $request->input('id_number'))->first();
@@ -81,6 +78,7 @@ class CustomerDetailsController extends Controller
             $customer->nationality = $request->nationality;
             $customer->country = $request->country;
             $customer->mode = $request->mode;
+            $customer->promotion_id = $request->promo;
             $customer->created_by = $request->created_by;
             $customer->save();
 
@@ -124,33 +122,33 @@ class CustomerDetailsController extends Controller
         return redirect()->route('admin.reviewOrder');
     }
 
-    public function searchCustomer(Request $request, $category, $childCategory, $childCategory2, Product $product)
-    {
-        $query = $request->input('query');
+    // public function searchCustomer(Request $request, $category, $childCategory, $childCategory2, Product $product)
+    // {
+    //     $query = $request->input('query');
 
 
-        $searchCust = Customer::where('id_number', 'like', "%$query")
-            ->get();
+    //     $searchCust = Customer::where('id_number', 'like', "%$query")
+    //         ->get();
 
-        $users = User::where('parent_id')
-            ->with('childUsers')
-            ->get();
+    //     $users = User::where('parent_id')
+    //         ->with('childUsers')
+    //         ->get();
 
-        $product->load('categories.parentCategory');
+    //     $product->load('categories.parentCategory');
 
-        if (count($searchCust) > 0) {
-            session(['searchCust' => $searchCust]);
+    //     if (count($searchCust) > 0) {
+    //         session(['searchCust' => $searchCust]);
 
-            $corAddr = Customer::with(['correspondenceAddress', 'contactPersons'])
-            ->where('id', $searchCust[0]->id)
-            ->get();
+    //         $corAddr = Customer::with(['correspondenceAddress', 'contactPersons'])
+    //         ->where('id', $searchCust[0]->id)
+    //         ->get();
             
-            alert()->info(__('Record found! This is returning purchaser'))->toToast();
-            return view('pages.customer.customer-update', compact('product', 'users', 'searchCust', 'corAddr'));
-        } else {
-            alert()->info(__('No records found. This is new purchaser!'))->toToast();
-            return view('pages.customer.customer-detail', compact('product', 'users'));
-        }
+    //         alert()->info(__('Record found! This is returning purchaser'))->toToast();
+    //         return view('pages.customer.customer-update', compact('product', 'users', 'searchCust', 'corAddr'));
+    //     } else {
+    //         alert()->info(__('No records found. This is new purchaser!'))->toToast();
+    //         return view('pages.customer.customer-detail', compact('product', 'users'));
+    //     }
 
-    }
+    // }
 }

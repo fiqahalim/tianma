@@ -105,6 +105,11 @@
                                 {{ trans('cruds.addOnProduct.title') }}
                             </a>
                         </li>
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.promotions.index") }}" class="c-sidebar-nav-link">
+                                Promotions
+                            </a>
+                        </li>
                     </ul>
                 </li>
             @endcan

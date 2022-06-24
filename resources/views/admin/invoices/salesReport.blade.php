@@ -53,6 +53,9 @@
                             Monthly Installments (RM)
                         </th>
                         <th>
+                            Agent Code
+                        </th>
+                        <th>
                             Total Sales (RM)
                         </th>
                     </tr>
@@ -78,6 +81,9 @@
                                     @else
                                         <i>Full Payment</i>
                                     @endif
+                                </td>
+                                <td>
+                                    {{ $sale->createdBy->agent_code ?? '' }}
                                 </td>
                                 <td>
                                     {{ $sale->customer->orders()->sum('amount') ?? '' }}

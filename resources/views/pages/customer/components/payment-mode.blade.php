@@ -39,7 +39,26 @@
 
             {{-- Payment Option --}}
             <div class="form-row">
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-4">
+                    <label>Promotion Code</label>
+                    <select class="form-control select2 {{ $errors->has('promo') ? 'is-invalid' : '' }}" name="promo" id="promo" required form="myForm">
+                        <option value disabled {{ old('promo', null) === null ? 'selected' : '' }}>No Promotion Code</option>
+                        @foreach($promos as $key => $promo)
+                            <option value="{{ $key }}" {{ old('promo', '') === (string) $key ? 'selected' : '' }}>
+                                {{ $promo }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('mode'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('mode') }}
+                        </div>
+                    @endif
+                    <span class="help-block">
+                        {{ trans('cruds.customer.fields.id_type_helper') }}
+                    </span>
+                </div>
+                <div class="form-group col-md-4">
                     <label class="required">{{ trans('cruds.customer.fields.mode') }}</label>
                     <select class="form-control select2 {{ $errors->has('mode') ? 'is-invalid' : '' }}" name="mode" id="mode" required form="myForm">
                         <option value disabled {{ old('mode', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
@@ -59,7 +78,7 @@
                     </span>
                 </div>
 
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-4">
                     <label class="font-weight-bold required" for="agent_code">
                         Referral {{ trans('global.register.agent_code') }}
                     </label>

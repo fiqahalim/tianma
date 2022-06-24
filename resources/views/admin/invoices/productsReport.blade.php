@@ -66,7 +66,7 @@
                         <tr data-entry-id="{{ $reserve->id }}">
                             <td></td>
                             <td>
-                                {{ Carbon\Carbon::parse($reserve->orders->created_at)->format('d/M/Y H:i:s') }}
+                                {{ Carbon\Carbon::parse(isset($reserve->orders->created_at) ? $reserve->orders->created_at : '')->format('d/M/Y H:i:s') }}
                             </td>
                             <td>#{{ $reserve->orders->ref_no ?? '' }}</td>
                             <td>
@@ -87,7 +87,7 @@
                                 @endif
                             </td>
                             <td>
-                                {{ strtoupper($reserve->orders->order_status) ?? '' }}
+                                {{ strtoupper(isset($reserve->orders->order_status) ? $reserve->orders->order_status :'') }}
                             </td>
                         </tr>
                     @endforeach

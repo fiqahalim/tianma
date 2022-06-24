@@ -45,7 +45,7 @@
                                 <i>RM</i>
                             </span>
                         </div>
-                        <input class="form-control {{ $errors->has('amount') ? 'is-invalid' : '' }}" type="text" name="amount" id="amount" value="{{ old('amount', $order->amount) }}" step="0.01" readonly>
+                        <input class="form-control {{ $errors->has('amount') ? 'is-invalid' : '' }}" type="text" name="amount" id="amount" value="{{ old('amount', $order->amount) }}" step="0.01">
                         @if($errors->has('amount'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('amount') }}
@@ -117,7 +117,7 @@
                                 <i>RM</i>
                             </span>
                         </div>
-                        <input class="form-control" type="text" value="{{ $order->lotID ? $order->lotID->price : '' }}" readonly>
+                        <input class="form-control" type="text" value="{{ $order->lotID ? $order->lotID->price : '' }}">
                     </div>
                 </div>
                 <div class="form-group col-md-3">
@@ -128,7 +128,7 @@
                                 <i>RM</i>
                             </span>
                         </div>
-                        <input class="form-control" type="text" value="{{ $order->lotID ? $order->lotID->maintenance : '' }}" readonly>
+                        <input class="form-control" type="text" value="{{ $order->lotID ? $order->lotID->maintenance : '' }}">
                     </div>
                 </div>
                 <div class="form-group col-md-3">
@@ -139,7 +139,7 @@
                                 <i>RM</i>
                             </span>
                         </div>
-                        <input class="form-control" type="text" value="{{ $order->lotID ? $order->lotID->promo : '' }}" readonly>
+                        <input class="form-control" type="text" value="{{ $order->lotID ? $order->lotID->promo : '' }}">
                     </div>
                 </div>
             </div>

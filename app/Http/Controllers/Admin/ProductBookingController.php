@@ -69,33 +69,35 @@ class ProductBookingController extends Controller
     }
 
     // save booking lot
-    public function productBooked(Request $request, $id)
-    {
-        $request->validate([
-            "seats"           => "required|string",
-        ],[
-            "seats.required"  => "Please Select at Least One Lot"
-        ]);
+    // public function productBooked(Request $request, $id)
+    // {
+    //     $request->validate([
+    //         "seats"           => "required|string",
+    //     ],[
+    //         "seats.required"  => "Please Select at Least One Lot"
+    //     ]);
 
-        $booked_ticket  = ProductBooking::whereJsonContains('seats', rtrim($request->seats, ","))->get();
+    //     $booked_ticket  = ProductBooking::whereJsonContains('seats', rtrim($request->seats, ","))->get();
 
-        $seats = array_filter((explode(',', $request->seats)));
-        $pnr_number = getTrx(10);
-        $bookedTicket = new ProductBooking();
-        $bookedTicket->customer_id = $customer->id;
-        $bookedTicket->seats = $seats;
-        $bookedTicket->ticket_count = sizeof($seats);
-        $bookedTicket->pnr_number = $pnr_number;
-        $bookedTicket->status = 0;
-        $bookedTicket->save();
-        session()->put('pnr_number',$pnr_number);
-    }
+    //     $seats = array_filter((explode(',', $request->seats)));
+    //     $pnr_number = getTrx(10);
+    //     $bookedTicket = new ProductBooking();
+    //     $bookedTicket->customer_id = $customer->id;
+    //     $bookedTicket->seats = $seats;
+    //     $bookedTicket->ticket_count = sizeof($seats);
+    //     $bookedTicket->pnr_number = $pnr_number;
+    //     $bookedTicket->status = 0;
+    //     $bookedTicket->save();
+    //     session()->put('pnr_number',$pnr_number);
+    // }
 
     public function reviewOrder(Request $request)
     {
         $customer = session('customer');
         $locations = session('bookLocation');
         $reservedLot = session('reservedLot');
+        $promo = Customer::with('promotions')->where('id', $customer->id)->get();
+        session(['promo' => $promo]);
 
         $perAddr = array(
                 $customer->address_1,
@@ -129,17 +131,14 @@ class ProductBookingController extends Controller
                 $cust_details['cor_address'] = $concat_corAddr;
             }
 
-        // $product->load('categories.parentCategory');
-        // session(['products' => $product]);
-
-        return view('pages.product.booking-detail', compact('customer', 'cust_details', 'corAddr', 'locations', 'reservedLot'
+        return view('pages.product.booking-detail', compact('customer', 'cust_details', 'corAddr', 'locations', 'reservedLot', 'promo'
         ));
     }
 
-    public function getSection(Request $request)
-    {
-        $sections = BookingSection::where("lot_layout_id", $request->lot_layout_id)
-            ->pluck("name", "id");
-        return response()->json($sections);
-    }
+    // public function getSection(Request $request)
+    // {
+    //     $sections = BookingSection::where("lot_layout_id", $request->lot_layout_id)
+    //         ->pluck("name", "id");
+    //     return response()->json($sections);
+    // }
 }

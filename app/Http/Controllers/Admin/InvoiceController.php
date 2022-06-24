@@ -47,7 +47,7 @@ class InvoiceController extends Controller
             $end_date = Carbon::createFromFormat('d/m/Y', $request->end_date)->toDateString();
             $sales = Order::whereBetween('created_at', [$start_date,$end_date])->get();
         } else {
-            $sales = Order::with(['customer', 'products', 'installments', 'fullPayments'])->get();
+            $sales = Order::with(['customer', 'products', 'installments', 'fullPayments', 'createdBy'])->get();
         }
 
         return view('admin.invoices.salesReport', compact('sales'));
