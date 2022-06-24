@@ -62,6 +62,7 @@ class Customer extends Model
         'deleted_at',
         'created_by',
         'mode',
+        'promotion_id'
     ];
 
     public function createdBy()
@@ -112,5 +113,10 @@ class Customer extends Model
     public function payments()
     {
         return $this->hasMany(PaymentMode::class);
+    }
+
+    public function promotions()
+    {
+        return $this->belongsTo(Promotion::class, 'promotion_id');
     }
 }

@@ -1,8 +1,8 @@
 <div class="form-row">
     <div class="form-group col-md-5">
-        <label class="required" for="full_name">{{ trans('cruds.customer.fields.full_name') }} As in NRIC/Passport
+        <label for="full_name">{{ trans('cruds.customer.fields.full_name') }} As in NRIC/Passport
         </label>
-        <input class="form-control {{ $errors->has('full_name') ? 'is-invalid' : '' }}" type="text" name="full_name" id="full_name" value="{{ old('full_name', '') }}" required>
+        <input class="form-control {{ $errors->has('full_name') ? 'is-invalid' : '' }}" type="text" name="full_name" id="full_name" value="{{ old('full_name', '') }}">
         @if($errors->has('full_name'))
         <div class="invalid-feedback">
             {{ $errors->first('full_name') }}
@@ -30,10 +30,10 @@
     </div>
 
     <div class="form-group col-md-4">
-        <label class="required" for="id_number">{{ trans('cruds.customer.fields.id_number') }}</label>
+        <label for="id_number">{{ trans('cruds.customer.fields.id_number') }}</label>
         <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="{{ trans('cruds.customer.fields.id_number_helper') }}">
         </i>
-        <input class="form-control {{ $errors->has('id_number') ? 'is-invalid' : '' }}" type="text" name="id_number" id="id_number" value="{{ old('id_number', '') }}" required>
+        <input class="form-control {{ $errors->has('id_number') ? 'is-invalid' : '' }}" type="text" name="id_number" id="id_number" value="{{ old('id_number', '') }}">
         @if($errors->has('id_number'))
         <div class="invalid-feedback">
             {{ $errors->first('id_number') }}
@@ -44,7 +44,7 @@
 
 <div class="form-row">
     <div class="form-group col-md-4">
-        <label for="gender" class="required">
+        <label for="gender">
             Gender
         </label>
         <select class="form-control {{ $errors->has('gender') ? 'is-invalid' : '' }}" name="gender" id="gender">
@@ -62,7 +62,7 @@
     </div>
 
     <div class="form-group col-md-4">
-        <label for="mobile" class="required">
+        <label for="mobile">
             Mobile
         </label>
         <input class="form-control {{ $errors->has('mobile') ? 'is-invalid' : '' }}" type="text" name="mobile" id="mobile" value="{{ old('mobile', '') }}">

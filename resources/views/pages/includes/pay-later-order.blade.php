@@ -59,6 +59,7 @@
                             $order = session('order');
                             $paymentInfo = session('paymentInfo');
                             $products = session('products');
+                            $promo = session('promo');
                         @endphp
 
                         <div class="p-3 border-bottom">
@@ -97,6 +98,15 @@
                                         </i>
                                         Payment Method: <b>{{ Str::upper($customer->mode) }}</b>
                                     </small>
+                                    @if(isset($customer->promotion_id) && $customer->promotion_id !=null)
+                                        <small class="mt-2">
+                                            <i class="fa fa-check text-muted"></i>
+                                            Promotion Code:
+                                            <span class="badge bg-success text-white" style="font-size:8pt;">
+                                                {{ Str::upper($customer->promotions->promo_code) }}
+                                            </span>
+                                        </small>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -118,17 +128,66 @@
                         </div>
 
                         <div class="row g-0">
+                            <div class="col-md-6">
+                                <div class="p-3 d-flex justify-content-center align-items-center">
+                                    <span class="font-weight-bold">
+                                        Product Selling Price
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 d-flex justify-content-center align-items-center">
+                                    <span>
+                                        RM {{ $reservedLot->selling ?? '' }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-0">
+                            <div class="col-md-6">
+                                <div class="p-3 d-flex justify-content-center align-items-center">
+                                    <span class="font-weight-bold">
+                                        Maintenance Fees
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 d-flex justify-content-center align-items-center">
+                                    <span>
+                                        RM {{ $reservedLot->maintenance ?? '' }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-0">
+                            <div class="col-md-6">
+                                <div class="p-3 d-flex justify-content-center align-items-center">
+                                    <span class="font-weight-bold">
+                                        Promotion Price
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 d-flex justify-content-center align-items-center">
+                                    <span>
+                                        RM {{ $reservedLot->promo ?? '' }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        @if(isset($customer->promotion_id) && $customer->promotion_id !=null)
+                            <div class="row g-0">
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span class="font-weight-bold">
-                                            Product Selling Price
+                                            Promotion Code Discount
                                         </span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
-                                        <span>
-                                            RM {{ $reservedLot->selling ?? '' }}
+                                        <span style="color:blue;">
+                                            RM {{ $order->discount_price ?? '' }}
                                         </span>
                                     </div>
                                 </div>
@@ -137,34 +196,36 @@
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span class="font-weight-bold">
-                                            Maintenance Fees
+                                            Product Price
                                         </span>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                    <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
-                                        <span>
-                                            RM {{ $reservedLot->maintenance ?? '' }}
+                                        <span class="font-weight-bold">
+                                            RM {{ $reservedLot->price ?? '' }}
                                         </span>
                                     </div>
                                 </div>
                             </div>
+                            <hr>
                             <div class="row g-0">
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span class="font-weight-bold">
-                                            Promotion Price
+                                            Total
                                         </span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
-                                        <span>
-                                            RM {{ $reservedLot->promo ?? '' }}
+                                        <span class="font-weight-bold">
+                                            RM {{ $order->after_discount ?? '' }}
                                         </span>
                                     </div>
                                 </div>
                             </div>
+                        @else
                             <div class="row g-0">
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
@@ -181,6 +242,7 @@
                                     </div>
                                 </div>
                             </div>
+                        @endif
                     </div>
                 </div>
             </div>

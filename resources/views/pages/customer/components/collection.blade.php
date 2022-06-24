@@ -38,10 +38,10 @@
 
             <div class="form-row">
                 <div class="form-group col-md-4">
-                    <label class="required" for="contact_person_name">
+                    <label for="contact_person_name">
                         Representative Name
                     </label>
-                    <input class="form-control {{ $errors->has('contact_person_name') ? 'is-invalid' : '' }}" type="text" name="contact_person_name" id="contact_person_name" value="{{ old('contact_person_name', '') }}" required>
+                    <input class="form-control {{ $errors->has('contact_person_name') ? 'is-invalid' : '' }}" type="text" name="contact_person_name" id="contact_person_name" value="{{ old('contact_person_name', '') }}">
                     @if($errors->has('contact_person_name'))
                         <div class="invalid-feedback">
                             {{ $errors->first('contact_person_name') }}
@@ -50,12 +50,12 @@
                 </div>
 
                 <div class="form-group col-md-4">
-                    <label class="required" for="cperson_id_number">
+                    <label for="cperson_id_number">
                         NRIC No.
                     </label>
                     <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="{{ trans('cruds.customer.fields.id_number_helper') }}">
                     </i>
-                    <input class="form-control {{ $errors->has('cperson_id_number') ? 'is-invalid' : '' }}" type="text" name="cperson_id_number" id="cperson_id_number" value="{{ old('cperson_id_number', '') }}" required>
+                    <input class="form-control {{ $errors->has('cperson_id_number') ? 'is-invalid' : '' }}" type="text" name="cperson_id_number" id="cperson_id_number" value="{{ old('cperson_id_number', '') }}" >
                     @if($errors->has('cperson_id_number'))
                         <div class="invalid-feedback">
                             {{ $errors->first('cperson_id_number') }}
@@ -64,10 +64,10 @@
                 </div>
 
                 <div class="form-group col-md-4">
-                    <label class="required" for="contact_person_no">
+                    <label for="contact_person_no">
                         Contact No.
                     </label>
-                    <input class="form-control {{ $errors->has('contact_person_no') ? 'is-invalid' : '' }}" type="text" name="contact_person_no" id="contact_person_no" value="{{ old('contact_person_no', '') }}" required>
+                    <input class="form-control {{ $errors->has('contact_person_no') ? 'is-invalid' : '' }}" type="text" name="contact_person_no" id="contact_person_no" value="{{ old('contact_person_no', '') }}">
                     @if($errors->has('contact_person_no'))
                         <div class="invalid-feedback">
                             {{ $errors->first('contact_person_no') }}

@@ -42,11 +42,27 @@ class InstallmentController extends Controller
 
         $requestData = $request->all();
 
+        if(isset($customer->promotion_id) && !is_null($customer->promotion_id)){
+            $percentage = $customer->promotions->promo_value;
+            $percentPrice = $reservedLot->price * ($percentage/100);
+            $amountDiscount = ($reservedLot->price) - ($percentPrice);
+
+            if($customer->promotions->promo_type === 'Percentage') {
+                $discount_price = $percentPrice;
+                $after_discount = $amountDiscount;
+            } elseif($customer->promotions->promo_type === 'Fixed') {
+                $discount_price = $percentage;
+                $after_discount = ($reservedLot->price) - $discount_price;
+            }
+        }
+
         $order = new Order;
         $order->ref_no = $this->getOrderNumber();
         $order->order_status = 'NEW';
         $order->payment_option = 'PAY NOW';
         $order->amount = $requestData['amount'];
+        $order->after_discount = $after_discount;
+        $order->discount_price = $discount_price;
         $order->order_date = $current = Carbon::now();
         $order->customer_id = $customer->id;
         $order->created_by = $customer->created_by;
@@ -107,11 +123,27 @@ class InstallmentController extends Controller
         $locations = session('bookLocation');
         $reservedLot = session('reservedLot');
 
+        if(isset($customer->promotion_id) && !is_null($customer->promotion_id)){
+            $percentage = $customer->promotions->promo_value;
+            $percentPrice = $reservedLot->price * ($percentage/100);
+            $amountDiscount = ($reservedLot->price) - ($percentPrice);
+
+            if($customer->promotions->promo_type === 'Percentage') {
+                $discount_price = $percentPrice;
+                $after_discount = $amountDiscount;
+            } elseif($customer->promotions->promo_type === 'Fixed') {
+                $discount_price = $percentage;
+                $after_discount = ($reservedLot->price) - $discount_price;
+            }
+        }
+
         $order = new Order;
         $order->ref_no = $this->getOrderNumber();
         $order->order_status = 'NEW';
         $order->payment_option = 'PAY LATER';
         $order->amount = '0.0';
+        $order->after_discount = $after_discount;
+        $order->discount_price = $discount_price;
         $order->order_date = $current = Carbon::now();
         $order->customer_id = $customer->id;
         $order->created_by = $customer->created_by;

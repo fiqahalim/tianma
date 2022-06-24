@@ -11,16 +11,24 @@
             @if(isset($corAddr))
             @foreach($corAddr as $items)
             @foreach($items->payments as $payment)
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
                 <label for="mode">Payment Mode Type</label>
                 <input class="form-control" id="mode" type="text" value="{{ old('payment_name', $payment->payment_name['0']) }}" readonly>
             </div>
             @endforeach
             @endforeach
             @endif
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
                 <label for="mode">{{ trans('cruds.customer.fields.mode') }}</label>
                 <input class="form-control" id="mode" type="text" value="{{ old('mode', $customer->mode) }}" readonly>
+            </div>
+            <div class="form-group col-md-4">
+                @if(isset($promo))
+                @foreach($promo as $code)
+                    <label for="promo">Promotion Code</label>
+                    <input class="form-control" id="promo" type="text" value="{{ old('promo', $code->promotions->promo_code) }}" readonly>
+                @endforeach
+                @endif
             </div>
         </div>
     </div>
