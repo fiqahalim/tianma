@@ -57,13 +57,13 @@
                                 {{ isset($firstPayout->point_value) ? $firstPayout->point_value : '' }}
                             </td>
                             <td>
-                                {{ isset($firstPayout->point_value) ? $firstPayout->percentage : '' }}
+                                {{ isset($firstPayout->percentage) ? $firstPayout->percentage : '' }}
                             </td>
                             @if(isset($order->commissions->first_month) && $order->commissions->first_month > 0)
                                 <td>Yes</td>
                             @endif
                             <td>
-                                RM {{ isset($firstPayout->mo_overriding_comm) ? $firstPayout->mo_overriding_comm : '' }}
+                                RM{{ isset($firstPayout->mo_overriding_comm) ? $firstPayout->mo_overriding_comm : '' }}
                             </td>
                         </tr>
                     </tbody>
@@ -74,7 +74,7 @@
             @if(isset($order->customer))
                 @if($order->customer->mode == 'Installment')
                     <div class="form-group mt-5">
-                        <h5>Installment Payment (<i>{{ $order->installments->installment_year }} months</i>)</h5>
+                        <h5>Installment Payment (<i>{{ isset($order->installments->installment_year) ? $order->installments->installment_year : '' }} months</i>)</h5>
                         <table class="table table-light table-bordered datatable datatable-installments">
                             <thead>
                                 @if(isset($order->commissions) && $order->commissions->mo_overriding_comm != "0")
@@ -111,9 +111,11 @@
                             <tr class="table-primary">
                                 <th scope="col">Upperline Agent Code</th>
                                 <th scope="col">Upperline Agent Ranking</th>
+                                <th scope="col">Upperline Commission</th>
                             </tr>
                         </thead>
                         <tbody>
+                            {{-- 1st Parent --}}
                             <tr>
                                 <td>
                                     {{ $order->createdBy->parent->agent_code }}
@@ -131,7 +133,91 @@
                                         CBDD
                                     @endif
                                 </td>
+                                <td>
+                                    RM{{ $order->createdBy->parent->commissions->mo_overriding_comm }}
+                                </td>
                             </tr>
+
+                            {{-- 2nd Parent --}}
+                            @if(isset($order->createdBy->parent->parent) && !empty($order->createdBy->parent->parent))
+                                <tr>
+                                    <td>
+                                        {{ isset($order->createdBy->parent->parent->agent_code) ? $order->createdBy->parent->parent->agent_code : '' }}
+                                    </td>
+                                    <td>
+                                        @if(isset($order->createdBy->parent->parent->ranking_id))
+                                            @if($order->createdBy->parent->parent->ranking_id == 1)
+                                                SD
+                                            @elseif($order->createdBy->parent->parent->ranking_id == 2)
+                                                DSD
+                                            @elseif($order->createdBy->parent->parent->ranking_id == 3)
+                                                BDD A
+                                            @elseif($order->createdBy->parent->parent->ranking_id == 4)
+                                                BDD B
+                                            @else
+                                                CBDD
+                                            @endif
+                                        @endif
+                                    </td>
+                                    <td>
+                                        RM{{ isset($order->createdBy->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->commissions->mo_overriding_comm : '' }}
+                                    </td>
+                                </tr>
+                            @endif
+
+                            {{-- 3rd Parent --}}
+                            @if(isset($order->createdBy->parent->parent->parent) && !empty($order->createdBy->parent->parent->parent))
+                                <tr>
+                                    <td>
+                                        {{ isset($order->createdBy->parent->parent->parent->agent_code) ? $order->createdBy->parent->parent->parent->agent_code : '' }}
+                                    </td>
+                                    <td>
+                                        @if(isset($order->createdBy->parent->parent->parent->ranking_id))
+                                            @if($order->createdBy->parent->parent->parent->ranking_id == 1)
+                                                SD
+                                            @elseif($order->createdBy->parent->parent->parent->ranking_id == 2)
+                                                DSD
+                                            @elseif($order->createdBy->parent->parent->parent->ranking_id == 3)
+                                                BDD A
+                                            @elseif($order->createdBy->parent->parent->parent->ranking_id == 4)
+                                                BDD B
+                                            @else
+                                                CBDD
+                                            @endif
+                                        @endif
+                                    </td>
+                                    <td>
+                                        RM{{ isset($order->createdBy->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->commissions->mo_overriding_comm : '' }}
+                                    </td>
+                                </tr>
+                            @endif
+
+                            {{-- 4th Parent --}}
+                            @if(isset($order->createdBy->parent->parent->parent->parent) && !empty($order->createdBy->parent->parent->parent->parent))
+                                <tr>
+                                    <td>
+                                        {{ isset($order->createdBy->parent->parent->parent->parent->agent_code) ? $order->createdBy->parent->parent->parent->parent->agent_code : '' }}
+                                    </td>
+                                    <td>
+                                        @if(isset($order->createdBy->parent->parent->parent->parent->ranking_id))
+                                            @if($order->createdBy->parent->parent->parent->parent->ranking_id == 1)
+                                                SD
+                                            @elseif($order->createdBy->parent->parent->parent->parent->ranking_id == 2)
+                                                DSD
+                                            @elseif($order->createdBy->parent->parent->parent->parent->ranking_id == 3)
+                                                BDD A
+                                            @elseif($order->createdBy->parent->parent->parent->parent->ranking_id == 4)
+                                                BDD B
+                                            @else
+                                                CBDD
+                                            @endif
+                                        @endif
+                                    </td>
+                                    <td>
+                                        RM{{ isset($order->createdBy->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->commissions->mo_overriding_comm : '' }}
+                                    </td>
+                                </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>

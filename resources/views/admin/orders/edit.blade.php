@@ -142,6 +142,23 @@
                         <input class="form-control" type="text" value="{{ $order->lotID ? $order->lotID->promo : '' }}">
                     </div>
                 </div>
+                @if(isset($order->customer->promotions) && $order->customer->promotions != null)
+                    <div class="form-group col-md-3">
+                        <label for="promotion_price">Promotion Code</label>
+                        <input class="form-control" type="text" value="{{ $order->customer->promotions ? $order->customer->promotions->promo_code : '' }}" readonly>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="promotion_price">Promotion Code Discount</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i>RM</i>
+                                </span>
+                            </div>
+                            <input class="form-control" type="text" value="{{ $order->discount_price ? $order->discount_price : '' }}">
+                        </div>
+                    </div>
+                @endif
             </div>
 
             <div class="form-group pl-2">

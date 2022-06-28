@@ -66,7 +66,9 @@ class TransactionController extends Controller
     {
         $order->load('customer', 'createdBy', 'commissions', 'installments', 'transactions');
 
-        return view('admin.paymentMonthlies.edit', compact('order'));
+        $newBalancePV = ($order->commissions->actual_pv) - ($order->commissions->point_value);
+
+        return view('admin.paymentMonthlies.edit', compact('order', 'newBalancePV'));
     }
 
     public function store(Request $request, Order $order)
@@ -93,8 +95,9 @@ class TransactionController extends Controller
 
         $amount = isset($request->amount) ? $request->amount: '';
         $rankings = isset($orders->createdBy) ? $orders->createdBy : '';
+        $newBalancePV = ($order->commissions->actual_pv) - ($order->commissions->point_value);
         $newBalance = ($balances - $amount);
-        $newPV = $request->point_value;
+        $newPV = $newBalancePV;
         $installmentMonths = $request->installment_year;
         $installmentBalance = ($installmentB - 1);
 

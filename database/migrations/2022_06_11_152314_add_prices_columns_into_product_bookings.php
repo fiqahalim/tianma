@@ -14,10 +14,10 @@ class AddPricesColumnsIntoProductBookings extends Migration
     public function up()
     {
         Schema::table('product_bookings', function (Blueprint $table) {
-            $table->decimal('price', 15, 2)->nullable()->after('seats');
-            $table->decimal('promo', 15, 2)->nullable()->after('seats');
-            $table->decimal('maintenance', 15, 2)->nullable()->after('seats');
-            $table->float('point_value', 15, 2)->nullable()->after('seats');
+            $table->string('price')->nullable()->after('seats');
+            $table->string('promo')->nullable()->after('seats');
+            $table->string('maintenance')->nullable()->after('seats');
+            $table->string('point_value')->nullable()->after('seats');
             $table->string('available')->nullable()->after('seats');
         });
     }
