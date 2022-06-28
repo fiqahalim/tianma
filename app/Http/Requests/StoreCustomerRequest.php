@@ -19,11 +19,11 @@ class StoreCustomerRequest extends FormRequest
         return [
             'full_name' => [
                 'string',
-                'required',
+                'nullable',
             ],
             'id_number' => [
                 'string',
-                'required',
+                'nullable',
                 // 'unique:customers',
             ],
             'contact_person_name' => [

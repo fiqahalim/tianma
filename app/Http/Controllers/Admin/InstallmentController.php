@@ -42,6 +42,8 @@ class InstallmentController extends Controller
 
         $requestData = $request->all();
 
+        $after_discount = $discount_price = 0;
+
         if(isset($customer->promotion_id) && !is_null($customer->promotion_id)){
             $percentage = $customer->promotions->promo_value;
             $percentPrice = $reservedLot->price * ($percentage/100);
@@ -122,6 +124,8 @@ class InstallmentController extends Controller
         $customer = session('customer');
         $locations = session('bookLocation');
         $reservedLot = session('reservedLot');
+
+        $after_discount = $discount_price = 0;
 
         if(isset($customer->promotion_id) && !is_null($customer->promotion_id)){
             $percentage = $customer->promotions->promo_value;

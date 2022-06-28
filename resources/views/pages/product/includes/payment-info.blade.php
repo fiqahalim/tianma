@@ -26,7 +26,7 @@
                 @if(isset($promo))
                 @foreach($promo as $code)
                     <label for="promo">Promotion Code</label>
-                    <input class="form-control" id="promo" type="text" value="{{ old('promo', $code->promotions->promo_code) }}" readonly>
+                    <input class="form-control" id="promo" type="text" value="{{ old('promo', isset($code->promotions->promo_code) ? $code->promotions->promo_code : '') }}" readonly>
                 @endforeach
                 @endif
             </div>

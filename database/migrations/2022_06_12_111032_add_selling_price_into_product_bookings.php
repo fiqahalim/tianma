@@ -14,7 +14,7 @@ class AddSellingPriceIntoProductBookings extends Migration
     public function up()
     {
         Schema::table('product_bookings', function (Blueprint $table) {
-            $table->decimal('selling', 15,2)->nullable()->after('point_value');
+            $table->string('selling')->nullable()->after('point_value');
         });
     }
 

@@ -67,7 +67,7 @@
                             </td>
                             @if(isset($comms->orders->customer) ?? $comms->orders->customer->mode == 'Installment')
                                 <td>
-                                    {{ isset($comms->orders->installments->installment_year) ?? $comms->orders->installments->installment_year  }} months
+                                    {{ isset($comms->orders->installments->installment_year) ? $comms->orders->installments->installment_year : ''}} months
                                 </td>
                             @endif
                         </tr>
@@ -83,9 +83,11 @@
                             <tr class="table-primary">
                                 <th scope="col">Upperline Agent Code</th>
                                 <th scope="col">Upperline Agent Ranking</th>
+                                <th scope="col">Upperline Commission</th>
                             </tr>
                         </thead>
                         <tbody>
+                            {{-- 1st Parent --}}
                             <tr>
                                 <td>
                                     {{ isset($comms->user->parent->agent_code) ? $comms->user->parent->agent_code: 'No Upperline' }}
@@ -103,7 +105,64 @@
                                         CBDD
                                     @endif
                                 </td>
+                                <td>
+                                    RM{{ $comms->user->parent->commissions->mo_overriding_comm }}
+                                </td>
                             </tr>
+
+                            {{-- 2nd Parent --}}
+                            @if(isset($comms->user->parent->parent) && !empty($comms->user->parent->parent))
+                                <tr>
+                                    <td>
+                                        {{ isset($comms->user->parent->parent->agent_code) ? $comms->user->parent->parent->agent_code: 'No Upperline' }}
+                                    </td>
+                                    <td>
+                                        @if($comms->user->parent->parent->ranking_id)
+                                            @if($comms->user->parent->ranking_id == 1)
+                                                SD
+                                            @elseif($comms->user->parent->ranking_id == 2)
+                                                DSD
+                                            @elseif($comms->user->parent->ranking_id == 3)
+                                                BDD A
+                                            @elseif($comms->user->parent->ranking_id == 4)
+                                                BDD B
+                                            @else
+                                                CBDD
+                                            @endif
+                                        @endif
+                                    </td>
+                                    <td>
+                                        RM{{ $comms->user->parent->commissions->mo_overriding_comm }}
+                                    </td>
+                                </tr>
+                            @endif
+
+                            {{-- 3rd Parent --}}
+                            @if(isset($comms->user->parent->parent->parent) && !empty($comms->user->parent->parent->parent))
+                                <tr>
+                                    <td>
+                                        {{ isset($comms->user->parent->parent->parent->agent_code) ? $comms->user->parent->parent->parent->agent_code: 'No Upperline' }}
+                                    </td>
+                                    <td>
+                                        @if($comms->user->parent->parent->parent->ranking_id)
+                                            @if($comms->user->parent->parent->ranking_id == 1)
+                                                SD
+                                            @elseif($comms->user->parent->parent->ranking_id == 2)
+                                                DSD
+                                            @elseif($comms->user->parent->parent->ranking_id == 3)
+                                                BDD A
+                                            @elseif($comms->user->parent->parent->ranking_id == 4)
+                                                BDD B
+                                            @else
+                                                CBDD
+                                            @endif
+                                        @endif
+                                    </td>
+                                    <td>
+                                        RM{{ $comms->user->parent->commissions->mo_overriding_comm }}
+                                    </td>
+                                </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>
