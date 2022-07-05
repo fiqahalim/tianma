@@ -16,18 +16,50 @@
 
     <div class="card-body">
         <div class="form-group ml-3">
-            <h4>Customer Details</h4>
-            <p class="mt-3 ml-3" style="font-size: 12pt; font-family: Arial, Helvetica, sans-serif;">
-                {{ Str::upper($customer->full_name) }} <br>
-                {{ $customer->id_number }} <br>
-                {{ Str::upper($customer->address_1) }} <br>
-                @if(isset($customer->address_2) && !empty($customer->address_2))
-                    {{ Str::upper($customer->address_2) }} <br>
-                @endif
-                {{ Str::upper($customer->postcode) }}
-                {{ Str::upper($customer->city) }}
-                {{ Str::upper($customer->state) }}
-            </p>
+            <div class="page-content container" style="background: white;">
+                <div class="row">
+                    <div class="col-4 text-center">
+                        <figure class="figure">
+                            <img src="{{ '/images/tianma_logo_op-01a.png' }}" class="figure-img img-fluid rounded mt-2" style="height: 125px; width: 13rem;">
+                        </figure>
+                    </div>
+                    <div class="col-8 mt-4">
+                        <p style="font-size: 12pt; font-family: Arial, Helvetica, sans-serif;">
+                            <strong>TIANMA MEMORIAL HOLDINGS BERHAD</strong>
+                            <small><b>202101043182 (1443482 A)</b></small><br>
+                            Corporate Tower, Level 5, Jalan Pahat L 15/L, Section 15,<br>
+                            40200 Shah Alam , Selangor<br>
+                            Tel : 010-951 3688 &nbsp;&nbsp; Website : www.tianma.my
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col"></div>
+                    <div class="col-6 text-center">
+                        <h4><strong><u>CUSTOMER DETAILS</u></strong></h4>
+                    </div>
+                    <div class="col"></div>
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        <div class="text-dark-m2">
+                            <div class="my-1">
+                                <p style="font-size: 12pt; font-family: Arial, Helvetica, sans-serif;">
+                                    {{ Str::upper($customer->full_name) }} <br>
+                                    {{ $customer->id_number }} <br>
+                                    {{ Str::upper($customer->address_1) }} <br>
+                                    @if(isset($customer->address_2) && !empty($customer->address_2))
+                                        {{ Str::upper($customer->address_2) }} <br>
+                                    @endif
+                                    {{ Str::upper($customer->postcode) }}
+                                    {{ Str::upper($customer->city) }}
+                                    {{ Str::upper($customer->state) }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="form-group mt-5 ml-3">
             <h4>Customer's Order Lists</h4>
@@ -45,6 +77,10 @@
                         <th>
                             {{ trans('cruds.order.fields.order_status') }}
                         </th>
+                        <th>
+                            Product Amount (RM)
+                        </th>
+                        <th>Payment Mode</th>
                         <th>
                             &nbsp;
                         </th>
@@ -64,6 +100,10 @@
                         <td>
                             {{ Str::upper($order->order_status ?? '') }}
                         </td>
+                        <td>
+                            {{ Str::upper($order->amount ?? '') }}
+                        </td>
+                        <td>{{ Str::upper($customer->mode) }}</td>
                         <td>
                             <a class="btn btn-xs btn-primary" href="{{ route('admin.customers.showInvoice', $order->id) }}">
                                 <i class="fas fa-eye"></i>

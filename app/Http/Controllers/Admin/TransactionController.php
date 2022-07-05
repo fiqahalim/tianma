@@ -71,6 +71,7 @@ class TransactionController extends Controller
         return view('admin.paymentMonthlies.edit', compact('order', 'newBalancePV'));
     }
 
+    // monthly installment transaction
     public function store(Request $request, Order $order)
     {
         $orders = session('orders');
@@ -95,9 +96,8 @@ class TransactionController extends Controller
 
         $amount = isset($request->amount) ? $request->amount: '';
         $rankings = isset($orders->createdBy) ? $orders->createdBy : '';
-        $newBalancePV = ($order->commissions->actual_pv) - ($order->commissions->point_value);
         $newBalance = ($balances - $amount);
-        $newPV = $newBalancePV;
+        $newPV = $request->balance_pv;
         $installmentMonths = $request->installment_year;
         $installmentBalance = ($installmentB - 1);
 
@@ -116,30 +116,70 @@ class TransactionController extends Controller
                     $balanceCommission += round(($balanceComms * 0.16), 2);
                     $parentCommission = $this->getParent();
                     $pp = $this->getPP();
+                    $ppp = $this->getPPP();
+                    $pppp = $this->getPPPP();
+                    $getFive = $this->getFiveP();
+                    $getSixth = $this->getSixth();
+                    $getSeven = $this->getSeven();
+                    $getEight = $this->getEight();
+                    $getNine = $this->getNine();
+                    $getTen = $this->getTen();
                     break;
                 case 2:
                     $totalCommission += round(($installmentPV * 0.04), 2);
                     $balanceCommission += round(($balanceComms * 0.04), 2);
                     $parentCommission = $this->getParent();
                     $pp = $this->getPP();
+                    $ppp = $this->getPPP();
+                    $pppp = $this->getPPPP();
+                    $getFive = $this->getFiveP();
+                    $getSixth = $this->getSixth();
+                    $getSeven = $this->getSeven();
+                    $getEight = $this->getEight();
+                    $getNine = $this->getNine();
+                    $getTen = $this->getTen();
                     break;
                 case 3:
                     $totalCommission += round(($installmentPV * 0.02), 2);
                     $balanceCommission += round(($balanceComms * 0.02), 2);
                     $parentCommission = $this->getParent();
                     $pp = $this->getPP();
+                    $ppp = $this->getPPP();
+                    $pppp = $this->getPPPP();
+                    $getFive = $this->getFiveP();
+                    $getSixth = $this->getSixth();
+                    $getSeven = $this->getSeven();
+                    $getEight = $this->getEight();
+                    $getNine = $this->getNine();
+                    $getTen = $this->getTen();
                     break;
                 case 4:
                     $totalCommission += round(($installmentPV * 0.04),2);
                     $balanceCommission += round(($balanceComms * 0.04), 2);
                     $parentCommission = $this->getParent();
                     $pp = $this->getPP();
+                    $ppp = $this->getPPP();
+                    $pppp = $this->getPPPP();
+                    $getFive = $this->getFiveP();
+                    $getSixth = $this->getSixth();
+                    $getSeven = $this->getSeven();
+                    $getEight = $this->getEight();
+                    $getNine = $this->getNine();
+                    $getTen = $this->getTen();
                     break;
                 case 5:
                     $totalCommission += round(($installmentPV * 0.05), 2);
                     $balanceCommission += round(($balanceComms * 0.05), 2);
                     $parentCommission = $this->getParent();
                     $pp = $this->getPP();
+                    $ppp = $this->getPPP();
+                    $pppp = $this->getPPPP();
+                    $getFive = $this->getFiveP();
+                    $getSixth = $this->getSixth();
+                    $getSeven = $this->getSeven();
+                    $getEight = $this->getEight();
+                    $getNine = $this->getNine();
+                    $getTen = $this->getTen();
                     break;
                 default:
                     break;
@@ -150,26 +190,66 @@ class TransactionController extends Controller
                     $totalCommission += round(($newPV * 0.16), 2);
                     $parentCommission = $this->getParent();
                     $pp = $this->getPP();
+                    $ppp = $this->getPPP();
+                    $pppp = $this->getPPPP();
+                    $getFive = $this->getFiveP();
+                    $getSixth = $this->getSixth();
+                    $getSeven = $this->getSeven();
+                    $getEight = $this->getEight();
+                    $getNine = $this->getNine();
+                    $getTen = $this->getTen();
                     break;
                 case 2:
                     $totalCommission += round(($newPV * 0.04), 2);
                     $parentCommission = $this->getParent();
                     $pp = $this->getPP();
+                    $ppp = $this->getPPP();
+                    $pppp = $this->getPPPP();
+                    $getFive = $this->getFiveP();
+                    $getSixth = $this->getSixth();
+                    $getSeven = $this->getSeven();
+                    $getEight = $this->getEight();
+                    $getNine = $this->getNine();
+                    $getTen = $this->getTen();
                     break;
                 case 3:
                     $totalCommission += round(($newPV * 0.02), 2);
                     $parentCommission = $this->getParent();
                     $pp = $this->getPP();
+                    $ppp = $this->getPPP();
+                    $pppp = $this->getPPPP();
+                    $getFive = $this->getFiveP();
+                    $getSixth = $this->getSixth();
+                    $getSeven = $this->getSeven();
+                    $getEight = $this->getEight();
+                    $getNine = $this->getNine();
+                    $getTen = $this->getTen();
                     break;
                 case 4:
                     $totalCommission += round(($newPV * 0.04),2);
                     $parentCommission = $this->getParent();
                     $pp = $this->getPP();
+                    $ppp = $this->getPPP();
+                    $pppp = $this->getPPPP();
+                    $getFive = $this->getFiveP();
+                    $getSixth = $this->getSixth();
+                    $getSeven = $this->getSeven();
+                    $getEight = $this->getEight();
+                    $getNine = $this->getNine();
+                    $getTen = $this->getTen();
                     break;
                 case 5:
                     $totalCommission += round(($newPV * 0.05), 2);
                     $parentCommission = $this->getParent();
                     $pp = $this->getPP();
+                    $ppp = $this->getPPP();
+                    $pppp = $this->getPPPP();
+                    $getFive = $this->getFiveP();
+                    $getSixth = $this->getSixth();
+                    $getSeven = $this->getSeven();
+                    $getEight = $this->getEight();
+                    $getNine = $this->getNine();
+                    $getTen = $this->getTen();
                     break;
                 default:
                     break;
@@ -191,8 +271,9 @@ class TransactionController extends Controller
 
         // save to commission tables
         $comms = new Commission;
-        $comms->mo_overriding_comm = $totalCommission;
-        $comms->balance_comm = $balanceCommission;
+        $comms->mo_overriding_comm = abs($totalCommission);
+        $comms->balance_comm = abs($balanceCommission);
+        $comms->created_at = $current = Carbon::now();
         $comms->point_value = $request->point_value;
         $comms->order_id = $orders->id;
         $comms->user_id = $orders->createdBy->id;
@@ -211,7 +292,7 @@ class TransactionController extends Controller
         return $trans_no;
     }
 
-    // calling the getparent function
+    // 1st parent
     public function getParent()
     {
         $orders = session('orders');
@@ -283,8 +364,8 @@ class TransactionController extends Controller
 
         $commissions = null;
         $commissions = new Commission;
-        $commissions->mo_overriding_comm = $totalCommission;
-        $commissions->balance_comm = $balanceCommission;
+        $commissions->mo_overriding_comm = abs($totalCommission);
+        $commissions->balance_comm = abs($balanceCommission);
         $commissions->created_at = $current = Carbon::now();
         $commissions->user_id = $user->parent_id;
         $commissions->save();
@@ -292,6 +373,7 @@ class TransactionController extends Controller
         return $commissions;
     }
 
+    // calling the 2nd parent
     public function getPP()
     {
         $orders = session('orders');
@@ -339,8 +421,8 @@ class TransactionController extends Controller
 
                     $commissions = null;
                     $commissions = new Commission;
-                    $commissions->mo_overriding_comm = $totalCommission;
-                    $commissions->balance_comm = isset($balanceCommission) ? $balanceCommission : '';
+                    $commissions->mo_overriding_comm = abs($totalCommission);
+                    $commissions->balance_comm = abs(isset($balanceCommission)) ? abs($balanceCommission) : '';
                     $commissions->created_at = $current = Carbon::now();
                     $commissions->user_id = $pss->parent_id;
                     $commissions->save();
@@ -348,9 +430,508 @@ class TransactionController extends Controller
                     return $commissions;
                 }
             }
+        }
+    }
 
-        } else {
+    // 3rd parent
+    public function getPPP()
+    {
+        $orders = session('orders');
+        $installmentPV = session('installmentPV');
+        $balanceComms = session('balanceComms');
 
+        $user = isset($orders->createdBy) ? $orders->createdBy : '';
+
+        if(isset($user->parent) && !is_null($user->parent)) {
+            $p = User::where('id', $user->parent->parent_id)->with('parent')->get();
+
+            $totalCommission = $balanceCommission = 0;
+
+            if($orders->customer->mode == 'Installment') {
+                if(isset($p) && !empty($p)) {
+                    foreach ($p as $pss) {
+                        if (!empty($pss->parent_id)) {
+                            $pRank = User::select('ranking_id')->where('id', $pss->parent_id)->first();
+                            if ($pRank->ranking_id !== $pss->ranking_id) {
+                                switch ($pRank->ranking_id) {
+                                    case 1:
+                                        $totalCommission += round(($installmentPV * 0.16), 2);
+                                        $balanceCommission += round(($balanceComms * 0.16), 2);
+                                        break;
+                                    case 2:
+                                        $totalCommission += round(($installmentPV * 0.04), 2);
+                                        $balanceCommission += round(($balanceComms * 0.04), 2);
+                                        break;
+                                    case 3:
+                                        $totalCommission += round(($installmentPV * 0.02), 2);
+                                        $balanceCommission += round(($balanceComms * 0.02), 2);
+                                        break;
+                                    case 4:
+                                        $totalCommission += round(($installmentPV * 0.04),2);
+                                        $balanceCommission += round(($balanceComms * 0.04), 2);
+                                        break;
+                                    case 5:
+                                        $totalCommission += round(($installmentPV * 0.05), 2);
+                                        $balanceCommission += round(($balanceComms * 0.05), 2);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+
+                        $commissions = null;
+                        $commissions = new Commission;
+                        $commissions->mo_overriding_comm = abs($totalCommission);
+                        $commissions->balance_comm = isset($balanceCommission) ? $balanceCommission : '';
+                        $commissions->created_at = $current = Carbon::now();
+                        $commissions->user_id = $pss->parent_id;
+                        $commissions->save();
+
+                        return $commissions;
+                    }
+                }
+            }
+        }
+    }
+
+    // 4th parent
+    public function getPPPP()
+    {
+        $orders = session('orders');
+        $installmentPV = session('installmentPV');
+        $balanceComms = session('balanceComms');
+
+        $user = isset($orders->createdBy) ? $orders->createdBy : '';
+
+        if(isset($user->parent->parent) && !is_null($user->parent->parent)) {
+            $p = User::where('id', $user->parent->parent->parent_id)->with('parent')->get();
+
+            $totalCommission = $balanceCommission = 0;
+
+            if($orders->customer->mode == 'Installment') {
+                if(isset($p) && !empty($p)) {
+                    foreach ($p as $pss) {
+                        if (!empty($pss->parent_id)) {
+                            $pRank = User::select('ranking_id')->where('id', $pss->parent_id)->first();
+                            if ($pRank->ranking_id !== $pss->ranking_id) {
+                                switch ($pRank->ranking_id) {
+                                    case 1:
+                                        $totalCommission += round(($installmentPV * 0.16), 2);
+                                        $balanceCommission += round(($balanceComms * 0.16), 2);
+                                        break;
+                                    case 2:
+                                        $totalCommission += round(($installmentPV * 0.04), 2);
+                                        $balanceCommission += round(($balanceComms * 0.04), 2);
+                                        break;
+                                    case 3:
+                                        $totalCommission += round(($installmentPV * 0.02), 2);
+                                        $balanceCommission += round(($balanceComms * 0.02), 2);
+                                        break;
+                                    case 4:
+                                        $totalCommission += round(($installmentPV * 0.04),2);
+                                        $balanceCommission += round(($balanceComms * 0.04), 2);
+                                        break;
+                                    case 5:
+                                        $totalCommission += round(($installmentPV * 0.05), 2);
+                                        $balanceCommission += round(($balanceComms * 0.05), 2);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+
+                        $commissions = null;
+                        $commissions = new Commission;
+                        $commissions->mo_overriding_comm = abs($totalCommission);
+                        $commissions->balance_comm = isset($balanceCommission) ? $balanceCommission : '';
+                        $commissions->created_at = $current = Carbon::now();
+                        $commissions->user_id = $pss->parent_id;
+                        $commissions->save();
+
+                        return $commissions;
+                    }
+                }
+            }
+        }
+    }
+
+    // 5th parent
+    public function getFiveP()
+    {
+        $orders = session('orders');
+        $installmentPV = session('installmentPV');
+        $balanceComms = session('balanceComms');
+
+        $user = isset($orders->createdBy) ? $orders->createdBy : '';
+
+        if(isset($user->parent->parent->parent) && !is_null($user->parent->parent->parent)) {
+            $p = User::where('id', $user->parent->parent->parent->parent_id)->with('parent')->get();
+
+            $totalCommission = $balanceCommission = 0;
+
+            if($orders->customer->mode == 'Installment') {
+                if(isset($p) && !empty($p)) {
+                    foreach ($p as $pss) {
+                        if (!empty($pss->parent_id)) {
+                            $pRank = User::select('ranking_id')->where('id', $pss->parent_id)->first();
+                            if ($pRank->ranking_id !== $pss->ranking_id) {
+                                switch ($pRank->ranking_id) {
+                                    case 1:
+                                        $totalCommission += round(($installmentPV * 0.16), 2);
+                                        $balanceCommission += round(($balanceComms * 0.16), 2);
+                                        break;
+                                    case 2:
+                                        $totalCommission += round(($installmentPV * 0.04), 2);
+                                        $balanceCommission += round(($balanceComms * 0.04), 2);
+                                        break;
+                                    case 3:
+                                        $totalCommission += round(($installmentPV * 0.02), 2);
+                                        $balanceCommission += round(($balanceComms * 0.02), 2);
+                                        break;
+                                    case 4:
+                                        $totalCommission += round(($installmentPV * 0.04),2);
+                                        $balanceCommission += round(($balanceComms * 0.04), 2);
+                                        break;
+                                    case 5:
+                                        $totalCommission += round(($installmentPV * 0.05), 2);
+                                        $balanceCommission += round(($balanceComms * 0.05), 2);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+
+                        $commissions = null;
+                        $commissions = new Commission;
+                        $commissions->mo_overriding_comm = abs($totalCommission);
+                        $commissions->balance_comm = isset($balanceCommission) ? $balanceCommission : '';
+                        $commissions->created_at = $current = Carbon::now();
+                        $commissions->user_id = $pss->parent_id;
+                        $commissions->save();
+
+                        return $commissions;
+                    }
+                }
+            }
+        }
+    }
+
+    // 6th parent
+    public function getSixth()
+    {
+        $orders = session('orders');
+        $installmentPV = session('installmentPV');
+        $balanceComms = session('balanceComms');
+
+        $user = isset($orders->createdBy) ? $orders->createdBy : '';
+
+        if(isset($user->parent->parent->parent->parent) && !is_null($user->parent->parent->parent->parent)) {
+            $p = User::where('id', $user->parent->parent->parent->parent->parent_id)->with('parent')->get();
+
+            $totalCommission = $balanceCommission = 0;
+
+            if($orders->customer->mode == 'Installment') {
+                if(isset($p) && !empty($p)) {
+                    foreach ($p as $pss) {
+                        if (!empty($pss->parent_id)) {
+                            $pRank = User::select('ranking_id')->where('id', $pss->parent_id)->first();
+                            if ($pRank->ranking_id !== $pss->ranking_id) {
+                                switch ($pRank->ranking_id) {
+                                    case 1:
+                                        $totalCommission += round(($installmentPV * 0.16), 2);
+                                        $balanceCommission += round(($balanceComms * 0.16), 2);
+                                        break;
+                                    case 2:
+                                        $totalCommission += round(($installmentPV * 0.04), 2);
+                                        $balanceCommission += round(($balanceComms * 0.04), 2);
+                                        break;
+                                    case 3:
+                                        $totalCommission += round(($installmentPV * 0.02), 2);
+                                        $balanceCommission += round(($balanceComms * 0.02), 2);
+                                        break;
+                                    case 4:
+                                        $totalCommission += round(($installmentPV * 0.04),2);
+                                        $balanceCommission += round(($balanceComms * 0.04), 2);
+                                        break;
+                                    case 5:
+                                        $totalCommission += round(($installmentPV * 0.05), 2);
+                                        $balanceCommission += round(($balanceComms * 0.05), 2);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+
+                        $commissions = null;
+                        $commissions = new Commission;
+                        $commissions->mo_overriding_comm = abs($totalCommission);
+                        $commissions->balance_comm = isset($balanceCommission) ? $balanceCommission : '';
+                        $commissions->created_at = $current = Carbon::now();
+                        $commissions->user_id = $pss->parent_id;
+                        $commissions->save();
+
+                        return $commissions;
+                    }
+                }
+            }
+        }
+    }
+
+    // 7th parent
+    public function getSeven()
+    {
+        $orders = session('orders');
+        $installmentPV = session('installmentPV');
+        $balanceComms = session('balanceComms');
+
+        $user = isset($orders->createdBy) ? $orders->createdBy : '';
+
+        if(isset($user->parent->parent->parent->parent->parent) && !is_null($user->parent->parent->parent->parent->parent)) {
+
+            $p = User::where('id', $user->parent->parent->parent->parent->parent->parent_id)->with('parent')->get();
+
+            $totalCommission = $balanceCommission = 0;
+
+            if($orders->customer->mode == 'Installment') {
+                if(isset($p) && !empty($p)) {
+                    foreach ($p as $pss) {
+                        if (!empty($pss->parent_id)) {
+                            $pRank = User::select('ranking_id')->where('id', $pss->parent_id)->first();
+                            if ($pRank->ranking_id !== $pss->ranking_id) {
+                                switch ($pRank->ranking_id) {
+                                    case 1:
+                                        $totalCommission += round(($installmentPV * 0.16), 2);
+                                        $balanceCommission += round(($balanceComms * 0.16), 2);
+                                        break;
+                                    case 2:
+                                        $totalCommission += round(($installmentPV * 0.04), 2);
+                                        $balanceCommission += round(($balanceComms * 0.04), 2);
+                                        break;
+                                    case 3:
+                                        $totalCommission += round(($installmentPV * 0.02), 2);
+                                        $balanceCommission += round(($balanceComms * 0.02), 2);
+                                        break;
+                                    case 4:
+                                        $totalCommission += round(($installmentPV * 0.04),2);
+                                        $balanceCommission += round(($balanceComms * 0.04), 2);
+                                        break;
+                                    case 5:
+                                        $totalCommission += round(($installmentPV * 0.05), 2);
+                                        $balanceCommission += round(($balanceComms * 0.05), 2);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+
+                        $commissions = null;
+                        $commissions = new Commission;
+                        $commissions->mo_overriding_comm = abs($totalCommission);
+                        $commissions->balance_comm = isset($balanceCommission) ? $balanceCommission : '';
+                        $commissions->created_at = $current = Carbon::now();
+                        $commissions->user_id = $pss->parent_id;
+                        $commissions->save();
+
+                        return $commissions;
+                    }
+                }
+            }
+        }
+    }
+
+    // 8th parent
+    public function getEight()
+    {
+        $orders = session('orders');
+        $installmentPV = session('installmentPV');
+        $balanceComms = session('balanceComms');
+
+        $user = isset($orders->createdBy) ? $orders->createdBy : '';
+
+        if(isset($user->parent->parent->parent->parent->parent->parent) && !is_null($user->parent->parent->parent->parent->parent->parent)) {
+            $p = User::where('id', $user->parent->parent->parent->parent->parent->parent->parent_id)
+                ->with('parent')->get();
+
+            $totalCommission = $balanceCommission = 0;
+
+            if($orders->customer->mode == 'Installment') {
+                if(isset($p) && !empty($p)) {
+                    foreach ($p as $pss) {
+                        if (!empty($pss->parent_id)) {
+                            $pRank = User::select('ranking_id')->where('id', $pss->parent_id)->first();
+                            if ($pRank->ranking_id !== $pss->ranking_id) {
+                                switch ($pRank->ranking_id) {
+                                    case 1:
+                                        $totalCommission += round(($installmentPV * 0.16), 2);
+                                        $balanceCommission += round(($balanceComms * 0.16), 2);
+                                        break;
+                                    case 2:
+                                        $totalCommission += round(($installmentPV * 0.04), 2);
+                                        $balanceCommission += round(($balanceComms * 0.04), 2);
+                                        break;
+                                    case 3:
+                                        $totalCommission += round(($installmentPV * 0.02), 2);
+                                        $balanceCommission += round(($balanceComms * 0.02), 2);
+                                        break;
+                                    case 4:
+                                        $totalCommission += round(($installmentPV * 0.04),2);
+                                        $balanceCommission += round(($balanceComms * 0.04), 2);
+                                        break;
+                                    case 5:
+                                        $totalCommission += round(($installmentPV * 0.05), 2);
+                                        $balanceCommission += round(($balanceComms * 0.05), 2);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+
+                        $commissions = null;
+                        $commissions = new Commission;
+                        $commissions->mo_overriding_comm = abs($totalCommission);
+                        $commissions->balance_comm = isset($balanceCommission) ? $balanceCommission : '';
+                        $commissions->created_at = $current = Carbon::now();
+                        $commissions->user_id = $pss->parent_id;
+                        $commissions->save();
+
+                        return $commissions;
+                    }
+                }
+            }
+        }
+    }
+
+    // 9th parent
+    public function getNine()
+    {
+        $orders = session('orders');
+        $installmentPV = session('installmentPV');
+        $balanceComms = session('balanceComms');
+
+        $user = isset($orders->createdBy) ? $orders->createdBy : '';
+
+        if(isset($user->parent->parent->parent->parent->parent->parent->parent) && !is_null($user->parent->parent->parent->parent->parent->parent->parent)) {
+
+            $p = User::where('id', $user->parent->parent->parent->parent->parent->parent->parent->parent_id)
+                ->with('parent')->get();
+
+            $totalCommission = $balanceCommission = 0;
+
+            if($orders->customer->mode == 'Installment') {
+                if(isset($p) && !empty($p)) {
+                    foreach ($p as $pss) {
+                        if (!empty($pss->parent_id)) {
+                            $pRank = User::select('ranking_id')->where('id', $pss->parent_id)->first();
+                            if ($pRank->ranking_id !== $pss->ranking_id) {
+                                switch ($pRank->ranking_id) {
+                                    case 1:
+                                        $totalCommission += round(($installmentPV * 0.16), 2);
+                                        $balanceCommission += round(($balanceComms * 0.16), 2);
+                                        break;
+                                    case 2:
+                                        $totalCommission += round(($installmentPV * 0.04), 2);
+                                        $balanceCommission += round(($balanceComms * 0.04), 2);
+                                        break;
+                                    case 3:
+                                        $totalCommission += round(($installmentPV * 0.02), 2);
+                                        $balanceCommission += round(($balanceComms * 0.02), 2);
+                                        break;
+                                    case 4:
+                                        $totalCommission += round(($installmentPV * 0.04),2);
+                                        $balanceCommission += round(($balanceComms * 0.04), 2);
+                                        break;
+                                    case 5:
+                                        $totalCommission += round(($installmentPV * 0.05), 2);
+                                        $balanceCommission += round(($balanceComms * 0.05), 2);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+
+                        $commissions = null;
+                        $commissions = new Commission;
+                        $commissions->mo_overriding_comm = abs($totalCommission);
+                        $commissions->balance_comm = isset($balanceCommission) ? $balanceCommission : '';
+                        $commissions->created_at = $current = Carbon::now();
+                        $commissions->user_id = $pss->parent_id;
+                        $commissions->save();
+
+                        return $commissions;
+                    }
+                }
+            }
+        }
+    }
+
+    // 10th parent
+    public function getTen()
+    {
+        $orders = session('orders');
+        $installmentPV = session('installmentPV');
+        $balanceComms = session('balanceComms');
+
+        $user = isset($orders->createdBy) ? $orders->createdBy : '';
+
+        if(isset($user->parent->parent->parent->parent->parent->parent->parent->parent) && !is_null($user->parent->parent->parent->parent->parent->parent->parent->parent)) {
+
+            $p = User::where('id', $user->parent->parent->parent->parent->parent->parent->parent->parent->parent_id)
+                ->with('parent')->get();
+
+            $totalCommission = $balanceCommission = 0;
+
+            if($orders->customer->mode == 'Installment') {
+                if(isset($p) && !empty($p)) {
+                    foreach ($p as $pss) {
+                        if (!empty($pss->parent_id)) {
+                            $pRank = User::select('ranking_id')->where('id', $pss->parent_id)->first();
+                            if ($pRank->ranking_id !== $pss->ranking_id) {
+                                switch ($pRank->ranking_id) {
+                                    case 1:
+                                        $totalCommission += round(($installmentPV * 0.16), 2);
+                                        $balanceCommission += round(($balanceComms * 0.16), 2);
+                                        break;
+                                    case 2:
+                                        $totalCommission += round(($installmentPV * 0.04), 2);
+                                        $balanceCommission += round(($balanceComms * 0.04), 2);
+                                        break;
+                                    case 3:
+                                        $totalCommission += round(($installmentPV * 0.02), 2);
+                                        $balanceCommission += round(($balanceComms * 0.02), 2);
+                                        break;
+                                    case 4:
+                                        $totalCommission += round(($installmentPV * 0.04),2);
+                                        $balanceCommission += round(($balanceComms * 0.04), 2);
+                                        break;
+                                    case 5:
+                                        $totalCommission += round(($installmentPV * 0.05), 2);
+                                        $balanceCommission += round(($balanceComms * 0.05), 2);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+
+                        $commissions = null;
+                        $commissions = new Commission;
+                        $commissions->mo_overriding_comm = abs($totalCommission);
+                        $commissions->balance_comm = isset($balanceCommission) ? $balanceCommission : '';
+                        $commissions->created_at = $current = Carbon::now();
+                        $commissions->user_id = $pss->parent_id;
+                        $commissions->save();
+
+                        return $commissions;
+                    }
+                }
+            }
         }
     }
 }

@@ -46,17 +46,17 @@
                         </select>
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="point_value" class="col-form-label">Point Value</label>
+                        <label for="balance_pv" class="col-form-label">Point Value Balance</label>
                         <div class="input-group mb-3">
-                            <input class="form-control" type="text" name="point_value" id="point_value" value="{{ old('point_value', isset($order->commissions) ? $order->commissions->point_value : '')}}" required>
+                            <input class="form-control" type="text" name="balance_pv" id="balance_pv" value="{{ old('balance_pv', isset($order->commissions) ? $order->commissions->balance_pv : '')}}" required>
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
                                     <i>PV</i>
                                 </span>
                             </div>
-                            @if($errors->has('point_value'))
+                            @if($errors->has('balance_pv'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('point_value') }}
+                                    {{ $errors->first('balance_pv') }}
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.order.fields.amount_helper') }}</span>
