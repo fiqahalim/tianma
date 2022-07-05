@@ -118,33 +118,6 @@
                                     </td>
                                     <td>
                                         @if($comms->user->parent->parent->ranking_id)
-                                            @if($comms->user->parent->ranking_id == 1)
-                                                SD
-                                            @elseif($comms->user->parent->ranking_id == 2)
-                                                DSD
-                                            @elseif($comms->user->parent->ranking_id == 3)
-                                                BDD A
-                                            @elseif($comms->user->parent->ranking_id == 4)
-                                                BDD B
-                                            @else
-                                                CBDD
-                                            @endif
-                                        @endif
-                                    </td>
-                                    <td>
-                                        RM{{ $comms->user->parent->commissions->mo_overriding_comm }}
-                                    </td>
-                                </tr>
-                            @endif
-
-                            {{-- 3rd Parent --}}
-                            @if(isset($comms->user->parent->parent->parent) && !empty($comms->user->parent->parent->parent))
-                                <tr>
-                                    <td>
-                                        {{ isset($comms->user->parent->parent->parent->agent_code) ? $comms->user->parent->parent->parent->agent_code: 'No Upperline' }}
-                                    </td>
-                                    <td>
-                                        @if($comms->user->parent->parent->parent->ranking_id)
                                             @if($comms->user->parent->parent->ranking_id == 1)
                                                 SD
                                             @elseif($comms->user->parent->parent->ranking_id == 2)
@@ -159,7 +132,88 @@
                                         @endif
                                     </td>
                                     <td>
-                                        RM{{ $comms->user->parent->commissions->mo_overriding_comm }}
+                                        RM{{ $comms->user->parent->parent->commissions->mo_overriding_comm }}
+                                    </td>
+                                </tr>
+                            @endif
+
+                            {{-- 3rd Parent --}}
+                            @if(isset($comms->user->parent->parent->parent) && !empty($comms->user->parent->parent->parent))
+                                <tr>
+                                    <td>
+                                        {{ isset($comms->user->parent->parent->parent->agent_code) ? $comms->user->parent->parent->parent->agent_code: 'No Upperline' }}
+                                    </td>
+                                    <td>
+                                        @if($comms->user->parent->parent->parent->ranking_id)
+                                            @if($comms->user->parent->parent->ranking_id == 1)
+                                                SD
+                                            @elseif($comms->user->parent->parent->parent->ranking_id == 2)
+                                                DSD
+                                            @elseif($comms->user->parent->parent->parent->ranking_id == 3)
+                                                BDD A
+                                            @elseif($comms->user->parent->parent->parent->ranking_id == 4)
+                                                BDD B
+                                            @else
+                                                CBDD
+                                            @endif
+                                        @endif
+                                    </td>
+                                    <td>
+                                        RM{{ $comms->user->parent->parent->parent->commissions->mo_overriding_comm }}
+                                    </td>
+                                </tr>
+                            @endif
+
+                            {{-- 4th parent --}}
+                            @if(isset($comms->user->parent->parent->parent->parent) && !empty($comms->user->parent->parent->parent->parent))
+                                <tr>
+                                    <td>
+                                        {{ isset($comms->user->parent->parent->parent->parent->agent_code) ? $comms->user->parent->parent->parent->parent->agent_code: 'No Upperline' }}
+                                    </td>
+                                    <td>
+                                        @if($comms->user->parent->parent->parent->parent->ranking_id)
+                                            @if($comms->user->parent->parent->parent->ranking_id == 1)
+                                                SD
+                                            @elseif($comms->user->parent->parent->parent->parent->ranking_id == 2)
+                                                DSD
+                                            @elseif($comms->user->parent->parent->parent->parent->ranking_id == 3)
+                                                BDD A
+                                            @elseif($comms->user->parent->parent->parent->parent->ranking_id == 4)
+                                                BDD B
+                                            @else
+                                                CBDD
+                                            @endif
+                                        @endif
+                                    </td>
+                                    <td>
+                                        RM{{ $comms->user->parent->parent->parent->parent->commissions->mo_overriding_comm }}
+                                    </td>
+                                </tr>
+                            @endif
+
+                            {{-- 5th parent --}}
+                            @if(isset($comms->user->parent->parent->parent->parent->parent) && !empty($comms->user->parent->parent->parent->parent->parent))
+                                <tr>
+                                    <td>
+                                        {{ isset($comms->user->parent->parent->parent->parent->parent->agent_code) ? $comms->user->parent->parent->parent->parent->parent->agent_code: 'No Upperline' }}
+                                    </td>
+                                    <td>
+                                        @if($comms->user->parent->parent->parent->parent->parent->ranking_id)
+                                            @if($comms->user->parent->parent->parent->parent->ranking_id == 1)
+                                                SD
+                                            @elseif($comms->user->parent->parent->parent->parent->parent->ranking_id == 2)
+                                                DSD
+                                            @elseif($comms->user->parent->parent->parent->parent->parent->ranking_id == 3)
+                                                BDD A
+                                            @elseif($comms->user->parent->parent->parent->parent->parent->ranking_id == 4)
+                                                BDD B
+                                            @else
+                                                CBDD
+                                            @endif
+                                        @endif
+                                    </td>
+                                    <td>
+                                        RM{{ $comms->user->parent->parent->parent->parent->parent->commissions->mo_overriding_comm }}
                                     </td>
                                 </tr>
                             @endif

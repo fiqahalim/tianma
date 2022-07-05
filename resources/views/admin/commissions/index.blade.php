@@ -33,6 +33,9 @@
                             {{ trans('cruds.commission.fields.user') }}
                         </th>
                         <th>
+                            Agency Code
+                        </th>
+                        <th>
                             {{ trans('cruds.commission.fields.order') }}
                         </th>
                         <th>
@@ -53,7 +56,7 @@
                             $getUnitNo = isset($order->bookLocations) ? $order->bookLocations : '';
                             foreach($getUnitNo as $unit) {
                                 $bookLots = $unit->lotBookings->seats;
-                                // $unitNo = implode(", ", $bookLots);
+                                $unitNo = implode(", ", $bookLots);
                             }
                         @endphp
                         <tr data-entry-id="{{ $order->id }}">
@@ -74,6 +77,7 @@
                             <td>
                                 {{ $order->createdBy->agent_code ?? '' }}
                             </td>
+                            <td>{{ $order->createdBy->agency_code ?? '' }}</td>
                             <td>
                                 #{{ $order->ref_no ?? '' }}
                             </td>
@@ -97,7 +101,7 @@
                                     <i class="fas fa-money"></i>
                                 </a>
                             </td>
-                            @if(empty($order->commissions->mo_overriding_comm))
+                            @if($order->order_status != 'Rejected' && empty($order->commissions->mo_overriding_comm))
                                 <td>
                                     <a class="btn btn-xs btn-dark" href="{{ route('admin.commissions.calculator', $order->id) }}">
                                         <i class="fas fa-calculator"></i>

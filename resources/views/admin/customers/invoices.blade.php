@@ -26,7 +26,24 @@
         <div class="row">
             <div class="col-12 mb-2">
                 <div class="card">
-                    <h4 class="mt-5 text-center">Review Order</h4>
+                    <div class="row">
+                        <div class="col-4 text-center">
+                            <figure class="figure">
+                                <img src="{{ '/images/tianma_logo_op-01a.png' }}" class="figure-img img-fluid rounded mt-2" style="height: 125px; width: 13rem;">
+                            </figure>
+                        </div>
+                        <div class="col-8 mt-4">
+                            <p style="font-size: 12pt; font-family: Arial, Helvetica, sans-serif;">
+                                <strong>TIANMA MEMORIAL HOLDINGS BERHAD</strong>
+                                <small><b>202101043182 (1443482 A)</b></small><br>
+                                Corporate Tower, Level 5, Jalan Pahat L 15/L, Section 15,<br>
+                                40200 Shah Alam , Selangor<br>
+                                Tel : 010-951 3688 &nbsp;&nbsp; Website : www.tianma.my
+                            </p>
+                        </div>
+                    </div>
+
+                    <h4 class="mt-5 text-center"><u>{{ __('REVIEW ORDER') }}</u></h4>
                     <form method="POST" action="#" enctype="multipart/form-data" id="review-order">
                     @csrf
                         <div class="card-body">
