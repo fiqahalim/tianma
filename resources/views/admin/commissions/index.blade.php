@@ -69,7 +69,7 @@
                                 {{ $unitNo ?? '' }}
                             </td>
                             <td>
-                                {{ $order->commissions()->sum('mo_overriding_comm') ?? '' }}
+                                {{round($order->commissions()->sum('mo_overriding_comm') ?? '')}}.00
                             </td>
                             <td>
                                 {{ $order->commissions->mo_spin_off ?? 'Not eligible yet' }}
