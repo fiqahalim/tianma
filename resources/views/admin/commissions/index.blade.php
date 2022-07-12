@@ -72,7 +72,7 @@
                                 {{round($order->commissions()->sum('mo_overriding_comm') ?? '')}}.00
                             </td>
                             <td>
-                                {{ $order->commissions->mo_spin_off ?? 'Not eligible yet' }}
+                                {{ round($order->commissions()->sum('mo_spin_off')) ?? 'Target was not achieved' }}.00
                             </td>
                             <td>
                                 {{ $order->createdBy->agent_code ?? '' }}

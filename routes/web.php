@@ -296,6 +296,8 @@ Route::group(['middleware' => 'auth'], function() {
 
         // My Orders
         Route::resource('/my-orders', '\App\Http\Controllers\User\OrderDetailsController');
+        Route::match(['get', 'post'], 'locations', [\App\Http\Controllers\User\OrderDetailsController::class, 'location'])->name('location');
+        Route::match(['get', 'post'], '/review-lots', [\App\Http\Controllers\User\OrderDetailsController::class, 'reviewLot'])->name('reviewLot');
 
         // Installment Receipts
         Route::match(['get', 'post'], 'transactions/index/{order}', [\App\Http\Controllers\User\TransactionController::class, 'index'])->name('transaction.index');
