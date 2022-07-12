@@ -136,11 +136,13 @@ class CommissionController extends Controller
             ->where('commissions.order_id', $order->id)
             ->get(['commissions.*']);
 
+        $users = Commission::with(['user', 'orders'])->where('order_id', $order->id)->get();
+
         $firstPayout = Commission::join('orders', 'orders.id', '=', 'commissions.order_id')
             ->where('commissions.order_id', $order->id)
             ->first();
 
-        return view('admin.commissions.show', compact('order', 'allCommissions', 'firstPayout'));
+        return view('admin.commissions.show', compact('order', 'allCommissions', 'users', 'firstPayout'));
     }
 
     public function destroy(Commission $commission)

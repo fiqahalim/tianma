@@ -15,7 +15,7 @@
         </div>
 
         <div class="card-body">
-            <div class="my-2">
+            {{-- <div class="my-2">
                 <form action="{{ route('admin.commissions.show', $order->id) }}" method="GET">
                     <div class="input-group mb-4">
                         <div class="input-group-prepend">
@@ -23,11 +23,11 @@
                                 <i class="fas fa-search"></i>
                             </span>
                         </div>
-                        <input type="text" class="form-control" name="agency_code" id="agency_code" value="{{ $agency_code ?? '' }}" placeholder="Agency Code">
+                        <input type="text" class="form-control" name="agency_code" id="agency_code" placeholder="Agency Code">
                         <button class="btn btn-primary" type="submit">FILTER</button>
                     </div>
                 </form>
-            </div>
+            </div> --}}
             {{-- First Payout --}}
             <div class="form-group">
                 <h5>First Payment</h5>
@@ -97,21 +97,57 @@
                                         <th></th>
                                         <th>ID</th>
                                         <th scope="col">Commissions (Per Month)</th>
-                                        <th scope="col">Last Point Value (PV)</th>
+                                        <th>Agent Code</th>
+                                        <th>Agent Commission Percentage (%)</th>
+                                        <th scope="col">Point Value (PV)</th>
                                         <th>Commission Received Date </th>
                                     </tr>
                                 @endif
                             </thead>
                             <tbody>
-                                @foreach($allCommissions as $key => $allCommission)
+                                {{-- @foreach($allCommissions as $key => $allCommission)
                                     @if($allCommission->mo_overriding_comm != "0")
                                         <tr data-entry-id="{{ $allCommission->id }}">
                                             <td></td>
                                             <td>{{ $allCommission->id }}</td>
                                             <td>RM{{ $allCommission->mo_overriding_comm }}</td>
-                                            <td>{{ $allCommission->point_value }}</td>
+                                            <td></td>
+                                            <td>%</td>
+                                            <td>
+                                                First PV: {{ $allCommission->point_value }}<br>
+                                                Balance PV: {{ $allCommission->balance_pv }}
+                                            </td>
                                             <td>
                                                 {{ Carbon\Carbon::parse($allCommission->created_at)->format('d/M/Y H:i:s') }}
+                                            </td>
+                                        </tr>
+                                    @endif
+                                @endforeach --}}
+
+                                @foreach($users as $key => $data)
+                                    @if($data->mo_overriding_comm != "0")
+                                        <tr data-entry-id="{{ $data->id }}">
+                                            <td></td>
+                                            <td>{{ $data->id }}</td>
+                                            <td>RM{{ $data->mo_overriding_comm }}</td>
+                                            <td>{{ $data->user->agent_code }}</td>
+                                            <td>
+                                                @if($data->user->ranking_id == 1)
+                                                    16%
+                                                @elseif($data->user->ranking_id == 2 && $data->user->ranking_id == 4)
+                                                    4%
+                                                @elseif($data->user->ranking_id == 3)
+                                                    2%
+                                                @else
+                                                    5%
+                                                @endif
+                                            </td>
+                                            <td>
+                                                First PV: {{ $data->point_value }}<br>
+                                                Balance PV: {{ $data->balance_pv }}
+                                            </td>
+                                            <td>
+                                                {{ Carbon\Carbon::parse($data->created_at)->format('d/M/Y H:i:s') }}
                                             </td>
                                         </tr>
                                     @endif
@@ -125,6 +161,7 @@
             {{-- Upperline Info --}}
             @if(isset($order->createdBy->parent) ?? !empty($order->createdBy->parent))
                 <div class="form-group mt-5">
+                    <h5>Upperline Informations</h5>
                     <table class="table table-light table-bordered datatable datatable-upperline">
                         <thead>
                             <tr class="table-primary">
@@ -132,7 +169,7 @@
                                 <th scope="col">Upperline Agent Code</th>
                                 <th scope="col">Upperline Agency Code</th>
                                 <th scope="col">Upperline Agent Ranking</th>
-                                <th scope="col">Upperline Commission</th>
+                                <th scope="col">Upperline Total Commission</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -159,11 +196,10 @@
                                     @endif
                                 </td>
                                 <td>
-                                    RM{{ $order->createdBy->parent->commissions->mo_overriding_comm ?? '' }}
+                                    RM{{ $order->createdBy->parent->commissions()->sum('mo_overriding_comm') ?? '' }}
                                 </td>
                             </tr>
 
-                            {{-- 2nd parent --}}
                             @if(isset($order->createdBy->parent->parent) && !empty($order->createdBy->parent->parent))
                                 <tr>
                                     <td></td>
@@ -189,7 +225,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        RM{{ isset($order->createdBy->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->commissions->mo_overriding_comm : '' }}
+                                        RM{{ isset($order->createdBy->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->commissions()->sum('mo_overriding_comm') : '' }}
                                     </td>
                                 </tr>
                             @endif
@@ -220,7 +256,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        RM{{ isset($order->createdBy->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->commissions->mo_overriding_comm : '' }}
+                                        RM{{ isset($order->createdBy->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->commissions()->sum('mo_overriding_comm') : '' }}
                                     </td>
                                 </tr>
                             @endif
@@ -251,7 +287,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        RM{{ isset($order->createdBy->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->commissions->mo_overriding_comm : '' }}
+                                        RM{{ isset($order->createdBy->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->commissions()->sum('mo_overriding_comm') : '' }}
                                     </td>
                                 </tr>
                             @endif
@@ -282,7 +318,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        RM{{ isset($order->createdBy->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->commissions->mo_overriding_comm : '' }}
+                                        RM{{ isset($order->createdBy->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->commissions()->sum('mo_overriding_comm') : '' }}
                                     </td>
                                 </tr>
                             @endif
@@ -313,7 +349,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        RM{{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm : '' }}
+                                        RM{{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->parent->commissions()->sum('mo_overriding_comm') : '' }}
                                     </td>
                                 </tr>
                             @endif
@@ -344,7 +380,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        RM{{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm : '' }}
+                                        RM{{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->commissions()->sum('mo_overriding_comm') : '' }}
                                     </td>
                                 </tr>
                             @endif
@@ -375,7 +411,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        RM{{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm : '' }}
+                                        RM{{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->commissions()->sum('mo_overriding_comm') : '' }}
                                     </td>
                                 </tr>
                             @endif
@@ -431,6 +467,9 @@
                 visible: true,
             }
         ],
+        "language": {
+            searchPlaceholder: 'Filter Agency Code'
+        },
         orderCellsTop: true,
         order: [[ 1, 'asc' ]],
         pageLength: 5,
