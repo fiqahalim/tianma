@@ -106,11 +106,17 @@ class TransactionController extends Controller
             $installmentPV = ($newPV / $installmentMonths);
             $prevPVs = $installmentPV * ($installmentMonths - 1);
             $balanceComms = $newPV - $prevPVs;
+            $spinOff = 0;
+
+            $monthlySpinOff = Order::join('commissions', 'commissions.order_id', '=', 'orders.id')
+                ->where('commissions.user_id', $order->created_by)
+                ->sum('commissions.mo_overriding_comm');
 
             session(['installmentPV' => $installmentPV]);
             session(['balanceComms' => $balanceComms]);
 
             switch ($rankings->ranking_id) {
+                // SD
                 case 1:
                     $totalCommission += round(($installmentPV * 0.16), 2);
                     $balanceCommission += round(($balanceComms * 0.16), 2);
@@ -125,9 +131,13 @@ class TransactionController extends Controller
                     $getNine = $this->getNine();
                     $getTen = $this->getTen();
                     break;
+                // DSD
                 case 2:
                     $totalCommission += round(($installmentPV * 0.04), 2);
                     $balanceCommission += round(($balanceComms * 0.04), 2);
+                    if ($monthlySpinOff >= 50000) {
+                        $spinOff += round(($monthlySpinOff * (1.6/100)), 2);
+                    }
                     $parentCommission = $this->getParent();
                     $pp = $this->getPP();
                     $ppp = $this->getPPP();
@@ -139,9 +149,13 @@ class TransactionController extends Controller
                     $getNine = $this->getNine();
                     $getTen = $this->getTen();
                     break;
+                // BDD A
                 case 3:
                     $totalCommission += round(($installmentPV * 0.02), 2);
                     $balanceCommission += round(($balanceComms * 0.02), 2);
+                    if ($monthlySpinOff >= 150000) {
+                       $spinOff += round(($monthlySpinOff * (1/100)), 2);
+                    }
                     $parentCommission = $this->getParent();
                     $pp = $this->getPP();
                     $ppp = $this->getPPP();
@@ -153,6 +167,7 @@ class TransactionController extends Controller
                     $getNine = $this->getNine();
                     $getTen = $this->getTen();
                     break;
+                // BDD B
                 case 4:
                     $totalCommission += round(($installmentPV * 0.04),2);
                     $balanceCommission += round(($balanceComms * 0.04), 2);
@@ -167,9 +182,13 @@ class TransactionController extends Controller
                     $getNine = $this->getNine();
                     $getTen = $this->getTen();
                     break;
+                // CBDD
                 case 5:
                     $totalCommission += round(($installmentPV * 0.05), 2);
                     $balanceCommission += round(($balanceComms * 0.05), 2);
+                    if ($monthlySpinOff >= 900000) {
+                       $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
+                    }
                     $parentCommission = $this->getParent();
                     $pp = $this->getPP();
                     $ppp = $this->getPPP();
@@ -201,6 +220,9 @@ class TransactionController extends Controller
                     break;
                 case 2:
                     $totalCommission += round(($newPV * 0.04), 2);
+                    if ($monthlySpinOff >= 50000) {
+                       $spinOff += round(($monthlySpinOff * (1.6/100)), 2);
+                    }
                     $parentCommission = $this->getParent();
                     $pp = $this->getPP();
                     $ppp = $this->getPPP();
@@ -214,6 +236,9 @@ class TransactionController extends Controller
                     break;
                 case 3:
                     $totalCommission += round(($newPV * 0.02), 2);
+                    if ($monthlySpinOff >= 150000) {
+                       $spinOff += round(($monthlySpinOff * (1/100)), 2);
+                    }
                     $parentCommission = $this->getParent();
                     $pp = $this->getPP();
                     $ppp = $this->getPPP();
@@ -240,6 +265,9 @@ class TransactionController extends Controller
                     break;
                 case 5:
                     $totalCommission += round(($newPV * 0.05), 2);
+                    if ($monthlySpinOff >= 900000) {
+                       $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
+                    }
                     $parentCommission = $this->getParent();
                     $pp = $this->getPP();
                     $ppp = $this->getPPP();
@@ -273,8 +301,9 @@ class TransactionController extends Controller
         $comms = new Commission;
         $comms->mo_overriding_comm = abs($totalCommission);
         $comms->balance_comm = abs($balanceCommission);
+        $comms->mo_spin_off = abs($spinOff);
         $comms->created_at = $current = Carbon::now();
-        $comms->point_value = $request->point_value;
+        $comms->point_value = $orders->commissions->point_value;
         $comms->order_id = $orders->id;
         $comms->user_id = $orders->createdBy->id;
         $comms->save();
@@ -301,11 +330,15 @@ class TransactionController extends Controller
 
         $user = isset($orders->createdBy) ? $orders->createdBy : '';
 
-        $totalCommission = $balanceCommission = 0;
+        $totalCommission = $balanceCommission = $spinOff = 0;
 
         if($orders->customer->mode == 'Installment') {
             if(!empty($user->parent_id)) {
                 $parent = User::select('ranking_id')->where('id', $user->parent_id)->first();
+                $monthlySpinOff = Order::join('commissions', 'commissions.order_id', '=', 'orders.id')
+                    ->where('commissions.user_id', $user->parent_id)
+                    ->sum('commissions.mo_overriding_comm');
+
                 if($parent->ranking_id !== $user->ranking_id) {
                     // switch statement
                     switch ($parent->ranking_id) {
@@ -316,10 +349,16 @@ class TransactionController extends Controller
                         case 2:
                             $totalCommission += round(($installmentPV * 0.04), 2);
                             $balanceCommission += round(($balanceComms * 0.04), 2);
+                            if ($monthlySpinOff >= 50000) {
+                                $spinOff += round(($monthlySpinOff * (1.6/100)), 2);
+                            }
                             break;
                         case 3:
                             $totalCommission += round(($installmentPV * 0.02), 2);
                             $balanceCommission += round(($balanceComms * 0.02), 2);
+                            if ($monthlySpinOff >= 150000) {
+                                $spinOff += round(($monthlySpinOff * (1/100)), 2);
+                            }
                             break;
                         case 4:
                             $totalCommission += round(($installmentPV * 0.04),2);
@@ -328,6 +367,9 @@ class TransactionController extends Controller
                         case 5:
                             $totalCommission += round(($installmentPV * 0.05), 2);
                             $balanceCommission += round(($balanceComms * 0.05), 2);
+                            if ($monthlySpinOff >= 900000) {
+                                $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
+                            }
                             break;
                         default:
                             break;
@@ -345,15 +387,24 @@ class TransactionController extends Controller
                             break;
                         case 2:
                             $totalCommission += round(($installmentPV * 0.04), 2);
+                            if ($monthlySpinOff >= 50000) {
+                                $spinOff += round(($monthlySpinOff * (1.6/100)), 2);
+                            }
                             break;
                         case 3:
                             $totalCommission += round(($installmentPV * 0.02), 2);
+                            if ($monthlySpinOff >= 50000) {
+                                $spinOff += round(($monthlySpinOff * (1/100)), 2);
+                            }
                             break;
                         case 4:
                             $totalCommission += round(($installmentPV * 0.04),2);
                             break;
                         case 5:
                             $totalCommission += round(($installmentPV * 0.05), 2);
+                            if ($monthlySpinOff >= 900000) {
+                                $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
+                            }
                             break;
                         default:
                             break;
@@ -366,6 +417,7 @@ class TransactionController extends Controller
         $commissions = new Commission;
         $commissions->mo_overriding_comm = abs($totalCommission);
         $commissions->balance_comm = abs($balanceCommission);
+        $commissions->mo_spin_off = abs($spinOff);
         $commissions->created_at = $current = Carbon::now();
         $commissions->user_id = $user->parent_id;
         $commissions->save();
@@ -391,6 +443,12 @@ class TransactionController extends Controller
                 foreach ($p as $pss) {
                     if (!empty($pss->parent_id)) {
                         $pRank = User::select('ranking_id')->where('id', $pss->parent_id)->first();
+                        $monthlySpinOff = Order::join('commissions', 'commissions.order_id', '=', 'orders.id')
+                            ->where('commissions.user_id', $pss->parent_id)
+                            ->sum('commissions.mo_overriding_comm');
+
+                        $spinOff = 0;
+
                         if ($pRank->ranking_id !== $pss->ranking_id) {
                             switch ($pRank->ranking_id) {
                                 case 1:
@@ -400,10 +458,16 @@ class TransactionController extends Controller
                                 case 2:
                                     $totalCommission += round(($installmentPV * 0.04), 2);
                                     $balanceCommission += round(($balanceComms * 0.04), 2);
+                                    if ($monthlySpinOff >= 50000) {
+                                        $spinOff += round(($monthlySpinOff * (1.6/100)), 2);
+                                    }
                                     break;
                                 case 3:
                                     $totalCommission += round(($installmentPV * 0.02), 2);
                                     $balanceCommission += round(($balanceComms * 0.02), 2);
+                                    if ($monthlySpinOff >= 150000) {
+                                        $spinOff += round(($monthlySpinOff * (1/100)), 2);
+                                    }
                                     break;
                                 case 4:
                                     $totalCommission += round(($installmentPV * 0.04),2);
@@ -412,6 +476,9 @@ class TransactionController extends Controller
                                 case 5:
                                     $totalCommission += round(($installmentPV * 0.05), 2);
                                     $balanceCommission += round(($balanceComms * 0.05), 2);
+                                    if ($monthlySpinOff >= 900000) {
+                                        $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
+                                    }
                                     break;
                                 default:
                                     break;
@@ -423,6 +490,7 @@ class TransactionController extends Controller
                     $commissions = new Commission;
                     $commissions->mo_overriding_comm = abs($totalCommission);
                     $commissions->balance_comm = abs(isset($balanceCommission)) ? abs($balanceCommission) : '';
+                    $commissions->mo_spin_off = abs($spinOff);
                     $commissions->created_at = $current = Carbon::now();
                     $commissions->user_id = $pss->parent_id;
                     $commissions->save();
@@ -452,6 +520,12 @@ class TransactionController extends Controller
                     foreach ($p as $pss) {
                         if (!empty($pss->parent_id)) {
                             $pRank = User::select('ranking_id')->where('id', $pss->parent_id)->first();
+                            $monthlySpinOff = Order::join('commissions', 'commissions.order_id', '=', 'orders.id')
+                                ->where('commissions.user_id', $pss->parent_id)
+                                ->sum('commissions.mo_overriding_comm');
+
+                            $spinOff = 0;
+
                             if ($pRank->ranking_id !== $pss->ranking_id) {
                                 switch ($pRank->ranking_id) {
                                     case 1:
@@ -461,10 +535,16 @@ class TransactionController extends Controller
                                     case 2:
                                         $totalCommission += round(($installmentPV * 0.04), 2);
                                         $balanceCommission += round(($balanceComms * 0.04), 2);
+                                        if ($monthlySpinOff >= 50000) {
+                                            $spinOff += round(($monthlySpinOff * (1.6/100)), 2);
+                                        }
                                         break;
                                     case 3:
                                         $totalCommission += round(($installmentPV * 0.02), 2);
                                         $balanceCommission += round(($balanceComms * 0.02), 2);
+                                        if ($monthlySpinOff >= 150000) {
+                                            $spinOff += round(($monthlySpinOff * (1/100)), 2);
+                                        }
                                         break;
                                     case 4:
                                         $totalCommission += round(($installmentPV * 0.04),2);
@@ -473,6 +553,9 @@ class TransactionController extends Controller
                                     case 5:
                                         $totalCommission += round(($installmentPV * 0.05), 2);
                                         $balanceCommission += round(($balanceComms * 0.05), 2);
+                                        if ($monthlySpinOff >= 900000) {
+                                            $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
+                                        }
                                         break;
                                     default:
                                         break;
@@ -484,6 +567,7 @@ class TransactionController extends Controller
                         $commissions = new Commission;
                         $commissions->mo_overriding_comm = abs($totalCommission);
                         $commissions->balance_comm = isset($balanceCommission) ? $balanceCommission : '';
+                        $commissions->mo_spin_off = abs($spinOff);
                         $commissions->created_at = $current = Carbon::now();
                         $commissions->user_id = $pss->parent_id;
                         $commissions->save();
@@ -514,6 +598,12 @@ class TransactionController extends Controller
                     foreach ($p as $pss) {
                         if (!empty($pss->parent_id)) {
                             $pRank = User::select('ranking_id')->where('id', $pss->parent_id)->first();
+                            $monthlySpinOff = Order::join('commissions', 'commissions.order_id', '=', 'orders.id')
+                                ->where('commissions.user_id', $pss->parent_id)
+                                ->sum('commissions.mo_overriding_comm');
+
+                            $spinOff = 0;
+
                             if ($pRank->ranking_id !== $pss->ranking_id) {
                                 switch ($pRank->ranking_id) {
                                     case 1:
@@ -523,10 +613,16 @@ class TransactionController extends Controller
                                     case 2:
                                         $totalCommission += round(($installmentPV * 0.04), 2);
                                         $balanceCommission += round(($balanceComms * 0.04), 2);
+                                        if ($monthlySpinOff >= 50000) {
+                                            $spinOff += round(($monthlySpinOff * (1.6/100)), 2);
+                                        }
                                         break;
                                     case 3:
                                         $totalCommission += round(($installmentPV * 0.02), 2);
                                         $balanceCommission += round(($balanceComms * 0.02), 2);
+                                        if ($monthlySpinOff >= 150000) {
+                                            $spinOff += round(($monthlySpinOff * (1/100)), 2);
+                                        }
                                         break;
                                     case 4:
                                         $totalCommission += round(($installmentPV * 0.04),2);
@@ -535,6 +631,9 @@ class TransactionController extends Controller
                                     case 5:
                                         $totalCommission += round(($installmentPV * 0.05), 2);
                                         $balanceCommission += round(($balanceComms * 0.05), 2);
+                                        if ($monthlySpinOff >= 900000) {
+                                            $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
+                                        }
                                         break;
                                     default:
                                         break;
@@ -546,6 +645,7 @@ class TransactionController extends Controller
                         $commissions = new Commission;
                         $commissions->mo_overriding_comm = abs($totalCommission);
                         $commissions->balance_comm = isset($balanceCommission) ? $balanceCommission : '';
+                        $commissions->mo_spin_off = abs($spinOff);
                         $commissions->created_at = $current = Carbon::now();
                         $commissions->user_id = $pss->parent_id;
                         $commissions->save();
@@ -576,6 +676,12 @@ class TransactionController extends Controller
                     foreach ($p as $pss) {
                         if (!empty($pss->parent_id)) {
                             $pRank = User::select('ranking_id')->where('id', $pss->parent_id)->first();
+                            $monthlySpinOff = Order::join('commissions', 'commissions.order_id', '=', 'orders.id')
+                                ->where('commissions.user_id', $pss->parent_id)
+                                ->sum('commissions.mo_overriding_comm');
+
+                            $spinOff = 0;
+
                             if ($pRank->ranking_id !== $pss->ranking_id) {
                                 switch ($pRank->ranking_id) {
                                     case 1:
@@ -585,10 +691,16 @@ class TransactionController extends Controller
                                     case 2:
                                         $totalCommission += round(($installmentPV * 0.04), 2);
                                         $balanceCommission += round(($balanceComms * 0.04), 2);
+                                        if ($monthlySpinOff >= 50000) {
+                                            $spinOff += round(($monthlySpinOff * (1.6/100)), 2);
+                                        }
                                         break;
                                     case 3:
                                         $totalCommission += round(($installmentPV * 0.02), 2);
                                         $balanceCommission += round(($balanceComms * 0.02), 2);
+                                        if ($monthlySpinOff >= 150000) {
+                                            $spinOff += round(($monthlySpinOff * (1/100)), 2);
+                                        }
                                         break;
                                     case 4:
                                         $totalCommission += round(($installmentPV * 0.04),2);
@@ -597,6 +709,9 @@ class TransactionController extends Controller
                                     case 5:
                                         $totalCommission += round(($installmentPV * 0.05), 2);
                                         $balanceCommission += round(($balanceComms * 0.05), 2);
+                                        if ($monthlySpinOff >= 900000) {
+                                            $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
+                                        }
                                         break;
                                     default:
                                         break;
@@ -608,6 +723,7 @@ class TransactionController extends Controller
                         $commissions = new Commission;
                         $commissions->mo_overriding_comm = abs($totalCommission);
                         $commissions->balance_comm = isset($balanceCommission) ? $balanceCommission : '';
+                        $commissions->mo_spin_off = abs($spinOff);
                         $commissions->created_at = $current = Carbon::now();
                         $commissions->user_id = $pss->parent_id;
                         $commissions->save();
@@ -638,6 +754,12 @@ class TransactionController extends Controller
                     foreach ($p as $pss) {
                         if (!empty($pss->parent_id)) {
                             $pRank = User::select('ranking_id')->where('id', $pss->parent_id)->first();
+                            $monthlySpinOff = Order::join('commissions', 'commissions.order_id', '=', 'orders.id')
+                                ->where('commissions.user_id', $pss->parent_id)
+                                ->sum('commissions.mo_overriding_comm');
+
+                            $spinOff = 0;
+
                             if ($pRank->ranking_id !== $pss->ranking_id) {
                                 switch ($pRank->ranking_id) {
                                     case 1:
@@ -647,10 +769,16 @@ class TransactionController extends Controller
                                     case 2:
                                         $totalCommission += round(($installmentPV * 0.04), 2);
                                         $balanceCommission += round(($balanceComms * 0.04), 2);
+                                        if ($monthlySpinOff >= 50000) {
+                                            $spinOff += round(($monthlySpinOff * (1.6/100)), 2);
+                                        }
                                         break;
                                     case 3:
                                         $totalCommission += round(($installmentPV * 0.02), 2);
                                         $balanceCommission += round(($balanceComms * 0.02), 2);
+                                        if ($monthlySpinOff >= 150000) {
+                                            $spinOff += round(($monthlySpinOff * (1/100)), 2);
+                                        }
                                         break;
                                     case 4:
                                         $totalCommission += round(($installmentPV * 0.04),2);
@@ -659,6 +787,9 @@ class TransactionController extends Controller
                                     case 5:
                                         $totalCommission += round(($installmentPV * 0.05), 2);
                                         $balanceCommission += round(($balanceComms * 0.05), 2);
+                                        if ($monthlySpinOff >= 900000) {
+                                            $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
+                                        }
                                         break;
                                     default:
                                         break;
@@ -670,6 +801,7 @@ class TransactionController extends Controller
                         $commissions = new Commission;
                         $commissions->mo_overriding_comm = abs($totalCommission);
                         $commissions->balance_comm = isset($balanceCommission) ? $balanceCommission : '';
+                        $commissions->mo_spin_off = abs($spinOff);
                         $commissions->created_at = $current = Carbon::now();
                         $commissions->user_id = $pss->parent_id;
                         $commissions->save();
@@ -701,6 +833,12 @@ class TransactionController extends Controller
                     foreach ($p as $pss) {
                         if (!empty($pss->parent_id)) {
                             $pRank = User::select('ranking_id')->where('id', $pss->parent_id)->first();
+                            $monthlySpinOff = Order::join('commissions', 'commissions.order_id', '=', 'orders.id')
+                                ->where('commissions.user_id', $pss->parent_id)
+                                ->sum('commissions.mo_overriding_comm');
+
+                            $spinOff = 0;
+
                             if ($pRank->ranking_id !== $pss->ranking_id) {
                                 switch ($pRank->ranking_id) {
                                     case 1:
@@ -710,10 +848,16 @@ class TransactionController extends Controller
                                     case 2:
                                         $totalCommission += round(($installmentPV * 0.04), 2);
                                         $balanceCommission += round(($balanceComms * 0.04), 2);
+                                        if ($monthlySpinOff >= 50000) {
+                                            $spinOff += round(($monthlySpinOff * (1.6/100)), 2);
+                                        }
                                         break;
                                     case 3:
                                         $totalCommission += round(($installmentPV * 0.02), 2);
                                         $balanceCommission += round(($balanceComms * 0.02), 2);
+                                        if ($monthlySpinOff >= 150000) {
+                                            $spinOff += round(($monthlySpinOff * (1/100)), 2);
+                                        }
                                         break;
                                     case 4:
                                         $totalCommission += round(($installmentPV * 0.04),2);
@@ -722,6 +866,9 @@ class TransactionController extends Controller
                                     case 5:
                                         $totalCommission += round(($installmentPV * 0.05), 2);
                                         $balanceCommission += round(($balanceComms * 0.05), 2);
+                                        if ($monthlySpinOff >= 900000) {
+                                            $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
+                                        }
                                         break;
                                     default:
                                         break;
@@ -733,6 +880,7 @@ class TransactionController extends Controller
                         $commissions = new Commission;
                         $commissions->mo_overriding_comm = abs($totalCommission);
                         $commissions->balance_comm = isset($balanceCommission) ? $balanceCommission : '';
+                        $commissions->mo_spin_off = abs($spinOff);
                         $commissions->created_at = $current = Carbon::now();
                         $commissions->user_id = $pss->parent_id;
                         $commissions->save();
@@ -764,6 +912,12 @@ class TransactionController extends Controller
                     foreach ($p as $pss) {
                         if (!empty($pss->parent_id)) {
                             $pRank = User::select('ranking_id')->where('id', $pss->parent_id)->first();
+                            $monthlySpinOff = Order::join('commissions', 'commissions.order_id', '=', 'orders.id')
+                                ->where('commissions.user_id', $pss->parent_id)
+                                ->sum('commissions.mo_overriding_comm');
+
+                            $spinOff = 0;
+
                             if ($pRank->ranking_id !== $pss->ranking_id) {
                                 switch ($pRank->ranking_id) {
                                     case 1:
@@ -773,10 +927,16 @@ class TransactionController extends Controller
                                     case 2:
                                         $totalCommission += round(($installmentPV * 0.04), 2);
                                         $balanceCommission += round(($balanceComms * 0.04), 2);
+                                        if ($monthlySpinOff >= 50000) {
+                                            $spinOff += round(($monthlySpinOff * (1.6/100)), 2);
+                                        }
                                         break;
                                     case 3:
                                         $totalCommission += round(($installmentPV * 0.02), 2);
                                         $balanceCommission += round(($balanceComms * 0.02), 2);
+                                        if ($monthlySpinOff >= 150000) {
+                                            $spinOff += round(($monthlySpinOff * (1/100)), 2);
+                                        }
                                         break;
                                     case 4:
                                         $totalCommission += round(($installmentPV * 0.04),2);
@@ -785,6 +945,9 @@ class TransactionController extends Controller
                                     case 5:
                                         $totalCommission += round(($installmentPV * 0.05), 2);
                                         $balanceCommission += round(($balanceComms * 0.05), 2);
+                                        if ($monthlySpinOff >= 900000) {
+                                            $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
+                                        }
                                         break;
                                     default:
                                         break;
@@ -796,6 +959,7 @@ class TransactionController extends Controller
                         $commissions = new Commission;
                         $commissions->mo_overriding_comm = abs($totalCommission);
                         $commissions->balance_comm = isset($balanceCommission) ? $balanceCommission : '';
+                        $commissions->mo_spin_off = abs($spinOff);
                         $commissions->created_at = $current = Carbon::now();
                         $commissions->user_id = $pss->parent_id;
                         $commissions->save();
@@ -828,6 +992,12 @@ class TransactionController extends Controller
                     foreach ($p as $pss) {
                         if (!empty($pss->parent_id)) {
                             $pRank = User::select('ranking_id')->where('id', $pss->parent_id)->first();
+                            $monthlySpinOff = Order::join('commissions', 'commissions.order_id', '=', 'orders.id')
+                                ->where('commissions.user_id', $pss->parent_id)
+                                ->sum('commissions.mo_overriding_comm');
+
+                            $spinOff = 0;
+
                             if ($pRank->ranking_id !== $pss->ranking_id) {
                                 switch ($pRank->ranking_id) {
                                     case 1:
@@ -837,10 +1007,16 @@ class TransactionController extends Controller
                                     case 2:
                                         $totalCommission += round(($installmentPV * 0.04), 2);
                                         $balanceCommission += round(($balanceComms * 0.04), 2);
+                                        if ($monthlySpinOff >= 50000) {
+                                            $spinOff += round(($monthlySpinOff * (1.6/100)), 2);
+                                        }
                                         break;
                                     case 3:
                                         $totalCommission += round(($installmentPV * 0.02), 2);
                                         $balanceCommission += round(($balanceComms * 0.02), 2);
+                                        if ($monthlySpinOff >= 150000) {
+                                            $spinOff += round(($monthlySpinOff * (1/100)), 2);
+                                        }
                                         break;
                                     case 4:
                                         $totalCommission += round(($installmentPV * 0.04),2);
@@ -849,6 +1025,9 @@ class TransactionController extends Controller
                                     case 5:
                                         $totalCommission += round(($installmentPV * 0.05), 2);
                                         $balanceCommission += round(($balanceComms * 0.05), 2);
+                                        if ($monthlySpinOff >= 900000) {
+                                            $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
+                                        }
                                         break;
                                     default:
                                         break;
@@ -860,6 +1039,7 @@ class TransactionController extends Controller
                         $commissions = new Commission;
                         $commissions->mo_overriding_comm = abs($totalCommission);
                         $commissions->balance_comm = isset($balanceCommission) ? $balanceCommission : '';
+                        $commissions->mo_spin_off = abs($spinOff);
                         $commissions->created_at = $current = Carbon::now();
                         $commissions->user_id = $pss->parent_id;
                         $commissions->save();
@@ -892,6 +1072,12 @@ class TransactionController extends Controller
                     foreach ($p as $pss) {
                         if (!empty($pss->parent_id)) {
                             $pRank = User::select('ranking_id')->where('id', $pss->parent_id)->first();
+                            $monthlySpinOff = Order::join('commissions', 'commissions.order_id', '=', 'orders.id')
+                                ->where('commissions.user_id', $pss->parent_id)
+                                ->sum('commissions.mo_overriding_comm');
+
+                            $spinOff = 0;
+
                             if ($pRank->ranking_id !== $pss->ranking_id) {
                                 switch ($pRank->ranking_id) {
                                     case 1:
@@ -901,10 +1087,16 @@ class TransactionController extends Controller
                                     case 2:
                                         $totalCommission += round(($installmentPV * 0.04), 2);
                                         $balanceCommission += round(($balanceComms * 0.04), 2);
+                                        if ($monthlySpinOff >= 50000) {
+                                            $spinOff += round(($monthlySpinOff * (1.6/100)), 2);
+                                        }
                                         break;
                                     case 3:
                                         $totalCommission += round(($installmentPV * 0.02), 2);
                                         $balanceCommission += round(($balanceComms * 0.02), 2);
+                                        if ($monthlySpinOff >= 150000) {
+                                            $spinOff += round(($monthlySpinOff * (1/100)), 2);
+                                        }
                                         break;
                                     case 4:
                                         $totalCommission += round(($installmentPV * 0.04),2);
@@ -913,6 +1105,9 @@ class TransactionController extends Controller
                                     case 5:
                                         $totalCommission += round(($installmentPV * 0.05), 2);
                                         $balanceCommission += round(($balanceComms * 0.05), 2);
+                                        if ($monthlySpinOff >= 900000) {
+                                            $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
+                                        }
                                         break;
                                     default:
                                         break;
@@ -924,6 +1119,7 @@ class TransactionController extends Controller
                         $commissions = new Commission;
                         $commissions->mo_overriding_comm = abs($totalCommission);
                         $commissions->balance_comm = isset($balanceCommission) ? $balanceCommission : '';
+                        $commissions->mo_spin_off = abs($spinOff);
                         $commissions->created_at = $current = Carbon::now();
                         $commissions->user_id = $pss->parent_id;
                         $commissions->save();

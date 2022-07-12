@@ -60,11 +60,23 @@
         </li>
 
         {{-- My Orders --}}
-        <li class="c-sidebar-nav-item">
-            <a href="{{ route("user.my-orders.index") }}" class="c-sidebar-nav-link">
+        <li class="c-sidebar-nav-dropdown">
+            <a class="c-sidebar-nav-dropdown-toggle" href="#">
                 <i class="fa-fw fab fa-first-order-alt c-sidebar-nav-icon"></i>
-                {{ trans('global.order.myOrder') }}
+                Orders
             </a>
+            <ul class="c-sidebar-nav-dropdown-items">
+                <li class="c-sidebar-nav-item">
+                    <a href="{{ route("user.location") }}" class="c-sidebar-nav-link">
+                        Reservation Lots
+                    </a>
+                </li>
+                <li class="c-sidebar-nav-item">
+                    <a href="{{ route("user.my-orders.index") }}" class="c-sidebar-nav-link">
+                        My Order Lists
+                    </a>
+                </li>
+            </ul>
         </li>
 
         {{-- Documents --}}
