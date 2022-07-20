@@ -22,7 +22,7 @@ class InstallmentController extends Controller
         $customer = session('customer');
         $reservedLot = session('reservedLot');
 
-        return view('pages.installment.index', compact('customer'));
+        return view('pages.installment.index', compact('customer', 'reservedLot'));
     }
 
     private function getOrderNumber()
@@ -105,7 +105,7 @@ class InstallmentController extends Controller
 
         session(['paymentInfo' => $installments]);
 
-        return view('pages.installment.result', compact('customer', 'order', 'installments'));
+        return view('pages.installment.result', compact('customer', 'order', 'installments', 'reservedLot'));
     }
 
     public function update(Request $request, $category, $childCategory, $childCategory2, Product $product, Installment $installment)

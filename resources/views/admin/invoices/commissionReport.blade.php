@@ -40,35 +40,35 @@
             <table class=" table table-bordered table-striped table-hover datatable datatable-CommissionReport">
                 <thead>
                     <tr>
-                        <th width="10">
-
-                        </th>
+                        <th width="10"></th>
                         <th>Agent Name</th>
-                        <th>
-                            Agent Code
-                        </th>
-                        <th>
-                            Total Commissions (RM)
-                        </th>
+                        <th>Agent Code</th>
+                        <th>Agency Code</th>
+                        <th>Total Commissions (RM)</th>
+                        <th>Commission for Month</th>
                     </tr>
                 </thead>
-                    <tbody>
-                        @foreach($commissions as $key => $data)
-                            @if($data->commissions()->sum('mo_overriding_comm') > 0)
-                                <tr data-entry-id="{{ $data->id }}">
-                                    <td></td>
-                                    <td> {{ $data->name }}</td>
-                                    <td>
-                                        {{ $data->agent_code }}
-                                    </td>
-                                    <td>
-                                        {{ $data->commissions()->sum('mo_overriding_comm') ?? '' }}
-                                    </td>
-                                </tr>
-                            @endif
-                        @endforeach
-                    </tbody>
-                </table>
+                <tbody>
+                    @foreach($commissions as $key => $data)
+                        @if($data->commissions()->sum('mo_overriding_comm') > 0)
+                            <tr data-entry-id="{{ $data->id }}">
+                                <td></td>
+                                <td> {{ $data->name }}</td>
+                                <td>
+                                    {{ $data->agent_code }}
+                                </td>
+                                <td>
+                                    {{ $data->agency_code }}
+                                </td>
+                                <td>
+                                    {{ $data->commissions()->sum('mo_overriding_comm') ?? '' }}
+                                </td>
+                                <td></td>
+                            </tr>
+                        @endif
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

@@ -47,6 +47,7 @@
                                 <th scope="col">First Month Payment</th>
                             @endif
                             <th scope="col">Commissions</th>
+                            <th scope="col">Total Commissions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -79,6 +80,9 @@
                             @endif
                             <td>
                                 RM{{ isset($firstPayout->mo_overriding_comm) ? $firstPayout->mo_overriding_comm : '' }}
+                            </td>
+                            <td>
+                                RM{{ isset($firstPayout->mo_overriding_comm) ? $firstPayout->sum('mo_overriding_comm') : '' }}
                             </td>
                         </tr>
                     </tbody>
@@ -173,6 +177,34 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($users as $key => $data)
+                                    @if($data->mo_overriding_comm != "0")
+                                        <tr data-entry-id="{{ $data->id }}">
+                                            <td></td>
+                                            <td>{{ $data->id }}</td>
+                                            <td>RM{{ $data->sum('mo_overriding_comm') }}</td>
+                                            <td>{{ $data->user->agent_code }}</td>
+                                            <td>
+                                                @if($data->user->ranking_id == 1)
+                                                    16%
+                                                @elseif($data->user->ranking_id == 2 && $data->user->ranking_id == 4)
+                                                    4%
+                                                @elseif($data->user->ranking_id == 3)
+                                                    2%
+                                                @else
+                                                    5%
+                                                @endif
+                                            </td>
+                                            <td>
+                                                First PV: {{ $data->point_value }}<br>
+                                                Balance PV: {{ $data->balance_pv }}
+                                            </td>
+                                            <td>
+                                                {{ Carbon\Carbon::parse($data->created_at)->format('d/M/Y H:i:s') }}
+                                            </td>
+                                        </tr>
+                                    @endif
+                                @endforeach
                             {{-- 1st Parent --}}
                             <tr>
                                 <td></td>

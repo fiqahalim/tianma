@@ -1,127 +1,109 @@
 <table id="seatsBlock" class="row-seat">
     <tr>
         <td>Level 9</td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-09-008"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-09-018"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-09-028"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-09-038"></td>
-        <td class="seatGap"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-09-068"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-09-088"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-09-098"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-09-108"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-09-118"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-09-668" id="Total Cost: RM14800, Promotion Price: RM12800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-09-638" id="Total Cost: RM14800, Promotion Price: RM12800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-09-628" id="Total Cost: RM14800, Promotion Price: RM12800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SW-09-618" id="Total Cost: RM7800, Promotion Price: RM6800, Maintenance Price: RM1000, Point Value: 6800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SW-09-608" id="Total Cost: RM7800, Promotion Price: RM6800, Maintenance Price: RM1000, Point Value: 6800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SW-09-398" id="Total Cost: RM7800, Promotion Price: RM6800, Maintenance Price: RM1000, Point Value: 6800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-09-388" id="Total Cost: RM14800, Promotion Price: RM12800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-09-378" id="Total Cost: RM14800, Promotion Price: RM12800, Maintenance Price: RM2000, Point Value: 12800"></td>
       </tr>
 
       <tr>
         <td>Level 8</td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-08-008"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-08-018"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-08-028"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-08-038"></td>
-        <td class="seatGap"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-08-068"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-08-088"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-08-098"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-08-108"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-08-118"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-08-668" id="Total Cost: RM16800, Promotion Price: RM14800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-08-638" id="Total Cost: RM16800, Promotion Price: RM14800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-08-628" id="Total Cost: RM16800, Promotion Price: RM14800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SW-08-618" id="Total Cost: RM8800, Promotion Price: RM7800, Maintenance Price: RM1000, Point Value: 6800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SW-08-608" id="Total Cost: RM8800, Promotion Price: RM7800, Maintenance Price: RM1000, Point Value: 6800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SW-08-398" id="Total Cost: RM8800, Promotion Price: RM7800, Maintenance Price: RM1000, Point Value: 6800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-08-388" id="Total Cost: RM16800, Promotion Price: RM14800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-08-378" id="Total Cost: RM16800, Promotion Price: RM14800, Maintenance Price: RM2000, Point Value: 12800"></td>
       </tr>
 
       <tr>
         <td>Level 7</td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-07-008"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-07-018"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-07-028"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-07-038"></td>
-        <td class="seatGap"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-07-068"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-07-088"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-07-098"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-07-108"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-07-118"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-07-668" id="Total Cost: RM18800, Promotion Price: RM16800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-07-638" id="Total Cost: RM18800, Promotion Price: RM16800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-07-628" id="Total Cost: RM18800, Promotion Price: RM16800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SW-07-618" id="Total Cost: RM9800, Promotion Price: RM8800, Maintenance Price: RM1000, Point Value: 6800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SW-07-608" id="Total Cost: RM9800, Promotion Price: RM8800, Maintenance Price: RM1000, Point Value: 6800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SW-07-398" id="Total Cost: RM9800, Promotion Price: RM8800, Maintenance Price: RM1000, Point Value: 6800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-07-388" id="Total Cost: RM18800, Promotion Price: RM16800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-07-378" id="Total Cost: RM18800, Promotion Price: RM16800, Maintenance Price: RM2000, Point Value: 12800"></td>
     </tr>
 
     <tr>
         <td>Level 6</td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-06-008"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-06-018"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-06-028"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-06-038"></td>
-        <td class="seatGap"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-06-068"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-06-088"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-06-098"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-06-108"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-06-118"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-06-668" id="Total Cost: RM20800, Promotion Price: RM18800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-06-638" id="Total Cost: RM20800, Promotion Price: RM18800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-06-628" id="Total Cost: RM20800, Promotion Price: RM18800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SW-06-618" id="Total Cost: RM10800, Promotion Price: RM9800, Maintenance Price: RM1000, Point Value: 6800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SW-06-608" id="Total Cost: RM10800, Promotion Price: RM9800, Maintenance Price: RM1000, Point Value: 6800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SW-06-398" id="Total Cost: RM10800, Promotion Price: RM9800, Maintenance Price: RM1000, Point Value: 6800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-06-388" id="Total Cost: RM20800, Promotion Price: RM18800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-06-378" id="Total Cost: RM20800, Promotion Price: RM18800, Maintenance Price: RM2000, Point Value: 12800"></td>
     </tr>
 
     <tr>
         <td>Level 5</td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-05-008"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-05-018"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-05-028"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-05-038"></td>
-        <td class="seatGap"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-05-068"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-05-088"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-05-098"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-05-108"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-05-118"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-05-668" id="Total Cost: RM22800, Promotion Price: RM20800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-05-638" id="Total Cost: RM22800, Promotion Price: RM20800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-05-628" id="Total Cost: RM22800, Promotion Price: RM20800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SW-05-618" id="Total Cost: RM11800, Promotion Price: RM10800, Maintenance Price: RM1000, Point Value: 6800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SW-05-608" id="Total Cost: RM11800, Promotion Price: RM10800, Maintenance Price: RM1000, Point Value: 6800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SW-05-398" id="Total Cost: RM11800, Promotion Price: RM10800, Maintenance Price: RM1000, Point Value: 6800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-05-388" id="Total Cost: RM22800, Promotion Price: RM20800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-05-378" id="Total Cost: RM22800, Promotion Price: RM20800, Maintenance Price: RM2000, Point Value: 12800"></td>
     </tr>
 
     <tr>
         <td>Level 3A</td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-3A-008"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-3A-018"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-3A-028"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-3A-038"></td>
-        <td class="seatGap"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-3A-068"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-3A-088"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-3A-098"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-3A-108"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-3A-118"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-3A-668" id="Total Cost: RM20800, Promotion Price: RM18800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-3A-638" id="Total Cost: RM20800, Promotion Price: RM18800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-3A-628" id="Total Cost: RM20800, Promotion Price: RM18800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SW-3A-618" id="Total Cost: RM10800, Promotion Price: RM9800, Maintenance Price: RM1000, Point Value: 6800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SW-3A-608" id="Total Cost: RM10800, Promotion Price: RM9800, Maintenance Price: RM1000, Point Value: 6800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SW-3A-398" id="Total Cost: RM10800, Promotion Price: RM9800, Maintenance Price: RM1000, Point Value: 6800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-3A-388" id="Total Cost: RM20800, Promotion Price: RM18800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-3A-378" id="Total Cost: RM20800, Promotion Price: RM18800, Maintenance Price: RM2000, Point Value: 12800"></td>
     </tr>
 
     <tr>
         <td>Level 3</td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-008"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-018"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-028"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-038"></td>
-        <td class="seatGap"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-068"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-088"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-098"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-108"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-118"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-668" id="Total Cost: RM18800, Promotion Price: RM16800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-638" id="Total Cost: RM18800, Promotion Price: RM16800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-628" id="Total Cost: RM18800, Promotion Price: RM16800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SW-02-618" id="Total Cost: RM9800, Promotion Price: RM8800, Maintenance Price: RM1000, Point Value: 6800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SW-02-608" id="Total Cost: RM9800, Promotion Price: RM8800, Maintenance Price: RM1000, Point Value: 6800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SW-02-398" id="Total Cost: RM9800, Promotion Price: RM8800, Maintenance Price: RM1000, Point Value: 6800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-388" id="Total Cost: RM18800, Promotion Price: RM16800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-378" id="Total Cost: RM18800, Promotion Price: RM16800, Maintenance Price: RM2000, Point Value: 12800"></td>
     </tr>
 
     <tr>
         <td>Level 2</td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-008"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-018"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-028"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-038"></td>
-        <td class="seatGap"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-068"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-088"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-098"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-108"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-118"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-668" id="Total Cost: RM16800, Promotion Price: RM14800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-638" id="Total Cost: RM16800, Promotion Price: RM14800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-628" id="Total Cost: RM16800, Promotion Price: RM14800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SW-02-618" id="Total Cost: RM8800, Promotion Price: RM7800, Maintenance Price: RM1000, Point Value: 6800" ></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SW-02-608" id="Total Cost: RM8800, Promotion Price: RM7800, Maintenance Price: RM1000, Point Value: 6800" ></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SW-02-398" id="Total Cost: RM8800, Promotion Price: RM7800, Maintenance Price: RM1000, Point Value: 6800" ></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-388" id="Total Cost: RM16800, Promotion Price: RM14800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-02-378" id="Total Cost: RM16800, Promotion Price: RM14800, Maintenance Price: RM2000, Point Value: 12800"></td>
     </tr>
 
     <tr>
         <td>Level 1</td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-01-008"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-01-018"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-01-028"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-01-038"></td>
-        <td class="seatGap"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-01-068"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-01-088"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-01-098"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-01-108"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DW-01-118"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-01-668" id="Total Cost: RM14800, Promotion Price: RM12800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-01-638" id="Total Cost: RM14800, Promotion Price: RM12800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-01-628" id="Total Cost: RM14800, Promotion Price: RM12800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SW-01-618" id="Total Cost: RM7800, Promotion Price: RM6800, Maintenance Price: RM1000, Point Value: 6800" ></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SW-01-608" id="Total Cost: RM7800, Promotion Price: RM6800, Maintenance Price: RM1000, Point Value: 6800" ></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SW-01-398" id="Total Cost: RM7800, Promotion Price: RM6800, Maintenance Price: RM1000, Point Value: 6800" ></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-01-388" id="Total Cost: RM14800, Promotion Price: RM12800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DW-01-378" id="Total Cost: RM14800, Promotion Price: RM12800, Maintenance Price: RM2000, Point Value: 12800"></td>
     </tr>
 </table>
