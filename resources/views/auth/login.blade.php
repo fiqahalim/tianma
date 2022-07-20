@@ -28,7 +28,7 @@
                                         <label class="form-label font-weight-bold required" for="email">
                                             {{ trans('global.username') }}
                                         </label>
-                                        <input id="username" name="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" required autocomplete="username" autofocus value="{{ old('username', null) }}">
+                                        <input id="username" name="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" required autofocus value="{{ old('username', null) }}">
                                         @if($errors->has('username'))
                                             <div class="invalid-feedback">
                                                 {{ $errors->first('username') }}

@@ -12,6 +12,11 @@
     </nav>
 
     <div class="card">
+        {{-- Product Details --}}
+        <div class="card-header font-weight-bold">
+            Product Details
+        </div>
+
         <div class="card-header font-weight-bold">
             {{ trans('cruds.commission.title') }} Calculator
         </div>

@@ -26,7 +26,7 @@
                                             <p>{{ __('auth.register_label') }}</p>
                                     </div>
 
-                                    <form method="POST" action="{{ route('register') }}">
+                                    <form method="POST" action="{{ route('register') }}" autocomplete="off">
                                         @csrf
                                         <div class="form-row mt-4">
                                             <div class="form-group col-md-6">
