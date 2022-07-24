@@ -15,7 +15,7 @@
                     {{-- <a class="btn btn-primary mx-1px text-95" href="#">
                         Tax Invoice
                     </a> --}}
-                    <a class="btn bg-white btn-light mx-1px text-95 print-window" href="#" data-title="Print">
+                    <a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="Print" onClick="printReport()">
                         <i class="mr-1 fa fa-print text-primary-m1 text-120 w-2"></i>
                         Print
                     </a>
@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    <div class="card">
+    <div class="card" id="invoicePrint">
         <div class="card-body">
             <div class="form-group">
                 @if($order->customer->mode == 'Installment')
@@ -36,7 +36,7 @@
         </div>
     </div>
 
-    <div class="card">
+    <div class="card" id="itemPrint">
         <div class="card-body">
             <div class="form-group">
                 @if($order->customer->mode == 'Installment')
@@ -64,18 +64,27 @@
 @endsection
 
 @section('scripts')
+<script type="text/javascript">
+    function printReport()
+    {
+        var prtContent = document.getElementById("invoicePrint");
+        var WinPrint = window.open();
+        WinPrint.document.write(prtContent.innerHTML);
+        WinPrint.document.close();
+        WinPrint.focus();
+        WinPrint.print();
+        WinPrint.close();
+    }
 
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>
-<script type="text/javascript" src="js/jquery.printPage.js"></script>
-
-<script>
-    // $('.print-window').ready(function() {
-    // window.print();
-    // });
-
-    // $(document).ready(function() {
-    //     $('.print-window').printPage();
-    // });
+    function printItem()
+    {
+        var prtItem = document.getElementById("itemPrint");
+        var WinPrint = window.open();
+        WinPrint.document.write(prtItem.innerHTML);
+        WinPrint.document.close();
+        WinPrint.focus();
+        WinPrint.print();
+        WinPrint.close();
+    }
 </script>
 @endsection

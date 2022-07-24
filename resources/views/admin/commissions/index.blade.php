@@ -97,9 +97,9 @@
                                     <i class="fas fa-eye"></i>
                                 </a>
 
-                                <a class="btn btn-xs btn-warning text-white" href="{{ route('admin.commissions.edit', $order->id) }}">
+                                {{-- <a class="btn btn-xs btn-warning text-white" href="{{ route('admin.commissions.edit', $order->id) }}">
                                     <i class="fas fa-money"></i>
-                                </a>
+                                </a> --}}
                             </td>
                             @if($order->order_status != 'Rejected' && empty($order->commissions->mo_overriding_comm))
                                 <td>
