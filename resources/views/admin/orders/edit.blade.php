@@ -45,7 +45,7 @@
                                 <i>RM</i>
                             </span>
                         </div>
-                        <input class="form-control {{ $errors->has('amount') ? 'is-invalid' : '' }}" type="text" name="amount" id="amount" value="{{ old('amount', $order->amount) }}" step="0.01">
+                        <input class="form-control {{ $errors->has('amount') ? 'is-invalid' : '' }}" type="text" name="amount" id="amount" value="{{ old('amount', $order->amount) }}" step="0.01" readonly>
                         @if($errors->has('amount'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('amount') }}
@@ -105,22 +105,22 @@
                 $unitNo = implode(" ",$getUnitNo);
             @endphp
             <div class="form-row mt-3 mb-3">
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4">
                     <label for="product_code">{{ trans('cruds.product.fields.product_code') }}</label>
                     <input class="form-control" type="text" value="{{ $unitNo ? $unitNo : '' }}" readonly>
                 </div>
-                <div class="form-group col-md-3">
-                    <label for="price">{{ trans('cruds.product.fields.price') }}</label>
+                <div class="form-group col-md-4">
+                    <label for="selling">Selling {{ trans('cruds.product.fields.price') }}</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
                                 <i>RM</i>
                             </span>
                         </div>
-                        <input class="form-control" type="text" value="{{ $order->lotID ? $order->lotID->price : '' }}">
+                        <input class="form-control" type="text" value="{{ $order->lotID ? $order->lotID->selling : '' }}" readonly>
                     </div>
                 </div>
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4">
                     <label for="maintenance_price">{{ trans('cruds.product.fields.maintenance_price') }}</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -128,7 +128,7 @@
                                 <i>RM</i>
                             </span>
                         </div>
-                        <input class="form-control" type="text" value="{{ $order->lotID ? $order->lotID->maintenance : '' }}">
+                        <input class="form-control" type="text" value="{{ $order->lotID ? $order->lotID->maintenance : '' }}" readonly>
                     </div>
                 </div>
                 <div class="form-group col-md-3">
@@ -139,7 +139,29 @@
                                 <i>RM</i>
                             </span>
                         </div>
-                        <input class="form-control" type="text" value="{{ $order->lotID ? $order->lotID->promo : '' }}">
+                        <input class="form-control" type="text" value="{{ $order->lotID ? $order->lotID->promo : '' }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="price">Product Price (After Promo)</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>RM</i>
+                            </span>
+                        </div>
+                        <input class="form-control" type="text" value="{{ $order->lotID ? $order->lotID->price : '' }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="point_value">Point Value</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>PV</i>
+                            </span>
+                        </div>
+                        <input class="form-control" type="text" value="{{ $order->lotID ? $order->lotID->point_value : '' }}" readonly>
                     </div>
                 </div>
                 @if(isset($order->customer->promotions) && $order->customer->promotions != null)

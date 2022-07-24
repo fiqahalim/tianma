@@ -14,7 +14,14 @@
             @csrf
             <input type="text" name="price" hidden="">
 
-            <img src="{{ $product->photo->url ?? '/images/product/luxury_1.png' }}" class="rounded mx-auto d-block" style="height: 300px; width: 485px;">
+            @if($locations->category == 'Luxury')
+                <img src="{{ $product->photo->url ?? '/images/product/luxury_layout.png' }}" class="rounded mx-auto d-block" style="height: 300px; width: 485px;">
+            @elseif($locations->category == 'Premium')
+                <img src="{{ $product->photo->url ?? '/images/product/premium_layout.png' }}" class="rounded mx-auto d-block" style="height: 300px; width: 485px;">
+            @else
+                <img src="{{ $product->photo->url ?? '/images/product/standard_layout.png' }}" class="rounded mx-auto d-block" style="height: 300px; width: 485px;">
+            @endif
+
             <div class="movie-container">
                 <h5><strong>Category Selected: {{ $locations->category ?? ''}}</strong>
                 </h5>

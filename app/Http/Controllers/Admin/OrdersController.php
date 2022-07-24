@@ -126,6 +126,8 @@ class OrdersController extends Controller
     // Calculate for pay later at orders management
     public function calculatePayLater(Request $request, Order $order)
     {
+        $order->load('customer', 'createdBy', 'products', 'bookLocations', 'installments', 'fullPayments', 'lotID');
+
         $requestData = $request->all();
 
         $installments = new Installment;

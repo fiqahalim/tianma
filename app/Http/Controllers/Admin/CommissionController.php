@@ -22,7 +22,7 @@ class CommissionController extends Controller
     {
         abort_if(Gate::denies('commission_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $orders = Order::with(['customer', 'createdBy', 'commissions', 'bookLocations'])->get();
+        $orders = Order::with(['customer', 'createdBy', 'commissions', 'bookLocations', 'lotID'])->get();
 
         return view('admin.commissions.index', compact('orders'));
     }
@@ -130,7 +130,7 @@ class CommissionController extends Controller
     {
         abort_if(Gate::denies('commission_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $order->load('customer', 'team', 'createdBy', 'commissions', 'installments', 'products');
+        $order->load('customer', 'team', 'createdBy', 'commissions', 'installments', 'products', 'lotID');
 
         $allCommissions = Order::join('commissions', 'commissions.order_id', '=', 'orders.id')
             ->where('commissions.order_id', $order->id)
@@ -164,7 +164,7 @@ class CommissionController extends Controller
 
     public function commissionCalculator(Order $order)
     {
-        $order->load('customer', 'team', 'createdBy', 'commissions', 'installments', 'bookLocations');
+        $order->load('customer', 'team', 'createdBy', 'commissions', 'installments', 'bookLocations', 'lotID');
         session(['orders' => $order]);
 
         return view('admin.commissions.calculator', compact('order'));
@@ -177,6 +177,7 @@ class CommissionController extends Controller
         $requestData = $request->all();
 
         $newPV = isset($requestData['point_value']) ? $requestData['point_value'] : null;
+
         $totalCommission = $installmentPV = $balance_pv = 0;
 
         $balance_pv = $requestData['pv'] - $newPV;
@@ -186,7 +187,8 @@ class CommissionController extends Controller
 
         // check method payment
         if ($orders->customer->mode == 'Installment') {
-            $installmentPV = ($newPV);
+            // first payment lumsum
+            $installmentPV = ($balance_pv);
             session(['installmentPV' => $installmentPV]);
 
             switch ($rankings->ranking_id) {
@@ -334,7 +336,7 @@ class CommissionController extends Controller
         $comms = new Commission;
         $comms->mo_overriding_comm = $totalCommission;
         $comms->actual_pv = $requestData['pv'];
-        $comms->point_value = $requestData['point_value'];
+        $comms->point_value = $newPV;
         $comms->percentage = $requestData['percentage'];
         $comms->first_month = $requestData['first_month'];
         $comms->balance_pv = $balance_pv;

@@ -15,19 +15,39 @@
         </div>
 
         <div class="card-body">
-            {{-- <div class="my-2">
-                <form action="{{ route('admin.commissions.show', $order->id) }}" method="GET">
-                    <div class="input-group mb-4">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text bg-info text-white" id="basic-addon1">
-                                <i class="fas fa-search"></i>
-                            </span>
-                        </div>
-                        <input type="text" class="form-control" name="agency_code" id="agency_code" placeholder="Agency Code">
-                        <button class="btn btn-primary" type="submit">FILTER</button>
-                    </div>
-                </form>
-            </div> --}}
+            {{-- Purchaser Information --}}
+            <div class="form-group mb-5">
+                <h5>Purchaser Information</h5>
+                <table class="table table-light table-bordered">
+                    <thead>
+                        <tr class="table-info">
+                            <th>Order Ref No.</th>
+                            <th>Order Created</th>
+                            <th>Purchaser Name</th>
+                            <th>Purchaser ID/Passport Number</th>
+                            <th>Reservation Lot Number</th>
+                            <th>Product Price (RM)</th>
+                            <th>Agent Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php
+                            $getUnitNo = isset($order->lotID->seats) ? $order->lotID->seats : '';
+                            $unitNo = implode(" ",$getUnitNo);
+                        @endphp
+                        <tr>
+                            <td>#{{ $order->ref_no }}</td>
+                            <td>{{ Carbon\Carbon::parse($order->created_at)->format('d/M/Y H:i:s') }}</td>
+                            <td>{{ $order->customer->full_name ?? 'No Information' }}</td>
+                            <td>{{ $order->customer->id_number }}</td>
+                            <td>{{ $unitNo }}</td>
+                            <td>{{ $order->amount }}</td>
+                            <td>{{ $order->createdBy->name }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
             {{-- First Payout --}}
             <div class="form-group">
                 <h5>First Payment</h5>

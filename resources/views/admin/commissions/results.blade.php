@@ -8,6 +8,88 @@
         </ol>
     </nav>
 
+    {{-- Product Details --}}
+    <div class="card">
+        <div class="card-header font-weight-bold">
+            Product Details
+        </div>
+
+        <div class="card-body">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="selling">Selling Price</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>RM</i>
+                            </span>
+                        </div>
+                        <input class="form-control" id="selling" type="text" value="{{ $orders->lotID->selling }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="promo">Promotion Price</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>RM</i>
+                            </span>
+                        </div>
+                        <input class="form-control" id="promo" type="text" value="{{ $orders->lotID->promo }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="maintenance">Maintenance Price</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>RM</i>
+                            </span>
+                        </div>
+                        <input class="form-control" id="maintenance" type="text" value="{{ $orders->lotID->maintenance }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="price">Product Price (After Promo)</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>RM</i>
+                            </span>
+                        </div>
+                        <input class="form-control" id="price" type="text" value="{{ $orders->lotID->price }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="point_value">Point Value</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>PV</i>
+                            </span>
+                        </div>
+                        <input class="form-control" type="text" value="{{ $orders->lotID->point_value }}" readonly>
+                    </div>
+                </div>
+                @php
+                    $getUnitNo = isset($orders->lotID->seats) ? $orders->lotID->seats : '';
+                    $unitNo = implode(" ",$getUnitNo);
+                @endphp
+                <div class="form-group col-md-4">
+                    <label for="seats">Reservation Lot</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fa fa-home"></i>
+                            </span>
+                        </div>
+                        <input class="form-control" id="seats" type="text" value="{{ $unitNo }}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="card">
         <div class="card-header font-weight-bold">
             {{ trans('global.show') }} {{ trans('cruds.commission.title') }}
@@ -29,10 +111,10 @@
                             @if($comms->first_month > 0)
                                 <th scope="col">First Month Payment</th>
                             @endif
-                            <th scope="col">Commissions (Per Month)</th>
-                            @if(isset($comms->orders->customer) ?? $comms->orders->customer->mode == 'Installment')
+                            <th scope="col">First Month Commissions</th>
+                            {{-- @if(isset($comms->orders->customer) ?? $comms->orders->customer->mode == 'Installment')
                                 <th scope="col">Installments Period (Months)</th>
-                            @endif
+                            @endif --}}
                         </tr>
                     </thead>
                     <tbody>
@@ -54,7 +136,7 @@
                                 @endif
                             </td>
                             <td id="point_value" name="point_value">
-                                {{ $comms->point_value }}
+                                {{ $comms->balance_pv }}
                             </td>
                             <td>
                                 {{ $comms->percentage }}
@@ -65,11 +147,11 @@
                             <td>
                                 RM {{ $comms->mo_overriding_comm }}
                             </td>
-                            @if(isset($comms->orders->customer) ?? $comms->orders->customer->mode == 'Installment')
+                            {{-- @if(isset($comms->orders->customer) ?? $comms->orders->customer->mode == 'Installment')
                                 <td>
                                     {{ isset($comms->orders->installments->installment_year) ? $comms->orders->installments->installment_year : ''}} months
                                 </td>
-                            @endif
+                            @endif --}}
                         </tr>
                     </tbody>
                 </table>

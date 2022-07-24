@@ -64,9 +64,18 @@
 @endsection
 
 @section('scripts')
+
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>
+<script type="text/javascript" src="js/jquery.printPage.js"></script>
+
 <script>
-    $('.print-window').click(function() {
-    window.print();
-    });
+    // $('.print-window').ready(function() {
+    // window.print();
+    // });
+
+    // $(document).ready(function() {
+    //     $('.print-window').printPage();
+    // });
 </script>
 @endsection

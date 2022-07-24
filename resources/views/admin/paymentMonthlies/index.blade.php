@@ -41,6 +41,38 @@
         </div>
     </div>
 
+    <div class="container mb-3" style="background: white;">
+        <div class="my-5">
+            <div class="form-row">
+                @php
+                    $balances = ($order->installments->installment_year) - 1;
+                @endphp
+                <div class="form-group col-md-6 mt-3">
+                    <label>Monthly Installment <i>(for {{ $balances }} months)</i></label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>RM</i>
+                            </span>
+                        </div>
+                        <input class="form-control" type="text" name="monthly_installment" id="monthly_installment" value="{{ old('monthly_installment', $order->installments->monthly_installment) }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group col-md-6 mt-3">
+                    <label>Last Month Installments</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>RM</i>
+                            </span>
+                        </div>
+                        <input class="form-control" type="text" name="last_month_payment" id="last_month_payment" value="{{ old('last_month_payment', $order->installments->last_month_payment) }}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="page-content container" style="background: white;">
         <div class="row">

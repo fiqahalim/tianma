@@ -10,6 +10,88 @@
         </ol>
     </nav>
 
+    {{-- Product Details --}}
+    <div class="card">
+        <div class="card-header font-weight-bold">
+            Product Details
+        </div>
+
+        <div class="card-body">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="selling">Selling Price</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>RM</i>
+                            </span>
+                        </div>
+                        <input class="form-control" id="selling" type="text" value="{{ $order->lotID->selling }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="promo">Promotion Price</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>RM</i>
+                            </span>
+                        </div>
+                        <input class="form-control" id="promo" type="text" value="{{ $order->lotID->promo }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="maintenance">Maintenance Price</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>RM</i>
+                            </span>
+                        </div>
+                        <input class="form-control" id="maintenance" type="text" value="{{ $order->lotID->maintenance }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="price">Product Price (After Promo)</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>RM</i>
+                            </span>
+                        </div>
+                        <input class="form-control" id="price" type="text" value="{{ $order->lotID->price }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="point_value">Point Value</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>PV</i>
+                            </span>
+                        </div>
+                        <input class="form-control" id="point_value" type="text" value="{{ $order->lotID->point_value }}" readonly>
+                    </div>
+                </div>
+                @php
+                    $getUnitNo = isset($order->lotID->seats) ? $order->lotID->seats : '';
+                    $unitNo = implode(" ",$getUnitNo);
+                @endphp
+                <div class="form-group col-md-4">
+                    <label for="seats">Reservation Lot</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fa fa-home"></i>
+                            </span>
+                        </div>
+                        <input class="form-control" id="seats" type="text" value="{{ $unitNo }}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="card">
         <div class="card-header font-weight-bold">
             Installment Calculator

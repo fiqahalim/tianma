@@ -12,7 +12,7 @@
                 {{ trans('global.products_view') }}
             </li>
             <li aria-current="page" class="breadcrumb-item active">
-                Installment Calculator
+               Pay Later Installment Calculator
             </li>
         </ol>
     </nav>
