@@ -100,10 +100,12 @@
                 <table class="table table-light table-bordered">
                     <thead>
                         <tr class="table-info">
+                            <th>Commission Received Date</th>
                             <th scope="col">Agent Code</th>
                             <th scope="col">Agent Ranking</th>
+                            <th scope="col">Agency Code</th>
                             @if(isset($comms->orders->customer) ?? $comms->orders->customer->mode == 'Installment')
-                                <th scope="col">New Point Value (PV)</th>
+                                <th scope="col">First Point Value (PV)</th>
                             @else
                                 <th scope="col">Point Value (PV)</th>
                             @endif
@@ -111,7 +113,7 @@
                             @if($comms->first_month > 0)
                                 <th scope="col">First Month Payment</th>
                             @endif
-                            <th scope="col">First Month Commissions</th>
+                            <th scope="col">First Month Commissions Received</th>
                             {{-- @if(isset($comms->orders->customer) ?? $comms->orders->customer->mode == 'Installment')
                                 <th scope="col">Installments Period (Months)</th>
                             @endif --}}
@@ -119,6 +121,9 @@
                     </thead>
                     <tbody>
                         <tr>
+                            <td>
+                                {{ Carbon\Carbon::parse($comms->created_at)->format('d/M/Y H:i:s') }}
+                            </td>
                             <td>
                                 {{ $comms->user->agent_code }}
                             </td>
@@ -135,6 +140,7 @@
                                     CBDD
                                 @endif
                             </td>
+                            <td>{{ $order->createdBy->agency_code ?? 'No Agency Code Yet' }}</td>
                             <td id="point_value" name="point_value">
                                 {{ $comms->balance_pv }}
                             </td>
@@ -142,7 +148,7 @@
                                 {{ $comms->percentage }}
                             </td>
                             @if($comms->first_month > 0)
-                                <td>Yes</td>
+                                <td>Yes, {{ $comms->first_month }}</td>
                             @endif
                             <td>
                                 RM {{ $comms->mo_overriding_comm }}

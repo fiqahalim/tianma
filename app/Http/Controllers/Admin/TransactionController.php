@@ -405,7 +405,7 @@ class TransactionController extends Controller
         $commissions->balance_comm = abs($balanceCommission);
         $commissions->mo_spin_off = abs($spinOff);
         $commissions->created_at = $current = Carbon::now();
-        $commissions->order_id = $orders->id;
+        // $commissions->order_id = $orders->id;
         $commissions->user_id = $user->parent_id;
         $commissions->save();
 
@@ -479,7 +479,7 @@ class TransactionController extends Controller
                     $commissions->balance_comm = abs(isset($balanceCommission)) ? abs($balanceCommission) : '';
                     $commissions->mo_spin_off = abs($spinOff);
                     $commissions->created_at = $current = Carbon::now();
-                    $commissions->order_id = $orders->id;
+                    // $commissions->order_id = $orders->id;
                     $commissions->user_id = $pss->parent_id;
                     $commissions->save();
 
@@ -557,7 +557,7 @@ class TransactionController extends Controller
                         $commissions->balance_comm = isset($balanceCommission) ? $balanceCommission : '';
                         $commissions->mo_spin_off = abs($spinOff);
                         $commissions->created_at = $current = Carbon::now();
-                        $commissions->order_id = $orders->id;
+                        // $commissions->order_id = $orders->id;
                         $commissions->user_id = $pss->parent_id;
                         $commissions->save();
 
@@ -636,7 +636,7 @@ class TransactionController extends Controller
                         $commissions->balance_comm = isset($balanceCommission) ? $balanceCommission : '';
                         $commissions->mo_spin_off = abs($spinOff);
                         $commissions->created_at = $current = Carbon::now();
-                        $commissions->order_id = $orders->id;
+                        // $commissions->order_id = $orders->id;
                         $commissions->user_id = $pss->parent_id;
                         $commissions->save();
 
@@ -715,7 +715,7 @@ class TransactionController extends Controller
                         $commissions->balance_comm = isset($balanceCommission) ? $balanceCommission : '';
                         $commissions->mo_spin_off = abs($spinOff);
                         $commissions->created_at = $current = Carbon::now();
-                        $commissions->order_id = $orders->id;
+                        // $commissions->order_id = $orders->id;
                         $commissions->user_id = $pss->parent_id;
                         $commissions->save();
 
@@ -792,7 +792,7 @@ class TransactionController extends Controller
                         $commissions->balance_comm = isset($balanceCommission) ? $balanceCommission : '';
                         $commissions->mo_spin_off = abs($spinOff);
                         $commissions->created_at = $current = Carbon::now();
-                        $commissions->order_id = $orders->id;
+                        // $commissions->order_id = $orders->id;
                         $commissions->user_id = $pss->parent_id;
                         $commissions->save();
 
@@ -872,7 +872,7 @@ class TransactionController extends Controller
                         $commissions->balance_comm = isset($balanceCommission) ? $balanceCommission : '';
                         $commissions->mo_spin_off = abs($spinOff);
                         $commissions->created_at = $current = Carbon::now();
-                        $commissions->order_id = $orders->id;
+                        // $commissions->order_id = $orders->id;
                         $commissions->user_id = $pss->parent_id;
                         $commissions->save();
 
@@ -952,7 +952,7 @@ class TransactionController extends Controller
                         $commissions->balance_comm = isset($balanceCommission) ? $balanceCommission : '';
                         $commissions->mo_spin_off = abs($spinOff);
                         $commissions->created_at = $current = Carbon::now();
-                        $commissions->order_id = $orders->id;
+                        // $commissions->order_id = $orders->id;
                         $commissions->user_id = $pss->parent_id;
                         $commissions->save();
 
@@ -1033,7 +1033,7 @@ class TransactionController extends Controller
                         $commissions->balance_comm = isset($balanceCommission) ? $balanceCommission : '';
                         $commissions->mo_spin_off = abs($spinOff);
                         $commissions->created_at = $current = Carbon::now();
-                        $commissions->order_id = $orders->id;
+                        // $commissions->order_id = $orders->id;
                         $commissions->user_id = $pss->parent_id;
                         $commissions->save();
 
@@ -1114,7 +1114,7 @@ class TransactionController extends Controller
                         $commissions->balance_comm = isset($balanceCommission) ? $balanceCommission : '';
                         $commissions->mo_spin_off = abs($spinOff);
                         $commissions->created_at = $current = Carbon::now();
-                        $commissions->order_id = $orders->id;
+                        // $commissions->order_id = $orders->id;
                         $commissions->user_id = $pss->parent_id;
                         $commissions->save();
 

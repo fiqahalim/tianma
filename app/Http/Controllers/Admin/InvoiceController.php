@@ -34,7 +34,10 @@ class InvoiceController extends Controller
             $end_date = Carbon::createFromFormat('d/m/Y', $request->end_date)->toDateString();
             $commissions = User::whereBetween('created_at', [$start_date,$end_date])->get();
         } else {
-            $commissions = User::with(['commissions', 'orders'])->get();
+            $commissions = User::join('commissions', 'commissions.user_id', '=', 'users.id')
+                ->whereMonth('commissions.created_at', Carbon::now()->month)
+                ->whereYear('commissions.created_at', Carbon::now()->year)
+                ->get(['users.*', 'commissions.*']);
         }
 
         return view('admin.invoices.commissionReport', compact('commissions'));

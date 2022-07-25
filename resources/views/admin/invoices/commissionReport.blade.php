@@ -41,11 +41,14 @@
                 <thead>
                     <tr>
                         <th width="10"></th>
+                        <th>Commission Received Date</th>
+                        <th>Month Received</th>
+                        <th>Agent Ranking</th>
                         <th>Agent Name</th>
                         <th>Agent Code</th>
                         <th>Agency Code</th>
-                        <th>Total Commissions (RM)</th>
-                        <th>Commission for Month</th>
+                        <th>Overriding Spin-Off</th>
+                        <th>Total Commissions Monthly (RM)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,17 +56,38 @@
                         @if($data->commissions()->sum('mo_overriding_comm') > 0)
                             <tr data-entry-id="{{ $data->id }}">
                                 <td></td>
-                                <td> {{ $data->name }}</td>
                                 <td>
-                                    {{ $data->agent_code }}
+                                    {{ Carbon\Carbon::parse($data->commissions->created_at)->format('d/M/Y H:i:s') }}
                                 </td>
                                 <td>
-                                    {{ $data->agency_code }}
+                                    {{ strtoupper(Carbon\Carbon::parse($data->commissions->created_at)->format('F Y')) }}
+                                </td>
+                                <td>
+                                    @if($data->ranking_id == 1)
+                                        SD
+                                    @elseif($data->ranking_id == 2)
+                                        DSD
+                                    @elseif($data->ranking_id == 3)
+                                        BDD A
+                                    @elseif($data->ranking_id == 4)
+                                        BDD B
+                                    @else
+                                        CBDD
+                                    @endif
+                                </td>
+                                <td>{{ strtoupper($data->name) }}</td>
+                                <td>
+                                    {{ strtoupper($data->agent_code) }}
+                                </td>
+                                <td>
+                                    {{ strtoupper($data->agency_code ?? 'No Information') }}
+                                </td>
+                                <td>
+                                    {{ $data->commissions()->sum('mo_spin_off') ?? '' }}
                                 </td>
                                 <td>
                                     {{ $data->commissions()->sum('mo_overriding_comm') ?? '' }}
                                 </td>
-                                <td></td>
                             </tr>
                         @endif
                     @endforeach

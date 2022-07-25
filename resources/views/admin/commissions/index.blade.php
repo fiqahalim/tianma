@@ -24,6 +24,9 @@
                         </th>
                         <th>Unit ID</th>
                         <th>
+                            Order Ref. No
+                        </th>
+                        <th>
                             Total {{ trans('cruds.commission.fields.comm_per_order') }}
                         </th>
                         <th>
@@ -34,9 +37,6 @@
                         </th>
                         <th>
                             Agency Code
-                        </th>
-                        <th>
-                            {{ trans('cruds.commission.fields.order') }}
                         </th>
                         <th>
                             Payment Mode
@@ -69,6 +69,9 @@
                                 {{ $unitNo ?? '' }}
                             </td>
                             <td>
+                                #{{ $order->ref_no ?? '' }}
+                            </td>
+                            <td>
                                 {{round($order->commissions()->sum('mo_overriding_comm') ?? '')}}.00
                             </td>
                             <td>
@@ -78,9 +81,6 @@
                                 {{ $order->createdBy->agent_code ?? '' }}
                             </td>
                             <td>{{ $order->createdBy->agency_code ?? '' }}</td>
-                            <td>
-                                #{{ $order->ref_no ?? '' }}
-                            </td>
                             <td>
                                 @if($order->customer->mode == 'Installment')
                                     <span class="badge bg-success text-white">

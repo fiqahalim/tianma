@@ -21,8 +21,8 @@
                 <table class="table table-light table-bordered">
                     <thead>
                         <tr class="table-info">
-                            <th>Order Ref No.</th>
                             <th>Order Created</th>
+                            <th>Order Ref No.</th>
                             <th>Purchaser Name</th>
                             <th>Purchaser ID/Passport Number</th>
                             <th>Reservation Lot Number</th>
@@ -36,8 +36,8 @@
                             $unitNo = implode(" ",$getUnitNo);
                         @endphp
                         <tr>
-                            <td>#{{ $order->ref_no }}</td>
                             <td>{{ Carbon\Carbon::parse($order->created_at)->format('d/M/Y H:i:s') }}</td>
+                            <td>#{{ $order->ref_no }}</td>
                             <td>{{ $order->customer->full_name ?? 'No Information' }}</td>
                             <td>{{ $order->customer->id_number }}</td>
                             <td>{{ $unitNo }}</td>
@@ -54,11 +54,12 @@
                 <table class="table table-light table-bordered">
                     <thead>
                         <tr class="table-info">
+                            <th>Commission Received Date</th>
                             <th scope="col">Agent Code</th>
                             <th scope="col">Agent Ranking</th>
                             <th scope="col">Agency Code</th>
                             @if(isset($order->customer) ?? $order->customer->mode == 'Installment')
-                                <th scope="col">New Point Value (PV)</th>
+                                <th scope="col">First Point Value (PV)</th>
                             @else
                                 <th scope="col">Point Value (PV)</th>
                             @endif
@@ -66,12 +67,14 @@
                             @if(isset($order->commissions->first_month) && $order->commissions->first_month > 0)
                                 <th scope="col">First Month Payment</th>
                             @endif
-                            <th scope="col">Commissions</th>
-                            <th scope="col">Total Commissions</th>
+                            <th scope="col">First Month Commissions Received</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
+                            <td>
+                                {{ Carbon\Carbon::parse($order->commissions->created_at)->format('d/M/Y H:i:s') }}
+                            </td>
                             <td>
                                 {{ $order->createdBy->agent_code }}
                             </td>
@@ -96,14 +99,14 @@
                                 {{ isset($firstPayout->percentage) ? $firstPayout->percentage : '' }}
                             </td>
                             @if(isset($order->commissions->first_month) && $order->commissions->first_month > 0)
-                                <td>Yes</td>
+                                <td>Yes, {{ $firstPayout->first_month }}</td>
                             @endif
                             <td>
                                 RM{{ isset($firstPayout->mo_overriding_comm) ? $firstPayout->mo_overriding_comm : '' }}
                             </td>
-                            <td>
+                            {{-- <td>
                                 RM{{ isset($firstPayout->mo_overriding_comm) ? $firstPayout->sum('mo_overriding_comm') : '' }}
-                            </td>
+                            </td> --}}
                         </tr>
                     </tbody>
                 </table>
@@ -120,41 +123,39 @@
                                     <tr class="table-info">
                                         <th></th>
                                         <th>ID</th>
-                                        <th scope="col">Commissions (Per Month)</th>
-                                        <th>Agent Code</th>
+                                        <th>Commission Received Date</th>
+                                        <th>Agent Ranking</th>
+                                        <th>Commissions Received <i>(per Installment)</i></th>
                                         <th>Agent Commission Percentage (%)</th>
-                                        <th scope="col">Point Value (PV)</th>
-                                        <th>Commission Received Date </th>
+                                        <th>Point Value (PV)</th>
+                                        <th>Agent Name</th>
+                                        <th>Agent Code</th>
                                     </tr>
                                 @endif
                             </thead>
                             <tbody>
-                                {{-- @foreach($allCommissions as $key => $allCommission)
-                                    @if($allCommission->mo_overriding_comm != "0")
-                                        <tr data-entry-id="{{ $allCommission->id }}">
-                                            <td></td>
-                                            <td>{{ $allCommission->id }}</td>
-                                            <td>RM{{ $allCommission->mo_overriding_comm }}</td>
-                                            <td></td>
-                                            <td>%</td>
-                                            <td>
-                                                First PV: {{ $allCommission->point_value }}<br>
-                                                Balance PV: {{ $allCommission->balance_pv }}
-                                            </td>
-                                            <td>
-                                                {{ Carbon\Carbon::parse($allCommission->created_at)->format('d/M/Y H:i:s') }}
-                                            </td>
-                                        </tr>
-                                    @endif
-                                @endforeach --}}
-
                                 @foreach($users as $key => $data)
                                     @if($data->mo_overriding_comm != "0")
                                         <tr data-entry-id="{{ $data->id }}">
                                             <td></td>
                                             <td>{{ $data->id }}</td>
+                                            <td>
+                                                {{ Carbon\Carbon::parse($data->created_at)->format('d/M/Y H:i:s') }}
+                                            </td>
+                                            <td>
+                                                @if($data->user->ranking_id == 1)
+                                                    SD
+                                                @elseif($data->user->ranking_id == 2)
+                                                    DSD
+                                                @elseif($data->user->ranking_id == 3)
+                                                    BDD A
+                                                @elseif($data->user->ranking_id == 4)
+                                                    BDD B
+                                                @else
+                                                    CBDD
+                                                @endif
+                                            </td>
                                             <td>RM{{ $data->mo_overriding_comm }}</td>
-                                            <td>{{ $data->user->agent_code }}</td>
                                             <td>
                                                 @if($data->user->ranking_id == 1)
                                                     16%
@@ -170,9 +171,8 @@
                                                 First PV: {{ $data->point_value }}<br>
                                                 Balance PV: {{ $data->balance_pv }}
                                             </td>
-                                            <td>
-                                                {{ Carbon\Carbon::parse($data->created_at)->format('d/M/Y H:i:s') }}
-                                            </td>
+                                            <td>{{ $data->user->name }}</td>
+                                            <td>{{ $data->user->agent_code }}</td>
                                         </tr>
                                     @endif
                                 @endforeach
@@ -190,49 +190,22 @@
                         <thead>
                             <tr class="table-primary">
                                 <th></th>
-                                <th scope="col">Upperline Agent Code</th>
-                                <th scope="col">Upperline Agency Code</th>
-                                <th scope="col">Upperline Agent Ranking</th>
-                                <th scope="col">Upperline Total Commission</th>
+                                <th>Commission Received Date</th>
+                                <th>Upperline Agent Ranking</th>
+                                <th>Upperline Total Commission</th>
+                                <th>Upperline Commission Percentage(%)</th>
+                                <th>Point Value (PV) Claimed</th>
+                                <th>Upperline Agent Name</th>
+                                <th>Upperline Agent Code</th>
+                                <th>Upperline Agency Code</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($users as $key => $data)
-                                    @if($data->mo_overriding_comm != "0")
-                                        <tr data-entry-id="{{ $data->id }}">
-                                            <td></td>
-                                            <td>{{ $data->id }}</td>
-                                            <td>RM{{ $data->sum('mo_overriding_comm') }}</td>
-                                            <td>{{ $data->user->agent_code }}</td>
-                                            <td>
-                                                @if($data->user->ranking_id == 1)
-                                                    16%
-                                                @elseif($data->user->ranking_id == 2 && $data->user->ranking_id == 4)
-                                                    4%
-                                                @elseif($data->user->ranking_id == 3)
-                                                    2%
-                                                @else
-                                                    5%
-                                                @endif
-                                            </td>
-                                            <td>
-                                                First PV: {{ $data->point_value }}<br>
-                                                Balance PV: {{ $data->balance_pv }}
-                                            </td>
-                                            <td>
-                                                {{ Carbon\Carbon::parse($data->created_at)->format('d/M/Y H:i:s') }}
-                                            </td>
-                                        </tr>
-                                    @endif
-                                @endforeach
                             {{-- 1st Parent --}}
                             <tr>
                                 <td></td>
                                 <td>
-                                    {{ $order->createdBy->parent->agent_code }}
-                                </td>
-                                <td>
-                                    {{ $order->createdBy->parent->agency_code ?? 'No Agency Code Yet' }}
+                                    {{ Carbon\Carbon::parse($order->commissions->created_at)->format('d/M/Y H:i:s') }}
                                 </td>
                                 <td>
                                     @if($order->createdBy->parent->ranking_id == 1)
@@ -250,16 +223,34 @@
                                 <td>
                                     RM{{ $order->createdBy->parent->commissions()->sum('mo_overriding_comm') ?? '' }}
                                 </td>
+                                <td>
+                                    @if($order->createdBy->parent->ranking_id == 1)
+                                        16%
+                                    @elseif($order->createdBy->parent->ranking_id == 2 && $order->createdBy->parent->ranking_id == 4)
+                                        4%
+                                    @elseif($order->createdBy->parent->ranking_id == 3)
+                                        2%
+                                    @else
+                                        5%
+                                    @endif
+                                </td>
+                                <td>
+                                    {{ $order->commissions->point_value }}
+                                </td>
+                                <td>{{ $order->createdBy->parent->name }}</td>
+                                <td>
+                                    {{ $order->createdBy->parent->agent_code }}
+                                </td>
+                                <td>
+                                    {{ $order->createdBy->parent->agency_code ?? 'No Agency Code Yet' }}
+                                </td>
                             </tr>
 
                             @if(isset($order->createdBy->parent->parent) && !empty($order->createdBy->parent->parent))
                                 <tr>
                                     <td></td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->agent_code) ? $order->createdBy->parent->parent->agent_code : '' }}
-                                    </td>
-                                    <td>
-                                        {{ isset($order->createdBy->parent->parent->agency_code) ? $order->createdBy->parent->parent->agency_code : 'No Agency Code Yet' }}
+                                        {{ Carbon\Carbon::parse($order->commissions->created_at)->format('d/M/Y H:i:s') }}
                                     </td>
                                     <td>
                                         @if(isset($order->createdBy->parent->parent->ranking_id))
@@ -279,6 +270,15 @@
                                     <td>
                                         RM{{ isset($order->createdBy->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->commissions()->sum('mo_overriding_comm') : '' }}
                                     </td>
+                                    <td>
+                                        {{ isset($order->createdBy->parent->parent->name) ? $order->createdBy->parent->parent->name : '' }}
+                                    </td>
+                                    <td>
+                                        {{ isset($order->createdBy->parent->parent->agent_code) ? $order->createdBy->parent->parent->agent_code : '' }}
+                                    </td>
+                                    <td>
+                                        {{ isset($order->createdBy->parent->parent->agency_code) ? $order->createdBy->parent->parent->agency_code : 'No Agency Code Yet' }}
+                                    </td>
                                 </tr>
                             @endif
 
@@ -287,10 +287,7 @@
                                 <tr>
                                     <td></td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->parent->agent_code) ? $order->createdBy->parent->parent->parent->agent_code : '' }}
-                                    </td>
-                                    <td>
-                                        {{ isset($order->createdBy->parent->parent->parent->agency_code) ? $order->createdBy->parent->parent->parent->agency_code : 'No Agency Code Yet' }}
+                                        {{ Carbon\Carbon::parse($order->commissions->created_at)->format('d/M/Y H:i:s') }}
                                     </td>
                                     <td>
                                         @if(isset($order->createdBy->parent->parent->parent->ranking_id))
@@ -309,6 +306,15 @@
                                     </td>
                                     <td>
                                         RM{{ isset($order->createdBy->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->commissions()->sum('mo_overriding_comm') : '' }}
+                                    </td>
+                                    <td>
+                                        {{ isset($order->createdBy->parent->parent->parent->name) ? $order->createdBy->parent->parent->parent->name : '' }}
+                                    </td>
+                                    <td>
+                                        {{ isset($order->createdBy->parent->parent->parent->agent_code) ? $order->createdBy->parent->parent->parent->agent_code : '' }}
+                                    </td>
+                                    <td>
+                                        {{ isset($order->createdBy->parent->parent->parent->agency_code) ? $order->createdBy->parent->parent->parent->agency_code : 'No Agency Code Yet' }}
                                     </td>
                                 </tr>
                             @endif

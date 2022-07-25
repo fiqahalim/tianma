@@ -388,7 +388,7 @@ class CommissionController extends Controller
         $commissions->mo_overriding_comm = abs($totalCommission);
         $commissions->created_at = $current = Carbon::now();
         $commissions->user_id = $user->parent_id;
-        $commissions->order_id = $orders->id;
+        // $commissions->order_id = $orders->id;
         $commissions->save();
 
         return $commissions;
@@ -438,7 +438,7 @@ class CommissionController extends Controller
                 $commissions->mo_overriding_comm = abs($totalCommission);
                 $commissions->created_at = $current = Carbon::now();
                 $commissions->user_id = $pss->parent_id;
-                $commissions->order_id = $orders->id;
+                // $commissions->order_id = $orders->id;
                 $commissions->save();
 
                 return $commissions;
@@ -491,7 +491,7 @@ class CommissionController extends Controller
                     $commissions->mo_overriding_comm = abs($totalCommission);
                     $commissions->created_at = $current = Carbon::now();
                     $commissions->user_id = $pss->parent_id;
-                    $commissions->order_id = $orders->id;
+                    // $commissions->order_id = $orders->id;
                     $commissions->save();
 
                     return $commissions;
@@ -545,7 +545,7 @@ class CommissionController extends Controller
                     $commissions->mo_overriding_comm = abs($totalCommission);
                     $commissions->created_at = $current = Carbon::now();
                     $commissions->user_id = $pss->parent_id;
-                    $commissions->order_id = $orders->id;
+                    // $commissions->order_id = $orders->id;
                     $commissions->save();
 
                     return $commissions;
@@ -599,7 +599,7 @@ class CommissionController extends Controller
                     $commissions->mo_overriding_comm = abs($totalCommission);
                     $commissions->created_at = $current = Carbon::now();
                     $commissions->user_id = $pss->parent_id;
-                    $commissions->order_id = $orders->id;
+                    // $commissions->order_id = $orders->id;
                     $commissions->save();
 
                     return $commissions;
@@ -653,7 +653,7 @@ class CommissionController extends Controller
                     $commissions->mo_overriding_comm = abs($totalCommission);
                     $commissions->created_at = $current = Carbon::now();
                     $commissions->user_id = $pss->parent_id;
-                    $commissions->order_id = $orders->id;
+                    // $commissions->order_id = $orders->id;
                     $commissions->save();
 
                     return $commissions;
@@ -707,7 +707,7 @@ class CommissionController extends Controller
                     $commissions->mo_overriding_comm = abs($totalCommission);
                     $commissions->created_at = $current = Carbon::now();
                     $commissions->user_id = $pss->parent_id;
-                    $commissions->order_id = $orders->id;
+                    // $commissions->order_id = $orders->id;
                     $commissions->save();
 
                     return $commissions;
@@ -761,7 +761,7 @@ class CommissionController extends Controller
                     $commissions->mo_overriding_comm = abs($totalCommission);
                     $commissions->created_at = $current = Carbon::now();
                     $commissions->user_id = $pss->parent_id;
-                    $commissions->order_id = $orders->id;
+                    // $commissions->order_id = $orders->id;
                     $commissions->save();
 
                     return $commissions;
@@ -815,7 +815,7 @@ class CommissionController extends Controller
                     $commissions->mo_overriding_comm = abs($totalCommission);
                     $commissions->created_at = $current = Carbon::now();
                     $commissions->user_id = $pss->parent_id;
-                    $commissions->order_id = $orders->id;
+                    // $commissions->order_id = $orders->id;
                     $commissions->save();
 
                     return $commissions;
@@ -869,7 +869,7 @@ class CommissionController extends Controller
                     $commissions->mo_overriding_comm = abs($totalCommission);
                     $commissions->created_at = $current = Carbon::now();
                     $commissions->user_id = $pss->parent_id;
-                    $commissions->order_id = $orders->id;
+                    // $commissions->order_id = $orders->id;
                     $commissions->save();
 
                     return $commissions;
