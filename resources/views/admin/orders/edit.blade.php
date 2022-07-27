@@ -100,24 +100,27 @@
 
             {{-- Product Details --}}
             <h5>Product Details</h5>
+
             @php
-                $getUnitNo = isset($order->lotID) ? $order->lotID->seats : '';
-                $unitNo = implode(" ",$getUnitNo);
+                $getAllDatas = isset($order->lotID) ? $order->lotID->seats : '';
+                $datas = implode(" ", $getAllDatas);
+                $extractData = explode(",",$datas);
             @endphp
+
             <div class="form-row mt-3 mb-3">
                 <div class="form-group col-md-4">
-                    <label for="product_code">{{ trans('cruds.product.fields.product_code') }}</label>
-                    <input class="form-control" type="text" value="{{ $unitNo ? $unitNo : '' }}" readonly>
+                    <label for="product_code">Reservation Lot ID</label>
+                    <input class="form-control" type="text" value="{{ $extractData[0] }}" readonly>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="selling">Selling {{ trans('cruds.product.fields.price') }}</label>
+                    <label for="promotion_price">{{ trans('cruds.product.fields.promotion_price') }}</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
                                 <i>RM</i>
                             </span>
                         </div>
-                        <input class="form-control" type="text" value="{{ $order->lotID ? $order->lotID->selling : '' }}" readonly>
+                        <input class="form-control" type="text" value="{{ $extractData[2] }}" readonly>
                     </div>
                 </div>
                 <div class="form-group col-md-4">
@@ -128,29 +131,18 @@
                                 <i>RM</i>
                             </span>
                         </div>
-                        <input class="form-control" type="text" value="{{ $order->lotID ? $order->lotID->maintenance : '' }}" readonly>
+                        <input class="form-control" type="text" value="{{ $extractData[3] }}" readonly>
                     </div>
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="promotion_price">{{ trans('cruds.product.fields.promotion_price') }}</label>
+                    <label for="price">Product Price</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
                                 <i>RM</i>
                             </span>
                         </div>
-                        <input class="form-control" type="text" value="{{ $order->lotID ? $order->lotID->promo : '' }}" readonly>
-                    </div>
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="price">Product Price (After Promo)</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i>RM</i>
-                            </span>
-                        </div>
-                        <input class="form-control" type="text" value="{{ $order->lotID ? $order->lotID->price : '' }}" readonly>
+                        <input class="form-control" type="text" value="{{ $extractData[1] }}" readonly>
                     </div>
                 </div>
                 <div class="form-group col-md-3">
@@ -161,7 +153,7 @@
                                 <i>PV</i>
                             </span>
                         </div>
-                        <input class="form-control" type="text" value="{{ $order->lotID ? $order->lotID->point_value : '' }}" readonly>
+                        <input class="form-control" type="text" value="{{ $extractData[4] }}" readonly>
                     </div>
                 </div>
                 @if(isset($order->customer->promotions) && $order->customer->promotions != null)

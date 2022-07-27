@@ -23,17 +23,23 @@
             Product Details
         </div>
 
+        @php
+            $getAllDatas = isset($reservedLot->seats) ? $reservedLot->seats : '';
+            $datas = implode(" ", $getAllDatas);
+            $extractData = explode(",",$datas);
+        @endphp
+
         <div class="card-body">
             <div class="form-row">
                 <div class="form-group col-md-4">
-                    <label for="selling">Selling Price</label>
+                    <label for="seats">Reservation Lot</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i>RM</i>
+                                <i class="fa fa-home"></i>
                             </span>
                         </div>
-                        <input class="form-control" id="selling" type="text" value="{{ $reservedLot->selling }}" readonly>
+                        <input class="form-control" id="seats" type="text" value="{{ $extractData[0] }}" readonly>
                     </div>
                 </div>
                 <div class="form-group col-md-4">
@@ -44,7 +50,7 @@
                                 <i>RM</i>
                             </span>
                         </div>
-                        <input class="form-control" id="promo" type="text" value="{{ $reservedLot->promo }}" readonly>
+                        <input class="form-control" id="promo" type="text" value="{{ $extractData[2] }}" readonly>
                     </div>
                 </div>
                 <div class="form-group col-md-4">
@@ -55,18 +61,18 @@
                                 <i>RM</i>
                             </span>
                         </div>
-                        <input class="form-control" id="maintenance" type="text" value="{{ $reservedLot->maintenance }}" readonly>
+                        <input class="form-control" id="maintenance" type="text" value="{{ $extractData[3] }}" readonly>
                     </div>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="price">Product Price (After Promo)</label>
+                    <label for="price">Product Price</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
                                 <i>RM</i>
                             </span>
                         </div>
-                        <input class="form-control" id="price" type="text" value="{{ $reservedLot->price }}" readonly>
+                        <input class="form-control" id="price" type="text" value="{{ $extractData[1] }}" readonly>
                     </div>
                 </div>
                 <div class="form-group col-md-4">
@@ -77,22 +83,7 @@
                                 <i>PV</i>
                             </span>
                         </div>
-                        <input class="form-control" id="point_value" type="text" value="{{ $reservedLot->point_value }}" readonly>
-                    </div>
-                </div>
-                @php
-                    $getUnitNo = isset($reservedLot->seats) ? $reservedLot->seats : '';
-                    $unitNo = implode(" ",$getUnitNo);
-                @endphp
-                <div class="form-group col-md-4">
-                    <label for="seats">Reservation Lot</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="fa fa-home"></i>
-                            </span>
-                        </div>
-                        <input class="form-control" id="seats" type="text" value="{{ $unitNo }}" readonly>
+                        <input class="form-control" id="point_value" type="text" value="{{ $extractData[4] }}" readonly>
                     </div>
                 </div>
             </div>

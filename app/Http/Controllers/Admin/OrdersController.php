@@ -78,7 +78,7 @@ class OrdersController extends Controller
     {
         abort_if(Gate::denies('order_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $order->load('customer', 'createdBy', 'products', 'bookLocations', 'installments', 'fullPayments');
+        $order->load('customer', 'createdBy', 'products', 'bookLocations', 'installments', 'fullPayments', 'lotID');
 
         if($order->customer->mode == 'Installment') {
             $amount = isset($order->installments->downpayment) ? $order->installments->downpayment : null;
@@ -89,10 +89,13 @@ class OrdersController extends Controller
             $today = Carbon::today();
             $date = $today->addMonth(1);
         } else {
-            $amount = isset($order->amount) ? $order->amount : null;
+            $amount = isset($order->lotID->seats) ? $order->lotID->seats : null;
+            $unitNo = implode(", ", $amount);
+            $extractData = explode(",",$unitNo);
+
             $numberToWords = new NumberToWords();
             $numberTransformer = $numberToWords->getNumberTransformer('en');
-            $amountFormat = $numberTransformer->toWords($amount);
+            $amountFormat = $numberTransformer->toWords($extractData[0]);
 
             $today = Carbon::today();
             $date = $today->addMonth(1);

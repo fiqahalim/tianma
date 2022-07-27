@@ -100,8 +100,10 @@
 
                         @php
                         $getUnitNo = isset($order->lotID) ? $order->lotID->seats : '';
-                        $unitNo = implode(" ",$getUnitNo);
                         $locations = isset($order->bookLocations) ? $order->bookLocations : '';
+                        $unitNo = implode(" ",$getUnitNo);
+                        $extractData = explode(",",$unitNo);
+
                         foreach ($locations as $details) {
                             $place = $details->location;
                             $type = $details->product_type;
@@ -120,74 +122,64 @@
 
                                 </td>
                                 <td>
-                                    {{ $unitNo ?? '' }}
+                                    {{ $extractData[0] ?? '' }}
                                 </td>
                                 <td></td>
                             </tr>
-                                <tr>
-                                    <td>
-                                        {{ trans('cruds.product.fields.selling_price') }}
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        RM {{ $order->lotID->selling ?? '' }}.00
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        {{ trans('cruds.product.fields.promotion_price') }}
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        RM {{ $order->lotID->promo ?? '' }}.00
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Product Price
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        RM {{ $order->installments->amount ?? '' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        {{ trans('cruds.product.fields.maintenance_price') }}
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        RM {{ $order->lotID->maintenance ?? '' }}.00
-                                    </td>
-                                </tr>
-                                {{-- Installment Details --}}
-                                <tr>
-                                    <td>
-                                        Monthly Installment <i>(11 months)</i>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        RM {{ $order->installments->monthly_installment ?? '' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Installment Balance <i>(last month)</i>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        RM {{ $order->installments->last_month_payment ?? '0.00' }}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                            <tr>
+                                <td>
+                                    {{ trans('cruds.product.fields.promotion_price') }}
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    RM {{ $extractData[2] ?? '' }}.00
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {{ trans('cruds.product.fields.maintenance_price') }}
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    RM {{ $extractData[3] ?? '' }}.00
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Product Price
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    RM {{ $extractData[1] ?? '' }}.00
+                                </td>
+                            </tr>
+                            {{-- Installment Details --}}
+                            <tr>
+                                <td>
+                                    Monthly Installment <i>(11 months)</i>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    RM {{ $order->installments->monthly_installment ?? '' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Installment Balance <i>(last month)</i>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    RM {{ $order->installments->last_month_payment ?? '0.00' }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
                     <div class="row border-b-2 brc-default-l2"></div>
 
@@ -201,7 +193,7 @@
                                     SubTotal
                                 </div>
                                 <div class="col-5">
-                                    <span class="text-120 text-secondary-d1">RM {{ $order->lotID->price ?? '' }}</span>
+                                    <span class="text-120 text-secondary-d1">RM {{ $extractData[1] ?? '' }}.00</span>
                                 </div>
                             </div>
 

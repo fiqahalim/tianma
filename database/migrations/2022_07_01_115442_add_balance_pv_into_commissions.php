@@ -15,6 +15,7 @@ class AddBalancePvIntoCommissions extends Migration
     {
         Schema::table('commissions', function (Blueprint $table) {
             $table->float('balance_pv', 15, 2)->nullable()->after('point_value');
+            $table->float('installment_pv', 15, 2)->nullable()->after('point_value');
         });
     }
 
@@ -26,7 +27,7 @@ class AddBalancePvIntoCommissions extends Migration
     public function down()
     {
         Schema::table('commissions', function (Blueprint $table) {
-            $table->dropColumn(['balance_pv']);
+            $table->dropColumn(['balance_pv', 'installment_pv']);
         });
     }
 }

@@ -90,8 +90,10 @@
 
                         @php
                             $getUnitNo = isset($order->lotID) ? $order->lotID->seats : '';
-                            $unitNo = implode(" ",$getUnitNo);
                             $locations = isset($order->bookLocations) ? $order->bookLocations : '';
+                            $unitNo = implode(" ",$getUnitNo);
+                            $extractData = explode(",",$unitNo);
+
                             foreach ($locations as $details) {
                                 $place = $details->location;
                                 $type = $details->product_type;
@@ -110,19 +112,9 @@
 
                                 </td>
                                 <td>
-                                    {{ $unitNo ?? '' }}
+                                    {{ $extractData[0] ?? '' }}
                                 </td>
                                 <td></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    {{ trans('cruds.product.fields.selling_price') }}
-                                </td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    RM {{ $order->lotID->selling ?? '' }}.00
-                                </td>
                             </tr>
                             <tr>
                                 <td>
@@ -131,17 +123,7 @@
                                 <td></td>
                                 <td></td>
                                 <td>
-                                    RM {{ $order->lotID->promo ?? '' }}.00
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Product Price
-                                </td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    RM {{ $order->lotID->price ?? '' }}
+                                    RM {{ $extractData[2] ?? '' }}.00
                                 </td>
                             </tr>
                             <tr>
@@ -151,7 +133,17 @@
                                 <td></td>
                                 <td></td>
                                 <td>
-                                    RM {{ $order->lotID->maintenance ?? '' }}.00
+                                    RM {{ $extractData[3] ?? '' }}.00
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Product Price
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    RM {{ $extractData[1] ?? '' }}.00
                                 </td>
                             </tr>
                         </tbody>
@@ -170,7 +162,7 @@
                                 Total Amount
                             </div>
                             <div class="col-5">
-                                <span class="text-150 text-success-d3 opacity-2">RM {{ $order->amount ?? '' }}</span>
+                                <span class="text-150 text-success-d3 opacity-2">RM {{ $extractData ?? '' }}.00</span>
                             </div>
                         </div>
                     </div>

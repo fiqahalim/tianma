@@ -24,6 +24,12 @@ class CommissionController extends Controller
 
         $orders = Order::with(['customer', 'createdBy', 'commissions', 'bookLocations', 'lotID'])->get();
 
+        // $monthlySpinOff = Order::where('created_by', $orders[0]->created_by)
+        //         ->whereMonth('created_at', Carbon::now()->month)
+        //         ->whereYear('created_at', Carbon::now()->year)
+        //         ->sum('amount');
+        // dd($orders[0], $monthlySpinOff);
+
         return view('admin.commissions.index', compact('orders'));
     }
 
@@ -75,7 +81,7 @@ class CommissionController extends Controller
                     $pp = $this->getPP();
                     break;
                 case 5:
-                    $totalCommission += round(($installmentPV * 0.05), 2);
+                    $totalCommission += round(($installmentPV * 0.005), 2);
                     $parentCommission = $this->getParent();
                     $pp = $this->getPP();
                     break;
@@ -105,7 +111,7 @@ class CommissionController extends Controller
                     $pp = $this->getPP();
                     break;
                 case 5:
-                    $totalCommission += round(($newPV * 0.05), 2);
+                    $totalCommission += round(($newPV * 0.005), 2);
                     $parentCommission = $this->getParent();
                     $pp = $this->getPP();
                     break;
@@ -245,7 +251,7 @@ class CommissionController extends Controller
                     $getTen = $this->getTen();
                     break;
                 case 5:
-                    $totalCommission += round(($installmentPV * 0.05), 2);
+                    $totalCommission += round(($installmentPV * 0.005), 2);
                     $parentCommission = $this->getParent();
                     $pp = $this->getPP();
                     $ppp = $this->getPPP();
@@ -315,7 +321,7 @@ class CommissionController extends Controller
                     $getTen = $this->getTen();
                     break;
                 case 5:
-                    $totalCommission += round(($newPV * 0.05), 2);
+                    $totalCommission += round(($newPV * 0.005), 2);
                     $parentCommission = $this->getParent();
                     $pp = $this->getPP();
                     $ppp = $this->getPPP();
@@ -375,7 +381,7 @@ class CommissionController extends Controller
                         $totalCommission += round(($installmentPV * 0.04),2);
                         break;
                     case 5:
-                        $totalCommission += round(($installmentPV * 0.05), 2);
+                        $totalCommission += round(($installmentPV * 0.005), 2);
                         break;
                     default:
                         break;
@@ -425,7 +431,7 @@ class CommissionController extends Controller
                                 $totalCommission += round(($installmentPV * 0.04),2);
                                 break;
                             case 5:
-                                $totalCommission += round(($installmentPV * 0.05), 2);
+                                $totalCommission += round(($installmentPV * 0.005), 2);
                                 break;
                             default:
                                 break;
@@ -478,7 +484,7 @@ class CommissionController extends Controller
                                     $totalCommission += round(($installmentPV * 0.04),2);
                                     break;
                                 case 5:
-                                    $totalCommission += round(($installmentPV * 0.05), 2);
+                                    $totalCommission += round(($installmentPV * 0.005), 2);
                                     break;
                                 default:
                                     break;
@@ -532,7 +538,7 @@ class CommissionController extends Controller
                                     $totalCommission += round(($installmentPV * 0.04),2);
                                     break;
                                 case 5:
-                                    $totalCommission += round(($installmentPV * 0.05), 2);
+                                    $totalCommission += round(($installmentPV * 0.005), 2);
                                     break;
                                 default:
                                     break;
@@ -586,7 +592,7 @@ class CommissionController extends Controller
                                     $totalCommission += round(($installmentPV * 0.04),2);
                                     break;
                                 case 5:
-                                    $totalCommission += round(($installmentPV * 0.05), 2);
+                                    $totalCommission += round(($installmentPV * 0.005), 2);
                                     break;
                                 default:
                                     break;
@@ -640,7 +646,7 @@ class CommissionController extends Controller
                                     $totalCommission += round(($installmentPV * 0.04),2);
                                     break;
                                 case 5:
-                                    $totalCommission += round(($installmentPV * 0.05), 2);
+                                    $totalCommission += round(($installmentPV * 0.005), 2);
                                     break;
                                 default:
                                     break;
@@ -694,7 +700,7 @@ class CommissionController extends Controller
                                     $totalCommission += round(($installmentPV * 0.04),2);
                                     break;
                                 case 5:
-                                    $totalCommission += round(($installmentPV * 0.05), 2);
+                                    $totalCommission += round(($installmentPV * 0.005), 2);
                                     break;
                                 default:
                                     break;
@@ -748,7 +754,7 @@ class CommissionController extends Controller
                                     $totalCommission += round(($installmentPV * 0.04),2);
                                     break;
                                 case 5:
-                                    $totalCommission += round(($installmentPV * 0.05), 2);
+                                    $totalCommission += round(($installmentPV * 0.005), 2);
                                     break;
                                 default:
                                     break;
@@ -802,7 +808,7 @@ class CommissionController extends Controller
                                     $totalCommission += round(($installmentPV * 0.04),2);
                                     break;
                                 case 5:
-                                    $totalCommission += round(($installmentPV * 0.05), 2);
+                                    $totalCommission += round(($installmentPV * 0.005), 2);
                                     break;
                                 default:
                                     break;
@@ -856,7 +862,7 @@ class CommissionController extends Controller
                                     $totalCommission += round(($installmentPV * 0.04),2);
                                     break;
                                 case 5:
-                                    $totalCommission += round(($installmentPV * 0.05), 2);
+                                    $totalCommission += round(($installmentPV * 0.005), 2);
                                     break;
                                 default:
                                     break;

@@ -108,9 +108,10 @@ class TransactionController extends Controller
             $balanceComms = $newPV - $prevPVs;
 
             $spinOff = 0;
-            $monthlySpinOff = Order::join('commissions', 'commissions.order_id', '=', 'orders.id')
-                ->where('commissions.user_id', $order->created_by)
-                ->sum('commissions.mo_overriding_comm');
+            $monthlySpinOff = Order::where('created_by', $order->created_by)
+                ->whereMonth('created_at', Carbon::now()->month)
+                ->whereYear('created_at', Carbon::now()->year)
+                ->sum('amount');
 
             session(['installmentPV' => $installmentPV]);
             session(['balanceComms' => $balanceComms]);
@@ -179,8 +180,8 @@ class TransactionController extends Controller
                     $getTen = $this->getTen();
                     break;
                 case 5:
-                    $totalCommission += round(($installmentPV * 0.05), 2);
-                    $balanceCommission += round(($balanceComms * 0.05), 2);
+                    $totalCommission += round(($installmentPV * 0.005), 2);
+                    $balanceCommission += round(($balanceComms * 0.005), 2);
                     if ($monthlySpinOff >= 900000) {
                        $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
                     }
@@ -253,7 +254,7 @@ class TransactionController extends Controller
                     $getTen = $this->getTen();
                     break;
                 case 5:
-                    $totalCommission += round(($newPV * 0.05), 2);
+                    $totalCommission += round(($newPV * 0.005), 2);
                     $parentCommission = $this->getParent();
                     $pp = $this->getPP();
                     $ppp = $this->getPPP();
@@ -351,8 +352,8 @@ class TransactionController extends Controller
                             $balanceCommission += round(($balanceComms * 0.04), 2);
                             break;
                         case 5:
-                            $totalCommission += round(($installmentPV * 0.05), 2);
-                            $balanceCommission += round(($balanceComms * 0.05), 2);
+                            $totalCommission += round(($installmentPV * 0.005), 2);
+                            $balanceCommission += round(($balanceComms * 0.005), 2);
                             if ($monthlySpinOff >= 900000) {
                                 $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
                             }
@@ -387,7 +388,7 @@ class TransactionController extends Controller
                             $totalCommission += round(($installmentPV * 0.04),2);
                             break;
                         case 5:
-                            $totalCommission += round(($installmentPV * 0.05), 2);
+                            $totalCommission += round(($installmentPV * 0.005), 2);
                             if ($monthlySpinOff >= 900000) {
                                 $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
                             }
@@ -461,8 +462,8 @@ class TransactionController extends Controller
                                     $balanceCommission += round(($balanceComms * 0.04), 2);
                                     break;
                                 case 5:
-                                    $totalCommission += round(($installmentPV * 0.05), 2);
-                                    $balanceCommission += round(($balanceComms * 0.05), 2);
+                                    $totalCommission += round(($installmentPV * 0.005), 2);
+                                    $balanceCommission += round(($balanceComms * 0.005), 2);
                                     if ($monthlySpinOff >= 900000) {
                                         $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
                                     }
@@ -477,7 +478,7 @@ class TransactionController extends Controller
                     $commissions = new Commission;
                     $commissions->mo_overriding_comm = abs($totalCommission);
                     $commissions->balance_comm = abs(isset($balanceCommission)) ? abs($balanceCommission) : '';
-                    $commissions->mo_spin_off = abs($spinOff);
+                    $commissions->mo_spin_off = abs(isset($spinOff)) ? abs($spinOff) : '';
                     $commissions->created_at = $current = Carbon::now();
                     // $commissions->order_id = $orders->id;
                     $commissions->user_id = $pss->parent_id;
@@ -539,8 +540,8 @@ class TransactionController extends Controller
                                         $balanceCommission += round(($balanceComms * 0.04), 2);
                                         break;
                                     case 5:
-                                        $totalCommission += round(($installmentPV * 0.05), 2);
-                                        $balanceCommission += round(($balanceComms * 0.05), 2);
+                                        $totalCommission += round(($installmentPV * 0.005), 2);
+                                        $balanceCommission += round(($balanceComms * 0.005), 2);
                                         if ($monthlySpinOff >= 900000) {
                                             $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
                                         }
@@ -618,8 +619,8 @@ class TransactionController extends Controller
                                         $balanceCommission += round(($balanceComms * 0.04), 2);
                                         break;
                                     case 5:
-                                        $totalCommission += round(($installmentPV * 0.05), 2);
-                                        $balanceCommission += round(($balanceComms * 0.05), 2);
+                                        $totalCommission += round(($installmentPV * 0.005), 2);
+                                        $balanceCommission += round(($balanceComms * 0.005), 2);
                                         if ($monthlySpinOff >= 900000) {
                                             $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
                                         }
@@ -697,8 +698,8 @@ class TransactionController extends Controller
                                         $balanceCommission += round(($balanceComms * 0.04), 2);
                                         break;
                                     case 5:
-                                        $totalCommission += round(($installmentPV * 0.05), 2);
-                                        $balanceCommission += round(($balanceComms * 0.05), 2);
+                                        $totalCommission += round(($installmentPV * 0.005), 2);
+                                        $balanceCommission += round(($balanceComms * 0.005), 2);
                                         if ($monthlySpinOff >= 900000) {
                                             $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
                                         }
@@ -774,8 +775,8 @@ class TransactionController extends Controller
                                         $balanceCommission += round(($balanceComms * 0.04), 2);
                                         break;
                                     case 5:
-                                        $totalCommission += round(($installmentPV * 0.05), 2);
-                                        $balanceCommission += round(($balanceComms * 0.05), 2);
+                                        $totalCommission += round(($installmentPV * 0.005), 2);
+                                        $balanceCommission += round(($balanceComms * 0.005), 2);
                                         if ($monthlySpinOff >= 900000) {
                                             $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
                                         }
@@ -854,8 +855,8 @@ class TransactionController extends Controller
                                         $balanceCommission += round(($balanceComms * 0.04), 2);
                                         break;
                                     case 5:
-                                        $totalCommission += round(($installmentPV * 0.05), 2);
-                                        $balanceCommission += round(($balanceComms * 0.05), 2);
+                                        $totalCommission += round(($installmentPV * 0.005), 2);
+                                        $balanceCommission += round(($balanceComms * 0.005), 2);
                                         if ($monthlySpinOff >= 900000) {
                                             $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
                                         }
@@ -934,8 +935,8 @@ class TransactionController extends Controller
                                         $balanceCommission += round(($balanceComms * 0.04), 2);
                                         break;
                                     case 5:
-                                        $totalCommission += round(($installmentPV * 0.05), 2);
-                                        $balanceCommission += round(($balanceComms * 0.05), 2);
+                                        $totalCommission += round(($installmentPV * 0.005), 2);
+                                        $balanceCommission += round(($balanceComms * 0.005), 2);
                                         if ($monthlySpinOff >= 900000) {
                                             $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
                                         }
@@ -1015,8 +1016,8 @@ class TransactionController extends Controller
                                         $balanceCommission += round(($balanceComms * 0.04), 2);
                                         break;
                                     case 5:
-                                        $totalCommission += round(($installmentPV * 0.05), 2);
-                                        $balanceCommission += round(($balanceComms * 0.05), 2);
+                                        $totalCommission += round(($installmentPV * 0.005), 2);
+                                        $balanceCommission += round(($balanceComms * 0.005), 2);
                                         if ($monthlySpinOff >= 900000) {
                                             $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
                                         }
@@ -1096,8 +1097,8 @@ class TransactionController extends Controller
                                         $balanceCommission += round(($balanceComms * 0.04), 2);
                                         break;
                                     case 5:
-                                        $totalCommission += round(($installmentPV * 0.05), 2);
-                                        $balanceCommission += round(($balanceComms * 0.05), 2);
+                                        $totalCommission += round(($installmentPV * 0.005), 2);
+                                        $balanceCommission += round(($balanceComms * 0.005), 2);
                                         if ($monthlySpinOff >= 900000) {
                                             $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
                                         }

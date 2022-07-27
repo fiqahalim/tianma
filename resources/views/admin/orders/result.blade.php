@@ -17,6 +17,79 @@
         </ol>
     </nav>
 
+    {{-- Product Details --}}
+    <div class="card">
+        <div class="card-header font-weight-bold">
+            Product Details
+        </div>
+
+        @php
+            $getUnitNo = isset($order->lotID->seats) ? $order->lotID->seats : '';
+            $unitNo = implode(" ",$getUnitNo);
+            $extractData = explode(",",$unitNo);
+        @endphp
+
+        <div class="card-body">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="seats">Reservation Lot</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fa fa-home"></i>
+                            </span>
+                        </div>
+                        <input class="form-control" id="seats" type="text" value="{{ $extractData[0] }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="promo">Promotion Price</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>RM</i>
+                            </span>
+                        </div>
+                        <input class="form-control" id="promo" type="text" value="{{ $extractData[2] }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="maintenance">Maintenance Price</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>RM</i>
+                            </span>
+                        </div>
+                        <input class="form-control" id="maintenance" type="text" value="{{ $extractData[3] }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="price">Product Price</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>RM</i>
+                            </span>
+                        </div>
+                        <input class="form-control" id="price" type="text" value="{{ $extractData[1] }}" readonly>
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="point_value">Point Value</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i>PV</i>
+                            </span>
+                        </div>
+                        <input class="form-control" id="point_value" type="text" value="{{ $extractData[4] }}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="card">
         <div class="card-header font-weight-bold">
             Installment Calculator

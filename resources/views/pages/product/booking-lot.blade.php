@@ -84,8 +84,7 @@
                             <thead class="table-dark">
                                 <tr>
                                     <th>Reservation Lots</th>
-                                    <th>Lot ID Number</th>
-                                    <th>Price</th>
+                                    <th>Lot ID & Prices</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -95,8 +94,8 @@
                                             {{ strtoupper($locations->build_type) }}, {{ strtoupper($locations->level) }}, {{ strtoupper($locations->category) }}
                                         </p>
                                     </td>
-                                    <td id="results">
-                                    </td>
+                                    {{-- <td id="results">
+                                    </td> --}}
                                     <td id="prices"></td>
                                 </tr>
                             </tbody>

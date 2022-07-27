@@ -52,13 +52,14 @@
                                     foreach($getUnitNo as $unit) {
                                         $bookLots = $unit->lotBookings->seats;
                                         $unitNo = implode(", ", $bookLots);
+                                        $extractData = explode(",",$unitNo);
                                     }
                                 @endphp
                                 <p style="font-size: 12pt; font-family: Arial, Helvetica, sans-serif;" class="alignMe">
                                     <b>RECEIPT NO</b><br>
                                     <b>ORDER ID</b> #{{ $order->ref_no ?? '' }} <br>
                                     <b>INVOICE NO</b> <br>
-                                    <b>UNIT NUMBER</b> {{ $unitNo }}<br>
+                                    <b>UNIT NUMBER</b> {{ $extractData[0] }}<br>
                                     <b>DATE</b> {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y') }}
                                 </p>
                             </div>
@@ -99,7 +100,7 @@
                                         {{ Str::upper($payment_name ?? '') }}
                                     </td> --}}
                                     <td>
-                                        {{ $unitNo }}
+                                        {{ $extractData[0] }}
                                     </td>
                                     <td>
                                         @if($order->payment_option == 'PAY LATER' && $order->amount == 0)

@@ -13,7 +13,14 @@
             @csrf
             <input type="text" name="price" hidden="">
 
-            <img src="{{ $product->photo->url ?? '/images/product/luxury_1.png' }}" class="rounded mx-auto d-block" style="height: 300px; width: 485px;">
+            @if($locations->category == 'Luxury')
+                <img src="{{ $product->photo->url ?? '/images/product/luxury_layout.png' }}" class="rounded mx-auto d-block" style="height: 300px; width: 485px;">
+            @elseif($locations->category == 'Premium')
+                <img src="{{ $product->photo->url ?? '/images/product/premium_layout.png' }}" class="rounded mx-auto d-block" style="height: 300px; width: 485px;">
+            @else
+                <img src="{{ $product->photo->url ?? '/images/product/standard_layout.png' }}" class="rounded mx-auto d-block" style="height: 300px; width: 485px;">
+            @endif
+
             <div class="movie-container">
                 <h5><strong>Category Selected: {{ $locations->category ?? ''}}</strong>
                 </h5>
@@ -76,8 +83,7 @@
                             <thead class="table-dark">
                                 <tr>
                                     <th>Reservation Lots</th>
-                                    <th>Lot ID Number</th>
-                                    <th>Price</th>
+                                    <th>Lot ID & Prices</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -87,8 +93,8 @@
                                             {{ strtoupper($locations->build_type) }}, {{ strtoupper($locations->level) }}, {{ strtoupper($locations->category) }}
                                         </p>
                                     </td>
-                                    <td id="results">
-                                    </td>
+                                    {{-- <td id="results">
+                                    </td> --}}
                                     <td id="prices"></td>
                                 </tr>
                             </tbody>
