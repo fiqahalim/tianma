@@ -4,7 +4,6 @@
         $getAllDatas = $reservedLot->seats;
         $datas = implode(" ", $getAllDatas);
         $extractData = explode(",",$datas);
-        // dd($extractData[1], explode(",",$datas));
     @endphp
     <div class="form-group col-md-2">
         <label for="product_code">{{ trans('cruds.product.fields.product_code') }}</label>

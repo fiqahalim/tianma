@@ -129,15 +129,19 @@ class InstallmentController extends Controller
 
         if(isset($customer->promotion_id) && !is_null($customer->promotion_id)){
             $percentage = $customer->promotions->promo_value;
-            $percentPrice = $reservedLot->price * ($percentage/100);
-            $amountDiscount = ($reservedLot->price) - ($percentPrice);
+            $getAllDatas = isset($reservedLot->seats) ? $reservedLot->seats : '';
+            $datas = implode(" ", $getAllDatas);
+            $extractData = explode(",",$datas);
+
+            $percentPrice = $extractData[1] * ($percentage/100);
+            $amountDiscount = ($extractData[1]) - ($percentPrice);
 
             if($customer->promotions->promo_type === 'Percentage') {
                 $discount_price = $percentPrice;
                 $after_discount = $amountDiscount;
             } elseif($customer->promotions->promo_type === 'Fixed') {
                 $discount_price = $percentage;
-                $after_discount = ($reservedLot->price) - $discount_price;
+                $after_discount = ($extractData[1]) - $discount_price;
             }
         }
 

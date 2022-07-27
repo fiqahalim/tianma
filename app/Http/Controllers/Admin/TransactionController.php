@@ -288,9 +288,10 @@ class TransactionController extends Controller
         $comms = new Commission;
         $comms->mo_overriding_comm = abs($totalCommission);
         $comms->balance_comm = abs($balanceCommission);
-        $comms->mo_spin_off = abs($spinOff);
+        $comms->mo_spin_off = abs(isset($spinOff)) ? abs($spinOff) : '';
         $comms->point_value = $orders->commissions->point_value;
         $comms->balance_pv = $newPV;
+        $comms->installment_pv = abs(isset($installmentPV)) ? abs($installmentPV) : '';
         $comms->order_id = $orders->id;
         $comms->user_id = $orders->createdBy->id;
         $comms->save();

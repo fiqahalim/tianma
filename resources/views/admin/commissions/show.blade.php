@@ -187,7 +187,7 @@
             @if(isset($order->createdBy->parent) ?? !empty($order->createdBy->parent))
                 <div class="form-group mt-5">
                     <h5>Upperline Informations</h5>
-                    <table class="table table-light table-bordered datatable datatable-upperline">
+                    <table class="table table-light table-bordered">
                         <thead>
                             <tr class="table-primary">
                                 <th></th>

@@ -57,6 +57,7 @@
                             foreach($getUnitNo as $unit) {
                                 $bookLots = $unit->lotBookings->seats;
                                 $unitNo = implode(", ", $bookLots);
+                                $extractData = explode(",",$unitNo);
                             }
                         @endphp
                         <tr data-entry-id="{{ $order->id }}">
@@ -66,7 +67,7 @@
                                 {{ Carbon\Carbon::parse($order->created_at)->format('d/M/Y H:i:s') }}
                             </td>
                             <td>
-                                {{ $unitNo ?? '' }}
+                                {{ $extractData[0] ?? '' }}
                             </td>
                             <td>
                                 #{{ $order->ref_no ?? '' }}
