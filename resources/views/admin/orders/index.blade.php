@@ -221,7 +221,8 @@
 </script>
 <script>
         <?php
-            $dateTime = strtotime($order->expiry_date);
+            $order = date('Y-m-d',strtotime("31-07-2016"));
+            $dateTime = strtotime(isset($order)) ?? $order->expiry_date;
             $getDateTime = date("F d, Y H:i:s", $dateTime);
         ?>
         var payLater = {!! $order !!}
