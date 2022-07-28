@@ -198,7 +198,7 @@
                                 <th>Upperline Agency Code</th>
                                 <th>Point Value (PV) Claimed</th>
                                 <th>Upperline Commission Percentage(%)</th>
-                                <th>Upperline Monthly Installment Commissions</th>
+                                <th>Upperline First Month Commissions Received</th>
                                 <th>Upperline Total Commission</th>
                             </tr>
                         </thead>
