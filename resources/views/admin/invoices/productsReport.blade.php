@@ -55,6 +55,7 @@
                         <th>
                             Order Status
                         </th>
+                        <th>Agent Code</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -62,6 +63,7 @@
                         @php
                             $getUnitNo = isset($reserve->seats) ? $reserve->seats : '';
                             $unitNo = implode(" ",$getUnitNo);
+                            $extractData = explode(",", $unitNo);
                         @endphp
                         <tr data-entry-id="{{ $reserve->id }}">
                             <td></td>
@@ -70,10 +72,10 @@
                             </td>
                             <td>#{{ $reserve->orders->ref_no ?? '' }}</td>
                             <td>
-                                {{ $unitNo }}
+                                {{ $extractData[0] ?? '' }}
                             </td>
                             <td>
-                                {{ $reserve->price ?? '' }}
+                                {{ number_format($extractData[1] ?? '') }}
                             </td>
                             <td>
                                 @if($reserve->available == '0')
@@ -89,6 +91,7 @@
                             <td>
                                 {{ strtoupper(isset($reserve->orders->order_status) ? $reserve->orders->order_status :'') }}
                             </td>
+                            <td>{{ strtoupper($reserve->createdBy->agent_code) }}</td>
                         </tr>
                     @endforeach
                 </tbody>

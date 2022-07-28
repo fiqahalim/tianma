@@ -59,6 +59,11 @@
                             $order = session('order');
                             $paymentInfo = session('paymentInfo');
                             $products = session('products');
+                            $reservedLot = session('reservedLot');
+
+                            $getAllDatas = $reservedLot->seats;
+                            $datas = implode(" ", $getAllDatas);
+                            $extractData = explode(",",$datas);
                         @endphp
                         @if ($customer->mode == 'Full Payment')
                             <div class="p-3 border-bottom">
@@ -101,14 +106,14 @@
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span class="font-weight-bold">
-                                            Product Selling Price
+                                            Promotion Price
                                         </span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span>
-                                            RM {{ $reservedLot->selling ?? '' }}
+                                            RM {{ $extractData[2] ?? '' }}
                                         </span>
                                     </div>
                                 </div>
@@ -124,23 +129,7 @@
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span>
-                                            RM {{ $reservedLot->maintenance ?? '' }}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row g-0">
-                                <div class="col-md-6">
-                                    <div class="p-3 d-flex justify-content-center align-items-center">
-                                        <span class="font-weight-bold">
-                                            Promotion Price
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="p-3 d-flex justify-content-center align-items-center">
-                                        <span>
-                                            RM {{ $reservedLot->promo ?? '' }}
+                                            RM {{ $extractData[3] ?? '' }}
                                         </span>
                                     </div>
                                 </div>
@@ -156,7 +145,7 @@
                                 <div class="col-md-6">
                                     <div class="p-3 d-flex justify-content-center align-items-center">
                                         <span class="font-weight-bold">
-                                            RM {{ $reservedLot->price ?? '' }}
+                                            RM {{ $extractData[1] ?? '' }}
                                         </span>
                                     </div>
                                 </div>

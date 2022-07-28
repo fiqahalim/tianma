@@ -47,6 +47,7 @@
                         <th>
                             {{ trans('cruds.order.fields.ref_no') }}
                         </th>
+                        <th>Unit No.</th>
                         <th>
                             Downpayment
                         </th>
@@ -63,6 +64,12 @@
                 </thead>
                 <tbody>
                     @foreach($installments as $key => $installment)
+                        @php
+                            $getUnitNo = isset($installment->lotID->seats) ? $installment->lotID->seats : [];
+                            $unitNo = implode("",$getUnitNo);
+                            $extractData = explode(",", $unitNo);
+                        @endphp
+
                         @if($installment->customer->mode == 'Installment')
                             <tr data-entry-id="{{ $installment->id }}">
                                 <td></td>
@@ -72,6 +79,7 @@
                                 <td>
                                     #{{ $installment->ref_no ?? '' }}
                                 </td>
+                                <td>{{ strtoupper($extractData[0] ?? '') }}</td>
                                 @if($installment->order_status == 'Rejected')
                                     <td>
                                         <i>Reservation Cancelled</i>
@@ -87,13 +95,13 @@
                                     </td>
                                 @else
                                     <td>
-                                        {{ $installment->installments->downpayment ?? '' }}
+                                        RM{{ number_format($installment->installments->downpayment ?? '') }}
                                     </td>
                                     <td>
-                                        {{ $installment->installments->monthly_installment ?? '' }}
+                                        RM{{ number_format($installment->installments->monthly_installment ?? '') }}
                                     </td>
                                     <td>
-                                        {{ $installment->installments->last_month_payment ?? '' }}
+                                        RM{{ number_format($installment->installments->last_month_payment ?? '') }}
                                     </td>
                                     <td>
                                         {{ Carbon\Carbon::parse($date)->format('d/M/Y') }}

@@ -95,7 +95,7 @@ class OrdersController extends Controller
 
             $numberToWords = new NumberToWords();
             $numberTransformer = $numberToWords->getNumberTransformer('en');
-            $amountFormat = $numberTransformer->toWords($extractData[0]);
+            $amountFormat = $numberTransformer->toWords($extractData[1]);
 
             $today = Carbon::today();
             $date = $today->addMonth(1);

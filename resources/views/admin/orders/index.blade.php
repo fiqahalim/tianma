@@ -28,6 +28,7 @@
                         <th>
                             {{ trans('cruds.order.fields.ref_no') }}
                         </th>
+                        <th>Unit No.</th>
                         <th>
                             Product {{ trans('cruds.order.fields.amount') }}
                         </th>
@@ -62,6 +63,11 @@
                 </thead>
                 <tbody>
                     @foreach($orders as $key => $order)
+                        @php
+                            $getUnitNo = isset($order->lotID->seats) ? $order->lotID->seats : '';
+                            $unitNo = implode(" ",$getUnitNo);
+                            $extractData = explode(",",$unitNo);
+                        @endphp
                         <tr data-entry-id="{{ $order->id }}">
                             <td></td>
                             <td>{{ $order->id }}</td>
@@ -71,6 +77,7 @@
                             <td>
                                 #{{ $order->ref_no ?? '' }}
                             </td>
+                            <td>{{ $extractData[0] ?? '' }}</td>
                             <td>
                                 {{ $order->amount ?? '' }}
                             </td>
@@ -107,7 +114,7 @@
                                         <span class="badge bg-warning">
                                             Rejected Order
                                         </span>
-                                    @elseif($order->payment_option == 'PAY LATER' && $order->amount == 0)
+                                    @elseif($order->payment_option == 'PAY LATER')
                                         <span id="counter" style="color:blue;font-weight:bold"></span><br>
                                         {{ Carbon\Carbon::parse($order->expiry_date)->format('d/M/Y H:i:s') }}
                                     @else
@@ -117,32 +124,38 @@
                             <td>
                                 @can('order_show')
                                     @if($order->amount > 0 || $order->customer->mode == 'Full Payment')
-                                        <a class="btn btn-xs btn-primary" href="{{ route('admin.orders.show', $order->id) }}">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
+                                        <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="View">
+                                            <a class="btn btn-xs btn-primary" href="{{ route('admin.orders.show', $order->id) }}">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </span>
                                     @endif
                                 @endcan
 
                                 @can('order_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.orders.edit', $order->id) }}">
-                                        <i class="fas fa-pencil-alt"></i>
-                                    </a>
+                                    <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Edit">
+                                        <a class="btn btn-xs btn-info" href="{{ route('admin.orders.edit', $order->id) }}">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </a>
+                                    </span>
                                 @endcan
 
                                 @can('order_delete')
-                                    <form action="{{ route('admin.orders.destroy', $order->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <button type="submit" class="btn btn-xs btn-danger">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </form>
+                                    <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Delete">
+                                        <form action="{{ route('admin.orders.destroy', $order->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                            <button type="submit" class="btn btn-xs btn-danger">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+                                    </span>
                                 @endcan
                             </td>
                             <td>
                                 @if($order->customer->mode == 'Installment')
                                     @if($order->order_status == 'Rejected')
-                                    @elseif($order->payment_option == 'PAY LATER' && $order->amount == 0)
+                                    @elseif($order->payment_option == 'PAY LATER')
                                         <a class="btn btn-warning text-white" href="{{ route('admin.orders.showCalculator', $order->id) }}">
                                             <small>PAY NOW</small>
                                         </a>
@@ -221,8 +234,7 @@
 </script>
 <script>
         <?php
-            $order = date('Y-m-d',strtotime("31-07-2016"));
-            $dateTime = strtotime(isset($order)) ?? $order->expiry_date;
+            $dateTime = strtotime($order->expiry_date);
             $getDateTime = date("F d, Y H:i:s", $dateTime);
         ?>
         var payLater = {!! $order !!}

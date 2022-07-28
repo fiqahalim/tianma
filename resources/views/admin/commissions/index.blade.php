@@ -94,9 +94,11 @@
                                 @endif
                             </td>
                             <td>
-                                <a class="btn btn-xs btn-primary" href="{{ route("admin.commissions.show", $order->id) }}">
-                                    <i class="fas fa-eye"></i>
-                                </a>
+                                <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="View">
+                                    <a class="btn btn-xs btn-primary" href="{{ route("admin.commissions.show", $order->id) }}">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                </span>
 
                                 {{-- <a class="btn btn-xs btn-warning text-white" href="{{ route('admin.commissions.edit', $order->id) }}">
                                     <i class="fas fa-money"></i>
@@ -104,9 +106,11 @@
                             </td>
                             @if($order->order_status != 'Rejected' && empty($order->commissions->mo_overriding_comm))
                                 <td>
-                                    <a class="btn btn-xs btn-dark" href="{{ route('admin.commissions.calculator', $order->id) }}">
-                                        <i class="fas fa-calculator"></i>
-                                    </a>
+                                    <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Commission Calculator">
+                                        <a class="btn btn-xs btn-dark" href="{{ route('admin.commissions.calculator', $order->id) }}">
+                                            <i class="fas fa-calculator"></i>
+                                        </a>
+                                    </span>
                                 </td>
                             @else
                                 <td></td>

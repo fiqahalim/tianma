@@ -54,10 +54,15 @@ class OrderConfirmationController extends Controller
         $sst = 6;
         // $totalProductAmount = ($products->total_cost) + ($products->total_cost * ($sst/100));
 
+        // booking details
+        $getAllDatas = isset($reservedLot->seats) ? $reservedLot->seats : '';
+        $datas = implode(" ", $getAllDatas);
+        $extractData = explode(",",$datas);
+
         $orders = new Order;
         $order->ref_no = $this->getOrderNumber();
         $order->order_status = 'NEW';
-        $order->amount = $reservedLot->price;
+        $order->amount = $extractData[1];
         $order->order_date = $current = Carbon::now();
         $order->customer_id = $customer->id;
         $order->created_by = $customer->created_by;
@@ -100,9 +105,7 @@ class OrderConfirmationController extends Controller
     */
     private function commissions()
     {
-        // $pv = session('products')['point_value'];
         $cust = session('customer');
-        $existCust = session('searchCust');
 
         $totalCommission = 0;
 

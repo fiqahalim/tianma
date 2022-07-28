@@ -83,10 +83,10 @@
                                     {{ strtoupper($data->agency_code ?? 'No Information') }}
                                 </td>
                                 <td>
-                                    {{ $data->commissions()->sum('mo_spin_off') ?? '' }}
+                                    RM{{ number_format($data->commissions()->sum('mo_spin_off') ?? '') }}
                                 </td>
                                 <td>
-                                    {{ $data->commissions()->sum('mo_overriding_comm') ?? '' }}
+                                    RM{{ $data->commissions()->sum('mo_overriding_comm') ?? '' }}
                                 </td>
                             </tr>
                         @endif

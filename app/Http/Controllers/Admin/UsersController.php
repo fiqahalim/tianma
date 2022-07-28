@@ -159,6 +159,24 @@ class UsersController extends Controller
     {
         $user->load('parent', 'childUsers', 'commissions', 'rankings', 'orders');
 
-        return view('admin.users.agentCommissions', compact('user'));
+        $myOrders = Order::join('customers', 'customers.id', '=', 'orders.customer_id')
+            ->join('product_bookings', 'product_bookings.id', '=', 'orders.product_bookings_id')
+            ->where('orders.created_by', $user->id)
+            ->where('orders.approved', '=', 1)
+            ->whereMonth('orders.created_at', Carbon::now()->month)
+            ->whereYear('orders.created_at', Carbon::now()->year)
+            ->get(['orders.*', 'product_bookings.*', 'customers.full_name', 'customers.id_number']);
+
+        $myComms = Commission::join('orders', 'orders.id', '=', 'commissions.order_id')
+            ->join('installments', 'installments.id', '=', 'orders.id')
+            ->join('product_bookings', 'product_bookings.id', '=', 'orders.product_bookings_id')
+            ->join('users', 'users.id', '=', 'orders.created_by')
+            ->where('commissions.user_id', $user->id)
+            ->whereMonth('commissions.created_at', Carbon::now()->month)
+            ->whereYear('commissions.created_at', Carbon::now()->year)
+            ->get(['commissions.*', 'orders.*', 'installments.*', 'product_bookings.*', 'users.ranking_id']);
+            // dd($myComms);
+
+        return view('admin.users.agentCommissions', compact('user', 'myOrders', 'myComms'));
     }
 }

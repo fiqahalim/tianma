@@ -162,7 +162,7 @@
                                 Total Amount
                             </div>
                             <div class="col-5">
-                                <span class="text-150 text-success-d3 opacity-2">RM {{ $extractData ?? '' }}.00</span>
+                                <span class="text-150 text-success-d3 opacity-2">RM {{ $extractData[1] ?? '' }}.00</span>
                             </div>
                         </div>
                     </div>

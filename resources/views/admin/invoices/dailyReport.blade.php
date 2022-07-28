@@ -47,6 +47,7 @@
                         <th>
                             {{ trans('cruds.order.fields.ref_no') }}
                         </th>
+                        <th>Unit No.</th>
                         <th>
                             Product {{ trans('cruds.order.fields.amount') }}
                         </th>
@@ -63,6 +64,12 @@
                 </thead>
                 <tbody>
                     @foreach($dailys as $key => $daily)
+                        @php
+                            $getUnitNo = isset($daily->lotID->seats) ? $daily->lotID->seats : [];
+                            $unitNo = implode("",$getUnitNo);
+                            $extractData = explode(",", $unitNo);
+                        @endphp
+
                         @if($daily->amount > 0)
                             <tr data-entry-id="{{ $daily->id }}">
                                 <td></td>
@@ -72,8 +79,9 @@
                                 <td>
                                     #{{ $daily->ref_no }}
                                 </td>
+                                <td>{{ strtoupper($extractData[0] ?? '') }}</td>
                                 <td>
-                                    {{ $daily->amount ?? '' }}
+                                    {{ number_format($daily->amount ?? '') }}
                                 </td>
                                 <td>
                                     {{ strtoupper($daily->customer->full_name) }}

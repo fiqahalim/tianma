@@ -36,12 +36,12 @@
                             $extractData = explode(",",$unitNo);
                         @endphp
                         <tr>
-                            <td>{{ Carbon\Carbon::parse($order->created_at)->format('d/M/Y H:i:s') }}</td>
-                            <td>{{ $extractData[0] }}</td>
-                            <td>{{ $order->customer->full_name ?? 'No Information' }}</td>
-                            <td>{{ $order->customer->id_number }}</td>
-                            <td>{{ $order->createdBy->name }}</td>
-                            <td>RM{{ $extractData[1] }}.00</td>
+                            <td>{{ strtoupper(Carbon\Carbon::parse($order->created_at)->format('d/M/Y H:i:s')) }}</td>
+                            <td>{{ strtoupper($extractData[0]) ?? 'No Information' }}</td>
+                            <td>{{ strtoupper($order->customer->full_name ?? 'No Information') }}</td>
+                            <td>{{ strtoupper($order->customer->id_number ?? 'No Information') }}</td>
+                            <td>{{ strtoupper($order->createdBy->name ?? 'No Information') }}</td>
+                            <td>RM{{ number_format($extractData[1] ?? '') }}.00</td>
                         </tr>
                     </tbody>
                 </table>
@@ -75,10 +75,10 @@
                         @endphp
                         <tr>
                             <td>
-                                {{ Carbon\Carbon::parse($dates)->format('d/M/Y H:i:s') }}
+                                {{ strtoupper(Carbon\Carbon::parse($dates)->format('d/M/Y H:i:s')) }}
                             </td>
                             <td>
-                                {{ $order->createdBy->agent_code }}
+                                {{ strtoupper($order->createdBy->agent_code ?? 'No Information') }}
                             </td>
                             <td>
                                 @if($order->createdBy->ranking_id == 1)
@@ -93,15 +93,15 @@
                                     CBDD
                                 @endif
                             </td>
-                            <td>{{ $order->createdBy->agency_code ?? 'No Agency Code Yet' }}</td>
+                            <td>{{ strtoupper($order->createdBy->agency_code ?? 'No Information') }}</td>
                             <td id="point_value" name="point_value">
-                                {{ isset($firstPayout->point_value) ? $firstPayout->point_value : '' }}
+                                {{ number_format(isset($firstPayout->point_value) ? $firstPayout->point_value : '') }}
                             </td>
                             <td>
                                 {{ isset($firstPayout->percentage) ? $firstPayout->percentage : '' }}
                             </td>
                             @if(isset($order->commissions->first_month) && $order->commissions->first_month > 0)
-                                <td>Yes, {{ $firstPayout->first_month }}</td>
+                                <td>YES, {{ $firstPayout->first_month }}</td>
                             @endif
                             <td>
                                 RM{{ isset($firstPayout->mo_overriding_comm) ? $firstPayout->mo_overriding_comm : '' }}
@@ -127,12 +127,13 @@
                                         <th>ID</th>
                                         <th>Commission Received Date</th>
                                         <th>Agent Ranking</th>
+                                        <th>Agent Name</th>
+                                        <th>Agent Code</th>
                                         <th>Commissions Received <i>(per Installment)</i></th>
                                         <th>Agent Commission Percentage (%)</th>
                                         <th>Point Value (PV) Claimed</th>
                                         <th>Installment Balance Point Value (PV)</th>
-                                        <th>Agent Name</th>
-                                        <th>Agent Code</th>
+                                        <th>Total Commission</th>
                                     </tr>
                                 @endif
                             </thead>
@@ -143,8 +144,10 @@
                                             <td></td>
                                             <td>{{ $data->id }}</td>
                                             <td>
-                                                {{ Carbon\Carbon::parse($data->created_at)->format('d/M/Y H:i:s') }}
+                                                {{ strtoupper(Carbon\Carbon::parse($data->created_at)->format('d/M/Y H:i:s')) }}
                                             </td>
+                                            <td>{{ strtoupper($data->user->name ?? 'No Information') }}</td>
+                                            <td>{{ strtoupper($data->user->agent_code ?? 'No Information') }}</td>
                                             <td>
                                                 @if($data->user->ranking_id == 1)
                                                     SD
@@ -162,18 +165,19 @@
                                             <td>
                                                 @if($data->user->ranking_id == 1)
                                                     16%
-                                                @elseif($data->user->ranking_id == 2 && $data->user->ranking_id == 4)
+                                                @elseif($data->user->ranking_id == 2)
                                                     4%
                                                 @elseif($data->user->ranking_id == 3)
+                                                    4%
+                                                @elseif($data->user->ranking_id == 4)
                                                     2%
                                                 @else
                                                     0.5%
                                                 @endif
                                             </td>
-                                            <td>{{ $data->point_value }}</td>
+                                            <td>{{ number_format($data->balance_pv) }}</td>
                                             <td>{{ number_format($data->installment_pv) }}</td>
-                                            <td>{{ $data->user->name }}</td>
-                                            <td>{{ $data->user->agent_code }}</td>
+                                            <td></td>
                                         </tr>
                                     @endif
                                 @endforeach
@@ -186,7 +190,7 @@
             {{-- Upperline Info --}}
             @if(isset($order->createdBy->parent) ?? !empty($order->createdBy->parent))
                 <div class="form-group mt-5">
-                    <h5>Upperline Informations</h5>
+                    <h5>Upperline Information</h5>
                     <table class="table table-light table-bordered">
                         <thead>
                             <tr class="table-primary">
@@ -199,7 +203,9 @@
                                 <th>Point Value (PV) Claimed</th>
                                 <th>Upperline Commission Percentage(%)</th>
                                 <th>Upperline First Month Commissions Received</th>
+                                <th>Upperline Commissions Received <i>(per Installment)</i></th>
                                 <th>Upperline Total Commission</th>
+                                <th>Upperline Monthly Spin Off Overriding</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -207,7 +213,7 @@
                             <tr>
                                 <td></td>
                                 <td>
-                                    {{ Carbon\Carbon::parse($dates)->format('d/M/Y H:i:s') }}
+                                    {{ strtoupper(Carbon\Carbon::parse($dates)->format('d/M/Y H:i:s')) }}
                                 </td>
                                 <td>
                                     @if($order->createdBy->parent->ranking_id == 1)
@@ -222,15 +228,15 @@
                                         CBDD
                                     @endif
                                 </td>
-                                <td>{{ $order->createdBy->parent->name }}</td>
+                                <td>{{ strtoupper($order->createdBy->parent->name) }}</td>
                                 <td>
-                                    {{ $order->createdBy->parent->agent_code }}
+                                    {{ strtoupper($order->createdBy->parent->agent_code) }}
                                 </td>
                                 <td>
-                                    {{ $order->createdBy->parent->agency_code ?? 'No Agency Code Yet' }}
+                                    {{ strtoupper($order->createdBy->parent->agency_code ?? 'No Information') }}
                                 </td>
                                 <td>
-                                    {{ $order->commissions->point_value ?? '' }}
+                                    {{ strtoupper($order->commissions->point_value ?? '') }}
                                 </td>
                                 <td>
                                     @if($order->createdBy->parent->ranking_id == 1)
@@ -256,7 +262,7 @@
                                 <tr>
                                     <td></td>
                                     <td>
-                                        {{ Carbon\Carbon::parse($order->commissions->created_at)->format('d/M/Y H:i:s') }}
+                                        {{ strtoupper(Carbon\Carbon::parse($order->commissions->created_at)->format('d/M/Y H:i:s')) }}
                                     </td>
                                     <td>
                                         @if(isset($order->createdBy->parent->parent->ranking_id))
@@ -274,13 +280,13 @@
                                         @endif
                                     </td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->name) ? $order->createdBy->parent->parent->name : '' }}
+                                        {{ strtoupper(isset($order->createdBy->parent->parent->name) ? $order->createdBy->parent->parent->name : '') }}
                                     </td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->agent_code) ? $order->createdBy->parent->parent->agent_code : '' }}
+                                        {{ strtoupper(isset($order->createdBy->parent->parent->agent_code) ? $order->createdBy->parent->parent->agent_code : '') }}
                                     </td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->agency_code) ? $order->createdBy->parent->parent->agency_code : 'No Agency Code Yet' }}
+                                        {{ strtoupper(isset($order->createdBy->parent->parent->agency_code) ? $order->createdBy->parent->parent->agency_code : 'No Information') }}
                                     </td>
                                     <td>
                                         {{ $order->commissions->point_value }}
@@ -328,13 +334,13 @@
                                         @endif
                                     </td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->parent->name) ? $order->createdBy->parent->parent->parent->name : '' }}
+                                        {{ strtoupper(isset($order->createdBy->parent->parent->parent->name) ? $order->createdBy->parent->parent->parent->name : '') }}
                                     </td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->parent->agent_code) ? $order->createdBy->parent->parent->parent->agent_code : '' }}
+                                        {{ strtoupper(isset($order->createdBy->parent->parent->parent->agent_code) ? $order->createdBy->parent->parent->parent->agent_code : '') }}
                                     </td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->parent->agency_code) ? $order->createdBy->parent->parent->parent->agency_code : 'No Agency Code Yet' }}
+                                        {{ strtoupper(isset($order->createdBy->parent->parent->parent->agency_code) ? $order->createdBy->parent->parent->parent->agency_code : 'No Information') }}
                                     </td>
                                     <td>
                                         {{ $order->commissions->point_value }}
@@ -388,7 +394,7 @@
                                         {{ isset($order->createdBy->parent->parent->parent->parent->agent_code) ? $order->createdBy->parent->parent->parent->parent->agent_code : '' }}
                                     </td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->parent->parent->agency_code) ? $order->createdBy->parent->parent->parent->parent->agency_code : 'No Agency Code Yet' }}
+                                        {{ isset($order->createdBy->parent->parent->parent->parent->agency_code) ? $order->createdBy->parent->parent->parent->parent->agency_code : 'No Information' }}
                                     </td>
                                     <td>
                                         {{ $order->commissions->point_value }}
@@ -444,7 +450,7 @@
                                         {{ isset($order->createdBy->parent->parent->parent->parent->parent->agent_code) ? $order->createdBy->parent->parent->parent->parent->parent->agent_code : '' }}
                                     </td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->parent->parent->parent->agency_code) ? $order->createdBy->parent->parent->parent->parent->parent->agency_code : 'No Agency Code Yet' }}
+                                        {{ isset($order->createdBy->parent->parent->parent->parent->parent->agency_code) ? $order->createdBy->parent->parent->parent->parent->parent->agency_code : 'No Information' }}
                                     </td>
                                     <td>
                                         {{ $order->commissions->point_value }}
@@ -500,7 +506,7 @@
                                         {{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->agent_code) ? $order->createdBy->parent->parent->parent->parent->parent->parent->agent_code : '' }}
                                     </td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->agency_code) ? $order->createdBy->parent->parent->parent->parent->parent->parent->agency_code : 'No Agency Code Yet' }}
+                                        {{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->agency_code) ? $order->createdBy->parent->parent->parent->parent->parent->parent->agency_code : 'No Information' }}
                                     </td>
                                     <td>
                                         {{ $order->commissions->point_value }}
@@ -556,7 +562,7 @@
                                         {{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->agent_code) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->agent_code : '' }}
                                     </td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->agency_code) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->agency_code : 'No Agency Code Yet' }}
+                                        {{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->agency_code) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->agency_code : 'No Information' }}
                                     </td>
                                     <td>
                                         {{ $order->commissions->point_value }}
@@ -612,7 +618,7 @@
                                         {{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->agent_code) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->agent_code : '' }}
                                     </td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->agency_code) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->agency_code : 'No Agency Code Yet' }}
+                                        {{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->agency_code) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->agency_code : 'No Information' }}
                                     </td>
                                     <td>
                                         {{ $order->commissions->point_value }}

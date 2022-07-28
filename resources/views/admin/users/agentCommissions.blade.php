@@ -71,19 +71,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @php
-                            $getUnitNo = isset($user->order) && is_array($user->order->lotID->seats) ? $user->order->lotID->seats : [];
-                            $orderDate = isset($user->order->created_at) ? $user->order->created_at : '';
-                            $unitNo = implode(" ", $getUnitNo);
-                            $extractData = explode(",", $unitNo);
-                        @endphp
-                        <tr>
-                            <td>{{ Carbon\Carbon::parse($orderDate)->format('d/M/Y H:i:s') }}</td>
-                            <td>{{ $extractData[0] ?? 'No Information' }}</td>
-                            <td>{{ $user->order->customer->full_name ?? 'No Information' }}</td>
-                            <td>{{ $user->order->customer->id_number ?? 'No Information' }}</td>
-                            <td>RM{{ $extractData[1] ?? '0' }}.00</td>
-                        </tr>
+                        @foreach($myOrders as $key => $myOrder)
+                            @php
+                                $getUnitNo = isset($myOrder->seats) ? $myOrder->seats : [];
+                                $orderDate = isset($user->order->created_at) ? $user->order->created_at : '';
+                                $unitNo = str_replace(array( '[', '"', '"', ']' ), '', $getUnitNo);
+                                $extractData = explode(",", $unitNo);
+                            @endphp
+
+                            <tr>
+                                <td>{{ Carbon\Carbon::parse($orderDate)->format('d/M/Y H:i:s') }}</td>
+                                <td>{{ $extractData[0] ?? 'No Information' }}</td>
+                                <td>{{ $myOrder->full_name ?? 'No Information' }}</td>
+                                <td>{{ $myOrder->id_number ?? 'No Information' }}</td>
+                                <td>RM{{ $extractData[1] ?? '0' }}.00</td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -95,6 +98,7 @@
                     <thead>
                         <tr class="table-primary">
                             <th>Commission Received Month</th>
+                            <th>Order Lot No.</th>
                             <th>Agent Ranking</th>
                             <th>Commission Received <i>(per Installment)</i></th>
                             <th>Agent Commission Percentage(%)</th>
@@ -105,8 +109,31 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($myComms as $key => $myComm)
+                            @php
+                                $commissionDate = isset($myComm->created_at) ? $myComm->created_at : '';
+                                $getLotNo = isset($myComm->seats) ? $myComm->seats : [];
+                                $extractLotNo = str_replace(array( '[', '"', '"', ']' ), '', $getLotNo);
+                                $pvClaimed = str_replace(array( '"', '"' ), '', $myComm->point_value);
+                                $lotNo = explode(",", $extractLotNo);
+                            @endphp
+                        @endforeach
                         <tr>
-                            <td></td>
+                            <td>{{ strtoupper(Carbon\Carbon::parse($commissionDate)->format('F Y')) }}</td>
+                            <td>{{ $lotNo[0] ?? '' }}</td>
+                            <td>{{ strtoupper($user->rankings->category) }}</td>
+                            <td>RM{{ $myComm->mo_overriding_comm }}</td>
+                            <td>
+                                @if($user->rankings->category == "SD")
+                                    16%
+                                @elseif($user->rankings->category == "DSD")
+                                    4%
+                                @endif
+                            </td>
+                            <td>{{ $pvClaimed }}</td>
+                            <td>{{ $myComm->installment_pv }}</td>
+                            <td>RM{{ isset($myComm->mo_overriding_comm) ? $myComm->sum('mo_overriding_comm') : '' }}</td>
+                            <td>RM{{ isset($myComm->mo_spin_off) ? $myComm->sum('mo_spin_off') : '' }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -131,8 +158,42 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {{-- 1st Parent --}}
                         <tr>
-                            <td></td>
+                            <td>
+                                {{ strtoupper(Carbon\Carbon::parse($commissionDate)->format('F Y')) }}
+                            </td>
+                            <td>
+                                @if($user->parent->ranking_id == 1)
+                                SD
+                                @elseif($user->parent->ranking_id == 2)
+                                DSD
+                                @elseif($user->parent->ranking_id == 3)
+                                BDD A
+                                @elseif($user->parent->ranking_id == 4)
+                                BDD B
+                                @else
+                                CBDD
+                                @endif
+                            </td>
+                            <td>{{ strtoupper(isset($user->parent->name) ? $user->parent->name : '') }}</td>
+                            <td>{{ strtoupper(isset($user->parent->agent_code) ? $user->parent->agent_code : '') }}</td>
+                            <td>{{ strtoupper(isset($user->parent->agency_code) ? $user->parent->agency_code : 'No Information') }}</td>
+                            <td>{{ $pvClaimed }}</td>
+                            <td>
+                                @if($user->parent->ranking_id == 1)
+                                16%
+                                @elseif($user->parent->ranking_id == 2 && $user->parent->ranking_id == 4)
+                                4%
+                                @elseif($user->parent->ranking_id == 3)
+                                2%
+                                @else
+                                0.5%
+                                @endif
+                            </td>
+                            <td>{{ $myComm->installment_pv }}</td>
+                            <td>RM{{ $user->parent->commissions()->sum('mo_overriding_comm') }}</td>
+                            <td>RM{{ isset($user->parent->commissions->mo_spin_off) ? $user->parent->commissions()->sum('mo_spin_off') : '' }}</td>
                         </tr>
                     </tbody>
                 </table>

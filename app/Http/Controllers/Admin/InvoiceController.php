@@ -35,6 +35,8 @@ class InvoiceController extends Controller
             $commissions = User::whereBetween('created_at', [$start_date,$end_date])->get();
         } else {
             $commissions = User::join('commissions', 'commissions.user_id', '=', 'users.id')
+                ->join('orders', 'orders.created_by', '=', 'users.id')
+                ->where('orders.approved', '=', 1)
                 ->whereMonth('commissions.created_at', Carbon::now()->month)
                 ->whereYear('commissions.created_at', Carbon::now()->year)
                 ->get(['users.*', 'commissions.*']);
@@ -63,7 +65,7 @@ class InvoiceController extends Controller
             $end_date = Carbon::createFromFormat('d/m/Y', $request->end_date)->toDateString();
             $agents = User::whereBetween('created_at', [$start_date, $end_date])->get();
         } else {
-            $agents = User::with(['rankings', 'parent'])->get();
+            $agents = User::with(['rankings', 'parent', 'orders'])->get();
         }
 
         return view('admin.invoices.agentsReport', compact('agents'));
@@ -76,7 +78,7 @@ class InvoiceController extends Controller
             $end_date = Carbon::createFromFormat('d/m/Y', $request->end_date)->toDateString();
             $reservations = ProductBooking::whereBetween('created_at', [$start_date, $end_date])->get();
         } else {
-            $reservations = ProductBooking::with(['orders'])->get();
+            $reservations = ProductBooking::with(['orders', 'createdBy'])->get();
         }
 
         return view('admin.invoices.productsReport', compact('reservations'));

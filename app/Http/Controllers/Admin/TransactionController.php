@@ -106,17 +106,27 @@ class TransactionController extends Controller
             $installmentPV = ($newPV / $installmentMonths);
             $prevPVs = $installmentPV * ($installmentMonths - 1);
             $balanceComms = $newPV - $prevPVs;
+            $balancePV = $newPV - $installmentPV;
 
             $spinOff = 0;
-            $monthlySpinOff = Order::where('created_by', $order->created_by)
+            $monthlySpinOff = Order::where('created_by', $orders->createdBy)
+                ->where('approved', '=', 1)
                 ->whereMonth('created_at', Carbon::now()->month)
                 ->whereYear('created_at', Carbon::now()->year)
                 ->sum('amount');
+
+            $groupSales = Order::join('users', 'users.id', '=', 'orders.created_by')
+                ->where('users.agency_code', $orders->createdBy->agency_code)
+                ->where('orders.approved', '=', 1)
+                ->whereMonth('orders.created_at', Carbon::now()->month)
+                ->whereYear('orders.created_at', Carbon::now()->year)
+                ->sum('orders.amount');
 
             session(['installmentPV' => $installmentPV]);
             session(['balanceComms' => $balanceComms]);
 
             switch ($rankings->ranking_id) {
+                // SD
                 case 1:
                     $totalCommission += round(($installmentPV * 0.16), 2);
                     $balanceCommission += round(($balanceComms * 0.16), 2);
@@ -131,12 +141,10 @@ class TransactionController extends Controller
                     $getNine = $this->getNine();
                     $getTen = $this->getTen();
                     break;
+                // DSD
                 case 2:
                     $totalCommission += round(($installmentPV * 0.04), 2);
                     $balanceCommission += round(($balanceComms * 0.04), 2);
-                    if ($monthlySpinOff >= 50000) {
-                       $spinOff += round(($monthlySpinOff * (1.6/100)), 2);
-                    }
                     $parentCommission = $this->getParent();
                     $pp = $this->getPP();
                     $ppp = $this->getPPP();
@@ -147,13 +155,14 @@ class TransactionController extends Controller
                     $getEight = $this->getEight();
                     $getNine = $this->getNine();
                     $getTen = $this->getTen();
+                    if ($monthlySpinOff >= 300000) {
+                       $spinOff += round(($monthlySpinOff * (1.5/100)), 2);
+                    }
                     break;
+                // BDD A
                 case 3:
                     $totalCommission += round(($installmentPV * 0.02), 2);
                     $balanceCommission += round(($balanceComms * 0.02), 2);
-                    if ($monthlySpinOff >= 150000) {
-                       $spinOff += round(($monthlySpinOff * (1/100)), 2);
-                    }
                     $parentCommission = $this->getParent();
                     $pp = $this->getPP();
                     $ppp = $this->getPPP();
@@ -164,7 +173,11 @@ class TransactionController extends Controller
                     $getEight = $this->getEight();
                     $getNine = $this->getNine();
                     $getTen = $this->getTen();
+                    if ($groupSales >= 1000000) {
+                        $spinOff += round(($groupSales * (1.0/100)), 2);
+                    }
                     break;
+                // BDD B
                 case 4:
                     $totalCommission += round(($installmentPV * 0.04),2);
                     $balanceCommission += round(($balanceComms * 0.04), 2);
@@ -179,92 +192,23 @@ class TransactionController extends Controller
                     $getNine = $this->getNine();
                     $getTen = $this->getTen();
                     break;
+                // CBDD
                 case 5:
                     $totalCommission += round(($installmentPV * 0.005), 2);
                     $balanceCommission += round(($balanceComms * 0.005), 2);
-                    if ($monthlySpinOff >= 900000) {
-                       $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
+                    $parentCommission = $this->getParent();
+                    $pp = $this->getPP();
+                    $ppp = $this->getPPP();
+                    $pppp = $this->getPPPP();
+                    $getFive = $this->getFiveP();
+                    $getSixth = $this->getSixth();
+                    $getSeven = $this->getSeven();
+                    $getEight = $this->getEight();
+                    $getNine = $this->getNine();
+                    $getTen = $this->getTen();
+                    if ($groupSales >= 27000000) {
+                        $spinOff += round(($groupSales * (0.5/100)), 2);
                     }
-                    $parentCommission = $this->getParent();
-                    $pp = $this->getPP();
-                    $ppp = $this->getPPP();
-                    $pppp = $this->getPPPP();
-                    $getFive = $this->getFiveP();
-                    $getSixth = $this->getSixth();
-                    $getSeven = $this->getSeven();
-                    $getEight = $this->getEight();
-                    $getNine = $this->getNine();
-                    $getTen = $this->getTen();
-                    break;
-                default:
-                    break;
-            }
-        } else {
-            switch ($rankings->ranking_id) {
-                case 1:
-                    $totalCommission += round(($newPV * 0.16), 2);
-                    $parentCommission = $this->getParent();
-                    $pp = $this->getPP();
-                    $ppp = $this->getPPP();
-                    $pppp = $this->getPPPP();
-                    $getFive = $this->getFiveP();
-                    $getSixth = $this->getSixth();
-                    $getSeven = $this->getSeven();
-                    $getEight = $this->getEight();
-                    $getNine = $this->getNine();
-                    $getTen = $this->getTen();
-                    break;
-                case 2:
-                    $totalCommission += round(($newPV * 0.04), 2);
-                    $parentCommission = $this->getParent();
-                    $pp = $this->getPP();
-                    $ppp = $this->getPPP();
-                    $pppp = $this->getPPPP();
-                    $getFive = $this->getFiveP();
-                    $getSixth = $this->getSixth();
-                    $getSeven = $this->getSeven();
-                    $getEight = $this->getEight();
-                    $getNine = $this->getNine();
-                    $getTen = $this->getTen();
-                    break;
-                case 3:
-                    $totalCommission += round(($newPV * 0.02), 2);
-                    $parentCommission = $this->getParent();
-                    $pp = $this->getPP();
-                    $ppp = $this->getPPP();
-                    $pppp = $this->getPPPP();
-                    $getFive = $this->getFiveP();
-                    $getSixth = $this->getSixth();
-                    $getSeven = $this->getSeven();
-                    $getEight = $this->getEight();
-                    $getNine = $this->getNine();
-                    $getTen = $this->getTen();
-                    break;
-                case 4:
-                    $totalCommission += round(($newPV * 0.04),2);
-                    $parentCommission = $this->getParent();
-                    $pp = $this->getPP();
-                    $ppp = $this->getPPP();
-                    $pppp = $this->getPPPP();
-                    $getFive = $this->getFiveP();
-                    $getSixth = $this->getSixth();
-                    $getSeven = $this->getSeven();
-                    $getEight = $this->getEight();
-                    $getNine = $this->getNine();
-                    $getTen = $this->getTen();
-                    break;
-                case 5:
-                    $totalCommission += round(($newPV * 0.005), 2);
-                    $parentCommission = $this->getParent();
-                    $pp = $this->getPP();
-                    $ppp = $this->getPPP();
-                    $pppp = $this->getPPPP();
-                    $getFive = $this->getFiveP();
-                    $getSixth = $this->getSixth();
-                    $getSeven = $this->getSeven();
-                    $getEight = $this->getEight();
-                    $getNine = $this->getNine();
-                    $getTen = $this->getTen();
                     break;
                 default:
                     break;
@@ -290,7 +234,7 @@ class TransactionController extends Controller
         $comms->balance_comm = abs($balanceCommission);
         $comms->mo_spin_off = abs(isset($spinOff)) ? abs($spinOff) : '';
         $comms->point_value = $orders->commissions->point_value;
-        $comms->balance_pv = $newPV;
+        $comms->balance_pv = $balancePV;
         $comms->installment_pv = abs(isset($installmentPV)) ? abs($installmentPV) : '';
         $comms->order_id = $orders->id;
         $comms->user_id = $orders->createdBy->id;
@@ -318,80 +262,62 @@ class TransactionController extends Controller
 
         $user = isset($orders->createdBy) ? $orders->createdBy : '';
 
-        $totalCommission = $balanceCommission = $spinOff = 0;
+        $totalCommission = $balanceCommission = 0;
 
         if($orders->customer->mode == 'Installment') {
             if(!empty($user->parent_id)) {
+                $spinOff = 0;
+
                 $parent = User::select('ranking_id')->where('id', $user->parent_id)->first();
-                $monthlySpinOff = Order::join('commissions', 'commissions.order_id', '=', 'orders.id')
-                    ->where('commissions.user_id', $user->parent_id)
-                    ->sum('commissions.mo_overriding_comm');
+
+                $monthlySpinOff = Order::where('created_by', $user)
+                    ->where('approved', '=', 1)
+                    ->whereMonth('created_at', Carbon::now()->month)
+                    ->whereYear('created_at', Carbon::now()->year)
+                    ->sum('amount');
+
+                $groupSales = Order::join('users', 'users.id', '=', 'orders.created_by')
+                    ->where('users.agency_code', $user->agency_code)
+                    ->where('orders.approved', '=', 1)
+                    ->whereMonth('orders.created_at', Carbon::now()->month)
+                    ->whereYear('orders.created_at', Carbon::now()->year)
+                    ->sum('orders.amount');
 
                 if($parent->ranking_id !== $user->ranking_id) {
                     // switch statement
                     switch ($parent->ranking_id) {
+                        // SD
                         case 1:
                             $totalCommission += round(($installmentPV * 0.16), 2);
                             $balanceCommission += round(($balanceComms * 0.16), 2);
                             break;
+                        // DSD
                         case 2:
                             $totalCommission += round(($installmentPV * 0.04), 2);
                             $balanceCommission += round(($balanceComms * 0.04), 2);
-                            if ($monthlySpinOff >= 50000) {
-                                $spinOff += round(($monthlySpinOff * (1.6/100)), 2);
+                            if ($monthlySpinOff >= 300000) {
+                                $spinOff += round(($monthlySpinOff * (1.5/100)), 2);
                             }
                             break;
+                        // BDD A
                         case 3:
                             $totalCommission += round(($installmentPV * 0.02), 2);
                             $balanceCommission += round(($balanceComms * 0.02), 2);
-                            if ($monthlySpinOff >= 150000) {
-                                $spinOff += round(($monthlySpinOff * (1/100)), 2);
+                            if ($groupSales >= 1000000) {
+                                $spinOff += round(($groupSales * (1/100)), 2);
                             }
                             break;
+                        // BDD B
                         case 4:
                             $totalCommission += round(($installmentPV * 0.04),2);
                             $balanceCommission += round(($balanceComms * 0.04), 2);
                             break;
+                        // CBDD
                         case 5:
                             $totalCommission += round(($installmentPV * 0.005), 2);
                             $balanceCommission += round(($balanceComms * 0.005), 2);
-                            if ($monthlySpinOff >= 900000) {
-                                $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-        } else {
-            if(!empty($user->parent_id)) {
-                $parent = User::select('ranking_id')->where('id', $user->parent_id)->first();
-                if($parent->ranking_id !== $user->ranking_id) {
-                    // switch statement
-                    switch ($parent->ranking_id) {
-                        case 1:
-                            $totalCommission += round(($installmentPV * 0.16), 2);
-                            break;
-                        case 2:
-                            $totalCommission += round(($installmentPV * 0.04), 2);
-                            if ($monthlySpinOff >= 50000) {
-                                $spinOff += round(($monthlySpinOff * (1.6/100)), 2);
-                            }
-                            break;
-                        case 3:
-                            $totalCommission += round(($installmentPV * 0.02), 2);
-                            if ($monthlySpinOff >= 50000) {
-                                $spinOff += round(($monthlySpinOff * (1/100)), 2);
-                            }
-                            break;
-                        case 4:
-                            $totalCommission += round(($installmentPV * 0.04),2);
-                            break;
-                        case 5:
-                            $totalCommission += round(($installmentPV * 0.005), 2);
-                            if ($monthlySpinOff >= 900000) {
-                                $spinOff += round(($monthlySpinOff * (0.5/100)), 2);
+                            if ($groupSales >= 27000000) {
+                                $spinOff += round(($groupSales * (0.5/100)), 2);
                             }
                             break;
                         default:

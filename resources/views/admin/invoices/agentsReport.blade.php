@@ -5,14 +5,14 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item">Report Management</li>
         <li class="breadcrumb-item active" aria-current="page">
-            <a href="{{ route('admin.invoices.index') }}">Invoices Lists</a>
+            <a href="{{ route('admin.invoices.index') }}">Register Agent List</a>
         </li>
     </ol>
 </nav>
 
 <div class="card">
     <div class="card-header font-weight-bold">
-        Invoices {{ trans('global.list') }}
+        Register Agent {{ trans('global.list') }}
     </div>
 
     <div class="card-body">
@@ -43,6 +43,7 @@
                             <th width="10">
 
                             </th>
+                            <th>Joined Date</th>
                             <th>
                                 Name
                             </th>
@@ -53,32 +54,35 @@
                                 Agent Code
                             </th>
                             <th>
-                                Agency Code
-                            </th>
-                            <th>
                                 Ranking
                             </th>
+                            <th>
+                                Agency Code
+                            </th>
+                            <th>Total Sales</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($agents as $key => $agent)
                             <tr data-entry-id="{{ $agent->id }}">
                                 <td></td>
+                                <td>{{ strtoupper(Carbon\Carbon::parse($agent->created_at)->format('d F Y')) }}</td>
                                 <td>
-                                    {{ $agent->name }}
+                                    {{ strtoupper($agent->name) }}
                                 </td>
                                 <td>
                                     {{ $agent->email ?? '' }}
                                 </td>
                                 <td>
-                                    {{ $agent->agent_code ?? '' }}
+                                    {{ strtoupper($agent->agent_code ?? '') }}
                                 </td>
                                 <td>
-                                    {{ $agent->agency_code ?? '' }}
+                                    {{ strtoupper($agent->rankings->category ?? '') }}
                                 </td>
                                 <td>
-                                    {{ $agent->rankings->category ?? '' }}
+                                    {{ strtoupper($agent->agency_code ?? 'No Information') }}
                                 </td>
+                                <td>RM{{ number_format(isset($agent->orders->amount) ? $agent->orders()->sum('amount') : 0) }}</td>
                             </tr>
                         @endforeach
                     </tbody>

@@ -27,9 +27,11 @@
                         <th>
                             {{ trans('cruds.order.fields.ref_no') }}
                         </th>
+                        <th>Unit No.</th>
                         <th>
                             {{ trans('cruds.order.fields.customer') }}
                         </th>
+                        <th>Product Price</th>
                         <th>
                             {{ trans('cruds.customer.fields.mode') }}
                         </th>
@@ -40,6 +42,11 @@
                 </thead>
                 <tbody>
                     @foreach($myOrders as $key => $order)
+                        @php
+                            $getUnitNo = isset($order->lotID->seats) ? $order->lotID->seats : '';
+                            $unitNo = implode(" ",$getUnitNo);
+                            $extractData = explode(",",$unitNo);
+                        @endphp
                     @if(!empty($order->approved) && $order->approved == 1)
                         <tr data-entry-id="{{ $order->id }}">
                             <td></td>
@@ -50,9 +57,11 @@
                             <td>
                                 #{{ $order->ref_no ?? '' }}
                             </td>
+                            <td>{{ $extractData[0] ?? '' }}</td>
                             <td>
                                 {{ $order->customer->full_name ?? '' }}
                             </td>
+                            <td>RM{{ $order->amount ?? '' }}</td>
                             <td>
                                 @if($order->customer->mode == 'Installment')
                                     <span class="badge bg-success text-white">

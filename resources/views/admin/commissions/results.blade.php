@@ -56,7 +56,7 @@
                     </div>
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="price">Product Price (After Promo)</label>
+                    <label for="price">Product Price</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -131,7 +131,7 @@
                                     CBDD
                                 @endif
                             </td>
-                            <td>{{ $order->createdBy->agency_code ?? 'No Agency Code Yet' }}</td>
+                            <td>{{ $order->createdBy->agency_code ?? 'No Information' }}</td>
                             <td id="point_value" name="point_value">
                                 {{ $comms->balance_pv }}
                             </td>
@@ -162,7 +162,7 @@
                             <tr class="table-primary">
                                 <th scope="col">Upperline Agent Code</th>
                                 <th scope="col">Upperline Agent Ranking</th>
-                                <th scope="col">Upperline Commission</th>
+                                <th scope="col">Upperline First Month Commissions Received</th>
                             </tr>
                         </thead>
                         <tbody>
