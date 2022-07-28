@@ -9,7 +9,20 @@
         </ol>
     </nav>
 
-    <div class="card">
+    <div style="margin-bottom: 10px;" class="row text-right">
+        <div class="col-lg-12">
+            <div class="page-tools">
+                <div class="action-buttons">
+                    <a class="btn bg-white btn-light mx-1px text-95" data-title="Print" onClick="printReport()">
+                        <i class="mr-1 fa fa-print text-primary-m1 text-120 w-2"></i>
+                        Print
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" id="agentCommissionPrint">
         <div class="card-header font-weight-bold">
             {{ trans('global.show') }} Agent's {{ trans('cruds.commission.title') }}
         </div>
@@ -76,18 +89,52 @@
             </div>
 
             {{-- Commission's Information --}}
-            <div class="form-group">
+            <div class="form-group mb-5">
                 <h5>Agent's Commissions Information</h5>
                 <table class="table table-light table-bordered">
                     <thead>
                         <tr class="table-primary">
-                            <th>Order Created</th>
-                            <th>Reservation Lot Number</th>
-                            <th>Purchaser Name</th>
-                            <th>Purchaser ID/Passport Number</th>
-                            <th>Product Price</th>
+                            <th>Commission Received Month</th>
+                            <th>Agent Ranking</th>
+                            <th>Commission Received <i>(per Installment)</i></th>
+                            <th>Agent Commission Percentage(%)</th>
+                            <th>Point Value (PV) Claimed</th>
+                            <th>Installment Balance Point Value (PV)</th>
+                            <th>Monthly Total Commissions Received</th>
+                            <th>Monthly Spin Off Overriding</th>
                         </tr>
                     </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            {{-- Upperline Information --}}
+            <div class="form-group">
+                <h5>Upperline's Commissions Information</h5>
+                <table class="table table-light table-bordered">
+                    <thead>
+                        <tr class="table-warning">
+                            <th>Commission Received Month</th>
+                            <th>Upperline Agent Ranking</th>
+                            <th>Upperline Agent Name</th>
+                            <th>Upperline Agent Code</th>
+                            <th>Upperline Agency Code</th>
+                            <th>Point Value (PV) Claimed</th>
+                            <th>Upperline Commission Percentage(%)</th>
+                            <th>Upperline First Month Commissions Received</th>
+                            <th>Upperline Monthly Total Commission</th>
+                            <th>Upperline Monthly Spin Off Overriding</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -98,4 +145,35 @@
             {{ trans('global.back_to_list') }}
         </a>
     </div>
+@endsection
+
+@section('styles')
+    <link type="text/css" rel="stylesheet" href="{{ mix('/css/pages/invoice.css') }}"  media="screen,projection"/>
+    <link href="{{ mix('/css/pages/invoice.css') }}" rel="stylesheet" media="print" type="text/css">
+@endsection
+
+@section('scripts')
+<script type="text/javascript">
+    function printReport()
+    {
+        var prtContent = document.getElementById("agentCommissionPrint");
+        var WinPrint = window.open();
+        WinPrint.document.write(prtContent.innerHTML);
+        WinPrint.document.close();
+        WinPrint.focus();
+        WinPrint.print();
+        WinPrint.close();
+    }
+
+    function printItem()
+    {
+        var prtItem = document.getElementById("itemPrint");
+        var WinPrint = window.open();
+        WinPrint.document.write(prtItem.innerHTML);
+        WinPrint.document.close();
+        WinPrint.focus();
+        WinPrint.print();
+        WinPrint.close();
+    }
+</script>
 @endsection

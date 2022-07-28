@@ -39,20 +39,20 @@
 
     <tr>
         <td>Level 7</td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="SE-07-178" id="Lot ID: SE-07-178, Total Cost: RM17800, Promotion Price: RM15800, Maintenance Price: RM2000, Point Value: 12800"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="SE-07-168" id="Lot ID: SE-07-168, Total Cost: RM17800, Promotion Price: RM15800, Maintenance Price: RM2000, Point Value: 12800"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="SE-07-138" id="Lot ID: SE-07-138, Total Cost: RM17800, Promotion Price: RM15800, Maintenance Price: RM2000, Point Value: 12800"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="SE-07-128" id="Lot ID: SE-07-128, Total Cost: RM17800, Promotion Price: RM15800, Maintenance Price: RM2000, Point Value: 12800"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DE-07-118" id="Lot ID: DE-07-118, Total Cost: RM31800, Promotion Price: RM27800, Maintenance Price: RM4000, Point Value: 22800"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DE-07-108" id="Lot ID: DE-07-108, Total Cost: RM31800, Promotion Price: RM27800, Maintenance Price: RM4000, Point Value: 22800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SE-07-178, 17800, 15800, 2000, 12800" id="Lot ID: SE-07-178, Total Cost: RM17800, Promotion Price: RM15800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SE-07-168, 17800, 15800, 2000, 12800" id="Lot ID: SE-07-168, Total Cost: RM17800, Promotion Price: RM15800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SE-07-138, 17800, 15800, 2000, 12800" id="Lot ID: SE-07-138, Total Cost: RM17800, Promotion Price: RM15800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="SE-07-128, 17800, 15800, 2000, 12800" id="Lot ID: SE-07-128, Total Cost: RM17800, Promotion Price: RM15800, Maintenance Price: RM2000, Point Value: 12800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DE-07-118, 31800, 27800, 4000, 22800" id="Lot ID: DE-07-118, Total Cost: RM31800, Promotion Price: RM27800, Maintenance Price: RM4000, Point Value: 22800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DE-07-108, 31800, 27800, 4000, 22800" id="Lot ID: DE-07-108, Total Cost: RM31800, Promotion Price: RM27800, Maintenance Price: RM4000, Point Value: 22800"></td>
         <td class="seatGap"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DE-07-098" id="Lot ID: DE-07-098, Total Cost: RM31800, Promotion Price: RM27800, Maintenance Price: RM4000, Point Value: 22800"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DE-07-088" id="Lot ID: DE-07-088, Total Cost: RM31800, Promotion Price: RM27800, Maintenance Price: RM4000, Point Value: 22800"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DE-07-068" id="Lot ID: DE-07-068, Total Cost: RM31800, Promotion Price: RM27800, Maintenance Price: RM4000, Point Value: 22800"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DE-07-038" id="Lot ID: DE-07-038, Total Cost: RM31800, Promotion Price: RM27800, Maintenance Price: RM4000, Point Value: 22800"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DE-07-028" id="Lot ID: DE-07-028, Total Cost: RM31800, Promotion Price: RM27800, Maintenance Price: RM4000, Point Value: 22800"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DE-07-018" id="Lot ID: DE-07-018, Total Cost: RM31800, Promotion Price: RM27800, Maintenance Price: RM4000, Point Value: 22800"></td>
-        <td><input type="checkbox" class="seat" name="seats[]" value="DE-07-008" id="Lot ID: DE-07-008, Total Cost: RM31800, Promotion Price: RM27800, Maintenance Price: RM4000, Point Value: 22800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DE-07-098, 31800, 27800, 4000, 22800" id="Lot ID: DE-07-098, Total Cost: RM31800, Promotion Price: RM27800, Maintenance Price: RM4000, Point Value: 22800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DE-07-088, 31800, 27800, 4000, 22800" id="Lot ID: DE-07-088, Total Cost: RM31800, Promotion Price: RM27800, Maintenance Price: RM4000, Point Value: 22800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DE-07-068, 31800, 27800, 4000, 22800" id="Lot ID: DE-07-068, Total Cost: RM31800, Promotion Price: RM27800, Maintenance Price: RM4000, Point Value: 22800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DE-07-038, 31800, 27800, 4000, 22800" id="Lot ID: DE-07-038, Total Cost: RM31800, Promotion Price: RM27800, Maintenance Price: RM4000, Point Value: 22800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DE-07-028, 31800, 27800, 4000, 22800" id="Lot ID: DE-07-028, Total Cost: RM31800, Promotion Price: RM27800, Maintenance Price: RM4000, Point Value: 22800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DE-07-018, 31800, 27800, 4000, 22800" id="Lot ID: DE-07-018, Total Cost: RM31800, Promotion Price: RM27800, Maintenance Price: RM4000, Point Value: 22800"></td>
+        <td><input type="checkbox" class="seat" name="seats[]" value="DE-07-008, 31800, 27800, 4000, 22800" id="Lot ID: DE-07-008, Total Cost: RM31800, Promotion Price: RM27800, Maintenance Price: RM4000, Point Value: 22800"></td>
     </tr>
 
     <tr>
