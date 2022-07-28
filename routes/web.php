@@ -55,6 +55,7 @@ Route::group(['middleware' => 'auth'], function() {
             // Users
             Route::resource('users', '\App\Http\Controllers\Admin\UsersController');
             Route::delete('users/destroy', [\App\Http\Controllers\Admin\UsersController::class, 'massDestroy'])->name('users.massDestroy');
+            Route::match(['get', 'post'], 'users/commissions/{user}', [\App\Http\Controllers\Admin\UsersController::class, 'agentCommissions'])->name('agentCommissions');
 
             // Team
             Route::delete('teams/destroy', [\App\Http\Controllers\Admin\TeamController::class, 'massDestroy'])->name('teams.massDestroy');

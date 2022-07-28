@@ -171,7 +171,7 @@
                                                 @endif
                                             </td>
                                             <td>{{ $data->point_value }}</td>
-                                            <td>{{ $data->installment_pv }}</td>
+                                            <td>{{ number_format($data->installment_pv) }}</td>
                                             <td>{{ $data->user->name }}</td>
                                             <td>{{ $data->user->agent_code }}</td>
                                         </tr>

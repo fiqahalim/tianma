@@ -150,10 +150,10 @@ class OrdersController extends Controller
 
         $trans = new Transaction();
         $trans->transaction_date = Carbon::now();
-        $trans->amount = '';
+        $trans->amount = '0.0';
         $trans->balance = $installments->outstanding_balance;
         $trans->installment_balance = $installments->installment_year;
-        $trans->status = 'Paid';
+        $trans->status = 'PAID';
         $trans->installment_id = $installments->id;
         $trans->order_id = $order->id;
         $trans->customer_id = $order->customer->id;

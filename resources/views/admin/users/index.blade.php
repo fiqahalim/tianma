@@ -113,20 +113,30 @@
                                 {{ $user->agency_code ?? '' }}
                             </td>
                             <td>
-                                @can('user_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.users.edit', $user->id) }}">
-                                        <i class="fas fa-pencil-alt"></i>
+                                <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="View">
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.agentCommissions', $user->id) }}">
+                                        <i class="fas fa-eye"></i>
                                     </a>
+                                </span>
+
+                                @can('user_edit')
+                                    <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Edit">
+                                        <a class="btn btn-xs btn-info" href="{{ route('admin.users.edit', $user->id) }}">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </a>
+                                    </span>
                                 @endcan
 
                                 @can('user_delete')
-                                    <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <button type="submit" class="btn btn-xs btn-danger">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </form>
+                                    <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Delete">
+                                        <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                            <button type="submit" class="btn btn-xs btn-danger">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+                                    </span>
                                 @endcan
                             </td>
                         </tr>

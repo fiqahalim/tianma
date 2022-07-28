@@ -154,4 +154,11 @@ class UsersController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+    public function agentCommissions(Request $request, User $user)
+    {
+        $user->load('parent', 'childUsers', 'commissions', 'rankings', 'orders');
+
+        return view('admin.users.agentCommissions', compact('user'));
+    }
 }

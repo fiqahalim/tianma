@@ -149,7 +149,7 @@ class InstallmentController extends Controller
         $order->ref_no = $this->getOrderNumber();
         $order->order_status = 'NEW';
         $order->payment_option = 'PAY LATER';
-        $order->amount = '0.0';
+        $order->amount = $extractData[1];
         $order->after_discount = $after_discount;
         $order->discount_price = $discount_price;
         $order->order_date = $current = Carbon::now();
