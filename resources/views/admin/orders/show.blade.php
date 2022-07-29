@@ -15,7 +15,7 @@
                     {{-- <a class="btn btn-primary mx-1px text-95" href="#">
                         Tax Invoice
                     </a> --}}
-                    <a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="Print" onClick="printReport()">
+                    <a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="Print" onclick="printReport()">
                         <i class="mr-1 fa fa-print text-primary-m1 text-120 w-2"></i>
                         Print
                     </a>
@@ -69,7 +69,8 @@
     {
         var prtContent = document.getElementById("invoicePrint");
         var WinPrint = window.open();
-        WinPrint.document.write(prtContent.innerHTML);
+        // WinPrint.document.write(prtContent.innerHTML);
+        WinPrint.document.write( "<link rel='stylesheet' href='/public/css/pages/invoice.css' type='text/css' media='print'/>" );
         WinPrint.document.close();
         WinPrint.focus();
         WinPrint.print();

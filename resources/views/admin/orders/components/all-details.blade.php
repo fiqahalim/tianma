@@ -181,43 +181,43 @@
                     </table>
                 </div>
 
-                    <div class="row border-b-2 brc-default-l2"></div>
+                <div class="row border-b-2 brc-default-l2"></div>
 
-                    <div class="row mt-3">
-                        <div class="col-12 col-sm-7 text-grey-d2 text-95 mt-2 mt-lg-0">
+                <div class="row mt-3">
+                    <div class="col-12 col-sm-7 text-grey-d2 text-95 mt-2 mt-lg-0">
+                    </div>
+
+                    <div class="col-12 col-sm-5 text-grey text-90 order-first order-sm-last">
+                        <div class="row my-2">
+                            <div class="col-7 text-right">
+                                SubTotal
+                            </div>
+                            <div class="col-5">
+                                <span class="text-120 text-secondary-d1">RM {{ $extractData[1] ?? '' }}.00</span>
+                            </div>
                         </div>
 
-                        <div class="col-12 col-sm-5 text-grey text-90 order-first order-sm-last">
-                            <div class="row my-2">
-                                <div class="col-7 text-right">
-                                    SubTotal
-                                </div>
-                                <div class="col-5">
-                                    <span class="text-120 text-secondary-d1">RM {{ $extractData[1] ?? '' }}.00</span>
-                                </div>
+                        <div class="row my-2">
+                            <div class="col-7 text-right">
+                                Downpayment (20%)
                             </div>
-
-                            <div class="row my-2">
-                                <div class="col-7 text-right">
-                                    Downpayment (20%)
-                                </div>
-                                <div class="col-5">
-                                    <span class="text-110 text-secondary-d1">RM {{ $order->installments->downpayment ?? '' }}</span>
-                                </div>
+                            <div class="col-5">
+                                <span class="text-110 text-secondary-d1">RM {{ $order->installments->downpayment ?? '' }}</span>
                             </div>
+                        </div>
 
-                            <div class="row my-2 align-items-center bgc-primary-l3 p-2">
-                                <div class="col-7 text-right">
-                                    Outstanding Amount
-                                </div>
-                                <div class="col-5">
-                                    <span class="text-150 text-success-d3 opacity-2">RM {{ $order->installments->outstanding_balance ?? '' }}</span>
-                                </div>
+                        <div class="row my-2 align-items-center bgc-primary-l3 p-2">
+                            <div class="col-7 text-right">
+                                Outstanding Amount
+                            </div>
+                            <div class="col-5">
+                                <span class="text-150 text-success-d3 opacity-2">RM {{ $order->installments->outstanding_balance ?? '' }}</span>
                             </div>
                         </div>
                     </div>
-                    <hr>
                 </div>
+                <hr>
             </div>
         </div>
     </div>
+</div>

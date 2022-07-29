@@ -73,9 +73,10 @@ class UsersController extends Controller
 
         $totalComms = Commission::join('orders', 'orders.id', '=', 'commissions.order_id')
             ->where('commissions.user_id', $user->id)
+            ->where('orders.approved', '=', 1)
             ->whereMonth('commissions.created_at', Carbon::now()->month)
             ->whereYear('commissions.created_at', Carbon::now()->year)
-            ->sum('commissions.mo_overriding_comm');
+            ->get(['commissions.mo_overriding_comm', 'orders.amount']);
 
         $user->load('roles', 'parent', 'team', 'rankings');
 
@@ -175,8 +176,26 @@ class UsersController extends Controller
             ->whereMonth('commissions.created_at', Carbon::now()->month)
             ->whereYear('commissions.created_at', Carbon::now()->year)
             ->get(['commissions.*', 'orders.*', 'installments.*', 'product_bookings.*', 'users.ranking_id']);
-            // dd($myComms);
 
         return view('admin.users.agentCommissions', compact('user', 'myOrders', 'myComms'));
+    }
+
+    public function commissionStatement(Request $request, Order $order)
+    {
+        $order->load('customer', 'team', 'createdBy', 'commissions', 'installments', 'products', 'lotID');
+
+        $myComms = Order::join('commissions', 'commissions.order_id', '=', 'orders.id')
+            ->join('users', 'users.id', '=', 'orders.created_by')
+            ->join('product_bookings', 'product_bookings.id', '=', 'orders.product_bookings_id')
+            ->where('commissions.order_id', $order->id)
+            ->get(['commissions.*', 'users.ranking_id', 'product_bookings.*']);
+
+        $allCommissions = Commission::with(['user', 'orders'])->where('order_id', $order->id)->get();
+
+        $firstPayout = Commission::join('orders', 'orders.id', '=', 'commissions.order_id')
+            ->where('commissions.order_id', $order->id)
+            ->first();
+
+        return view('admin.users.commissionStatement', compact('order', 'firstPayout', 'myComms', 'allCommissions'));
     }
 }

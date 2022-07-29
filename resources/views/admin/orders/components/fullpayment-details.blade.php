@@ -1,4 +1,8 @@
 <div class="container px-0">
+    <a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="Print" onClick="printItem()">
+        <i class="mr-1 fa fa-print text-primary-m1 text-120 w-2"></i>
+        Print
+    </a>
     <div class="row mt-4">
         <div class="col-12 col-lg-12">
             <div class="row">

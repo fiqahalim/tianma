@@ -56,6 +56,7 @@ Route::group(['middleware' => 'auth'], function() {
             Route::resource('users', '\App\Http\Controllers\Admin\UsersController');
             Route::delete('users/destroy', [\App\Http\Controllers\Admin\UsersController::class, 'massDestroy'])->name('users.massDestroy');
             Route::match(['get', 'post'], 'users/commissions/{user}', [\App\Http\Controllers\Admin\UsersController::class, 'agentCommissions'])->name('agentCommissions');
+            Route::match(['get', 'post'], 'users/commissions-statement/{order}', [\App\Http\Controllers\Admin\UsersController::class, 'commissionStatement'])->name('commissionStatement');
 
             // Team
             Route::delete('teams/destroy', [\App\Http\Controllers\Admin\TeamController::class, 'massDestroy'])->name('teams.massDestroy');

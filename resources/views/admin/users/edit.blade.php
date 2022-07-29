@@ -172,7 +172,7 @@
                         <label>{{ trans('cruds.ranking.currentRank') }}</label>
                         <input class="form-control" type="text" name="rankings_id" id="rankings_id" value="{{ $user->rankings ? $user->rankings->category : '' }}" readonly>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label>{{ trans('cruds.commission.fields.comm_monthly') }}</label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -180,12 +180,23 @@
                                     <i>RM</i>
                                 </span>
                             </div>
-                            <input class="form-control" type="text" value="{{ $totalComms ?? '' }}" readonly>
+                            <input class="form-control" type="text" value="{{ $totalComms->sum('mo_overriding_comm') ?? '0' }}" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Total Sales (Monthly)</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i>RM</i>
+                                </span>
+                            </div>
+                            <input class="form-control" type="text" value="{{ $totalComms->sum('amount') ?? '0' }}" readonly>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
                         <label>{{ trans('cruds.ranking.remoteDemote') }}</label>
-                        @if(!empty($totalComms) && $totalComms > 50000)
+                        @if(!empty($totalComms) && $totalComms->sum('amount') > 50000)
                             <select class="form-control form-select {{ $errors->has('rankings') ? 'is-invalid' : '' }}" name="ranking_id" id="rankings_id">
                                 @foreach($rankings as $id => $data)
                                     <option value="{{ $id }}" {{ (old('rankings_id') ? old('rankings_id') : $user->rankings->id ?? '') == $id ? 'selected' : '' }}>{{ $data }}</option>
@@ -212,7 +223,7 @@
                         <label>{{ trans('cruds.ranking.currentRank') }}</label>
                         <input class="form-control" type="text" name="rankings_id" id="rankings_id" value="{{ $user->rankings ? $user->rankings->category : '' }}" readonly>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label>{{ trans('cruds.commission.fields.comm_monthly') }}</label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -220,12 +231,23 @@
                                     <i>RM</i>
                                 </span>
                             </div>
-                            <input class="form-control" type="text" value="{{ $totalComms ?? '' }}" readonly>
+                            <input class="form-control" type="text" value="{{ $totalComms->sum('mo_overriding_comm') ?? '0' }}" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Total Sales (Monthly)</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i>RM</i>
+                                </span>
+                            </div>
+                            <input class="form-control" type="text" value="{{ $totalComms->sum('amount') ?? '0' }}" readonly>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
                         <label>{{ trans('cruds.ranking.remoteDemote') }}</label>
-                        @if(!empty($totalComms) && $totalComms > 50000)
+                        @if(!empty($totalComms) && $totalComms->sum('amount') > 50000)
                             <select class="form-control form-select {{ $errors->has('rankings') ? 'is-invalid' : '' }}" name="ranking_id" id="rankings_id">
                                 @foreach($rankings as $id => $data)
                                     <option value="{{ $id }}" {{ (old('rankings_id') ? old('rankings_id') : $user->rankings->id ?? '') == $id ? 'selected' : '' }}>{{ $data }}</option>

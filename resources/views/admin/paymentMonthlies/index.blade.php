@@ -183,7 +183,7 @@
                                                 {{ $transaction->installment_balance ?? '' }}
                                             </td>
                                             <td>
-                                                RM{{ $transaction->balance ?? '' }}
+                                                RM{{ number_format($transaction->balance ?? '0') }}
                                             </td>
                                             <td>
                                                 <a class="btn btn-xs btn-primary" href="{{ route('admin.transaction.show', $transaction->id) }}">

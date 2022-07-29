@@ -81,13 +81,14 @@
                                                     foreach($getUnitNo as $unit) {
                                                         $bookLots = $unit->lotBookings->seats;
                                                         $unitNo = implode(", ", $bookLots);
+                                                        $extractData = explode(",",$unitNo);
                                                     }
                                                 @endphp
                                                 <p style="font-size: 12pt; font-family: Arial, Helvetica, sans-serif;" class="alignMe">
                                                     <b>RECEIPT NO</b><br>
                                                     <b>ORDER ID</b> #{{ $transaction->orders->ref_no ?? '' }} <br>
                                                     <b>INVOICE NO</b> <br>
-                                                    <b>UNIT NUMBER</b> {{ $unitNo }}<br>
+                                                    <b>UNIT NUMBER</b> {{ $extractData[0] ?? ''}}<br>
                                                     <b>DATE</b> {{ Carbon\Carbon::parse($transaction->orders->created_at)->format('d/m/Y') }}
                                                 </p>
                                             </div>
@@ -111,7 +112,8 @@
                                             @php
                                                 $payments = isset($transaction->orders->customer->payments) ? $transaction->orders->customer->payments : '';
                                                 $getUnitNo = isset($transaction->orders->lotID) ? $transaction->orders->lotID->seats : '';
-                                                $unitNo = implode(" ",$getUnitNo);
+                                                $unitNo = implode(", ", $getUnitNo);
+                                                $extractData = explode(",",$unitNo);
 
                                                 foreach($payments as $pay) {
                                                     $payName = $pay->payment_name;
@@ -122,7 +124,7 @@
                                                 <tr >
                                                     <td>1</td>
                                                     <td>
-                                                        {{ Str::upper($unitNo) }}
+                                                        {{ Str::upper($extractData[0] ?? '') }}
                                                     </td>
                                                     <td>
                                                         {{ Str::upper($transaction->customer->mode) }}

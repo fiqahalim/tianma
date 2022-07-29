@@ -104,11 +104,8 @@
                                 <td>YES, {{ $firstPayout->first_month }}</td>
                             @endif
                             <td>
-                                RM{{ isset($firstPayout->mo_overriding_comm) ? $firstPayout->mo_overriding_comm : '' }}
+                                RM{{ number_format(isset($firstPayout->mo_overriding_comm) ? $firstPayout->mo_overriding_comm : '') }}
                             </td>
-                            {{-- <td>
-                                RM{{ isset($firstPayout->mo_overriding_comm) ? $firstPayout->sum('mo_overriding_comm') : '' }}
-                            </td> --}}
                         </tr>
                     </tbody>
                 </table>
@@ -134,6 +131,7 @@
                                         <th>Point Value (PV) Claimed</th>
                                         <th>Installment Balance Point Value (PV)</th>
                                         <th>Total Commission</th>
+                                        <th>Monthly Spin Off Overriding</th>
                                     </tr>
                                 @endif
                             </thead>
@@ -161,7 +159,7 @@
                                                     CBDD
                                                 @endif
                                             </td>
-                                            <td>RM{{ $data->mo_overriding_comm }}</td>
+                                            <td>RM{{ number_format($data->mo_overriding_comm ?? '') }}</td>
                                             <td>
                                                 @if($data->user->ranking_id == 1)
                                                     16%
@@ -177,7 +175,12 @@
                                             </td>
                                             <td>{{ number_format($data->balance_pv) }}</td>
                                             <td>{{ number_format($data->installment_pv) }}</td>
-                                            <td></td>
+                                            <td>
+                                                RM{{ number_format(isset($order->commissions) ? $order->commissions()->sum('mo_overriding_comm') : '') }}
+                                            </td>
+                                            <td>
+                                                RM{{ number_format(isset($order->commissions) ? $order->commissions->mo_spin_off : '0') }}
+                                            </td>
                                         </tr>
                                     @endif
                                 @endforeach
@@ -236,7 +239,7 @@
                                     {{ strtoupper($order->createdBy->parent->agency_code ?? 'No Information') }}
                                 </td>
                                 <td>
-                                    {{ strtoupper($order->commissions->point_value ?? '') }}
+                                    {{ strtoupper($order->commissions->balance_pv ?? '') }}
                                 </td>
                                 <td>
                                     @if($order->createdBy->parent->ranking_id == 1)
@@ -250,10 +253,16 @@
                                     @endif
                                 </td>
                                 <td>
-                                    RM {{ $order->createdBy->parent->commissions->mo_overriding_comm ?? '' }}
+                                    RM{{ number_format($order->createdBy->parent->commissions->mo_overriding_comm ?? '') }}
                                 </td>
                                 <td>
-                                    RM{{ $order->createdBy->parent->commissions()->sum('mo_overriding_comm') ?? '' }}
+                                    RM{{ number_format($order->createdBy->parent->commissions->mo_overriding_comm ?? '') }}
+                                </td>
+                                <td>
+                                    RM{{ number_format($order->createdBy->parent->commissions()->sum('mo_overriding_comm') ?? '') }}
+                                </td>
+                                <td>
+                                    RM{{ number_format($order->createdBy->parent->commissions->mo_spin_off ?? '0') }}
                                 </td>
                             </tr>
 
@@ -289,24 +298,32 @@
                                         {{ strtoupper(isset($order->createdBy->parent->parent->agency_code) ? $order->createdBy->parent->parent->agency_code : 'No Information') }}
                                     </td>
                                     <td>
-                                        {{ $order->commissions->point_value }}
+                                        {{ number_format(isset($order->commissions->balance_pv) ? $order->commissions->balance_pv : '') }}
                                     </td>
                                     <td>
                                         @if($order->createdBy->parent->parent->ranking_id == 1)
                                             16%
-                                        @elseif($order->createdBy->parent->parent->ranking_id == 2 && $order->createdBy->parent->parent->ranking_id == 4)
+                                        @elseif($order->createdBy->parent->parent->ranking_id == 2)
                                             4%
                                         @elseif($order->createdBy->parent->parent->ranking_id == 3)
                                             2%
+                                        @elseif($order->createdBy->parent->parent->ranking_id == 4)
+                                            4%
                                         @else
                                             0.5%
                                         @endif
                                     </td>
                                     <td>
-                                        RM{{ isset($order->createdBy->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->commissions->mo_overriding_comm : '' }}
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->commissions->mo_overriding_comm : '') }}
                                     </td>
                                     <td>
-                                        RM{{ isset($order->createdBy->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->commissions()->sum('mo_overriding_comm') : '' }}
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->commissions->mo_overriding_comm : '') }}
+                                    </td>
+                                    <td>
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->commissions()->sum('mo_overriding_comm') : '') }}
+                                    </td>
+                                    <td>
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->commissions->mo_spin_off) ? $order->createdBy->parent->parent->commissions->mo_spin_off : '0') }}
                                     </td>
                                 </tr>
                             @endif
@@ -316,7 +333,7 @@
                                 <tr>
                                     <td></td>
                                     <td>
-                                        {{ Carbon\Carbon::parse($order->commissions->created_at)->format('d/M/Y H:i:s') }}
+                                        {{ strtoupper(Carbon\Carbon::parse($order->commissions->created_at)->format('d/M/Y H:i:s')) }}
                                     </td>
                                     <td>
                                         @if(isset($order->createdBy->parent->parent->parent->ranking_id))
@@ -343,24 +360,32 @@
                                         {{ strtoupper(isset($order->createdBy->parent->parent->parent->agency_code) ? $order->createdBy->parent->parent->parent->agency_code : 'No Information') }}
                                     </td>
                                     <td>
-                                        {{ $order->commissions->point_value }}
+                                        {{ number_format(isset($order->commissions->balance_pv) ? $order->commissions->balance_pv : '') }}
                                     </td>
                                     <td>
                                         @if($order->createdBy->parent->parent->parent->ranking_id == 1)
                                             16%
-                                        @elseif($order->createdBy->parent->parent->parent->ranking_id == 2 && $order->createdBy->parent->parent->parent->ranking_id == 4)
+                                        @elseif($order->createdBy->parent->parent->parent->ranking_id == 2)
                                             4%
                                         @elseif($order->createdBy->parent->parent->parent->ranking_id == 3)
                                             2%
+                                        @elseif($order->createdBy->parent->parent->parent->ranking_id == 4)
+                                            4%
                                         @else
                                             0.5%
                                         @endif
                                     </td>
                                     <td>
-                                        RM{{ isset($order->createdBy->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->commissions->mo_overriding_comm : '' }}
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->commissions->mo_overriding_comm : '') }}
                                     </td>
                                     <td>
-                                        RM{{ isset($order->createdBy->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->commissions()->sum('mo_overriding_comm') : '' }}
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->commissions->mo_overriding_comm : '') }}
+                                    </td>
+                                    <td>
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->commissions()->sum('mo_overriding_comm') : '') }}
+                                    </td>
+                                    <td>
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->parent->commissions->mo_spin_off) ? $order->createdBy->parent->parent->parent->commissions->mo_spin_off : '0') }}
                                     </td>
                                 </tr>
                             @endif
@@ -370,7 +395,7 @@
                                 <tr>
                                     <td></td>
                                     <td>
-                                        {{ Carbon\Carbon::parse($order->commissions->created_at)->format('d/M/Y H:i:s') }}
+                                        {{ strtoupper(Carbon\Carbon::parse($order->commissions->created_at)->format('d/M/Y H:i:s')) }}
                                     </td>
                                     <td>
                                         @if(isset($order->createdBy->parent->parent->parent->parent->ranking_id))
@@ -388,35 +413,43 @@
                                         @endif
                                     </td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->parent->parent->name) ? $order->createdBy->parent->parent->parent->parent->name : '' }}
+                                        {{ strtoupper(isset($order->createdBy->parent->parent->parent->parent->name) ? $order->createdBy->parent->parent->parent->parent->name : '') }}
                                     </td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->parent->parent->agent_code) ? $order->createdBy->parent->parent->parent->parent->agent_code : '' }}
+                                        {{ strtoupper(isset($order->createdBy->parent->parent->parent->parent->agent_code) ? $order->createdBy->parent->parent->parent->parent->agent_code : '') }}
                                     </td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->parent->parent->agency_code) ? $order->createdBy->parent->parent->parent->parent->agency_code : 'No Information' }}
+                                        {{ strtoupper(isset($order->createdBy->parent->parent->parent->parent->agency_code) ? $order->createdBy->parent->parent->parent->parent->agency_code : 'No Information') }}
                                     </td>
                                     <td>
-                                        {{ $order->commissions->point_value }}
+                                        {{ number_format(isset($order->commissions->balance_pv) ? $order->commissions->balance_pv : '') }}
                                     </td>
                                     <td>
                                         @if(isset($order->createdBy->parent->parent->parent->parent->ranking_id))
                                             @if($order->createdBy->parent->parent->parent->parent->ranking_id == 1)
                                                 16%
-                                            @elseif($order->createdBy->parent->parent->parent->parent->ranking_id == 2 && $order->createdBy->parent->parent->parent->parent->ranking_id == 4)
+                                            @elseif($order->createdBy->parent->parent->parent->parent->ranking_id == 2)
                                                 4$
                                             @elseif($order->createdBy->parent->parent->parent->parent->ranking_id == 3)
                                                 2%
+                                            @elseif($order->createdBy->parent->parent->parent->parent->ranking_id == 4)
+                                                4%
                                             @else
                                                 0.5%
                                             @endif
                                         @endif
                                     </td>
                                     <td>
-                                        RM{{ isset($order->createdBy->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->commissions->mo_overriding_comm : '' }}
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->commissions->mo_overriding_comm : '') }}
                                     </td>
                                     <td>
-                                        RM{{ isset($order->createdBy->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->commissions()->sum('mo_overriding_comm') : '' }}
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->commissions->mo_overriding_comm : '') }}
+                                    </td>
+                                    <td>
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->commissions()->sum('mo_overriding_comm') : '') }}
+                                    </td>
+                                    <td>
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->parent->parent->commissions->mo_spin_off) ? $order->createdBy->parent->parent->parent->parent->commissions->mo_spin_off : '0') }}
                                     </td>
                                 </tr>
                             @endif
@@ -426,7 +459,7 @@
                                 <tr>
                                     <td></td>
                                     <td>
-                                        {{ Carbon\Carbon::parse($order->commissions->created_at)->format('d/M/Y H:i:s') }}
+                                        {{ strtoupper(Carbon\Carbon::parse($order->commissions->created_at)->format('d/M/Y H:i:s')) }}
                                     </td>
                                     <td>
                                         @if(isset($order->createdBy->parent->parent->parent->parent->parent->ranking_id))
@@ -444,35 +477,43 @@
                                         @endif
                                     </td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->parent->parent->parent->name) ? $order->createdBy->parent->parent->parent->parent->parent->name : '' }}
+                                        {{ strtoupper(isset($order->createdBy->parent->parent->parent->parent->parent->name) ? $order->createdBy->parent->parent->parent->parent->parent->name : '') }}
                                     </td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->parent->parent->parent->agent_code) ? $order->createdBy->parent->parent->parent->parent->parent->agent_code : '' }}
+                                        {{ strtoupper(isset($order->createdBy->parent->parent->parent->parent->parent->agent_code) ? $order->createdBy->parent->parent->parent->parent->parent->agent_code : '') }}
                                     </td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->parent->parent->parent->agency_code) ? $order->createdBy->parent->parent->parent->parent->parent->agency_code : 'No Information' }}
+                                        {{ strtoupper(isset($order->createdBy->parent->parent->parent->parent->parent->agency_code) ? $order->createdBy->parent->parent->parent->parent->parent->agency_code : 'No Information') }}
                                     </td>
                                     <td>
-                                        {{ $order->commissions->point_value }}
+                                        {{ number_format(isset($order->commissions->balance_pv) ? $order->commissions->balance_pv : '') }}
                                     </td>
                                     <td>
                                         @if(isset($order->createdBy->parent->parent->parent->parent->parent->ranking_id))
                                             @if($order->createdBy->parent->parent->parent->parent->parent->ranking_id == 1)
                                                 16%
-                                            @elseif($order->createdBy->parent->parent->parent->parent->parent->ranking_id == 2 && $order->createdBy->parent->parent->parent->parent->parent->ranking_id == 4)
+                                            @elseif($order->createdBy->parent->parent->parent->parent->parent->ranking_id == 2)
                                                 4%
                                             @elseif($order->createdBy->parent->parent->parent->parent->parent->ranking_id == 3)
                                                 2%
+                                            @elseif($order->createdBy->parent->parent->parent->parent->parent->ranking_id == 4)
+                                                4%
                                             @else
                                                 0.5%
                                             @endif
                                         @endif
                                     </td>
                                     <td>
-                                        RM{{ isset($order->createdBy->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->commissions->mo_overriding_comm : '' }}
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->commissions->mo_overriding_comm : '') }}
                                     </td>
                                     <td>
-                                        RM{{ isset($order->createdBy->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->commissions()->sum('mo_overriding_comm') : '' }}
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->commissions->mo_overriding_comm : '') }}
+                                    </td>
+                                    <td>
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->commissions()->sum('mo_overriding_comm') : '') }}
+                                    </td>
+                                    <td>
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->parent->parent->parent->commissions->mo_spin_off) ? $order->createdBy->parent->parent->parent->parent->parent->commissions->mo_spin_off : '0') }}
                                     </td>
                                 </tr>
                             @endif
@@ -482,7 +523,7 @@
                                 <tr>
                                     <td></td>
                                     <td>
-                                        {{ Carbon\Carbon::parse($order->commissions->created_at)->format('d/M/Y H:i:s') }}
+                                        {{ strtoupper(Carbon\Carbon::parse($order->commissions->created_at)->format('d/M/Y H:i:s')) }}
                                     </td>
                                     <td>
                                         @if(isset($order->createdBy->parent->parent->parent->parent->parent->parent->ranking_id))
@@ -500,35 +541,43 @@
                                         @endif
                                     </td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->name) ? $order->createdBy->parent->parent->parent->parent->parent->parent->name : '' }}
+                                        {{ strtoupper(isset($order->createdBy->parent->parent->parent->parent->parent->parent->name) ? $order->createdBy->parent->parent->parent->parent->parent->parent->name : '') }}
                                     </td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->agent_code) ? $order->createdBy->parent->parent->parent->parent->parent->parent->agent_code : '' }}
+                                        {{ strtoupper(isset($order->createdBy->parent->parent->parent->parent->parent->parent->agent_code) ? $order->createdBy->parent->parent->parent->parent->parent->parent->agent_code : '') }}
                                     </td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->agency_code) ? $order->createdBy->parent->parent->parent->parent->parent->parent->agency_code : 'No Information' }}
+                                        {{ strtoupper(isset($order->createdBy->parent->parent->parent->parent->parent->parent->agency_code) ? $order->createdBy->parent->parent->parent->parent->parent->parent->agency_code : 'No Information') }}
                                     </td>
                                     <td>
-                                        {{ $order->commissions->point_value }}
+                                        {{ number_format(isset($order->commissions->balance_pv) ? $order->commissions->balance_pv : '') }}
                                     </td>
                                     <td>
                                         @if(isset($order->createdBy->parent->parent->parent->parent->parent->parent->ranking_id))
                                             @if($order->createdBy->parent->parent->parent->parent->parent->parent->ranking_id == 1)
                                                 16%
-                                            @elseif($order->createdBy->parent->parent->parent->parent->parent->parent->ranking_id == 2 && $order->createdBy->parent->parent->parent->parent->parent->parent->ranking_id == 4)
+                                            @elseif($order->createdBy->parent->parent->parent->parent->parent->parent->ranking_id == 2)
                                                 4%
                                             @elseif($order->createdBy->parent->parent->parent->parent->parent->parent->ranking_id == 3)
                                                 2%
+                                            @elseif($order->createdBy->parent->parent->parent->parent->parent->parent->ranking_id == 4)
+                                                4%
                                             @else
                                                 0.5%
                                             @endif
                                         @endif
                                     </td>
                                     <td>
-                                        RM{{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm : '' }}
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm : '') }}
                                     </td>
                                     <td>
-                                        RM{{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->parent->commissions()->sum('mo_overriding_comm') : '' }}
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm : '') }}
+                                    </td>
+                                    <td>
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->parent->commissions()->sum('mo_overriding_comm') : '') }}
+                                    </td>
+                                    <td>
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->parent->parent->parent->parent->commissions->mo_spin_off) ? $order->createdBy->parent->parent->parent->parent->parent->parent->commissions->mo_spin_off : '0') }}
                                     </td>
                                 </tr>
                             @endif
@@ -538,7 +587,7 @@
                                 <tr>
                                     <td></td>
                                     <td>
-                                        {{ Carbon\Carbon::parse($order->commissions->created_at)->format('d/M/Y H:i:s') }}
+                                        {{ strtoupper(Carbon\Carbon::parse($order->commissions->created_at)->format('d/M/Y H:i:s')) }}
                                     </td>
                                     <td>
                                         @if(isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->ranking_id))
@@ -556,35 +605,43 @@
                                         @endif
                                     </td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->name) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->name : '' }}
+                                        {{ strtoupper(isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->name) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->name : '') }}
                                     </td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->agent_code) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->agent_code : '' }}
+                                        {{ strtoupper(isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->agent_code) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->agent_code : '') }}
                                     </td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->agency_code) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->agency_code : 'No Information' }}
+                                        {{ strtoupper(isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->agency_code) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->agency_code : 'No Information') }}
                                     </td>
                                     <td>
-                                        {{ $order->commissions->point_value }}
+                                        {{ number_format(isset($order->commissions->balance_pv) ? $order->commissions->balance_pv : '') }}
                                     </td>
                                     <td>
                                         @if(isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->ranking_id))
                                             @if($order->createdBy->parent->parent->parent->parent->parent->parent->parent->ranking_id == 1)
                                                 16%
-                                            @elseif($order->createdBy->parent->parent->parent->parent->parent->parent->parent->ranking_id == 2 && $order->createdBy->parent->parent->parent->parent->parent->parent->parent->ranking_id == 4)
+                                            @elseif($order->createdBy->parent->parent->parent->parent->parent->parent->parent->ranking_id == 2)
                                                 4%
                                             @elseif($order->createdBy->parent->parent->parent->parent->parent->parent->parent->ranking_id == 3)
                                                 2%
+                                            @elseif($order->createdBy->parent->parent->parent->parent->parent->parent->parent->ranking_id == 4)
+                                                4%
                                             @else
                                                 0.5%
                                             @endif
                                         @endif
                                     </td>
                                     <td>
-                                        RM{{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm : '' }}
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm : '') }}
                                     </td>
                                     <td>
-                                        RM{{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->commissions()->sum('mo_overriding_comm') : '' }}
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm : '') }}
+                                    </td>
+                                    <td>
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->commissions()->sum('mo_overriding_comm') : '') }}
+                                    </td>
+                                    <td>
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->commissions->mo_spin_off) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->commissions->mo_spin_off : '0') }}
                                     </td>
                                 </tr>
                             @endif
@@ -594,7 +651,7 @@
                                 <tr>
                                     <td></td>
                                     <td>
-                                        {{ Carbon\Carbon::parse($order->commissions->created_at)->format('d/M/Y H:i:s') }}
+                                        {{ strtoupper(Carbon\Carbon::parse($order->commissions->created_at)->format('d/M/Y H:i:s')) }}
                                     </td>
                                     <td>
                                         @if(isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->ranking_id))
@@ -612,35 +669,43 @@
                                         @endif
                                     </td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->name) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->name : '' }}
+                                        {{ strtoupper(isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->name) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->name : '') }}
                                     </td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->agent_code) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->agent_code : '' }}
+                                        {{ strtoupper(isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->agent_code) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->agent_code : '') }}
                                     </td>
                                     <td>
-                                        {{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->agency_code) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->agency_code : 'No Information' }}
+                                        {{ strtoupper(isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->agency_code) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->agency_code : 'No Information') }}
                                     </td>
                                     <td>
-                                        {{ $order->commissions->point_value }}
+                                        {{ number_format(isset($order->commissions->balance_pv) ? $order->commissions->balance_pv : '') }}
                                     </td>
                                     <td>
                                         @if(isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->ranking_id))
                                             @if($order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->ranking_id == 1)
                                                 16%
-                                            @elseif($order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->ranking_id == 2 && $order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->ranking_id == 4)
+                                            @elseif($order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->ranking_id == 2)
                                                 4%
                                             @elseif($order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->ranking_id == 3)
                                                 2%
+                                            @elseif($order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->ranking_id == 4)
+                                                4%
                                             @else
                                                 0.5%
                                             @endif
                                         @endif
                                     </td>
                                     <td>
-                                        RM{{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm : '' }}
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm : '') }}
                                     </td>
                                     <td>
-                                        RM{{ isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->commissions()->sum('mo_overriding_comm') : '' }}
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm : '') }}
+                                    </td>
+                                    <td>
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->commissions->mo_overriding_comm) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->commissions()->sum('mo_overriding_comm') : '') }}
+                                    </td>
+                                    <td>
+                                        RM{{ number_format(isset($order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->commissions->mo_spin_off) ? $order->createdBy->parent->parent->parent->parent->parent->parent->parent->parent->commissions->mo_spin_off : '0') }}
                                     </td>
                                 </tr>
                             @endif

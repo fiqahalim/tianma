@@ -61,7 +61,7 @@
                             <td>
                                 {{ $order->customer->full_name ?? '' }}
                             </td>
-                            <td>RM{{ $order->amount ?? '' }}</td>
+                            <td>RM{{ number_format($order->amount ?? '0') }}</td>
                             <td>
                                 @if($order->customer->mode == 'Installment')
                                     <span class="badge bg-success text-white">

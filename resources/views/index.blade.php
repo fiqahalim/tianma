@@ -56,7 +56,7 @@
                         <div class="col mr-2">
                             <a href="{{ route('user.myCommission') }}">
                                 <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                    My Earnings (Monthly)
+                                    Total Commissions (Monthly)
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                     RM {{ $myEarnings }}

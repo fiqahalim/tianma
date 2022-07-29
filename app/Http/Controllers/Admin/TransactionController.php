@@ -405,7 +405,7 @@ class TransactionController extends Controller
                     $commissions = new Commission;
                     $commissions->mo_overriding_comm = abs($totalCommission);
                     $commissions->balance_comm = abs(isset($balanceCommission)) ? abs($balanceCommission) : '';
-                    $commissions->mo_spin_off = abs(isset($spinOff)) ? abs($spinOff) : '';
+                    // $commissions->mo_spin_off = abs(isset($spinOff)) ? abs($spinOff) : '';
                     $commissions->created_at = $current = Carbon::now();
                     // $commissions->order_id = $orders->id;
                     $commissions->user_id = $pss->parent_id;

@@ -79,7 +79,7 @@
                             </td>
                             <td>{{ $extractData[0] ?? '' }}</td>
                             <td>
-                                {{ $order->amount ?? '' }}
+                                RM{{ number_format($order->amount ?? '0') }}
                             </td>
                             {{-- <td>
                                 {{ $order->order_status ?? '' }}

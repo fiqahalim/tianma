@@ -25,35 +25,40 @@
                             {{ trans('global.createdDate') }}
                         </th>
                         <th>
+                            {{ trans('cruds.commission.fields.order') }}
+                        </th>
+                        <th>Unit No.</th>
+                        <th>
                             {{ trans('cruds.commission.fields.comm_per_order') }}
                         </th>
                         <th>
                             {{ trans('cruds.commission.fields.increased_commission') }}
                         </th>
-                        <th>
-                            {{ trans('cruds.commission.fields.order') }}
-                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($commissions as $key => $commission)
+                    @php
+                        // $getUnitNo = isset($commission->orders) ? $commission->orders->lotID->seats : [];
+                        // $unitNo = implode("," $getUnitNo);
+                        // $extractData = explode(",", $unitNo);
+                    @endphp
                     @if($commission->mo_overriding_comm > 0)
                         <tr data-entry-id="{{ $commission->id }}">
-                            <td>
-
-                            </td>
+                            <td></td>
                             <td>{{ $commission->id }}</td>
                             <td>
                                 {{ Carbon\Carbon::parse($commission->created_at)->format('d/M/Y H:i:s') }}
                             </td>
                             <td>
-                                {{ $commission->mo_overriding_comm ?? '' }}
+                                #{{ $commission->orders->ref_no ?? '' }}
+                            </td>
+                            <td></td>
+                            <td>
+                                {{ number_format($commission->mo_overriding_comm ?? '0') }}
                             </td>
                             <td>
                                 {{ $commission->mo_spin_off ?? 'Not eligible yet' }}
-                            </td>
-                            <td>
-                                #{{ $commission->orders->ref_no ?? '' }}
                             </td>
                         </tr>
                     @endif
