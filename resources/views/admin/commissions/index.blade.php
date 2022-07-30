@@ -26,6 +26,7 @@
                         <th>
                             Order Ref. No
                         </th>
+                        <th>Purchaser Name</th>
                         <th>
                             Total {{ trans('cruds.commission.fields.comm_per_order') }}
                         </th>
@@ -38,9 +39,9 @@
                         <th>
                             Agency Code
                         </th>
-                        <th>
+                        {{-- <th>
                             Payment Mode
-                        </th>
+                        </th> --}}
                         <th>
                             &nbsp;
                         </th>
@@ -72,17 +73,18 @@
                             <td>
                                 #{{ $order->ref_no ?? '' }}
                             </td>
+                            <td>{{ strtoupper($order->customer->full_name ?? '') }}</td>
                             <td>
-                                {{round($order->commissions()->sum('mo_overriding_comm') ?? '')}}.00
+                                {{number_format($order->commissions()->sum('mo_overriding_comm') ?? '')}}
                             </td>
                             <td>
-                                {{ round($order->commissions()->sum('mo_spin_off')) ?? 'Target was not achieved' }}.00
+                                {{ number_format($order->commissions()->sum('mo_spin_off')) ?? 'Target was not achieved' }}
                             </td>
                             <td>
-                                {{ $order->createdBy->agent_code ?? '' }}
+                                {{ strtoupper($order->createdBy->agent_code ?? '') }}
                             </td>
-                            <td>{{ $order->createdBy->agency_code ?? '' }}</td>
-                            <td>
+                            <td>{{ strtoupper($order->createdBy->agency_code ?? '') }}</td>
+                            {{-- <td>
                                 @if($order->customer->mode == 'Installment')
                                     <span class="badge bg-success text-white">
                                         {{ $order->customer->mode ?? '' }}
@@ -92,7 +94,7 @@
                                         {{ $order->customer->mode ?? '' }}
                                     </span>
                                 @endif
-                            </td>
+                            </td> --}}
                             <td>
                                 <span aria-hidden="true" data-toggle="tooltip" data-placement="right" title="View">
                                     <a class="btn btn-xs btn-primary" href="{{ route("admin.commissions.show", $order->id) }}">
